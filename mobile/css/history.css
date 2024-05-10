@@ -1,0 +1,173 @@
+
+/* ==================================================================HEADER ==================================================================*/
+/* body{
+    width:100%;
+    position:fixed; 
+} */
+.header{
+    background-color:#f5f5f5;
+    text-align: center;
+    position: relative;
+    height:56px;
+    background-color:#fff;
+   overflow: hidden;
+}
+.hd_title{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size:1.125em;
+    color:#333;
+    line-height: 56px;
+    letter-spacing: -0.05em;
+}
+.header .left{
+    position: absolute;
+    width:14px;
+    left:20px;
+        top:50%;
+        transform: translateY(-50%);
+    
+}
+/* ==================================================================//HEADER ==================================================================*/
+
+
+.history{
+    overflow: hidden;
+}
+
+/* BALANCE */
+
+.coin_balance{
+    width:100%;
+    background-color: #f6bd14;
+    overflow: hidden;
+    padding:24px;
+
+}
+.cb_left{
+    float:left;
+    color:#fff;
+}
+
+.cb_right{
+    float:right;
+    color:#fff;
+}
+
+.coin_img{
+    float:left;
+    width:45px;
+    height:45px;
+}
+.coin_img img{
+    width:100%;
+    height:100%;
+}
+
+.coin_name{
+    float: left;
+    color:#fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875em;
+    line-height: 45px;
+    margin-left:11px;
+}
+.cb_right{
+    font-family: 'Poppins', sans-serif;
+    text-align: right;
+    font-size: 1.125em;
+    line-height: 6vh;
+}
+.cb_right p{
+  line-height: 3vh;
+}
+.point_balance{
+  line-height: 6vh !important;
+}
+
+/* BALANCE */
+
+
+
+/* HISTORY BOX */
+.hist_tab_box{
+    width:92%;
+    margin:0 auto;
+    background-color:#fff;
+    overflow: hidden;
+    margin-top:20px;
+    padding:0 20px;
+}
+
+/* ================================== TABLE ===============================*/
+.hist_tab{
+    width:100%;
+    margin:0 auto;
+    border-collapse: collapse;
+}
+.hist_tab tr{
+    height:25px;
+    
+}
+.hist_tab tr th{
+    font-size: 0.74rem;
+    color:#666666;
+    letter-spacing: -0.05em;
+    line-height: 40px;
+    -border-bottom:1px solid #c6c6c6;
+    padding:0 10px;
+}
+.hist_tab tr td{
+    font-size: 0.74rem;
+    color:#999999;
+    letter-spacing: -0.03em;
+    text-align: center;
+    line-height: 40px;
+    border-bottom:1px solid #c6c6c6;
+    font-weight: 300;
+    
+}
+/* .hist_tab tr:last-child td{border:none;} */
+
+/* ================================== //TABLE ===============================*/
+
+/* HISTORY BOX */
+
+.guide_1, .guide_2{
+  /* display:none; */
+ font-size:0.9em;
+ background:rgba(255,255,255,0.8);
+ color:#1a1a1a;
+ /* text-align:center; */
+ /* vertical-align: middle; */
+position: absolute;
+/* top:70%; */
+/* transform: translateX(-50%); */
+left:45%;
+ border-radius: 1vh;
+ /* padding:0 1vh; */
+ margin-top: 10%;
+}
+#js-balance_2, #js-balance_3{
+  border-top:1px solid #fff;
+}
+
+#js-hist_tab_3{display:none;}
+
+/* .eth_balance{color:#555} */
+.ex_icon{text-align:right;float:right;}
+
+.hist_tab tr{height:25px}
+.hist_tab tr td{color:#000}
+.hist_tab .date{line-height:20px}
+.hist_tab .goods_name{font-weight:600}
+.hist_tab .price{font-weight:900;font-size:14px}
+.hist_tab .payment{font-size:10px;color:#787878}
+.hist_tab .gas{border-bottom:1px solid #ccc}
+.hist_tab .gas td{-padding-bottom:10px}
+.hist_tab tr.item td{padding:5px 0 0 0}
+.hist_tab tr.item td.coin{font-size:1rem;font-weight:700}
+.hist_tab .gas td.gas_fee{color:gold;text-align:center;-padding-right:5%;font-weight:700}
+.hist_tab tr td.date{border-bottom:1px solid #ccc}
+.goods_name,.order_total{line-height:20px!important;letter-spacing:-1px}
+.order_total{font-family:nanumgothic!important}
+.js-hist_tab_3 tbody tr td{padding:1vh 0}

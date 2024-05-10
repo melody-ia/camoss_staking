@@ -1,0 +1,611 @@
+
+/* ==================================================================HEADER ==================================================================*/
+
+.header{
+    background-color:#f5f5f5;
+    text-align: center;
+    position: relative;
+    height:56px;
+    background-color:#fff;
+   overflow: hidden;
+}
+.hd_title{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size:1.125em;
+    color:#333;
+    line-height: 56px;
+    letter-spacing: -0.05em;
+}
+.header .left{
+    position: absolute;
+    width:14px;
+    left:20px;
+        top:50%;
+        transform: translateY(-50%);
+
+}
+
+/* ==================================================================//HEADER ==================================================================*/
+
+
+/* BALANCE */
+
+.coin_balance{
+    width:100%;
+    background-color: #f6bd14;
+    overflow: hidden;
+    padding:24px;
+
+}
+
+.coin_1, .coin_2{
+    overflow: hidden;
+}
+.coin_2{
+    margin-top:16px;
+}
+.cb_left{
+    float:left;
+    color:#fff;
+}
+
+.cb_right{
+    float:right;
+    color:#fff;
+}
+
+.coin_img{
+    float:left;
+    width:45px;
+    height:45px;
+}
+.coin_img img{
+    width:100%;
+    height:100%;
+}
+
+.coin_name{
+    float: left;
+    color:#fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875em;
+    line-height: 45px;
+    margin-left:5px;
+}
+.cb_right{
+    font-family: 'Poppins', sans-serif;
+    text-align: right;
+    font-size: 1.125rem;
+    line-height: 1.5em;
+}
+
+/* .eth_balance{
+  color:#04051B;
+} */
+/* BALANCE */
+
+
+
+/* Trade */
+.trade{
+    width:92%;
+    margin:20px auto;
+    background-color: #fff;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.trade_inner{width:87%;margin:0 auto;
+overflow: hidden;
+display: flex; justify-content: space-between;}
+.trade_left{
+    width:40%;
+    float:left;
+}
+.trade_right{
+    width:40%;
+    float:right;
+}
+
+.trade_arrow{
+    width:22px; height:36px;
+    float:left;margin-left:16px;margin-top:60px;}
+    .trade_arrow img {width:100%; height:100%;}
+
+
+
+.coin_sym{
+    width:45px; height:45px;
+    text-align: center;
+    margin:36px auto 0;
+
+}
+.coin_sym img{
+    width:100%;
+}
+
+
+
+.trade_input_box{
+    color:#353535;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size:13px;
+    line-height: 13px;
+    margin-top: 24px;
+    margin-bottom:30px;
+    padding-bottom:5px;
+    border-bottom:1px solid #dddddd;
+    position: relative;
+    overflow: hidden;
+}
+
+.trade_money{
+    padding:0; margin:0;
+    width:65%;
+    border:none;
+    margin-right:5px;
+    padding-left:15px;
+    background:none;
+    color:#353535;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size:18px;
+    text-align:left;
+    float: left;
+    line-height: 13px;
+    overflow: scroll;
+    text-align:center;
+    font-weight: 900;
+}
+.coin_title{
+    position: absolute;
+    right:0;
+    vertical-align:middle;
+    line-height:27px;
+    font-size:16px;
+}
+
+
+/* Submit */
+.submit{width:92%;margin:20px auto 60px;display: flex;justify-content: space-between;}
+
+.btnOut2, .btnCancle{
+    width: 160px;
+    height: 45px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.985em;
+    color: #fff;
+    border:0;
+}
+.btnOut2{background-color:#f6bd14;}
+ .btnCancle{background-color:#bdbdbd;}
+
+/* Submit */
+
+
+
+
+
+
+
+/* 수령인폼 */
+
+
+/* html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+} */
+
+/* html {
+  line-height: 1;
+} */
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* Colors */
+/* ---------------------------------------- */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  text-align: center;
+  font-family: 'Lato', 'sans-serif';
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+}
+
+.info-text {
+  text-align: left;
+  width: 100%;
+}
+
+form {
+  padding: 1em 10%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+h2.heading {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: left;
+  color: #506982;
+  border-bottom: 1px solid #506982;
+  padding-bottom: 3px;
+  margin-bottom: 20px;
+}
+
+.controls {
+  text-align: left;
+  position: relative;
+}
+.controls input[type="text"],
+.controls input[type="email"],
+.controls input[type="number"],
+.controls input[type="date"],
+.controls input[type="tel"],
+.controls textarea,
+.controls button,
+.controls select {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #c6c6c6;
+  width: 100%;
+  margin-bottom: 18px;
+  color: #888;
+  font-family: 'Lato', 'sans-serif';
+  font-size: 16px;
+  font-weight: 300;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  cursor:pointer;
+  margin-top: 3px;
+}
+.controls input[type="text"]:focus, .controls input[type="text"]:hover,
+.controls input[type="email"]:focus,
+.controls input[type="email"]:hover,
+.controls input[type="number"]:focus,
+.controls input[type="number"]:hover,
+.controls input[type="date"]:focus,
+.controls input[type="date"]:hover,
+.controls input[type="tel"]:focus,
+.controls input[type="tel"]:hover,
+.controls textarea:focus,
+.controls textarea:hover,
+.controls button:focus,
+.controls button:hover,
+.controls select:focus,
+.controls select:hover {
+  outline: none;
+  border-color: #9FB1C1;
+}
+.controls input[type="text"]:focus + label, .controls input[type="text"]:hover + label,
+.controls input[type="email"]:focus + label,
+.controls input[type="email"]:hover + label,
+.controls input[type="number"]:focus + label,
+.controls input[type="number"]:hover + label,
+.controls input[type="date"]:focus + label,
+.controls input[type="date"]:hover + label,
+.controls input[type="tel"]:focus + label,
+.controls input[type="tel"]:hover + label,
+.controls textarea:focus + label,
+.controls textarea:hover + label,
+.controls button:focus + label,
+.controls button:hover + label,
+.controls select:focus + label,
+.controls select:hover + label {
+  color: #222436;
+  cursor: text;
+}
+.controls .fa-sort {
+  position: absolute;
+  right: 10px;
+  top: 17px;
+  color: #999;
+}
+.controls select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.controls label {
+  position: absolute;
+  left: 8px;
+  top: 13px;
+  width: 60%;
+  color: #999;
+  font-size: 16px;
+  display: inline-block;
+  padding: 4px 10px;
+  font-weight: 400;
+  background-color: rgba(255, 255, 255, 0);
+  -moz-transition: color 0.3s, top 0.3s, background-color 0.8s;
+  -o-transition: color 0.3s, top 0.3s, background-color 0.8s;
+  -webkit-transition: color 0.3s, top 0.3s, background-color 0.8s;
+  transition: color 0.3s, top 0.3s, background-color 0.8s;
+  background-color: white;
+}
+.controls label.active {
+  top: -14px;
+  color: #555;
+  background-color: white;
+  width: auto;
+}
+.controls textarea {
+  resize: none;
+  height: 200px;
+}
+
+button {
+  cursor: pointer;
+  background-color: #222436;
+  border: none;
+  color: #fff;
+  padding: 12px 0;
+  float: right;
+}
+button:hover {
+  background-color: #222436;
+}
+
+.clear:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.grid {
+  background: white;
+}
+.grid:after {
+  /* Or @extend clearfix */
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[class*='col-'] {
+  float: left;
+  padding-right: 10px;
+}
+.grid [class*='col-']:last-of-type {
+  padding-right: 0;
+}
+
+.col-2-3 {
+  width: 66.66%;
+}
+
+.col-1-3 {
+  width: 33.33%;
+}
+
+.col-1-2 {
+  width: 50%;
+}
+
+.col-1-4 {
+  width: 25%;
+}
+
+@media (max-width: 760px) {
+  .col-1-4-sm, .col-1-3, .col-2-3 {
+    width: 100%;
+  }
+
+  [class*='col-'] {
+    padding-right: 0px;
+  }
+}
+.col-1-8 {
+  width: 12.5%;
+}
+
+
+
+/* 국가 */
+
+.selectbox {
+    position: relative;
+    background: #f5f5f5;
+    /* background-image: -moz-linear-gradient(top, white, #e6e6e6);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, white), color-stop(1, #e6e6e6)); */
+    /* background-image: linear-gradient(top, white, #e6e6e6); */
+    border: 1px solid #aeaeae;
+    display: inline-block;
+    *display: inline;
+    zoom: 0;
+    /* border-radius: 5px; */
+    box-shadow: 0 1px 1px #d2d2d2;
+    width: 100%;
+    margin-bottom: 25px;
+    line-height:30px;
+    height:40px;
+    /* cursor:pointer; */
+}
+
+select {
+  /* height:40px; */
+ z-index: 10;
+  position: relative;
+  opacity: 0;
+  border: none;
+  -webkit-appearance: none;
+background: none;
+  outline: none;
+   padding: 4px 12px;
+  filter: alpha(opacity=0);
+  width: 100%;
+  cursor:pointer;
+}
+
+.selecttext {
+   display: inline-block;
+  *display: inline;
+  zoom: 1;
+   background: transparent;
+   position: absolute;
+   left: 5px;
+  z-index: 9;
+color: #666;
+ padding-top: 4px;
+}
+
+
+/* 마스크 라디오 버튼 */
+
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    margin-top:38px;
+    /* padding-left: 23px; */
+    cursor: pointer;
+    line-height: 22px;
+    display: inline-block;
+    color: #222436;
+    font-size:14px;
+    width:100%;
+    background:#f1f1f1;color:#222436
+}
+
+[type="radio"]:checked + label {
+  background:#f6bd14;
+  font-weight:700;
+}
+
+/*
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #F87DA9;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+} */
+
+/* 상품교환 */
+.item_detail{font-size:13px;margin:20px -10px;background:cornflowerblue;border-radius:15px;padding:10px 10px;color:white}
+.item_detail2{background: lightgray;font-size:13px;margin:0px -10px 20px;border-radius:15px;padding:10px 10px;}
+.item_detail2 li{list-style:none;text-align:left;line-height:24px;letter-spacing:-1px;}
+
+.item_detail h2{font-size:24px;font-weight:600;margin:10px 0;}
+.item_detail li{list-style:none;text-align:left;line-height:30px;letter-spacing:-1px;}
+
+#order_form h1{font-size:1.1em; font-weight:600;color:#222436}
+.item_box{width:100%;display:block;margin:30px 0px;height:100px; }
+
+.item{ margin:0 2px;float: left; width: 35%; cursor:pointer;border:1px solid #ccc; margin-left: 34px;}
+.item .item_img{background:white; width:100%;height:60px;
+  /* padding:5px 0; */
+}
+.item .item_img img{height:50px;vertical-align: middle;}
+.item .item_name{}
+
+
+option {font-size:16px;line-height:20px;}
+.select_purchase{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height:50px;
+}
+
+label{
+  margin-bottom : .0rem;
+}
+
+pre{
+  color:#FFFFFF;
+  margin-bottom: -1rem;
+}

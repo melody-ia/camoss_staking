@@ -1,0 +1,246 @@
+@charset "UTF-8";
+/* Header */
+#hd {
+  background: white;
+}
+
+#hd_wrapper .back_btn {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 0;
+  z-index: 1000;
+  text-align: center;
+  line-height: 60px;
+}
+#hd_wrapper .back_btn i {
+  font-size: 16px;
+}
+
+/* 회원가입 */
+.mbskin .btn_submit, .btn_submit {
+  background: #f6bd14;
+  border-radius: 0 !important;
+  border: 1px solid #bc8d00;
+}
+
+#mb_login .frm_input {
+  border: 1px solid #eeeeee;
+  text-indent: 44px;
+  line-height: 45px;
+  margin: 0;
+}
+
+.email_box .input_img {
+  position: relative;
+  width: 17px;
+  height: 12px;
+  left: 15px;
+  top: -35px;
+}
+
+.pw_box .input_img {
+  position: relative;
+  width: 13px;
+  height: 16px;
+  left: 15px;
+  top: -35px;
+}
+
+.input_img img {
+  width: 100%;
+  height: 100%;
+}
+
+.breadcomp {
+  width: 100%;
+  display: block;
+  background: #222436;
+  min-height: 170px;
+  color: white;
+  padding: 20px 30px;
+}
+.breadcomp .greeting {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+.breadcomp .greeting span {
+  font-weight: 900;
+  font-size: 16px;
+}
+.breadcomp .balance {
+  text-align: right;
+  font-family: "Poppins", sans-serif;
+}
+.breadcomp .coin_img img {
+  width: 60px;
+  height: 60px;
+}
+
+.token_balance {
+  font-size: 18px;
+}
+
+.eth_balance {
+  font-size: 14px;
+  color: rgb(158, 159, 179);
+}
+
+main {
+  width: 100%;
+  padding: 0 15px;
+  display: block;
+}
+
+#main_card {
+  background: white;
+  width: 100%;
+  height: 70px;
+  display: block;
+  margin-top: -20px;
+  padding: 10px 0;
+}
+#main_card .dual {
+  width: 49.9%;
+  height: 100%;
+  float: left;
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 14px;
+}
+#main_card .dual img {
+  width: 34px;
+  height: 34px;
+}
+#main_card .right {
+  border-left: 1px solid #ccc;
+}
+
+/*  NOTICE */
+.notice {
+  margin: 0 auto;
+  font-size: 0.75em;
+  text-align: left;
+  color: #555;
+  font-weight: 200;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.notice_inner b {
+  font-weight: 600;
+}
+
+.notice_inner img {
+  width: 5px;
+  height: 5px;
+  margin: 0 4px;
+  margin-bottom: 2px;
+}
+
+/*  //NOTICE */
+/* =====================MENUBOX================================= */
+.menu {
+  margin: 0 auto;
+}
+
+.menu_card {
+  height: 160px;
+  padding: 40px 10px;
+  background: white;
+  margin: 0 2px;
+}
+.menu_card:hover {
+  background: #222436;
+  color: white;
+}
+
+.menu_box {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.menu_box a {
+  width: 25%;
+}
+.menu_box a div {
+  height: 6vh;
+  margin: 0 auto;
+  text-align: center;
+  background-size: contain;
+}
+.menu_box a p {
+  font-size: 14px;
+  line-height: 0.75em;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.main_icon {
+  font-size: 36px;
+  color: #f6bd14;
+}
+
+.partner {
+  background: url("/img/project/partner.png") no-repeat center;
+}
+
+.confirm {
+  background: url("/img/project/confirm.png") no-repeat center;
+}
+
+.shopping {
+  background: url("/img/project/shopping.png") no-repeat center;
+}
+
+.my_info {
+  background: url("/img/project/icon_my.png") no-repeat center;
+}
+
+.logout {
+  background: url("/img/project/icon_logout.png") no-repeat center;
+}
+
+.sysbtnset {
+  width: 100%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 2vh 0;
+  background: #fff;
+  font-size: 14px;
+}
+.sysbtnset a {
+  width: initial;
+  margin: 0 auto;
+  text-align: center;
+}
+.sysbtnset a p {
+  margin: 0;
+  line-height: 19px;
+  float: left;
+  margin-left: 6px;
+}
+.sysbtnset a div {
+  float: left;
+  width: 19px;
+  height: 19px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  background-size: contain;
+}
+.sysbtnset .sysbtnset_bar {
+  width: 1px;
+  height: 70%;
+  background-color: #ececec;
+  position: absolute;
+  left: 50%;
+  top: 10px;
+}

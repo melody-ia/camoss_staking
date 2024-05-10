@@ -1,0 +1,74 @@
+$breakpoint-mobile: 335px;
+$breakpoint-tablet: 758px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-wide: 1200px;
+
+// 테마 백그라운드 설정
+$main-theme-type: black-theme; // 테마 모드 설정 
+
+@if $main-theme-type == black-theme {
+    $main-point-color: #492191 ;// 메인 포인트 컬러
+    $main-button-color:#b1b1b1 ; // 메인 버튼 배경 1 색상
+    $main-button-color2:#808080 ; // 메인 버튼 배경 2 색상
+    $main-sub-button-color:#8ddc30 ; // 메인 서브 버튼 배경 1 색상
+    $main-sub-button-color2:#6eca02 ; // 메인 서브 버튼 배경 2 색상
+    $deposit-btn-background: #302783 ;//입금 버튼 배경 색상
+    $deposit2-btn-background: #e30413 ; // 입금 2(상품구매페이지) 버튼 배경 색상
+    $withdraw-btn-background: #516feb ; //출금 버튼 배경 색상
+    $purchase-btn-background: #516feb ; // 구매 버튼 배경 색상
+    $timer-background: #5d96c6 ; //타이머 배경 색상
+    $main-background-depth1-color:#27282d ; // 메인 배경 색상
+    $main-background-depth2-color:#3e4048 ; // 메인 depth2 배경 색상
+    $main-background-depth3-color:#525561 ; // 메인 depth3 배경 색상
+    $header-background:#3e4048 ; // header 배경 색상
+    $gnb-background: #27282d ; // gnb background 배경 색상
+    $gnb-title-color: #eee ; // gnb title 색상
+    $breadcrumb-background: #3e4048 ; // breadcrumb 배경 색상
+    $breadcrumb-usercontent-background: #636b73 ; // breadcrumb 유저 콘텐트 박스 배경 색상
+    $breadcrumb-updown-background: #492191 ;
+    $badge-background-color: #6eca02 ; // breadcrumb 뱃지 배경 색상
+    $notice-background-color: #5d96c6 ; // 공지사항 버튼 배경 색상
+    $main-title-color: #fff ; // title 폰트 컬러
+    $content-box-background: #3e4048 ; // content-box 배경 색상
+    $content-box-color: #fff ; // content-box 폰트 색상
+}
+
+// 테마 백그라운드 설정 끝
+
+// 상품 카드 백그라운드 색상
+// $pack_background_0: #b55dccd9;
+// $pack_background_1: #516feb;
+// $pack_background_2: #09c3fd;
+// $pack_background_3: #5ed2dc;
+// $pack_background_4: #373cbc;
+// $pack_background_5: #2b3a6d;
+// $pack_background_6: #6214ab;
+
+// 상품 카드 백그라운드 색상
+$pack_background_0: #6f42c1;
+$pack_background_1: #516feb;
+$pack_background_2: #3b5977;
+$pack_background_3: #03a9f4;
+$pack_background_4: #343a40;
+$pack_background_5: #2b3a6d;
+$pack_background_6: #6214ab;
+
+// 상품 카드 폰트 색상
+$pack_font_0: #6f42c1;
+$pack_font_1: #516feb;
+$pack_font_2: #3b5977;
+$pack_font_3: #03a9f4;
+$pack_font_4: #343a40;
+$pack_font_5: #2b3a6d;
+$pack_font_6: #6214ab;
+
+//회원등급 배경 컬러 색상
+$grade_color_0: #6f42c1;
+$grade_color_1: #516feb;
+$grade_color_2: #3b5977;
+$grade_color_3: #03a9f4;
+$grade_color_4: #343a40;
+$grade_color_5: #2b3a6d;
+$grade_color_6: #6214ab;
+
+
