@@ -8,7 +8,7 @@ body{overflow-y: hidden;}
 	width:100%;
 	display:block;
 	height:100vh;
-	background:#000 url('<?=G5_THEME_URL?>/img/launcher.png') no-repeat center;
+	background:#000 url('<?=G5_THEME_URL?>/img/launcher.jpg') no-repeat center;
 	background-size:cover;
 }
 
@@ -161,7 +161,7 @@ body{overflow-y: hidden;}
 		<div id="myBar"></div>
 		<div id="btnDiv" class="animate-bottom">
 			<div class='btn_ly'>
-				<?include_once(G5_THEME_PATH.'/_include/lang.php')?>
+				<!-- <?include_once(G5_THEME_PATH.'/_include/lang.php')?> -->
 					<a href="/bbs/login_pw.php" class="btn btn_wd btn_secondary login_btn">LOG IN</a>
 					<!-- <a href="javascript:auto_login()" class="btn btn_wd btn_primary login_btn">LOG IN</a> -->
 						<a href="/bbs/register_form.php" class="btn btn_wd btn_primary signup_btn">SIGN UP</a>
