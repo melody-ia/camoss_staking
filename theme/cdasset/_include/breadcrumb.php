@@ -148,11 +148,11 @@ $title = 'Dashboard';
 							<dd class="value" style='font-size:15px;'><?=shift_auto($total_bonus,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<li class="col-4">
-							<dt class="title" >구매 가능 USDT </dt>
+							<dt class="title" >구매 가능액</dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<li class="col-4">
-							<dt class="title" >출금 가능 USDT </dt>
+							<dt class="title" >출금 가능액 </dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<!-- <li class="col-4">
@@ -223,7 +223,7 @@ $title = 'Dashboard';
 						</li>
 
 						<li class="col-4">
-							<dt class="title">승급대상 USDT</dt>
+							<dt class="title">승급대상</dt>
 							<dd class="value">
 								<?=check_value($member['mb_7'])?>
 							</dd>

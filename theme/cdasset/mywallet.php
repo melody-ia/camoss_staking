@@ -400,10 +400,10 @@ function curency_txt($value, $kind = 'deposit')
     <div class="my_btn_wrap">
       <div class="row mywallet_btn">
         <div class='col-lg-6 col-12'>
-          <button type='button' class='btn wd main_btn b_darkblue round' onclick="switch_func('deposit')"> 입금 (USDT구매)</button>
+          <button type='button' class='btn wd main_btn b_darkblue round' onclick="switch_func('deposit')"> 입금</button>
         </div>
         <div class='col-lg-6 col-12'>
-          <button type='button' class='btn wd main_btn b_skyblue round' onclick="switch_func('withdraw')">출금 (USDT판매)</button>
+          <button type='button' class='btn wd main_btn b_skyblue round' onclick="switch_func('withdraw')">출금</button>
         </div>
       </div>
     </div>
@@ -416,15 +416,15 @@ function curency_txt($value, $kind = 'deposit')
             <a id="coin_refresh" class="btn inline"><i class="ri-restart-fill" style="font-size:28px;"></i></a>
         </div> -->
       <!-- </h3> -->
-      <div class="checkbox-group">
+      <!-- <div class="checkbox-group">
         <div class='checkbox-tile'>1 USDT = <span id='curency_usdt_eth'><?= $shift_auto_withdrawal_price ?></span> <?= $curencys[1] ?> </div>
-      </div>
+      </div> -->
     </section>
 
     <!-- 입금 -->
     <section id='deposit' class='loadable'>
 
-      <h3 class="wallet_title">입금(구매)계좌 선택</h3>
+      <h3 class="wallet_title">입금계좌</h3>
 
       <section id="account_select" class="account_select">
         <?
@@ -494,7 +494,7 @@ function curency_txt($value, $kind = 'deposit')
       <hr class="hr_dash"></hr>
 
       <div class="col-sm-12 col-12 content-box round mt20" id="eth">
-        <h3 class="wallet_title">입금(구매)신청 </h3> <span class='desc'> - 선택된 구좌로 1회만 요청해주세요.</span>
+        <h3 class="wallet_title">입금신청 </h3> <span class='desc'> - 선택된 구좌로 1회만 요청해주세요.</span>
         <div style="clear:both"></div>
         <div class="row">
 
@@ -528,11 +528,10 @@ function curency_txt($value, $kind = 'deposit')
 
           <div class='col-sm-12 col-12 '>
             <button class="btn btn_wd font_white deposit_request deposit_value" data-currency="<?= $curencys[1] ?>">
-              <span>입금(구매)신청</span>
+              <span>입금신청</span>
             </button>
 
             <div class='txt-box deposit_alert col-12'>
-              입금(구매)신청 후 내역에 입금(구매) 정보가 확인됩니다.<br>
               신청금액과 실제 입금액이 다른경우 처리가 지연될수 있습니다.
             </div>
           </div>
@@ -543,7 +542,7 @@ function curency_txt($value, $kind = 'deposit')
 
       <!-- 입금 요청 내역 -->
       <div class="history_box content-box">
-        <h3 class="hist_tit wallet_title">입금(구매) 신청 내역 <span style="font-size:11px;font-weight:300;">- 내역의 계좌번호 클릭시 복사</span></h3>
+        <h3 class="hist_tit wallet_title">입금 신청 내역 <span style="font-size:11px;font-weight:300;">- 내역의 계좌번호 클릭시 복사</span></h3>
 
         <div class="b_line2"></div>
         <? if (sql_num_rows($result_deposit) == 0) { ?>
@@ -629,7 +628,7 @@ function curency_txt($value, $kind = 'deposit')
       -->
 
       <div class="col-sm-12 col-12 content-box round mt20">
-        <h3 class="wallet_title">출금(판매) 신청</h3>
+        <h3 class="wallet_title">출금 신청</h3>
         <span class="desc"> 총 출금 가능액 : <?= shift_auto($withdrwal_total, $curencys[1]) ?> <?= $curencys[0] ?></span>
         
         <div class="row">

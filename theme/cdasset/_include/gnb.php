@@ -92,7 +92,7 @@ $(document).ready(function(){
 				<a href="/page.php?id=mywallet">
 					<div class="gnb_img_wrap"></div>
 					<div class="gnb_title_Wrap">
-						<span >USDT 거래소</span>
+						<span >입금/출금</span>
 					</div>
 				</a>
 			</li> 
@@ -124,6 +124,15 @@ $(document).ready(function(){
 				</a>
 			</li> 
 			<?}?>
+			<li class="upstairs_icon <? if($_GET['id'] === 'reupstairs') {echo 'active';}?>">
+				<a href="/page.php?id=reupstairs">
+					<div class="gnb_img_wrap"></div>
+					<div class="gnb_title_Wrap">
+						<span >재구매</span>
+					</div>
+				</a>
+			</li> 
+
 			<li class="bonus_history_icon <? if($_GET['id'] === 'bonus_history') {echo 'active';}?>">
 				<a href="/page.php?id=bonus_history">
 					<div class="gnb_img_wrap"></div>
@@ -156,7 +165,7 @@ $(document).ready(function(){
 			</li>
 			<?}?>
 
-			<!-- <li class="support_icon <?// if($_GET['id'] === 'binary') {echo 'active';}?>">
+			<li class="support_icon <?// if($_GET['id'] === 'binary') {echo 'active';}?>">
 				<a href="/page.php?id=binary">
 					<div class="gnb_img_wrap"></div>
 					<div class="gnb_title_Wrap">
@@ -164,6 +173,7 @@ $(document).ready(function(){
 					</div>
 				</a>
 			</li>
+			<!--
 			<li class="support_icon <? //if($_GET['id'] === 'binary2') {echo 'active';}?>">
 				<a href="/page.php?id=binary2">
 					<div class="gnb_img_wrap"></div>
@@ -197,21 +207,21 @@ $(document).ready(function(){
 				</a>
 			</li>
 			<?if($nw['nw_shop'] == 'Y'){?>
-			<li class="shop_icon">
+			<!-- <li class="shop_icon">
 				<a href="/shop">
 					<div class="gnb_img_wrap"></div>
 					<div class="gnb_title_Wrap">
 						<span >쇼핑몰</span>
 					</div>
 				</a>
-			</li>
+			</li> -->
 			<?}?>
 
-			<div class='gnb_bottom text-center hidden'><i class="ri-arrow-down-s-line" style='font-size:20px;vertical-align:top'></i></div>
+			<!-- <div class='gnb_bottom text-center hidden'><i class="ri-arrow-down-s-line" style='font-size:20px;vertical-align:top'></i></div>
 			<div id='gnb_language'>
 				<p class='f_small title'>언어선택</p>
 				<?include_once(G5_THEME_PATH.'/_include/lang.html')?>
-			</div>
+			</div> -->
 			
 			<div class="logout_wrap">
 				<a href="javascript:void(0);" class="logout_pop_open"><i class="ri-logout-box-r-line"></i><span>로그아웃</span></a>

@@ -683,7 +683,7 @@ if ($_GET['recom_referral']){
 			</section>
 
 			<!-- 센터 정보 -->
-			<!-- <p class="check_appear_title mt20"><span >센터정보</span></p>
+			<p class="check_appear_title mt20"><span >센터정보</span></p>
 				<section class='referzone'>
 					<div class="btn_input_wrap">
 						<input type="hidden" name="mb_center_nick" id="reg_mb_center_nick" value=""  required  />
@@ -695,7 +695,7 @@ if ($_GET['recom_referral']){
 						</div>
 					</div>
 				</section>
-				<i style="color:rgba(255,255,255,0.4)">※센터정보 검색후 선택해주세요.</i> -->
+				<i style="color:rgba(255,255,255,0.4)">※센터정보 검색후 선택해주세요.</i>
 				<em class="info_text">※추천회원 검색후 선택해주세요.</em>
 			<!-- <p class="check_appear_title mt40"><span data-i18n='signUp.일반정보'>General Information</span></p> -->
 			<p class="check_appear_title mt30"><span>개인 정보 & 인증</span></p>
@@ -709,7 +709,7 @@ if ($_GET['recom_referral']){
 
 				<input type="email"  id="reg_mb_email" name="mb_email" class='cabinet' required placeholder="이메일 주소" />
 				<span class='cabinet_inner' style=''>※수신가능한 이메일주소를 직접 입력해주세요</span>
-				<div class='in_btn_ly'><input type="button" id='EmailChcek' class='btn_round check' value="이메일 전송"></div>
+				<!-- <div class='in_btn_ly'><input type="button" id='EmailChcek' class='btn_round check' value="이메일 전송"></div> -->
 				
 				<input type="text" name="mb_hp"  id="reg_mb_hp" class='cabinet'  pattern="[0-9]*" required  placeholder="휴대폰번호"/>
 				<span class='cabinet_inner' style=''>※'-'를 제외한 숫자만 입력해주세요</span>
