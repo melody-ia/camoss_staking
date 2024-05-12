@@ -242,7 +242,7 @@ if($mem_self <= 0){
 						<div class="leg-view-container">
 								<?$leg_stack = array();?>
 								<?
-									if($start_id!=$member['mb_id']){
+									if($start_id != $member['mb_id']){
 										$get_list_higher  = "select mb_brecommend from g5_member where mb_id='".$start_id."'";
 										$higher_id = sql_fetch($get_list_higher);
 										array_push($leg_stack, $higher_id['mb_brecommend']);
@@ -262,6 +262,7 @@ if($mem_self <= 0){
 											break;
 										}
 									}
+
 									$reverse_stack  = array_reverse($leg_stack);
 									$cnt = count($reverse_stack) ;
 
@@ -351,10 +352,10 @@ if($mem_self <= 0){
 
 								<?}else{?>
 								<div class="lvl-open" id="<?echo $i ;?>" >
-									<!-- <select class="form-control">
+									<select class="form-control">
 										<option selected value="" data-i18n='binary.회원선택하기'>Select Member</option>
 									</select>
-									<button class="addMem b_skyblue b_radius_5"><span data-i18n='binary.등록하기'>Add member</span></button> -->
+									<button class="addMem b_skyblue b_radius_5"><span data-i18n='binary.등록하기'>Add member</span></button>
 								</div>
 								<?}//else end
 								}//for end?>
@@ -394,10 +395,10 @@ if($mem_self <= 0){
 								}
 								else{?>
 								<div class="lvl-open" id="<?echo $i ;?>" >
-									<!-- <select class="form-control">
+									<select class="form-control">
 										<option selected="" value="" data-i18n='binary.회원선택하기'>Select Member</option>
 									</select>
-									<button class="addMem b_skyblue b_radius_5"><span data-i18n='binary.등록하기'>등록하기</span></button> -->
+									<button class="addMem b_skyblue b_radius_5"><span data-i18n='binary.등록하기'>등록하기</span></button>
 								</div>
 								<?}//else end
 								}//for end?>

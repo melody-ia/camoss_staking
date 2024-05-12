@@ -131,8 +131,8 @@ else
 <div class="local_desc01 local_desc">
     <p>
 		<!-- - <span class='f_green'>MH : </span>보유 마이닝해쉬 (<?=strtoupper($minings[$now_mining_coin])?>)&nbsp&nbsp -->
-        - <span class='f_blue'>PV : </span> 매출금액(PV), 단위 : USDT &nbsp&nbsp
-		- <span class='f_pink'>ACC : </span> 승급 대상포인트 (하부 매출), 단위 : USDT &nbsp&nbsp
+        - <span class='f_blue'>PV : </span> 매출(패키지)금액, 단위 : 원 &nbsp&nbsp
+		- <span class='f_pink'>ACC : </span> 승급 대상포인트 (하부 매출), 단위 : 원 &nbsp&nbsp
 		<!-- - <span style='color:red'>LR </span> 추천/후원 하부 매출&nbsp&nbsp -->
 		<!-- - <span class='f_green'>LR# </span> 추천/후원 하부 해쉬 &nbsp&nbsp -->
 	</p>
@@ -186,8 +186,8 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 				
 				<input type="radio" id="gubun1" name="gubun" style="display:none" onclick="document.sForm2.submit();" value=""<?if ($gubun=="") echo " checked"?>> 
 				<label for="gubun1" class='btn search_btn <?if($_GET['gubun']=='')echo 'active';?>' >추천조직</label>
-				<!-- <input type="radio" id="gubun2" name="gubun" style="display:none" onclick="document.sForm2.submit();" value="B"<?if ($gubun=="B") echo " checked"?>>
-				<label for="gubun2" class='btn search_btn <?if($_GET['gubun']=='B')echo 'active';?>'>후원조직</label> -->
+				<input type="radio" id="gubun2" name="gubun" style="display:none" onclick="document.sForm2.submit();" value="B"<?if ($gubun=="B") echo " checked"?>>
+				<label for="gubun2" class='btn search_btn <?if($_GET['gubun']=='B')echo 'active';?>'>후원조직</label>
 				</td>
 			</tr>
 			
@@ -232,7 +232,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jquery.orgchart.css">
   <link href="<?=G5_ADMIN_URL?>/css/scss/member_org.css" rel="stylesheet">
-  <script type="text/javascript" src="jquery.orgchart3.js"></script>
+  <script type="text/javascript" src="jquery.orgchart.js"></script>
   <script type="text/javascript" src="js/bluebird.min.js"></script>
   <script type="text/javascript" src="js/html2canvas.min.js"></script>
   <script type="text/javascript" src="js/jspdf.min.js"></script>
@@ -279,7 +279,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 		background:#fff;
 		border:2px solid rgb(95, 95, 95);
 		color:#000;
-		height:175px;
+		height:195px;
 		font-weight:normal;
 		line-height:15px;
 		padding-top:5px;
@@ -382,8 +382,8 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 	.box_foot{
 		position: absolute;
 		bottom: 6px;
-		width:136px;
-		height:20px;
+		width:100%;
+		height:30px;
 		display: inline-block;
 		left:0;
 		padding:0 5px;
@@ -395,6 +395,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 	}
 	.orgchart .node .title .box_foot .hash{
 		line-height:14px;
+		min-width:inherit;
 		color:green;
 	}
 	.dec.p_left{

@@ -44,6 +44,7 @@ if ($w=="S"){
 <!--
 	opener.document.sForm2.submit();
 	self.close();
+	opener.parent.location.href = "member_org.php?gubun=B&sfl=&stx=&gubun=B" ;
 //-->
 </script>
 <?php

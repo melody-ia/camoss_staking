@@ -1087,15 +1087,14 @@
         html += '<div class="dec"><span class=f_blue><strong> PV: ' + temp[11] + '</strong></span></div>';
         html += '<div class="dec"><span class=f_pink><strong> ACC: ' + temp[9] + '</strong></span></div>';
 
-        /* if(temp[18] == 'B'){
+        if(temp[18] == 'B'){
           html += '<div class="box_foot">'
           html += '<div class="dec p_left"><span class="red">' + temp[7] + '</span><br><span class="hash">#'+temp[4]+'</span></div>';
           html += '<div class="dec p_right"><span class="red">' + temp[8] + '</span><br><span class="hash">#'+temp[5]+'</span></div>';
           html += '</div>';
         }else{
-          html += '<div class="box_foot"><div class="dec p_full"><span class="red">' + temp[14] + '</span></div>';
           html += '<div class="box_foot"><div class="dec p_full"><span class="red">' + temp[14] + '</span><br><span class="hash f_green">#'+temp[17]+'</span></div>';
-        } */
+        }
         $nodeDiv.append(html).append(typeof opts.nodeContent !== 'undefined' ? '<div class="content">' + (nodeData[opts.nodeContent] || '') + '</div>' : '');
 		 }
       }

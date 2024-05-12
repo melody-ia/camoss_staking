@@ -10,6 +10,12 @@ if ($member['mb_org_num']){
 }
 $org_num     = 8;
 
+if($member['mb_id'] == 'admin'){
+	$start_id = $config['cf_admin'];
+}else{
+	$start_id = $member['mb_id'];
+}
+
 
 if ($gubun=="B"){
 	$class_name     = "g5_member_bclass";
@@ -51,9 +57,8 @@ $sql = "SELECT c.c_id,c.c_class,(
 	,(SELECT mb_child FROM g5_member WHERE mb_id=c.c_id) AS mb_children
 	FROM g5_member m
 	JOIN ".$class_name." c ON m.mb_id=c.mb_id
-	WHERE c.mb_id='{$member['mb_id']}' AND c.c_id='$go_id'
+	WHERE c.mb_id='{$start_id}' AND c.c_id='$go_id'
 ";
-
 $srow = sql_fetch($sql);
 $my_depth = strlen($srow['c_class']);
 
