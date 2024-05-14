@@ -122,7 +122,7 @@ if($_POST['nw_data_test'] == 'on'){
         $orderid = date("YmdHis",time()).mt_rand(0000,9999);
         $member_id = 'test'.($i);
         $logic = purchase_package($member_id,2023040403,1);
-        $insert_order_sql_arry .= " ({$orderid}, '{$member_id}', 0, 1000, 1000, 1000, 'P3', 2023040403, 6, '{$today}', '{$todate}', 'usdt', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '{$today}', 0, 0, NULL, NULL, '패키지구매', '0000-00-00', 0, 0, '', '', 0, '', 0, 0, 0, 0, '0', '', '0000-00-00 00:00:00', NULL, NULL, '', '',curdate()),";
+        $insert_order_sql_arry .= " ({$orderid}, '{$member_id}', 0, 1000, 1000, 1000, 'P3', 2023040403, 6, '{$today}', '{$todate}', '원', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '{$today}', 0, 0, NULL, NULL, '패키지구매', '0000-00-00', 0, 0, '', '', 0, '', 0, 0, 0, 0, '0', '', '0000-00-00 00:00:00', NULL, NULL, '', '',curdate()),";
         sql_query("update g5_member set mb_index = 3000 where mb_id = '{$member_id}'");
     }
 

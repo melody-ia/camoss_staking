@@ -145,14 +145,14 @@ $title = 'Dashboard';
 					<ul class="row top">
 						<li class="col-4">
 							<dt class="title" >총 누적 보너스</dt>
-							<dd class="value" style='font-size:15px;'><?=shift_auto($total_bonus,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
+							<dd class="value" style='font-size:15px;'><?=shift_auto($member['mb_balance'],$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<li class="col-4">
 							<dt class="title" >구매 가능액</dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<li class="col-4">
-							<dt class="title" >출금 가능액 </dt>
+							<dt class="title" >출금/재구매 가능액 </dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<!-- <li class="col-4">
@@ -177,9 +177,10 @@ $title = 'Dashboard';
 						</li>
 
 						<li class="col-4">
-							<dt class="title" >나의구매등급</dt>
-							<dd class="value"><?=$member['rank_note']?><?=rank_name($member['rank_note'])?></dd>
-							<dd class="value" style='font-size:11px;font-weight:300;line-height:11px;'>(<?=shift_auto($rank_note_price['it_price'], $curencys[0])?> <?=$curencys[0]?>)</dd>
+							<dt class="title" >구매등급(PV)</dt>
+							<!-- <dd class="value"><?=$member['rank_note']?><?=rank_name($member['rank_note'])?></dd> -->
+							<!-- <dd class="value" style='font-size:11px;font-weight:300;line-height:11px;'>(<?=shift_auto($rank_note_price['it_price'], $curencys[0])?> <?=$curencys[0]?>)</dd> -->
+							<dd class="value" ><?=shift_auto($member['pv'], $curencys[0])?> <?=$curencys[0]?></dd>
 						</li>
 
 						<!-- <li class="col-4">
@@ -199,7 +200,7 @@ $title = 'Dashboard';
 							<dd class="value">
 								<div class='bonus_state_bg' data-per='<?=$bonus_per?>'>
 									<div class='bonus_state_bar' id='total_B_bar'>
-										<p><?=$boner_per_tx?></p>
+										<p><?=($boner_per_tx/$limited)*100?></p>
 									</div>
 								</div>
 								

@@ -51,7 +51,7 @@ if ($mrow['cnt']>$row['cc_usr'] || !$row['cc_no'] || $_GET["reset"]){
 
 	make_habu('');
 
-	$sql = "delete from g5_member_class where mb_id='".$tree_id."'";
+	$sql = "delete from g5_member_class ";
 	sql_query($sql);
 
 	get_recommend_down($tree_id,$tree_id,'11');
@@ -76,7 +76,7 @@ $row = sql_fetch($sql);
 if ($mrow['cnt']>$row['cc_usr'] || !$row['cc_no'] || $_GET["reset"]){
 	
 	make_habu('B');
-	$sql = "delete from g5_member_bclass where mb_id='".$tree_id."'";
+	$sql = "delete from g5_member_bclass" ;
 	sql_query($sql);
 
 	get_brecommend_down($tree_id,$tree_id,'11');

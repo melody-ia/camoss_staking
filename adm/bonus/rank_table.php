@@ -26,6 +26,11 @@ if($_GET['promote'] > -1){
     $promote = $_GET['promote'];
 }
 
+//패키지 정보
+$sql = "select it_name,it_id,it_option_subject from g5_item order by it_id asc";
+$item_list = sql_query($sql);
+$item_list_cnt = sql_num_rows($item_list);
+
 
 //주문번호
 function order_number($val){
@@ -225,13 +230,14 @@ function select_change(f){
         <div class="selectbox inline">
             <label for='select_rlevel'>패키지 CLASS 선택 : </label>
             <select id='select_rlevel' onchange="select_change(this);">
-                <option value='p1' <?=onselect('p1')?> >제주도</option>
-                <option value='p2' <?=onselect('p2')?> >동남아</option>
-                <option value='p3' <?=onselect('p3')?> >유럽</option>
-                <option value='p4' <?=onselect('p4')?> >아프리카</option>
-                <option value='p5' <?=onselect('p5')?> >알레스카(크루즈)</option>
-                <!-- <option value='p6' <?=onselect('p6')?> >p6</option>
-                <option value='p7' <?=onselect('p7')?> >p7</option> -->
+                <?
+                
+                for($i=0; $i < $item_list_cnt ;$i++){
+                    $item = "p".$i; 
+                    $item_list_result = sql_fetch_array($item_list);
+                    ?>
+                    <option value='<?=$item?>' <?=onselect($item)?> ><?=$item_list_result['it_option_subject']?></option>";
+                <?}?>  
             </select>
         </div>
 
@@ -239,7 +245,7 @@ function select_change(f){
             <label for='select_nth'>회원 보유 수량별 선택 : </label>
             <select id='select_nth' onchange="select_change(this);" style='width:80px;'>
                 <option value='ALL' <?=on_nth('ALL')?> >ALL</option>
-                <?for($i=1; $i < $cate_cnt; $i++){?>
+                <?for($i=1; $i < $cate_cnt; $i++){ ?>
                     <option value='<?=$i?>' <?=on_nth('n'.$i)?> ><?=$i?></option>
                 <?}?>
             </select>

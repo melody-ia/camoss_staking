@@ -360,11 +360,11 @@ $result = sql_query($sql);
     <tfoot>
     <tr>
         <td>합계</td>
-        <td colspan="3"></td>
+        <td colspan="4"></td>
         <td class="text-right"><?=shift_auto($total_amt)?></td>
         <td></td>
         <td class="text-right"><?=shift_auto($total_inamt,2)?></td>
-        <td colspan="5"></td>
+        <td colspan="6"></td>
     </tr>
     </tfoot>
     </tbody>

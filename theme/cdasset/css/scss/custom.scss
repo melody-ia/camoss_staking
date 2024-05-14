@@ -597,6 +597,19 @@ a.btn_cancle,
     background: #6214ab !important;
 }
 
+.color8,
+.r_card_8 {
+    background: #5edc79 !important;
+}
+
+
+.color9,
+.r_card_9 {
+    background: #dcc55e !important;
+}
+
+
+
 
 .pack_f_0 {
     color: #555 !important;
@@ -4209,6 +4222,16 @@ a.btn_cancle,
         background: linear-gradient(135deg, $r-card7, $r-card7-1) !important;
     }
 
+    .r_card.r_card_8,
+    .pack_8 {
+        background: linear-gradient(135deg, $r-card8, $r-card8-1) !important;
+    }
+
+    .r_card.r_card_9,
+    .pack_9 {
+        background: linear-gradient(135deg, $r-card9, $r-card9-1) !important;
+    }
+
     .color0 {
         background: $r-card0 !important;
     }
@@ -4239,6 +4262,12 @@ a.btn_cancle,
 
     .color7 {
         background: $r-card7 !important;
+    }
+    .color8 {
+        background: $r-card8 !important;
+    }
+    .color9 {
+        background: $r-card9 !important;
     }
 
     .color10 {
@@ -4458,6 +4487,9 @@ a.btn_cancle,
 .bonus_state_bar p{
     margin-right: 5px;
     color: white;
+    font-weight:600;
+    font-size:13px;
+    font-family: Montserrat,
 }
 
 

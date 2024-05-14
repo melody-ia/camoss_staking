@@ -16,7 +16,7 @@ $coin = get_coins_price();
 
 $withdrawal_price = shift_coin($coin['usdt_krw'],KRW_NUMBER_POINT);
 $withdrawal_price_sell = shift_coin($default['de_token_sell_price'],KRW_NUMBER_POINT);
-echo $withdrawal_price_sell;
+// echo $withdrawal_price_sell;
 $shift_auto_withdrawal_price = shift_auto($coin['usdt_krw'], 'krw');
 $shift_auto_withdrawal_price_sell = shift_auto($default['de_token_sell_price'],'krw');
 

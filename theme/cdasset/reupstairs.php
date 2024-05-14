@@ -16,6 +16,7 @@ if ($nw['nw_purchase'] == 'Y') {
 
 $goods_price = wallet_config("re_upstairs")['amt_minimum'];
 
+
 $title = 'reupstairs';
 
 // $pack_sql = "SELECT it_id, it_name,it_price,it_point,it_supply_point,it_use,it_option_subject, ca_id,ca_id3, it_maker FROM g5_shop_item WHERE it_use > 0 order by it_order asc ";
@@ -112,19 +113,19 @@ $result = sql_query($sql);
 					<div class='row' style="align-items: center;">
 						<div class='col-5 current_currency coin'>재구매 금액 </div>
 						
-						<div class='col-1 shift_usd flex-basis-min'>
-							<i class="ri-add-circle-line exchange" id="plus"></i>
+						<div class='col-2 shift_usd' style="margin:0;display:inline-flex">
 							<i class="ri-indeterminate-circle-line exchange" id="minus"></i>
+							<i class="ri-add-circle-line exchange" id="plus"></i>
 						</div>
 
-						<div class='col-6'>
-							<input type="text" id="trade_total" class="trade_money input_price" placeholder="0" min=5 readonly>
+						<div class='col-5'>
+							<input type="text" id="trade_total" style="padding-bottom:3px;margin:0;" class="trade_money input_price" placeholder="0" min=5 readonly>
 							<!-- <span class='currency-right coin'><?= BALANCE_CURENCY ?></span> -->
 							<div id='shift_won'></div>
 						</div>
 					</div>
 
-					<div class='row select_box' id='usd' style='margin-top:10px'>
+					<div class='row select_box' id='usd' style='margin-top:30px'>
 						<div class='col-12'>
 							<h3 class='tit'> 구매가능잔고</h3>
 						</div>
@@ -142,7 +143,7 @@ $result = sql_query($sql);
 						</div>
 
 						<div class='col-6'>
-							<input type="text" id='shift_dollor' class='input_price red' readOnly>
+							<input type="text" id='shift_dollor' class='input_price red' style='text-align:right' readOnly>
 							<span class="currency-right coin "><?= $curencys[0] ?></span>
 						</div>
 					</div>
@@ -238,7 +239,6 @@ $result = sql_query($sql);
 
 			$('#trade_total').val(Price(goods_price));
 			$('#shift_dollor').val(Price(left_total_withdraw));
-
 		})
 
 		// 재구매 -
@@ -253,8 +253,8 @@ $result = sql_query($sql);
 
 			$('#trade_total').val(Price(goods_price));
 			$('#shift_dollor').val(Price(left_total_withdraw));
-
 		})
+
 		
 		// 패키지구매
 		$('#purchase').on('click', function() {

@@ -346,7 +346,7 @@ $rank_result = sql_fetch($rank_sql);
 		<p>
 			<!-- - 센터지정시 체크시 센터명 등록 : 회원레벨 자동변경 (체크해제시 회원레벨은 수동)<br> -->
 			- 별도관리지정은 <strong>보너스 출금요청이 불가</strong>하며 아이디가 <strong>구분표시(아이디 붉은색 처리)</strong> 처리되며 회원차단은 로그인불가 처리됩니다. (각 해제시 입력된 날짜제거후 저장)
-			- 패키지 업그레이드는 업그레이드 선택후 해당 패키지 클릭시 +1단계 업그레이드 처리
+			<!--  패키지 업그레이드는 업그레이드 선택후 해당 패키지 클릭시 +1단계 업그레이드 처리 -->
 		</p>
 	</div>
 
@@ -664,14 +664,16 @@ $rank_result = sql_fetch($rank_sql);
 			.pack_have {
 				font-size: 16px;
 				font-weight: 600;
-				padding: 5px;
+				padding:1px  5px;
 				color: red
 			}
 		</style>
 		
 		<td colspan="3">
 		<div style="display: flex; margin-left: 200px; padding: 2px 0px;">
+		<!-- 
 			<div style="display: flex;width: auto;justify-content: space-between;">
+			
 				<span style="width:80px;">
 					<input type="radio" id="purchase" name="purchase_upgrade" value="purchase" checked/>
 					<label for="purchase">신규구매</label>
@@ -682,6 +684,7 @@ $rank_result = sql_fetch($rank_sql);
 					<label for="upgrade">패키지 업그레이드</label>
 				</span>
 			</div>
+		-->
 		</div>
 			최고보유 패키지 :
 			<!-- <span class='badge t_white color<?= max_item_level_array($mb['mb_id'], 'number') ?>' style='padding:15px;'><?= max_item_level_array($mb['mb_id']) ?></span> -->
@@ -779,7 +782,7 @@ $rank_result = sql_fetch($rank_sql);
 						return false;
 					} */
 
-					if (confirm("해당 회원에게 " + item.it_name + " 패키지를 지급하시겠습니까?\n회원 잔고에서 " + Price(item.it_cust_price) + " <?= $curencys[0] ?> (이)가 차감됩니다.")) {} else {
+					if (confirm("해당 회원에게 " + item.it_name + " 패키지를 지급하시겠습니까?\n회원 잔고에서 " + Comma_Number(item.it_cust_price) + " <?= $curencys[0] ?> (이)가 차감됩니다.")) {} else {
 						return false;
 					}
 

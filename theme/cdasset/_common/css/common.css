@@ -884,7 +884,7 @@ button.caret:hover {
 }
 input[type="text"] + .currency-right {
   position: absolute;
-  margin-top: 12px;
+  margin-top: 16px;
   color: #666;
   font-size: 14px;
   font-weight: bold;
@@ -2936,7 +2936,7 @@ input:checked + .slider:before {
 #shift_dollor {
   font-size: 16px;
   font-weight: 600;
-  padding-right: 25px;
+  padding-right: 28px;
   text-align: left;
 }
 

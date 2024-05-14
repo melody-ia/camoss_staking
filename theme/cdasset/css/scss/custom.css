@@ -1,4 +1,11 @@
 @charset "UTF-8";
+/* 
+$r-card7:  #658b27 ;
+$r-card7-1: #658b27 ;
+$r-card8:  #c04819 ;
+$r-card8-1: #c04819 ;
+$r-card9:  #bda253 ;
+$r-card9-1: #cfa21c ; */
 h1,
 h2,
 h3,
@@ -442,6 +449,16 @@ a.btn_cancle,
 .color7,
 .r_card_7 {
   background: #6214ab !important;
+}
+
+.color8,
+.r_card_8 {
+  background: #5edc79 !important;
+}
+
+.color9,
+.r_card_9 {
+  background: #dcc55e !important;
 }
 
 .pack_f_0 {
@@ -3045,7 +3062,7 @@ a.btn_cancle,
 }
 .dark .r_card.r_card_5,
 .dark .pack_5 {
-  background: linear-gradient(135deg, #586875, #3b4652) !important;
+  background: linear-gradient(135deg, #585d75, #3b4652) !important;
 }
 .dark .r_card.r_card_6,
 .dark .pack_6 {
@@ -3053,7 +3070,15 @@ a.btn_cancle,
 }
 .dark .r_card.r_card_7,
 .dark .pack_7 {
-  background: linear-gradient(135deg, #bda253, #cfa21c) !important;
+  background: linear-gradient(135deg, #9d4ecb, #8033ac) !important;
+}
+.dark .r_card.r_card_8,
+.dark .pack_8 {
+  background: linear-gradient(135deg, #4ecb5f, #38b649) !important;
+}
+.dark .r_card.r_card_9,
+.dark .pack_9 {
+  background: linear-gradient(135deg, #cbae4e, #b49738) !important;
 }
 .dark .color0 {
   background: #736ad0 !important;
@@ -3071,16 +3096,22 @@ a.btn_cancle,
   background: #227f9c !important;
 }
 .dark .color5 {
-  background: #586875 !important;
+  background: #585d75 !important;
 }
 .dark .color6 {
   background: #7e524b !important;
 }
 .dark .color7 {
-  background: #bda253 !important;
+  background: #9d4ecb !important;
+}
+.dark .color8 {
+  background: #4ecb5f !important;
+}
+.dark .color9 {
+  background: #cbae4e !important;
 }
 .dark .color10 {
-  background: #bda253 !important;
+  background: #9d4ecb !important;
 }
 .dark .pack_f_1 {
   color: #736ad0 !important;
@@ -3095,13 +3126,13 @@ a.btn_cancle,
   color: #227f9c !important;
 }
 .dark .pack_f_5 {
-  color: #586875 !important;
+  color: #585d75 !important;
 }
 .dark .pack_f_6 {
   color: #7e524b !important;
 }
 .dark .pack_f_7 {
-  color: #bda253 !important;
+  color: #9d4ecb !important;
 }
 .dark .pop_wrap {
   background: #212429;
@@ -3228,4 +3259,7 @@ a.btn_cancle,
 .bonus_state_bar p {
   margin-right: 5px;
   color: white;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: Montserrat;
 }
