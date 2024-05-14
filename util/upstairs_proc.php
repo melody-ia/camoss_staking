@@ -6,7 +6,7 @@ include_once(G5_PATH.'/util/purchase_proc.php');
 // $debug = 1;
 $now_datetime = date('Y-m-d H:i:s');
 $now_date = date('Y-m-d');
-$soodang_date = date('Y-m-d', strtotime("+3 day"));
+$soodang_date = date('Y-m-d', strtotime("+0 day"));
 
 $mb_id = $member['mb_id'];
 $mb_no = $member['mb_no'];
@@ -72,11 +72,10 @@ if($debug){
 	echo $sql."<br><br>";
 }else{
 
-	$member_bucks_check_sql = "select sum(mb_deposit_point+mb_deposit_calc) as deposit , sum(mb_balance-mb_shift_amt) as balance from g5_member where mb_id = '{$mb_id}'";
+	$member_bucks_check_sql = "select sum(mb_deposit_point+mb_deposit_calc) as deposit from g5_member where mb_id = '{$mb_id}'";
 	$member_bucks_check_row = sql_fetch($member_bucks_check_sql);
 
 	$deposit = floor($member_bucks_check_row['deposit']);
-	$balance = floor($member_bucks_check_row['balance']);
 
 	if($deposit < $it_point){
 		echo json_encode(array("result" => "failed",  "code" => "0001", "sql" => "잔고가 부족합니다."));
@@ -99,17 +98,7 @@ if($func == "new"){
 
 if($rst && $logic){
 
-	$update_mb_bucks = "";
-	if($deposit > 0){
-		$bucks_calc = $deposit - $it_point;
-		if($bucks_calc < 0){
-			$update_mb_bucks .= ",mb_fee = mb_fee + abs({$bucks_calc})";
-		}
-	}else{
-		$update_mb_bucks .= ",mb_fee = mb_fee + {$it_point}";
-	}
-
-	$update_point = " UPDATE g5_member set $target = ($target - $input_val){$update_mb_bucks} ";
+	$update_point = " UPDATE g5_member set pv = pv + {$input_val}, $target = ($target - $input_val)";
 
 	if($member['mb_level'] == 0){
 		$update_point .= ", mb_level = 1 " ;
@@ -133,7 +122,7 @@ if($rst && $logic){
 	$update_point .= ", mb_rate = ( mb_rate + {$pv}) ";
 	$update_point .= ", mb_save_point = ( mb_save_point + {$it_point}) ";
 	$update_point .= ", mb_index = ( mb_index + {$max_limit_point}) ";
-	$update_point .= ", rank = '{$update_rank}', rank_note = '{$pack_name}', sales_day = '{$now_datetime}' ";
+	$update_point .= ", rank = '{$update_rank}', rank_note = '{$pack_maker}', sales_day = '{$now_datetime}' ";
 	$update_point .= " where mb_id ='".$mb_id."'";
 
 	if($debug){

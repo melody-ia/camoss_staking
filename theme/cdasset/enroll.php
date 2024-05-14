@@ -595,6 +595,13 @@ if ($_GET['recom_referral']){
 			return false;
 		}
 
+		// 이메일 
+		if (f.mb_email.value == '' || f.mb_email.value == 'undefined') {
+			commonModal('이메일주소확인', '<strong>이메일 주소가 잘못되거나 누락되었습니다. </strong>', 80);
+			return false;
+		}
+
+	
 		// 연락처
 		if (f.mb_hp.value == '' || f.mb_hp.value == 'undefined') {
 			commonModal('휴대폰번호확인', '<strong>휴대폰 번호가 잘못되거나 누락되었습니다. </strong>', 80);
@@ -622,30 +629,30 @@ if ($_GET['recom_referral']){
 		}
 
 		// 메일인증 체크
-		$.ajax({
-			type: "POST",
-			url: "/mail/check_mail_for_register.php",
-			cache: false,
-			async: false,
-			dataType: "json",
-			data: {
-				user_email: $('#reg_mb_email').val()
-			},
-			success: function(res) {
-				if (res.result == "OK") {
-					mail_check = 1;
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: "/mail/check_mail_for_register.php",
+		// 	cache: false,
+		// 	async: false,
+		// 	dataType: "json",
+		// 	data: {
+		// 		user_email: $('#reg_mb_email').val()
+		// 	},
+		// 	success: function(res) {
+		// 		if (res.result == "OK") {
+		// 			mail_check = 1;
 					f.submit();
-				} else {
-					mail_check = 0;
-					dialogModal("Email Auth", res.res, 'failed');
+		// 		} else {
+		// 			mail_check = 0;
+		// 			dialogModal("Email Auth", res.res, 'failed');
 
-				}
+		// 		}
 
-			},
-			error: function(e) {
-				console.log(e)
-			}
-		});
+		// 	},
+		// 	error: function(e) {
+		// 		console.log(e)
+		// 	}
+		// });
 	}
 </script>
 
@@ -820,6 +827,13 @@ if ($_GET['recom_referral']){
 		$(".top_title h3").html("<span style='font-size:16px;margin-left:20px'>신규 회원등록</span>");
 
 		$("#reg_mb_email").on("click", function() {
+			if(check_id != 1){
+				dialogModal('ID 중복확인', '<strong>아이디 중복확인을 해주세요. </strong>', 'warning');
+				return false;
+			}
+		});
+
+		$("#reg_mb_hp").on("click", function() {
 			if(check_id != 1){
 				dialogModal('ID 중복확인', '<strong>아이디 중복확인을 해주세요. </strong>', 'warning');
 				return false;

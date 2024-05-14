@@ -187,8 +187,8 @@ $title = 'Dashboard';
 							<dd class="value"><?=Number_format($member['recom_sales'])?> </dd>
 						</li> -->
 						<li class="col-4">
-							<dt class="title">쇼핑몰포인트</dt>
-							<dd class="value"><?=shift_auto($shop_balance,$curencys[0])?><span class='currency'>usdp</span></dd>
+							<dt class="title">재구매 가능액</dt>
+							<dd class="value"><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 
 					</ul>

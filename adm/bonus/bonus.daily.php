@@ -7,11 +7,7 @@ include_once('./bonus_inc.php');
 auth_check($auth[$sub_menu], 'r');
 
 // 데일리수당
-$debug = FALSE;
-$bonus_row = bonus_pick($code);
-
-$bonus_rate = explode(",",$bonus_row['layer']);
-$daily_bonus_rate = $bonus_row['rate'];
+$debug = true;
 
 $reset_daily_benefit_sql = "update g5_member set mb_my_sales = 0";
 if($debug){
@@ -39,8 +35,10 @@ if($debug){
 	echo "</code><br>";
 }
 
+$goods_sql = "select group_concat(it_name,'->',it_supply_point,'% ') as rate from g5_item where it_name <> 'P0' order by it_order asc";
+$goods_row = sql_fetch($goods_sql);
 // 설정로그 
-echo "<strong>".strtoupper($code)." 지급비율 : ". $daily_bonus_rate."%   </strong> | 지급한계 : ".$bonus_row['limited']."% <br>";
+echo "<strong>".strtoupper($code)." 지급비율 : ". $goods_row['rate']."   </strong> | 지급한계 : ".$bonus_row['limited']."% <br>";
 echo "<strong>".$bonus_day."</strong><br><br>";
 echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
 
@@ -55,8 +53,8 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
 
 if(!$get_today){
 
-	$unit = "usdt";
-	$shop_unit = "usdp";
+	$unit = "원";
+	$shop_unit = "원";
 
 	$member_start_sql = "update g5_member set ";
 	$member_balance_column_sql = "";
@@ -75,7 +73,8 @@ if(!$get_today){
 		$mb_balance = $order_list_row['mb_balance'];
 		$mb_balance_ignore = $order_list_row['mb_balance_ignore'];
 		$mb_index = $order_list_row['mb_index'];
-		$benefit = $goods_price *(0.01 * $daily_bonus_rate);
+		// $benefit = $goods_price *(0.01 * $daily_bonus_rate);
+		$benefit = $goods_price *(0.01 * $order_list_row['pv']);
 		
 		$total_benefit = ($mb_balance - $mb_balance_ignore) + $benefit + $total_paid_list[$order_list_row['mb_id']]['total_benefit'];
 		

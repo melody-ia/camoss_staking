@@ -23,7 +23,7 @@ if (empty($to_date)) {$to_date =  date("Y-m-d", strtotime(date("Y-m-d")));}
 
 // 회원 자산, 보너스 정보
 $total_deposit = $member['mb_deposit_point'] + $member['mb_deposit_calc'];
-$total_bonus = $member['mb_balance']; 
+$total_bonus = $member['mb_balance'] + $member['mb_balance_calc']; 
 $total_shift_amt = $member['mb_shift_amt'];
 
 $total_fund = ($member['mb_balance'] + $member['mb_shop_point']);
@@ -31,7 +31,7 @@ $total_fund = ($member['mb_balance'] + $member['mb_shop_point']);
 // $shop_point = $total_bonus*0.1;
 
 // 출금가능금액 :: 총보너스 - 기출금
-$total_withraw = $total_bonus - $total_shift_amt - $member['mb_fee'];
+$total_withraw = $total_bonus - $total_shift_amt;
 $shop_balance = $member['mb_shop_point'] - $member['mb_shop_calc'];
 // 구매가능잔고 :: 입금액 - 구매금액 = 남은금액
 $available_fund = $total_deposit;
@@ -483,32 +483,46 @@ function shift_auto($val,$type = 'eth'){
 
 function get_coins_price(){
 
-	global $default;
-
 	$result = array();
-	$url_list = array(
-		'https://api.upbit.com/v1/ticker?markets=KRW-ETH&markets=KRW-ETC&markets=USDT-ETH&markets=USDT-ETC',
-		"https://pro-api.coinmarketcap.com/v1/tools/price-conversion?CMC_PRO_API_KEY=9a0e9663-df7f-431b-9561-d46935376d5b&amount=1&symbol=eth",
-		"https://api.bitforex.com/api/v1/market/ticker?symbol=coin-usdt-hja"
-		);
-
-	$data = multi_curl($url_list);
-	
-	$eth_krw = $data[0][0]['trade_price'];
-	$etc_krw = $data[0][1]['trade_price'];
-	$usdt_eth = $data[0][2]['trade_price'];
-	$usdt_etc = $data[0][3]['trade_price'];
-
-	$result['usdt_krw'] = $default['de_coin_auto'] ? $eth_krw / $usdt_eth : $default['de_token_price'];
-	$result['usdt_eth'] = $usdt_eth;
-	$result['usdt_etc'] = $usdt_etc;
-	$result['eth_krw'] = $eth_krw;
-	$result['etc_krw'] = $etc_krw;
-	$result['eth_usdt'] = $data[1]['data']['quote']['USD']['price'];
-	$result['hja'] = $data[2]['data']['last'];
+	$result['usdt_krw'] = 1;
+	$result['usdt_eth'] = 1;
+	$result['usdt_etc'] = 1;
+	$result['eth_krw'] = 1;
+	$result['etc_krw'] = 1;
+	$result['eth_usdt'] = 1;
+	$result['hja'] = 1;
 
 	return $result;
 }
+
+// function get_coins_price(){
+
+// 	global $default;
+
+// 	$result = array();
+// 	$url_list = array(
+// 		'https://api.upbit.com/v1/ticker?markets=KRW-ETH&markets=KRW-ETC&markets=USDT-ETH&markets=USDT-ETC',
+// 		"https://pro-api.coinmarketcap.com/v1/tools/price-conversion?CMC_PRO_API_KEY=9a0e9663-df7f-431b-9561-d46935376d5b&amount=1&symbol=eth",
+// 		"https://api.bitforex.com/api/v1/market/ticker?symbol=coin-usdt-hja"
+// 		);
+
+// 	$data = multi_curl($url_list);
+	
+// 	$eth_krw = $data[0][0]['trade_price'];
+// 	$etc_krw = $data[0][1]['trade_price'];
+// 	$usdt_eth = $data[0][2]['trade_price'];
+// 	$usdt_etc = $data[0][3]['trade_price'];
+
+// 	$result['usdt_krw'] = $default['de_coin_auto'] ? $eth_krw / $usdt_eth : $default['de_token_price'];
+// 	$result['usdt_eth'] = $usdt_eth;
+// 	$result['usdt_etc'] = $usdt_etc;
+// 	$result['eth_krw'] = $eth_krw;
+// 	$result['etc_krw'] = $etc_krw;
+// 	$result['eth_usdt'] = $data[1]['data']['quote']['USD']['price'];
+// 	$result['hja'] = $data[2]['data']['last'];
+
+// 	return $result;
+// }
 
 function multi_curl($url){
 	$ch = array();

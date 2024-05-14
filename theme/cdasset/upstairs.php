@@ -23,7 +23,7 @@ $qstr = "stx=" . $stx . "&fr_date=" . $fr_date . "&amp;to_date=" . $to_date;
 $query_string = $qstr ? '?' . $qstr : '';
 
 $sql_common = "FROM g5_order";
-$sql_search = " WHERE mb_id = '{$member['mb_id']}' ";
+$sql_search = " WHERE mb_id = '{$member['mb_id']}' and od_cash_no like 'P%' ";
 // $sql_search .= " AND od_date between '{$fr_date}' and '{$to_date}' ";
 
 $sql = " select count(*) as cnt

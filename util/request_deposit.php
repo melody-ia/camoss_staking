@@ -84,7 +84,7 @@ if($pre_result['cnt'] < $limit_cnt){
   }
 
   // 입금알림 텔레그램 API
-  $msg = '[RED Banana][입금요청] '.$mb_id.'('.$mb_name.') 님의 '.shift_auto($d_price, $curencys[0]).' '.$curencys[0].' 입금요청이 있습니다.';
+  $msg = '['.CONFIG_TITLE.'][입금요청] '.$mb_id.'('.$mb_name.') 님의 '.shift_auto($d_price, $curencys[0]).' '.$curencys[0].' 입금요청이 있습니다.';
 
   if(TELEGRAM_ALERT_USE){  
     curl_tele_sent($msg);

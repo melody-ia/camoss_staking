@@ -31,7 +31,7 @@ if ($up_pack_info['cnt'] <= 0) {
 
 // 3. 회원 잔고 확인
 $mb_info = sql_fetch("SELECT mb_deposit_point + mb_deposit_calc AS sum_deposit, 
-mb_balance - mb_shift_amt - mb_fee AS sum_soodang, 
+mb_balance - mb_shift_amt - mb_balance_calc AS sum_soodang, 
 mb_balance + mb_deposit_point + mb_deposit_calc - mb_shift_amt AS balance 
 FROM {$g5['member_table']} 
 WHERE mb_id = '{$mb_id}'");
@@ -81,7 +81,7 @@ $calc_point = $package_price - floor($mb_info['sum_deposit']);
 
 // 4-1. deposit_point 잔고로 구매 가능할 때
 if (floor($mb_info['sum_deposit']) > 0 && floor($mb_info['sum_deposit']) >= $package_price) {
-	$update_point = " UPDATE g5_member SET mb_deposit_calc = (mb_deposit_calc - {$package_price}) ";	
+	$update_point = " UPDATE g5_member SET pv = (pv + {$package_price}), mb_deposit_calc = (mb_deposit_calc - {$package_price}) ";	
 } 
 
 // 해당 패키지로 받을 수 있는 수당 한도()

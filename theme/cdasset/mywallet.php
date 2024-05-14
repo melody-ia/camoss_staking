@@ -16,6 +16,7 @@ $coin = get_coins_price();
 
 $withdrawal_price = shift_coin($coin['usdt_krw'],KRW_NUMBER_POINT);
 $withdrawal_price_sell = shift_coin($default['de_token_sell_price'],KRW_NUMBER_POINT);
+echo $withdrawal_price_sell;
 $shift_auto_withdrawal_price = shift_auto($coin['usdt_krw'], 'krw');
 $shift_auto_withdrawal_price_sell = shift_auto($default['de_token_sell_price'],'krw');
 
@@ -943,7 +944,7 @@ function curency_txt($value, $kind = 'deposit')
         swap_fee_val = real_fee_val;
       } */
       
-      if (curency_tmp == '원' && curency_tmp != usdt_curency) {
+      if (curency_tmp == '원' && curency_tmp == usdt_curency) {
         shift_coin_value = 0;
         swap_coin_price = (real_withdraw_val * <?= $withdrawal_price_sell ?>);
         swap_fee_val = (real_fee_val * <?= $withdrawal_price_sell ?>);
@@ -1200,7 +1201,7 @@ function curency_txt($value, $kind = 'deposit')
         return false;
       }
 
-    process_pin_mobile().then(function (){
+    // process_pin_mobile().then(function (){
 
       $.ajax({
         type: "POST",
@@ -1233,7 +1234,7 @@ function curency_txt($value, $kind = 'deposit')
         }
       });
 
-    });
+    // });
 
       /* if (!mb_block) {
       } else {
@@ -1453,7 +1454,7 @@ function curency_txt($value, $kind = 'deposit')
 
       // 입금액 fixed_amt d_price
       if (in_min_limit > 0 && Number(d_price) < Number(in_min_limit)) {
-        dialogModal('<p>최소 입금액 확인</p>', '<p>최소 입금 확인 금액은 ' + Price(Number(in_min_limit)) + ' 원 ('+ '<?= $deposit_min_limit ?>' + ' USDT) 입니다. </p>', 'warning');
+        dialogModal('<p>최소 입금액 확인</p>', '<p>최소 입금 확인 금액은 ' + Price(Number(in_min_limit)) + ' 원 입니다. </p>', 'warning');
         return false;
       }
 
@@ -1484,8 +1485,6 @@ function curency_txt($value, $kind = 'deposit')
         }
       });
     });
-  ///////////
-
   });
 </script>
 

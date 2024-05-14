@@ -17,7 +17,7 @@ if ($_GET['sst'] == "total_fund") {
 }
 
 if ($_GET['sst'] == "shift_amt") {
-	$sub_sql = " , (mb_shift_amt - mb_fee) as shift_amt";
+	$sub_sql = " , (mb_shift_amt) as shift_amt";
 }
 
 if ($_GET['sst'] == "deposit_point") {
@@ -782,7 +782,7 @@ while ($l_row = sql_fetch_array($get_lc)) {
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($total_fund) ?></td>
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($row['mb_deposit_point']) ?></td>
 						<td headers="mb_list_auth" class="td_mbstat" style='color:red' rowspan="2"><?= Number_format($row['mb_deposit_calc']) ?></td>
-						<td headers="mb_list_auth" class="td_mbstat" style='color:red' rowspan="2"><?= Number_format($row['mb_shift_amt']-$row['mb_fee']) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" style='color:red' rowspan="2"><?= Number_format($row['mb_shift_amt']) ?></td>
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($total_bonus) ?></td>
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($row['mb_save_point']) ?></td>
 						<!-- <td headers="mb_list_auth" class="td_mbstat" rowspan="2" style="min-width:50px;width:50px;"><?= Number_format($row['mb_rate']) ?></td>

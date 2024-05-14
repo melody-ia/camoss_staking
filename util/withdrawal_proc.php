@@ -108,7 +108,7 @@ if( $max_limit != 0 && $total_amt > $withdrwal_total ) {
 }
 
 // 출금잔고 재확인 
-$fund_check_sql = "SELECT sum(mb_balance - mb_shift_amt - mb_fee) as total from g5_member WHERE mb_id = '{$mb_id}' ";
+$fund_check_sql = "SELECT sum(mb_balance - mb_shift_amt - mb_balance_calc) as total from g5_member WHERE mb_id = '{$mb_id}' ";
 $fund_check_val = sql_fetch($fund_check_sql)['total'];
 
 
@@ -151,7 +151,6 @@ if($fund_check_val < $total_amt){
 
 
 $amt_total = $fixed_amt+$fixed_fee;
-
 if($select_coin != '원'){
 	$Enc_wallet_addr = Encrypt($bank_account,$secret_key,$secret_iv);
 }
@@ -219,7 +218,7 @@ if($debug){
 
 // 출금알림 텔레그램 API
 if(TELEGRAM_ALERT_USE){
-	curl_tele_sent('[HWAJO][출금요청] '.$mb_id.'('.$mb_name.') 님의 '.shift_auto($fixed_amt, $select_coin). ' ' . $select_coin . ' 출금요청이 있습니다.');
+	curl_tele_sent('[출금요청] '.$mb_id.'('.$mb_name.') 님의 '.shift_auto($fixed_amt, $select_coin). ' ' . $select_coin . ' 출금요청이 있습니다.');
 }
 
 if($rst && $amt_result){
