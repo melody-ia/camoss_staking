@@ -198,6 +198,15 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 			// $('#be_to').val(Price(calc));
 		});
 
+		$('#balance_field_upstair').on('change', function() {
+			var after = $(this).val().replace(/,/g, '');
+			var before = "<?= $mb['mb_balance'] ?>";
+			console.log(after + '/' + before);
+
+			// var calc = (after - conv_number(before));
+			// $('#be_to').val(Price(calc));
+		});
+
 		function copyAddress(param) {
 			//commonModal("Address copy",'Your Wallet address is copied!',100);
 
@@ -499,6 +508,15 @@ $rank_result = sql_fetch($rank_sql);
 			cursor: pointer
 		}
 
+		.balance_math_btn {
+			width: 39px;
+			height: 39px;
+			border: 1px solid #ccc;
+			padding: 1px;
+			font-size: 20px;
+			cursor: pointer
+		}
+
 		.math_btn.plus.active {
 			background: blue;
 			border: 1px solid blue;
@@ -506,6 +524,18 @@ $rank_result = sql_fetch($rank_sql);
 		}
 
 		.math_btn.minus.active {
+			background: red;
+			border: 1px solid red;
+			color: white
+		}
+
+		.balance_math_btn.plus.active {
+			background: blue;
+			border: 1px solid blue;
+			color: white
+		}
+
+		.balance_math_btn.minus.active {
 			background: red;
 			border: 1px solid red;
 			color: white
@@ -596,6 +626,23 @@ $rank_result = sql_fetch($rank_sql);
 	</tr>
 
 	<tr class="ly_up padding-box fund">
+		<th scope="row">수당 수동지급/차감</th>
+
+		<td colspan="1">
+			<input type="hidden" name="mb_balance_math" id="balance_math_code" value="">
+			<input type="button" value="+" class='balance_math_btn plus'>
+			<input type="button" value="-" class='balance_math_btn minus'>
+			<input type="text" name="mb_balance_add" value="" id="balance_field_upstair" class="frm_input wide" size="15" style="max-width:60%" inputmode=price>
+		</td>
+		<th>지급/차감 내용</th>
+		<td colspan="1">
+			<input type="text" name="mb_balance_content" value="" id="balance_field_upstair" class="frm_input wide field_upstair" size="15" style="max-width:60%">
+		</td>
+
+		<td></td>
+	</tr>
+
+	<tr class="ly_up padding-box fund">
 		<th scope="row">출금 총액</th>
 		<td colspan="1"><span class='strong amt'><?= shift_auto($mb['mb_shift_amt'],$curencys[0])?></span> <?=$curencys[0]?></td>
 
@@ -606,7 +653,7 @@ $rank_result = sql_fetch($rank_sql);
 
 	<tr class="ly_up padding-box fund">
 		<th scope="row">누적 매출 합계 (PV)</th>
-		<td colspan="1"><span class='strong soodang'><?= number_format($mb['mb_save_point']) ?> </span><?=$curencys[0]?></td>
+		<td colspan="1"><span class='strong soodang'><?= number_format($mb['pv']) ?> </span><?=$curencys[0]?></td>
 
 		<th scope="row">수당제한비율</th>
 			<td colspan="1">
@@ -744,6 +791,13 @@ $rank_result = sql_fetch($rank_sql);
 				$('.math_btn').removeClass('active');
 				$(this).addClass('active');
 				$('#math_code').val(value);
+			});
+
+			$('.balance_math_btn').click(function() {
+				var value = $(this).val();
+				$('.balance_math_btn').removeClass('active');
+				$(this).addClass('active');
+				$('#balance_math_code').val(value);
 			});
 
 			var total_fund = '<?= $mb['mb_deposit_point'] + $mb['mb_deposit_calc']?>';
@@ -1232,6 +1286,17 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
 			if (origin_deposit_point == 0) {
 				alert("최초입금처리시에는 바로처리되지 않으며,\n입금 요청 내역에서 승인처리하여야 정상입금처리됩니다. ");
 			}
+		}
+
+		if (f.mb_balance_add.value != '') {
+	
+			if ($('#balance_math_code').val() == '') {
+				$('.balance_math_btn.plus').focus();
+				alert('수당 수동입금 기호를 선택해주세요');
+
+				return false;
+			}
+
 		}
 
 

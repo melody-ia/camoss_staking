@@ -80,7 +80,7 @@ if($_POST['kyc_admin'] > ""){
 };
 
 $_POST['mb_center'] != "" ? $mb_center = $_POST['mb_center'] : $mb_center = '';
-$_POST['mb_balance'] != "" ? $mb_balance = conv_number($_POST['mb_balance']) : $mb_balance = 0;
+// $_POST['mb_balance'] != "" ? $mb_balance = conv_number($_POST['mb_balance']) : $mb_balance = 0;
 // $_POST['mb_deposit_point'] != "" ? $mb_deposit_point = conv_number($_POST['mb_deposit_point']) : $mb_deposit_point = 0;
 $_POST['mb_block'] != "" ? $mb_block = $_POST['mb_block'] : $mb_block = 0;
 $_POST['bank_name'] != "" ? $bank_name = $_POST['bank_name'] : $bank_name = '';
@@ -152,7 +152,6 @@ $sql_common = "  mb_name = '{$_POST['mb_name']}',
 				 mb_7 = '{$_POST['mb_7']}',
 				 mb_8 = '{$_POST['mb_8']}',
 				 mb_9 = '{$temp_mp_9}',
-				 mb_balance = '{$mb_balance}',
 				 bank_name = '{$bank_name}',
 				 bank_account = '{$bank_account}',
 				 account_name = '{$account_name}',
@@ -311,11 +310,53 @@ else if ($w == 'u')
 		$deposit_adm_result = sql_query($deposit_adm_sql);
 		
 		if($process_code == 1 && $deposit_adm_result){
-			$update_sql = "UPDATE g5_member set mb_deposit_point = mb_deposit_point  {$in_deposit_adm_value} WHERE mb_id = '{$mb_id}' ";
-			echo $update_sql;
+			$update_sql = "update g5_member set mb_deposit_point = mb_deposit_point  {$in_deposit_adm_value} WHERE mb_id = '{$mb_id}' ";
 			sql_query($update_sql);
 		}
 	}
+
+
+		// 수당입금처리
+		$balance_adm = conv_number($_POST['mb_balance_add']);
+		$balance_adm_content = $_POST['mb_balance_content'];
+		$balance_code = $_POST['mb_balance_math'];
+		$balance = $mb['mb_balance'];
+		
+		// 수당 수동 입금
+		if($balance_adm != 0){
+
+			if($balance_code == '+'){
+				if($balance_adm_content === '') {
+					$balance_adm_code = '관리자 지급';
+				} else {
+					$balance_adm_code = $balance_adm_content;
+				}
+			}else{
+				if($balance_adm_content === '') {
+					$balance_adm_code = '관리자 차감';
+				} else {
+					$balance_adm_code = $balance_adm_content;
+				}
+			}
+	
+			$in_balance_adm_value = $balance_code.$balance_adm;
+
+			$balance_adm_sql = "insert mb_balance_history set
+					mb_id             = '{$mb_id}'
+					, origin_mb_balance     =  '{$balance}'
+					, state         = '{$balance_code}'
+					, in_mb_balance    		= {$balance_adm}
+					, reason = '{$balance_adm_content}'
+					, created_at   			= now()";
+
+			$balance_adm_result = sql_query($balance_adm_sql);
+			
+			if($balance_adm_result){
+				$update_sql = "update g5_member set mb_balance = mb_balance  {$in_balance_adm_value} WHERE mb_id = '{$mb_id}' ";
+				sql_query($update_sql);
+			}
+		}
+	
 
 
 
