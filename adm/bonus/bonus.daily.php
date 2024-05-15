@@ -7,7 +7,21 @@ include_once('./bonus_inc.php');
 auth_check($auth[$sub_menu], 'r');
 
 // 데일리수당
-$debug = true;
+$debug = false;
+
+function find_rate($rate_array,$pv){
+
+	$result = 0;
+	
+	foreach($rate_array as $key => $value){
+		if($key <= $pv){
+			$result = $value;
+			break;
+		}
+	}
+
+	return $result;
+}
 
 $reset_daily_benefit_sql = "update g5_member set mb_my_sales = 0";
 if($debug){
@@ -22,10 +36,10 @@ if($debug){
 	}
 }
 
-$order_list_sql = "select s.*, m.mb_level, m.grade, m.mb_name, (m.mb_balance + m.mb_shop_point) as mb_balance, m.mb_balance_ignore, m.mb_deposit_point, m.mb_index
+$order_list_sql = "select s.*, m.mb_level, m.grade, m.mb_name, m.pv, (m.mb_balance + m.mb_shop_point) as mb_balance, m.mb_balance_ignore, m.mb_index
 from g5_order s 
 join g5_member m 
-on s.mb_id = m.mb_id where m.mb_save_point > 0 and s.od_soodang_date <= curdate()";
+on s.mb_id = m.mb_id where m.mb_save_point > 0 and s.od_soodang_date <= curdate() group by m.mb_id";
 
 $order_list_result = sql_query($order_list_sql);
 
@@ -35,13 +49,41 @@ if($debug){
 	echo "</code><br>";
 }
 
-$goods_sql = "select group_concat(it_name,'->',it_supply_point,'% ') as rate from g5_item where it_name <> 'P0' order by it_order asc";
-$goods_row = sql_fetch($goods_sql);
+$goods_sql = "select it_price, it_supply_point from g5_item where it_maker <> 'P0' order by it_price asc";
+$bonus_row = bonus_pick($code);;
+
+
+$goods_row = sql_query($goods_sql);
+$soodang_rate = $bonus_row['rate'];
+$soodang_config = explode(",",$soodang_rate);
+
+$soodang_cnt = count($soodang_config);
+$goods_cnt = sql_num_rows($goods_row);
+if($soodang_cnt != $goods_cnt){
+	echo "<script>alert('DAILY 수당 비율과 상품 갯수가 맞지 않습니다.');
+	history.back();</script>";
+}
+
+$rate = "";
+$rate_array = [];
+for($i = 0; $i < $row = sql_fetch_array($goods_row); $i++){
+	if($row['it_supply_point'] != $soodang_config[$i]){
+		echo "<script>alert('DAILY 수당 비율과 상품 비율이 맞지 않습니다.');
+		history.back();</script>";
+		return false;
+	}
+	$clean_price_format = clean_number_format($row['it_price']);
+	$rate .= "{$clean_price_format}원 -> {$soodang_config[$i]}%";
+	$rate_array[$row['it_price']] = $soodang_config[$i];
+	if($i < $goods_cnt - 1){
+		$rate .= ", ";
+	}
+}
+krsort($rate_array);
 // 설정로그 
-echo "<strong>".strtoupper($code)." 지급비율 : ". $goods_row['rate']."   </strong> | 지급한계 : ".$bonus_row['limited']."% <br>";
+echo "<strong>".strtoupper($code)." 지급비율 : ".$rate."   </strong> | 지급한계 : ".$bonus_row['limited']."% <br>";
 echo "<strong>".$bonus_day."</strong><br><br>";
 echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
-
 ?>
 
 <html>
@@ -69,16 +111,18 @@ if(!$get_today){
 	$total_paid_list = array();
 	
 	for($i = 0; $i < $order_list_row = sql_fetch_array($order_list_result); $i++){
-		$goods_price = $order_list_row['upstair'];
 		$mb_balance = $order_list_row['mb_balance'];
 		$mb_balance_ignore = $order_list_row['mb_balance_ignore'];
 		$mb_index = $order_list_row['mb_index'];
-		// $benefit = $goods_price *(0.01 * $daily_bonus_rate);
-		$benefit = $goods_price *(0.01 * $order_list_row['pv']);
+		$pv = $order_list_row['pv'];
+		
+		$rate = find_rate($rate_array,$pv);
+
+		$benefit = $pv * (0.01 * $rate);
 		
 		$total_benefit = ($mb_balance - $mb_balance_ignore) + $benefit + $total_paid_list[$order_list_row['mb_id']]['total_benefit'];
 		
-		$clean_number_goods_price = clean_number_format($goods_price);
+		$clean_number_goods_price = clean_number_format($pv);
 		$clean_number_mb_balance = clean_number_format($mb_balance - $mb_balance_ignore);
 		$clean_number_mb_index = clean_number_format($mb_index);
 		
@@ -113,14 +157,14 @@ if(!$get_today){
 		$_benefit = clean_coin_format($benefit * $live_bonus_rate,2);
 		$_clean_number_benefit  = clean_number_format($_benefit);
 
-		$rec = "Daily bonus {$order_list_row['pv']}% : {$_clean_number_benefit} {$unit}, Shop Bonus : {$clean_shop_benefit} {$shop_unit} {$over_benefit_log}";
-		$benefit_log = "{$clean_number_goods_price}(상품가격) * ( {$order_list_row['pv']}% [상품지급률] ) ){$over_benefit_log}";
+		$rec = "{$code} bonus {$rate}% : {$_clean_number_benefit} {$unit}, shop bonus : {$clean_shop_benefit} {$shop_unit} {$over_benefit_log}";
+		$benefit_log = "{$clean_number_goods_price}(총 구매액) * {$rate}% (지급률) {$over_benefit_log}";
 		
 		$total_paid_list[$order_list_row['mb_id']]['log'] .= "<br><span>{$benefit_log} = </span><span class='blue'>{$clean_number_benefit}</span>";
 		$total_paid_list[$order_list_row['mb_id']]['sub_log'] = "<span>현재총수당 : {$clean_number_mb_balance}, 수당한계점 : {$clean_number_mb_index} </span>";
 	
-		$log_values_sql .= "('{$code}','{$bonus_day}','{$order_list_row['mb_id']}',{$order_list_row['mb_no']},{$_benefit},{$order_list_row['mb_level']},{$order_list_row['grade']},
-							'{$order_list_row['mb_name']}','{$rec}','{$benefit_log}={$_clean_number_benefit} {$unit}, {$clean_shop_benefit} {$shop_unit}(expected : {$clean_number_benefit} {$unit})',{$mb_balance},{$order_list_row['mb_deposit_point']},now()),";
+		$log_values_sql .= "('{$code}','{$bonus_day}','{$order_list_row['mb_id']}',{$order_list_row['mb_no']},{$benefit},{$order_list_row['mb_level']},{$order_list_row['grade']},
+							'{$order_list_row['mb_name']}','{$rec}','{$benefit_log}={$_clean_number_benefit} {$unit}, {$clean_shop_benefit} {$shop_unit}(expected : {$clean_number_benefit} {$unit})',{$mb_balance},{$pv},now()),";
 	
 	}
 	
@@ -138,7 +182,7 @@ if(!$get_today){
 		$member_my_sales_cloumn_sql .= "when '{$key}' then {$value['real_benefit']} ";
 		
 		$member_where_sql .= "'{$key}',";
-		echo "<span class='title'>{$key}</span>{$value['sub_log']}<br>{$value['log']}<div style='color:orange;'>발생 수당 : {$value['total_benefit']}</div><div style='color:red;'>▶ 수당지급 : {$live_benefit} <br> ▶ 쇼핑몰포인트지급 : {$shop_benefit} </div><br><br>";
+		echo "<span class='title block' style='font-size:30px;'>{$key}</span>{$value['sub_log']}<br>{$value['log']}<div style='color:orange;'>발생 수당 : {$value['total_benefit']}</div><div style='color:red;'>▶ 수당지급 : {$live_benefit} <br> ▶ 쇼핑몰포인트지급 : {$shop_benefit} </div><br><br>";
 	}
 	
 	$member_balance_column_sql .= "else mb_balance end ";

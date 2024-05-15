@@ -52,8 +52,8 @@ $week_todate    = date('Y-m-d', $weekla - (86400 * 6)); // 지난주 종료일�
 
 // 트립시아 특수 설정 
 
-$live_bonus_rate = 0.8;
-$shop_bonus_rate = 0.2;
+$live_bonus_rate = 0.9;
+$shop_bonus_rate = 0.1;
 
 
 function bonus_pick($val){    
