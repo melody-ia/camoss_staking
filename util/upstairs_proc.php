@@ -48,6 +48,9 @@ if($func == "new"){
 	$orderid = $_POST['od_id'];
 }
 
+// 해당 패키지로 받을 수 있는 수당 한도()
+$max_limit_point = $it_point * ($limited/100);
+
 $sql = "insert g5_order set
 	od_id				= '".$orderid."'
 	, mb_no             = '".$mb_no."'
@@ -64,7 +67,8 @@ $sql = "insert g5_order set
 	, od_status         = '패키지구매'
 	, od_cash_no 		= '".$pack_maker."'	
 	, upstair    		= ".$it_point."
-	, pv				= ".$pv." ";
+	, pv				= ".$pv." 
+	, od_misu           = ".$max_limit_point."";
 
 if($debug){
 	$rst = 1;
@@ -110,15 +114,6 @@ if($rst && $logic){
 		$update_rank = $val;
 	}
 
-	// 해당 패키지로 받을 수 있는 수당 한도()
-	
-	if($member['b_autopack'] > 0){ 
-		$limited = $member['q_autopack'];
-	}
-	
-	$max_limit_point = $it_point * ($limited/100);
-
-	
 	$update_point .= ", mb_rate = ( mb_rate + {$pv}) ";
 	$update_point .= ", mb_save_point = ( mb_save_point + {$it_point}) ";
 	$update_point .= ", mb_index = ( mb_index + {$max_limit_point}) ";

@@ -108,7 +108,7 @@ if( $max_limit != 0 && $total_amt > $withdrwal_total ) {
 }
 
 // 출금잔고 재확인 
-$fund_check_sql = "SELECT sum(mb_balance - mb_shift_amt - mb_balance_calc) as total from g5_member WHERE mb_id = '{$mb_id}' ";
+$fund_check_sql = "SELECT sum(mb_balance - mb_shift_amt + mb_balance_calc) as total from g5_member WHERE mb_id = '{$mb_id}' ";
 $fund_check_val = sql_fetch($fund_check_sql)['total'];
 
 

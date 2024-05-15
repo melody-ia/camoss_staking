@@ -25,6 +25,7 @@ $curencys = $_POST['curencys'];
 $target = "mb_balance_calc";
 $orderid = date("YmdHis",time()).'01';
 $remove_zeroes = remove_zeroes($goods_price);
+$max_limit_point = $goods_price * ($limited/100);
 
 $sql = "insert g5_order set
 	od_id = '{$orderid}'
@@ -42,7 +43,8 @@ $sql = "insert g5_order set
 	, od_settle_case = '{$curencys}'
 	, od_status = '재구매'
 	, od_cash_no = '재구매'	
-	, pv = 0 ";
+	, pv = 0 
+	, od_misu = {$max_limit_point}";
 
 if($debug){
 	$rst = 1;
@@ -66,8 +68,6 @@ if($debug){
 if($rst){
 
 	$update_point = "update g5_member set pv = pv + {$goods_price}, $target = ($target - $goods_price)";
-
-	$max_limit_point = $goods_price * ($limited/100);
 
 	$update_point .= ", mb_index = ( mb_index + {$max_limit_point}) ";
 	$update_point .= " where mb_id ='".$mb_id."'";

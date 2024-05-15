@@ -31,7 +31,7 @@ if ($up_pack_info['cnt'] <= 0) {
 
 // 3. 회원 잔고 확인
 $mb_info = sql_fetch("SELECT mb_deposit_point + mb_deposit_calc AS sum_deposit, 
-mb_balance - mb_shift_amt - mb_balance_calc AS sum_soodang, 
+mb_balance - mb_shift_amt + mb_balance_calc AS sum_soodang, 
 mb_balance + mb_deposit_point + mb_deposit_calc - mb_shift_amt AS balance 
 FROM {$g5['member_table']} 
 WHERE mb_id = '{$mb_id}'");
