@@ -140,7 +140,7 @@ include_once(G5_ADMIN_PATH . '/admin.head.php');
 		- 회원및구매내역 초기화는 회원 보유 잔고,포인트,직급 등을 초기화하고 구매내역,상품등을 초기화합니다.<span class='red'> ※관리자제외</span><br>
 		- 입출금 초기화는 설정을 제외한 입금내역,출금내역 등을 초기화합니다.<br>
 		
-		- 테스트환경생성은 전회원 <strong>1,000 usdt 지급 하고, 당일기준 test5~test30까지의 p3 상품을</strong> 구매처리합니다.<span class='red'> ※관리자제외</span>
+		- 테스트환경생성은 전회원 <strong>1억 포인트 지급 하고, 당일기준 test5~test30까지의 p2 상품을</strong> 구매처리합니다.<span class='red'> ※관리자제외</span>
 	</p>
 </div>
 
@@ -203,7 +203,7 @@ include_once(G5_ADMIN_PATH . '/admin.head.php');
 					<td>
 						<p style="padding:0;"><input type="checkbox" id="nw_data_test" name="nw_data_test" <?if($nw['nw_data_test']=='Y' ) {echo "checked" ;}?>/><label for="nw_data_test"><span class="ui"></span><span class="nw_data_test_txt">사용 설정</span></label></p>
 					</td>
-					<td>전회원 <strong>3,000 usdt 지급 하고, 당일기준 test5~test30까지의 p3 상품을</strong> 구매처리합니다.</td>
+					<td>전회원 <strong>1억 포인트 지급 하고, 당일기준 test5~test30까지의 p2 상품을</strong> 구매처리합니다.</td>
 				</tr>
 
 			</tbody>

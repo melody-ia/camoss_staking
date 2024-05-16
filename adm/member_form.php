@@ -436,8 +436,10 @@ $rank_result = sql_fetch($rank_sql);
 							?>
 							<input type="text" name="mb_recommend" id="mb_recommend" value="<?= $mb['mb_recommend'] ?>" class="frm_input wide" /><span id="ajax_rcm_search" class="btn flexible">검색</span>
 						</td>
-					<th></th>
-					<td></td>
+					<th scope="row">후원인</th>
+					<td colspan="1">
+						<input type="text" name="mb_brecommend" id="mb_brecommend" value="<?= $mb['mb_brecommend'] ?>" class="frm_input wide" /><span id="ajax_brcm_search" class="btn flexible">검색</span>
+					</td>
 				</tr>
 	</div>
 

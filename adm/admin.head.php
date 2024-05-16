@@ -155,6 +155,11 @@ $(function(){
 			var $mb_id = $('#mb_id').val();
 			$('#framer').attr("src","/shop/ajax.id.php?mb_id="+$mb_id+"&rcm="+$rcm);
 			$('#framewrp').fadeIn();
+		}else if ($type == "brcm_search") {
+			var $brcm = $('#mb_brecommend').val();
+			var $mb_id = $('#mb_id').val();
+			$('#framer').attr("src","/shop/ajax.id.php?mb_id="+$mb_id+"&brcm="+$brcm);
+			$('#framewrp').fadeIn();
 		}
 	});
 	$('#framewrp').click(function () {

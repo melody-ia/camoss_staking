@@ -72,6 +72,8 @@ function purchase_package($mb_id,$pack_id,$return = 0){
         }else if($result && $proc_done && $return == 1){
             ob_end_clean();
             echo json_encode(array("response"=>"ok","code" => '0000', "data"=>$result_data),JSON_UNESCAPED_UNICODE);
+        }else if($result && $proc_done && $return == 10000){
+            return true;
         }else{
             echo "<br><br>처리에러<br><br>";
             ob_end_clean();

@@ -79,21 +79,21 @@ if($_POST['kyc_admin'] > ""){
 	$kyc_admin = '';
 };
 
-$_POST['mb_center'] != "" ? $mb_center = $_POST['mb_center'] : $mb_center = '';
+$mb_center = $_POST['mb_center'] != "" ?  $_POST['mb_center'] : '';
 // $_POST['mb_balance'] != "" ? $mb_balance = conv_number($_POST['mb_balance']) : $mb_balance = 0;
 // $_POST['mb_deposit_point'] != "" ? $mb_deposit_point = conv_number($_POST['mb_deposit_point']) : $mb_deposit_point = 0;
-$_POST['mb_block'] != "" ? $mb_block = $_POST['mb_block'] : $mb_block = 0;
-$_POST['bank_name'] != "" ? $bank_name = $_POST['bank_name'] : $bank_name = '';
-$_POST['bank_account'] != "" ? $bank_account = $_POST['bank_account'] : $bank_account = '';
-$_POST['account_name'] != "" ? $account_name = $_POST['account_name'] : $account_name = '';
+$mb_block = $_POST['mb_block'] != "" ? $_POST['mb_block'] :  0;
+$bank_name = $_POST['bank_name'] != "" ? $_POST['bank_name'] :  '';
+$bank_account = $_POST['bank_account'] != "" ?  $_POST['bank_account'] : '';
+$account_name = $_POST['account_name'] != "" ?  $_POST['account_name'] : '';
 $temp_mp_9 = $_POST['temp_mb_9'];
-$_POST['mb_week_dividend'] != "" ? $mb_week_dividend = $_POST['mb_week_dividend'] : $mb_week_dividen = '0';
+$mb_week_dividend = $_POST['mb_week_dividend'] != "" ? $_POST['mb_week_dividend'] :'0';
 
 $mb_wallet = $_POST['mb_wallet'] != "" ? Encrypt($_POST['mb_wallet'],$mb['mb_id'],"x") : '';
 $eth_my_wallet = $_POST['eth_my_wallet'] != "" ? Encrypt($_POST['eth_my_wallet'],$mb['mb_id'],"x") : '';
 $etc_my_wallet = $_POST['etc_my_wallet'] != "" ? Encrypt($_POST['etc_my_wallet'],$mb['mb_id'],"x") : '';
 $usdt_my_wallet = $_POST['usdt_my_wallet'] != "" ? Encrypt($_POST['usdt_my_wallet'],$mb['mb_id'],"x") : '';
-
+$mb_brecommend = $_POST['mb_brecommend'] != "" ? $_POST['mb_brecommend'] : "";
 
 $use_limit_paid = 0;
 
@@ -105,6 +105,15 @@ if(isset($_POST['b_autopack'])){
 $mb_index = "mb_index = (select ifnull(sum(od_cart_price),0)*({$limited}/100) from g5_order where mb_id = '{$mb_id}')";
 $mb_no_sql = "select count(mb_no) as cnt, mb_no from g5_member where mb_id = '{$_POST['mb_recommend']}'";
 $mb_no_row = sql_fetch($mb_no_sql);
+
+
+if($mb_brecommend != ""){
+	$mb_brecommend_check_sql = "select exists (select 1 from g5_member where mb_id = '{$mb_brecommend}') as exist";
+	$mb_brecommend_is_exist = sql_fetch($mb_brecommend_check_sql)['exist'];
+	if(!$mb_brecommend_is_exist){
+		alert('존재하지 않는 후원인 정보 입니다.');
+	}
+}
 
 if($mb_no_row['cnt'] <= 0){alert('존재하지 않는 추천인 정보 입니다.');}
 
@@ -141,6 +150,7 @@ $sql_common = "  mb_name = '{$_POST['mb_name']}',
 				 mb_level = '{$mb_level}',
 				 mb_recommend = '{$_POST['mb_recommend']}',
 				 mb_recommend_no = '{$mb_no_row['mb_no']}',
+				 mb_brecommend = '{$mb_brecommend}',
 			  	 first_name = '{$_POST['first_name']}',
   			 	 last_name = '{$_POST['last_name']}',
 				 mb_1 = '{$_POST['mb_1']}',

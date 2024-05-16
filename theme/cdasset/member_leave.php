@@ -12,9 +12,9 @@ include_once(G5_THEME_PATH.'/_include/gnb.php');
 
 <div class='container member_leave'>
   <h1 class="main_title">회원(계정) 탈퇴</h1>
-  <p class="info_text">회원(계정) 탈퇴를 하시면 회원님의 모든 정보와 활동 기록, <br />USDT/보너스/잔고 및 사용 내역이 삭제됩니다. 삭제된 정보는<br /> 복구할 수 없으니 신중하게 결정해주세요.</p>
+  <p class="info_text">회원(계정) 탈퇴를 하시면 회원님의 모든 정보와 활동 기록, <br />보너스/잔고 및 사용 내역이 삭제됩니다. 삭제된 정보는<br /> 복구할 수 없으니 신중하게 결정해주세요.</p>
   <p class="info_text red">
-  ! 계정탈퇴 및 USDT 관련 문의는 회원탈퇴 전 반드시 1:1 문의사항을 이용해주세요. 회원 탈퇴 진행후에는 처리되지 않습니다.
+  ! 계정탈퇴 관련 문의는 회원탈퇴 전 반드시 1:1 문의사항을 이용해주세요. 회원 탈퇴 진행후에는 처리되지 않습니다.
   </p>
 
   <div class="leave_info_wrap">
