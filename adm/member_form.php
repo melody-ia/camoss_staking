@@ -626,6 +626,14 @@ $rank_result = sql_fetch($rank_sql);
 	</tr>
 
 	<tr class="ly_up padding-box fund">
+		<th scope="row">출금 총액</th>
+		<td colspan="1"><span class='strong amt'><?= shift_auto($mb['mb_shift_amt'],$curencys[0])?></span> <?=$curencys[0]?></td>
+
+		<th scope="row">재구매 사용</th>
+		<td colspan="1"><span class='strong amt'><?=shift_auto(-1*$mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>
+	</tr>
+
+	<tr class="ly_up padding-box fund">
 		<th scope="row">수당 수동지급/차감</th>
 
 		<td colspan="1">
@@ -641,15 +649,6 @@ $rank_result = sql_fetch($rank_sql);
 
 		<td></td>
 	</tr>
-
-	<tr class="ly_up padding-box fund">
-		<th scope="row">출금 총액</th>
-		<td colspan="1"><span class='strong amt'><?= shift_auto($mb['mb_shift_amt'],$curencys[0])?></span> <?=$curencys[0]?></td>
-
-		<th scope="row">재구매 사용</th>
-		<td colspan="1"><span class='strong amt'><?=shift_auto($mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>
-	</tr>
-
 
 	<tr class="ly_up padding-box fund">
 		<th scope="row">누적 매출 합계 (PV)</th>

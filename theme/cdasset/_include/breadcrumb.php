@@ -145,7 +145,7 @@ $title = 'Dashboard';
 					<ul class="row top">
 						<li class="col-4">
 							<dt class="title" >총 누적 보너스</dt>
-							<dd class="value" style='font-size:15px;'><?=shift_auto($member['mb_balance'],$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
+							<dd class="value" style='font-size:15px;'><?=shift_auto($total_fund,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<li class="col-4">
 							<dt class="title" >구매 가능액</dt>
@@ -188,8 +188,8 @@ $title = 'Dashboard';
 							<dd class="value"><?=Number_format($member['recom_sales'])?> </dd>
 						</li> -->
 						<li class="col-4">
-							<dt class="title">재구매 가능액</dt>
-							<dd class="value"><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
+							<dt class="title">쇼핑몰 포인트</dt>
+							<dd class="value"><?=shift_auto($shop_balance,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 
 					</ul>

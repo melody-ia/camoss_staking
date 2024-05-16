@@ -192,7 +192,7 @@ $result = sql_query($sql);
 				<? } ?>
 
 				<?php
-				$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?id=upstairs&$qstr");
+				$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?id=reupstairs&$qstr");
 				echo $pagelist;
 				?>
 			</div>
