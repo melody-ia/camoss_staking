@@ -1027,8 +1027,10 @@
           .end().end().siblings().remove();
       }
     },
+    
     // create node
     createNode: function (nodeData, level, opts) {
+
       var that = this;
       if (!nodeData.children) { nodeData.children = []; }
       $.each(nodeData.children, function (index, child) {
@@ -1042,9 +1044,10 @@
         $nodeDiv.append(opts.nodeTemplate(nodeData));
       } else {
 		 var temp = nodeData[opts.nodeTitle].split("|");
+
 		 if (temp[0]=="NO"){
-	        $nodeDiv.append('<div class="title" onclick="set_member(\''+temp[1]+'\',\''+temp[2]+'\')"><div style="padding-top:40px">Place<br><br>New<br><br>member</div></div>')
-          .append(typeof opts.nodeContent !== 'undefined' ? '<div class="content">' + (nodeData[opts.nodeContent] || '') + '</div>' : '');
+	        // $nodeDiv.append('<div class="title" onclick="set_member(\''+temp[1]+'\',\''+temp[2]+'\')"><div style="padding-top:40px">Place<br><br>New<br><br>member</div></div>')
+          // .append(typeof opts.nodeContent !== 'undefined' ? '<div class="content">' + (nodeData[opts.nodeContent] || '') + '</div>' : '');
 		 }else{
 
         var html = '<div class="title"><div align=right style="padding:0px 2px 5px 5px;border-bottom:1px solid #111;text-align:left;"><img src="/img/go.png" onclick="go_member(\''+temp[2]+'\')"><img src="/img/edit.png" style="float:right" onclick="edit_member(\''+temp[2]+'\')"></div>';
@@ -1083,10 +1086,19 @@
           html += '<div class="dec">추천산하: <strong>' + temp[10] + '명</strong></div>';
         }
 
+        // html += '<div class="dec mt5"><span class=f_green> MH: ' + temp[13] + '</span></div>';
         html += '<div class="dec"><span class=f_blue><strong> PV: ' + temp[11] + '</strong></span></div>';
-        html += '<div class="dec"><span class=f_pink><strong> ACC: ' + temp[9] + '</strong></span></div>';
+        // html += '<div class="dec"><span class=f_pink><strong> ACC: ' + temp[9] + '</strong></span></div>';
 
-       
+        if(temp[18] == 'C'){
+          html += '<div class="box_foot">'
+          html += '<div class="dec p_left"><span class="red">' + temp[7] + '</span><br><span class="hash">#'+temp[4]+'</span></div>';
+          html += '<div class="dec p_right"><span class="red">' + temp[8] + '</span><br><span class="hash">#'+temp[5]+'</span></div>';
+          html += '</div>';
+        }else{
+          // html += '<div class="box_foot"><div class="dec p_full"><span class="red">' + temp[14] + '</span><br><span class="hash f_green">#'+temp[17]+'</span></div>';
+          html += '<div class="box_foot"><div class="dec p_full"><span class="green"><strong>' + temp[9] + '</strong></span></div>';
+        }
         $nodeDiv.append(html).append(typeof opts.nodeContent !== 'undefined' ? '<div class="content">' + (nodeData[opts.nodeContent] || '') + '</div>' : '');
 		 }
       }
@@ -1098,8 +1110,8 @@
           $nodeDiv.append('<i class="toggleBtn fa fa-' + icon + '-square"></i>');
         }
       } else {
-		  /*
-        if (Number(flags.substr(0,1))) {
+		  
+        /* if (Number(flags.substr(0,1))) {
           $nodeDiv.append('<i class="edge verticalEdge topEdge fa"></i>');
         }
         if(Number(flags.substr(1,1))) {
@@ -1109,8 +1121,8 @@
         if(Number(flags.substr(2,1))) {
           $nodeDiv.append('<i class="edge verticalEdge bottomEdge fa"></i>')
             .children('.title').prepend('<i class="fa '+ opts.parentNodeSymbol + ' symbol"></i>');
-        }
-		*/
+        } */
+		
       }
 
       $nodeDiv.on('mouseenter mouseleave', this.nodeEnterLeaveHandler.bind(this));
@@ -1161,24 +1173,29 @@
           console.log('Failed to creat node')
         });
       }
+      
       // Construct the inferior nodes and connectiong lines
       if (hasChildren) {
         if (Object.keys(nodeData).length === 1) { // if nodeData is just an array
           $nodeWrapper = $appendTo;
         }
-        var isHidden = (level + 1 >= opts.depth || nodeData.collapsed) ? ' hidden' : '';
+        var isHidden = (level + 1 >= opts.depth-1 || nodeData.collapsed) ? ' hidden' : '';
         var isVerticalLayer = (opts.verticalDepth && (level + 2) >= opts.verticalDepth) ? true : false;
 
         // draw the line close to parent node
         if (!isVerticalLayer) {
           $nodeWrapper.append('<tr class="lines' + isHidden + '"><td colspan="' + $childNodes.length * 2 + '"><div class="downLine"></div></td></tr>');
         }
+
         // draw the lines close to children nodes
+       
         var lineLayer = '<tr class="lines' + isHidden + '"><td class="rightLine"></td>';
+        
         for (var i=1; i<$childNodes.length; i++) {
           lineLayer += '<td class="leftLine topLine"></td><td class="rightLine topLine"></td>';
         }
         lineLayer += '<td class="leftLine"></td></tr>';
+
         var $nodeLayer;
         if (isVerticalLayer) {
           $nodeLayer = $('<ul>');
