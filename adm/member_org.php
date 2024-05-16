@@ -188,6 +188,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 				<label for="gubun1" class='btn search_btn <?if($_GET['gubun']=='')echo 'active';?>' >추천조직</label>
 				<input type="radio" id="gubun2" name="gubun" style="display:none" onclick="document.sForm2.submit();" value="B"<?if ($gubun=="B") echo " checked"?>>
 				<label for="gubun2" class='btn search_btn <?if($_GET['gubun']=='B')echo 'active';?>'>후원조직</label>
+				
 				</td>
 			</tr>
 			
@@ -534,7 +535,7 @@ $sql = "SELECT c.c_id,c.c_class,(
 	
 	,(select mb_rate FROM g5_member WHERE mb_id=c.c_id) AS mb_rate
 	,(select recom_sales FROM g5_member WHERE mb_id=c.c_id) AS recom_sales
-	,(select mb_save_point FROM g5_member WHERE mb_id=c.c_id) AS mb_save_point
+	,(select pv FROM g5_member WHERE mb_id=c.c_id) AS mb_save_point
 	,(select grade FROM g5_member WHERE mb_id=c.c_id) AS grade
 	,(SELECT mb_child FROM g5_member WHERE mb_id=c.c_id) AS mb_children
 	FROM g5_member m
@@ -592,9 +593,9 @@ if ($order_proc==1){
 
 
 if ($srow['b_recomm']){
-	$left_sql = " SELECT mb_rate,mb_save_point, (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm']}' ";
+	$left_sql = " SELECT mb_rate,mb_save_point,pv (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm']}' ";
 	$mb_self_left_result = sql_fetch($left_sql);
-	$mb_self_left_acc = $mb_self_left_result['mb_rate'] + $mb_self_left_result['noo'];
+	$mb_self_left_acc = $mb_self_left_result['pv'] + $mb_self_left_result['noo'];
 	$row6['tpv'] = $mb_self_left_acc ;
 
 }else{
@@ -603,9 +604,9 @@ if ($srow['b_recomm']){
 
 //바이너리 오른쪽 오늘 매출
 if ($srow['b_recomm2']){
-	$right_sql = " SELECT mb_rate,mb_save_point, (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm2']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm2']}' ";
+	$right_sql = " SELECT mb_rate,mb_save_point,pv (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm2']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm2']}' ";
 	$mb_self_right_result = sql_fetch($right_sql);
-	$mb_self_right_acc = $mb_self_right_result['mb_rate'] + $mb_self_right_result['noo'];
+	$mb_self_right_acc = $mb_self_right_result['pv'] + $mb_self_right_result['noo'];
 	$row7['tpv'] = $mb_self_right_acc ;
 
 }else{
@@ -630,7 +631,7 @@ $brecom_info = json_decode($member_info_data['brecom_info'],true);
 if (!$srow['b_child']) $srow['b_child']=1;
 
 ?>
-		<ul id="org" style="display:none;" >
+		<ul id="org" style="display:none" >
 			<li>
 				<?=(strlen($srow['c_class'])/2)-1?>-<?=($srow['c_child'])?>-<?=($srow['b_child']-1)?>
 				|<?=get_member_label($srow['mb_level'])?>

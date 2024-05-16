@@ -93,7 +93,7 @@ if( ! empty($_COOKIE['g5_admin_btn_gnb']) ){
 
 <?}else{?>
 
-  #gnb .gnb_li:nth-child(n+5):nth-child(-n+8) .btn_op {
+  #gnb .gnb_li:nth-child(n+3) .btn_op {
   background-size:20px 18px;}
 <?}?>
 </style>

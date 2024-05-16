@@ -75,18 +75,18 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
 #gnb .on .btn_op.menu-900{background:url(../img/menu-4.png) 50% 50% no-repeat #fff}
 
 /*메뉴아이콘 커스텀*/
-#gnb .gnb_li .btn_op.menu-600{background:url(../img/menu-600-1.png) 50% 50% no-repeat #ebebeb;background-size: 50% 50%;}
-#gnb .on .btn_op.menu-600{background:url(../img/menu-600.png) 50% 50% no-repeat #fff;background-size: 50% 50%;}
-#gnb .gnb_li .btn_op.menu-650{background:url(../img/menu-650-1.png) 50% 50% no-repeat #ebebeb;background-size: 50% 50%; }
-#gnb .on .btn_op.menu-650{background:url(../img/menu-650.png) 50% 50% no-repeat #fff;background-size: 50% 50%;}
+#gnb .gnb_li .btn_op.menu-600{background:url(../img/menu-650-1.png) 50% 50% no-repeat #ebebeb;}
+#gnb .on .btn_op.menu-600{background:url(../img/menu-650.png) 50% 50% no-repeat #fff;}
+#gnb .gnb_li .btn_op.menu-650{background:url(../img/menu-850-1.png) 50% 50% no-repeat #ebebeb; }
+#gnb .on .btn_op.menu-650{background:url(../img/menu-850.png) 50% 50% no-repeat #fff;}
 #gnb .gnb_li .btn_op.menu-700{background:url(../img/menu-700-1.png) 50% 50% no-repeat #ebebeb }
 #gnb .on .btn_op.menu-700{background:url(../img/menu-700.png) 50% 50% no-repeat #fff}
 #gnb .gnb_li .btn_op.menu-750{background:url(../img/menu-750-1.png) 50% 50% no-repeat #ebebeb }
 #gnb .on .btn_op.menu-750{background:url(../img/menu-750.png) 50% 50% no-repeat #fff}
 #gnb .gnb_li .btn_op.menu-800{background:url(../img/menu-800-1.png) 50% 50% no-repeat #ebebeb }
 #gnb .on .btn_op.menu-800{background:url(../img/menu-800.png) 50% 50% no-repeat #fff}
-#gnb .gnb_li .btn_op.menu-850{background:url(../img/menu-850-1.png) 50% 50% no-repeat #ebebeb }
-#gnb .on .btn_op.menu-850{background:url(../img/menu-850.png) 50% 50% no-repeat #fff}
+#gnb .gnb_li .btn_op.menu-850{background:url(../img/menu-600-1.png) 50% 50% no-repeat #ebebeb }
+#gnb .on .btn_op.menu-850{background:url(../img/menu-600.png) 50% 50% no-repeat #fff}
 
 
 

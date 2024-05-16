@@ -19,7 +19,7 @@ $week_todate    = date('Y-m-d', $weekla - (86400 * 5)); // 지난주 종료일�
 
 $day = date('d', $timestr);
 $lastday = date('t', $timestr);
-
+$balanace_ignore = fALSE;
 
 if($day > 13 && $day <= 20){
     $half = '1/2';
@@ -34,6 +34,7 @@ if($day > 13 && $day <= 20){
 
 
 // $bonus_rate = explode(',',$bonus_row['rate']);
+$bonus_rate = $bonus_row['rate']*0.01;
 
 $bonus_condition = $bonus_row['source'];
 $bonus_condition_tx = bonus_condition_tx($bonus_condition);
@@ -80,7 +81,7 @@ if($debug){
 ob_start();
 
 // 설정로그 
-echo "<strong>센터 지급비율 : ". $bonus_row['rate']."%   </strong> |    지급조건 :".$pre_condition.' | '.$bonus_condition_tx." | ".$bonus_layer_tx."<br>";
+echo "<strong>센터 지급비율 : ". $bonus_row['rate']."%   </strong> <br>";
 echo "<br><strong> 현재일 : ".$bonus_day." |  ".$half."(지급산정기준) : <span class='red'>".$half_frdate."~".$half_todate."</span><br>";
 
 echo "<br><br>기준대상자(센터회원) : <span class='red'>".$result_cnt."</span>";
@@ -125,7 +126,7 @@ excute();
 function  excute(){
 
     global $result;
-    global $g5, $bonus_day, $bonus_condition, $code, $bonus_rate,$pre_condition_in,$bonus_limit,$week_frdate,$week_todate,$half_frdate,$half_todate;
+    global $g5, $bonus_day, $bonus_condition, $code, $bonus_rate,$pre_condition_in,$bonus_limit,$week_frdate,$week_todate,$half_frdate,$half_todate,$balanace_ignore;
     global $debug,$log_sql;
 
 
@@ -140,9 +141,12 @@ function  excute(){
         $mb_balance=$row['mb_balance'];
         $grade=$row['grade'];
 
+        $live_bonus_rate = 0.9;
+        $shop_bonus_rate = 0.1;
+
 
         $recom= 'mb_center'; //센터멤버
-        $sql = " SELECT mb_no, mb_id, mb_name, grade, mb_level, mb_balance, mb_deposit_point FROM g5_member WHERE {$recom} = '{$mb_id}' ";
+        $sql = " SELECT mb_no, mb_id, mb_name, grade, mb_level, mb_balance, mb_deposit_point,pv FROM g5_member WHERE {$recom} = '{$mb_id}' ";
         $sql_result = sql_query($sql);
         $sql_result_cnt = sql_num_rows($sql_result);
 
@@ -151,11 +155,11 @@ function  excute(){
         echo "<br><br><span class='title block' style='font-size:30px;'>".$mb_id."</span><br>";
         echo "센터하부회원 : <span class='red'> ".$sql_result_cnt."</span> 명 <br>";
         
-
+        $recom_half_total = 0;
         while( $center = sql_fetch_array($sql_result) ){   
             
             $recom_id = $center['mb_id'];
-            $half_bonus_sql = "SELECT SUM(pv) AS hap FROM g5_order WHERE od_date BETWEEN '{$half_frdate}' AND '{$half_todate}' AND mb_id = '{$recom_id}' ";
+            $half_bonus_sql = "SELECT SUM(upstair) AS hap FROM g5_order WHERE od_date BETWEEN '{$half_frdate}' AND '{$half_todate}' AND mb_id = '{$recom_id}' ";
             // if($debug){echo "<code>".$half_bonus_sql."</code>";}
             $half_bonus_result = sql_fetch($half_bonus_sql);
 
@@ -172,9 +176,12 @@ function  excute(){
         } 
 
         $benefit = $recom_half_total * $bonus_rate;
+        $direct_benefit = $recom_half_total*0.01;
+       
         
-        echo "<br><br><span class='title box'> ".$mb_id."  - 지난주 하부 총매출 : <span class='blue'>".Number_format($recom_half_total)."</span>";
-        echo " | 센터수당 : <span class='blue'>".Number_format($benefit)." (".($bonus_rate*100)."%)</span></span><br>";
+        echo "<br><br><span class='title box'> ".$mb_id."  - 기간내 하부 총매출 : <span class='blue'>".Number_format($recom_half_total)."</span>";
+        echo " | 센터수당 : <span class='blue'>".Number_format($benefit)." (".($bonus_rate*100)."%)</span>";
+        echo " | 소개수당 : <span class='blue'>".Number_format($direct_benefit)." (".(1)."%)</span></span><br>";
         
         list($mb_balance,$balance_limit,$benefit_limit) = bonus_limit_check($recom_id,$benefit);
         $benefit_limit = $benefit;
@@ -188,6 +195,8 @@ function  excute(){
         $rec=$code.' Bonus By Center:'.$mb_id;
         $rec_adm= 'CENTER | '.$recom_half_total.'*'.$bonus_rate.'='.$benefit;
 
+        $live_benefit = $benefit_limit * $live_bonus_rate;
+        $shop_benefit = $benefit_limit * $shop_bonus_rate;
 
         // 수당제한
         echo $mb_id." | ".Number_format($recom_half_total).'*'.$bonus_rate;
@@ -205,7 +214,7 @@ function  excute(){
         }else if($benefit == 0){
             echo "<span class=blue> ▶▶ 수당 미발생 </span>";
         }else{
-            echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)."</span><br>";
+            echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)." (P지급".$live_benefit." / SP지급 : ".$shop_benefit.")</span><br>";
         }
 
 
@@ -213,8 +222,14 @@ function  excute(){
             
             $record_result = soodang_record($mb_id, $code, $benefit_limit,$rec,$rec_adm,$bonus_day);
             if($record_result){
-                $balance_up = "update g5_member set mb_balance = mb_balance + {$benefit_limit}  where mb_id = '".$mb_id."'";
+                if($balanace_ignore){
+                    $balance_ignore_sql = ", mb_balance_ignore = mb_balance_ignore + {$benefit_limit} ";
+                }else{
+                    $balance_ignore_sql = "";
+                }
 
+                $balance_up = "update g5_member set mb_balance = mb_balance + {$live_benefit} {$balance_ignore_sql}, mb_shop_point = mb_shop_point + {$shop_benefit}   where mb_id = '".$comp."'";
+    
                 // 디버그 로그
                 if($debug){
                     echo "<code>";

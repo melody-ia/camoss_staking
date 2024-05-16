@@ -2,7 +2,7 @@
 $sub_menu = "600800";
 include_once('./_common.php');
 
-
+// $debug=1;
 $g5['title'] = '센터수당(멤버)';
 $code = 'center';
 
@@ -258,7 +258,7 @@ function fvisit_submit(act)
         <th>회원가입일</th>
         <th>회원의 추천인</th>
         <th>기간매출(PV)금액</th>
-        <th>해쉬</th>
+        <th>PV</th>
         <th>멤버쉽결제</th>
         <th>센터수당</th>
     </tr>
@@ -269,15 +269,16 @@ function fvisit_submit(act)
     for ($i=0; $row=sql_fetch_array($result); $i++) {
 
         $order_total_sql = "SELECT sum(upstair) as upstair_total, sum(pv) as pv_total from g5_order WHERE mb_id = '{$row['mb_id']}' AND od_date >= '{$fr_date}' AND od_date <= '{$to_date}' ";
+        
         $order_total = sql_fetch($order_total_sql);
         
-        $membership_sql = " SELECT * from g5_order WHERE mb_id = '{$row['mb_id']}' AND od_date >= '{$fr_date}' AND od_date <= '{$to_date}' AND od_cash = 300000 ";
-        $membership_yn = sql_fetch($membership_sql)['od_cash'];
+        /* $membership_sql = " SELECT * from g5_order WHERE mb_id = '{$row['mb_id']}' AND od_date >= '{$fr_date}' AND od_date <= '{$to_date}' AND od_cash = 300000 ";
+        $membership_yn = sql_fetch($membership_sql)['od_cash']; */
 
         $bg = 'bg'.($i%2);
         $total_hap += $order_total['upstair_total'];
         $total_pv +=  $order_total['pv_total'];
-        $center_bonus = $order_total['upstair_total']*0.02;
+        $center_bonus = $order_total['upstair_total']*0.03;
         $total_center_bonus += $center_bonus ;
         $membership_total += $membership_yn; 
         
@@ -309,7 +310,7 @@ function fvisit_submit(act)
         <td><?=$i?>명</td>
         <td colspan='2'></td>
         <td><?=number_format($total_hap)?><?=$curencys[1]?></td>
-        <td><?=number_format($total_pv)?> PV (hash)</td>
+        <td><?=number_format($total_pv)?> PV </td>
         <td><?=number_format($membership_total)?></td>
         <td><?=number_format($total_center_bonus)?><?=$curencys[1]?></td>
     </tfoot>

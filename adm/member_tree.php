@@ -305,7 +305,7 @@ else
 	,(select mb_id from g5_member where mb_brecommend=c.c_id and mb_brecommend_type='R' limit 1) as b_recomm2
 	,(select count(mb_no) from g5_member where ".$recommend_name."=c.c_id and mb_leave_date = '') as m_child
 	,(SELECT mb_rate FROM g5_member WHERE mb_id = c.c_id) AS mb_rate
-	,(SELECT mb_save_point FROM g5_member WHERE mb_id = c.c_id) AS mb_pv
+	,(SELECT pv FROM g5_member WHERE mb_id = c.c_id) AS mb_pv
 	,(SELECT mb_habu_sum FROM g5_member WHERE mb_id = c.c_id) AS mb_habu_sum
 	,(SELECT recom_sales FROM g5_member WHERE mb_id = c.c_id) AS recom_sales
 	,(SELECT mb_child FROM g5_member WHERE mb_id=c.c_id) AS mb_children

@@ -5,7 +5,7 @@ include_once('./bonus_inc.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-// $debug=1;
+$debug=1;
 
 // 바이너리(후원)매칭 수당
 $min30= date("Y-m-d", strtotime( "-30 day", strtotime($bonus_day)) );

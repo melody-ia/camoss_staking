@@ -52,7 +52,7 @@ $sql = "SELECT c.c_id,c.c_class,(
 	WHERE mb_id=c.c_id) AS m_no
 	,(select mb_rate FROM g5_member WHERE mb_id=c.c_id) AS mb_rate
 	, ( select recom_sales FROM g5_member WHERE mb_id=c.c_id) AS recom_sales
-	,(select mb_save_point FROM g5_member WHERE mb_id=c.c_id) AS mb_save_point
+	,(select pv FROM g5_member WHERE mb_id=c.c_id) AS mb_save_point
 	,(select grade FROM g5_member WHERE mb_id=c.c_id) AS grade
 	,(SELECT mb_child FROM g5_member WHERE mb_id=c.c_id) AS mb_children
 	FROM g5_member m
@@ -119,10 +119,10 @@ if ($order_proc==1){
 
 
 if ($srow['b_recomm']){
-	$left_sql = " SELECT mb_rate,mb_save_point, (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm']}' ";
+	$left_sql = " SELECT mb_rate,mb_save_point,pv, (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm']}' ";
 	
 	$mb_self_left_result = sql_fetch($left_sql);
-	$mb_self_left_acc = $mb_self_left_result['mb_save_point'] + $mb_self_left_result['noo'];
+	$mb_self_left_acc = $mb_self_left_result['pv'] + $mb_self_left_result['noo'];
 	$row6['tpv'] = $mb_self_left_acc ;
 	
 }else{
@@ -130,9 +130,9 @@ if ($srow['b_recomm']){
 }
 
 if ($srow['b_recomm2']){
-	$right_sql = " SELECT mb_rate,mb_save_point, (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm2']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm2']}' ";
+	$right_sql = " SELECT mb_rate,mb_save_point,pv, (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm2']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm2']}' ";
 	$mb_self_right_result = sql_fetch($right_sql);
-	$mb_self_right_acc = $mb_self_right_result['mb_save_point'] + $mb_self_right_result['noo'];
+	$mb_self_right_acc = $mb_self_right_result['pv'] + $mb_self_right_result['noo'];
 	$row7['tpv'] = $mb_self_right_acc ;
 }else{
 	$row7['tpv'] = 0;
