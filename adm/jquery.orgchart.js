@@ -1027,6 +1027,7 @@
           .end().end().siblings().remove();
       }
     },
+    
     // create node
     createNode: function (nodeData, level, opts) {
       var that = this;
@@ -1042,6 +1043,7 @@
         $nodeDiv.append(opts.nodeTemplate(nodeData));
       } else {
 		 var temp = nodeData[opts.nodeTitle].split("|");
+
 		 if (temp[0]=="NO"){
 	        $nodeDiv.append('<div class="title" onclick="set_member(\''+temp[1]+'\',\''+temp[2]+'\')"><div style="padding-top:40px">Place<br><br>New<br><br>member</div></div>')
           .append(typeof opts.nodeContent !== 'undefined' ? '<div class="content">' + (nodeData[opts.nodeContent] || '') + '</div>' : '');
@@ -1077,23 +1079,28 @@
         html += "<div class='dec' style='margin-bottom:5px;'>등급: <span class='badge "+badge_color+"' style='font-size:11px;'>"+temp[12]+"S</span></div>";
         html += '<div class="dec">스폰서(직추천): <strong>' + temp[15] + '명</strong></div>';
 
-        if(temp[17] == 'B'){
+        if(temp[18] == 'B'){
           html += '<div class="dec">후원산하: <strong>' + temp[16] + '명</strong></div>';
         }else{
           html += '<div class="dec">추천산하: <strong>' + temp[10] + '명</strong></div>';
         }
 
         // html += '<div class="dec mt5"><span class=f_green> MH: ' + temp[13] + '</span></div>';
-        html += '<div class="dec"><span class=f_blue><strong> PV: ' + temp[11] + '</strong></span></div>';
-        html += '<div class="dec"><span class=f_pink><strong> ACC: ' + temp[9] + '</strong></span></div>';
+        
+        html += '<div class="dec" STYLE="line-height:20px;"><span class=f_blue><strong> PV: ' + temp[11] + '</strong></span></div>';
 
         if(temp[18] == 'B'){
-          html += '<div class="box_foot">'
+          // html += '<div class="dec"><span class=f_pink><strong> ACC: ' + temp[9] + '</strong></span></div>';
+        }
+
+        if(temp[18] == 'B'){
+          /* html += '<div class="box_foot">'
           html += '<div class="dec p_left"><span class="red">' + temp[7] + '</span><br><span class="hash">#'+temp[4]+'</span></div>';
           html += '<div class="dec p_right"><span class="red">' + temp[8] + '</span><br><span class="hash">#'+temp[5]+'</span></div>';
-          html += '</div>';
+          html += '</div>'; */
+          html += '<div class="box_foot"><div class="dec p_full"><span class="red"><strong> ' + temp[9] + '</strong></span></div>';
         }else{
-          html += '<div class="box_foot"><div class="dec p_full"><span class="red">' + temp[14] + '</span><br><span class="hash f_green">#'+temp[17]+'</span></div>';
+          // html += '<div class="box_foot"><div class="dec p_full"><span class="red"><strong> ' + temp[9] + '</strong></span></div>';
         }
         $nodeDiv.append(html).append(typeof opts.nodeContent !== 'undefined' ? '<div class="content">' + (nodeData[opts.nodeContent] || '') + '</div>' : '');
 		 }

@@ -385,10 +385,10 @@ function get_org_down($srow){
 		if ($gubun=="B"){
 ?>
 
-<ul>
+<!-- <ul>
 <li>NO|<?=$row['c_id']?>|L</li>
 <li>NO|<?=$row['c_id']?>|R</li>
-</ul>
+</ul> -->
 
 <?}}?>
 
@@ -405,7 +405,7 @@ $row2 = sql_fetch($sql);
 //echo $rc."|".$sql;
 if ($rc==1 && ceil($row2['cnt'])<2){
 ?>
-<li>NO|<?=$u_id?>|R</li>
+<!-- <li>NO|<?=$u_id?>|R</li> -->
 <?
 }
 }

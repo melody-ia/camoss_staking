@@ -130,40 +130,26 @@ else
 
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 
-<div class="local_desc01 local_desc">
-    <p>
-		<!-- - <span class='f_green'>MH : </span>보유 마이닝해쉬 (<?=strtoupper($minings[$now_mining_coin])?>)&nbsp&nbsp -->
-        - <span class='f_blue'>PV : </span> 매출(패키지)금액, 단위 : 원 &nbsp&nbsp
-		- <span class='f_pink'>ACC : </span> 승급 대상포인트 (하부 매출), 단위 : 원 &nbsp&nbsp
-		<!-- - <span style='color:red'>LR </span> 추천/후원 하부 매출&nbsp&nbsp -->
-		<!-- - <span class='f_green'>LR# </span> 추천/후원 하부 해쉬 &nbsp&nbsp -->
-	</p>
-</div>
-
+<!-- 
 <div style="padding:0px 0px 0px 10px;">
 	<a name="org_start"></a>
 	<div style="float:left">
 	<input type="button" class="btn_menu" value="검색메뉴닫기" onclick="btn_menu()">
-	<!-- <input type="button" class="btn_menu" value="전체 조직도보기" onclick="location.href='member_org.php?go=Y'">
-	<input type="button" class="btn_menu" style="background:#fadfca" value="신규회원등록" onclick="open_register()"> -->
-<!--	<input type="button" class="btn_menu" style="background:#fadfca" value="조직도 인쇄" onclick="btn_print()"> -->
 	</div>
 	<div style="float:right;padding-right:10px">
 
 	<button type='button' id='zoomOut' class='zoom2-btn'>Zoom Out</button>
 	<button type='button' id='zoomIn' class='zoom-btn'>Zoom In</button>
-	<!-- <button type="button" class="my-class" onclick="clickExportButton();">조직도 인쇄</button> -->
-
-	<button type="button"  class="my-class" onclick="btn_org()">조직도 재구성</button>
 	</div>
 </div>
 <div style="padding-top:10px;clear:both"></div>
+
 <div id="div_left" style="width:15%;float:left;min-height:710px;">
 	<div style="margin-left:10px;padding:5px 5px 5px 5px;border:1px solid #d9d9d9;height:100%">
-<?
-if (!$fr_date) $fr_date = Date("Y-m-d", time()-60*60*24*365);
-if (!$to_date) $to_date = Date("Y-m-d", time());
-?>
+	<?
+	if (!$fr_date) $fr_date = Date("Y-m-d", time()-60*60*24*365);
+	if (!$to_date) $to_date = Date("Y-m-d", time());
+	?>
 
 
 		<form name="sForm2" id="sForm2" method="get" action="./page.php">
@@ -191,7 +177,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 				</td>
 			</tr>
 			
-		</table>
+		</table> 
 		</form>
 
 		<div id="div_member"></div>
@@ -207,7 +193,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 				
 				<select name="sfl" id="sfl">
 				    <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
-					<!-- <option value="mb_name"<?php echo get_selected($_GET['sfl'], "mb_name"); ?>>이름</option> -->
+					<option value="mb_name"<?php echo get_selected($_GET['sfl'], "mb_name"); ?>>이름</option>
 					</select>
 				<div style="padding-top:5px">
 				<label for="stx" class="sound_only" >검색어<strong class="sound_only"> 필수</strong></label>
@@ -227,12 +213,13 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 
 		</div>
 	</div>
-</div>
+</div> -->
+
   <link type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/themes/base/jquery-ui.css" rel="stylesheet" />
   <link rel="stylesheet" href="/adm/css/font-awesome.min.css">
   <link rel="stylesheet" href="/adm/css/jquery.orgchart.css">
   <link href="/adm/css/scss/member_org.css" rel="stylesheet">
-  <script type="text/javascript" src="/adm/jquery.orgchart.js"></script>
+  <script type="text/javascript" src="/adm/jquery.orgchart2.js"></script>
   <script type="text/javascript" src="/adm/js/bluebird.min.js"></script>
   <script type="text/javascript" src="/adm/js/html2canvas.min.js"></script>
   <script type="text/javascript" src="/adm/js/jspdf.min.js"></script>
@@ -483,13 +470,13 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 	}
 </style>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	function clickExportButton(){
 		 $(".oc-export-btn").click();
 	}
-</script>
+</script> -->
 
-<div id="div_right" style="width:85%;float:left;min-height:500px">
+<div id="div_right" style="width:100%;float:left;min-height:500px">
 
 <?
 
