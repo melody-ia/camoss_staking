@@ -1350,7 +1350,7 @@ function curency_txt($value, $kind = 'deposit')
         swap_coin_price = deposit_amount/<?=$withdrawal_price?>;
         fixed_amt = Number(swap_coin_price).toFixed(2);
         $('.in_coin').css('display', 'block');
-        $('#active_in').text(`${number_with_commas(fixed_amt)} USDT`);
+        $('#active_in').text(`${number_with_commas(fixed_amt)} 원`);
 
       }else{
 
