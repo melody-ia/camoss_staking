@@ -627,6 +627,13 @@ if ($_GET['recom_referral']){
 			return false;
 		}
 
+		//페이 아이디
+		if (f.account_name.value == '' || f.account_name.value == 'undefined') {
+			commonModal('코드페이 아이디확인', '<strong>코드페이 아이디가 잘못되거나 누락되었습니다. </strong>', 80);
+			return false;
+		}
+
+
 		// 패스워드
 		if (!chkPwd_1($('#reg_mb_password').val(), $('#reg_mb_password_re').val())) {
 			commonModal('비밀번호 규칙 확인', '<strong> 로그인 패스워드를 확인해주세요.</strong>', 80);
@@ -753,7 +760,9 @@ if ($_GET['recom_referral']){
 				<input type="text" name="mb_hp"  id="reg_mb_hp" class='cabinet'  pattern="[0-9]*" required  placeholder="휴대폰번호"/>
 				<span class='cabinet_inner' style=''>※'-'를 제외한 숫자만 입력해주세요</span>
 				<!-- <label class='prev_icon'><i class="ri-smartphone-line"></i></label> -->
-				
+
+				<input type="text" name="account_name"  id="account_name" class='cabinet' required  placeholder="코드페이 아이디"/>
+		
 			</div>
 
 			

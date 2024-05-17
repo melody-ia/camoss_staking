@@ -18,6 +18,7 @@ if($debug ==1){
   $d_price = 300000;
   $mb_name = '테스터1';
   $calc_coin = 300000;
+  $account_name = "pay_id";
 }else{
   $mb_id = $_POST['mb_id'];
   $txhash = $_POST['hash'];
@@ -25,6 +26,7 @@ if($debug ==1){
   $d_price = $_POST['d_price'];
   $mb_name = $member['mb_name'];
   $calc_coin = $_POST['calc_coin'];
+  $account_name = $_POST['account_name'];
 }
 
 // 입금계좌정보
@@ -74,7 +76,7 @@ if($pre_result['cnt'] < $limit_cnt){
   }
 
   $sql = "INSERT INTO wallet_deposit_request(mb_id,od_id, txhash, bank_account, create_dt,create_d,status,coin,cost,amt,in_amt) 
-  VALUES('$mb_id',{$txhash},'$deposit_infomation','{$deposit_info['bank_account']}','$now_datetime','$now_date',0,'$coin', {$usdt},{$d_price},{$point})";
+  VALUES('$mb_id',{$txhash},'$deposit_infomation','{$account_name}','$now_datetime','$now_date',0,'$coin', {$usdt},{$d_price},{$point})";
   
   if($debug){
     print_R($sql);
