@@ -114,6 +114,8 @@ $mb_8           = isset($_POST['mb_8'])             ? trim($_POST['mb_8'])      
 $mb_9           = isset($_POST['mb_9'])             ? trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])            ? trim($_POST['mb_10'])          : "";
 
+$account_name = isset($_POST['account_name']) ? trim($_POST['account_name']) : "";
+
 $mb_name        = clean_xss_tags($mb_name);
 $mb_email       = get_email_address($mb_email);
 $mb_homepage    = clean_xss_tags($mb_homepage);
@@ -352,6 +354,7 @@ if ($w == '') {
 					 first_name = '{$first_name}',
 					 mb_mprecommend = '{$mb_mprecommend}',
 					 nation_number = '{$nation_number}',
+					 account_name = '{$account_name}',
 					 swaped = 2,
 					 mb_week_dividend = 1
 					 {$sql_certify} ";

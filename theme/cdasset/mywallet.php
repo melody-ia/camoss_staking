@@ -515,7 +515,7 @@ function curency_txt($value, $kind = 'deposit')
 
           <div class="btn_ly qrBox_right "></div>
           <div class="col-sm-12 col-12 withdraw mt20">
-            <!-- <input type="text" id="deposit_name" class='b_ghostwhite' placeholder="TXID를 입력해주세요"> -->
+            <input type="text" id="account_name" class='b_ghostwhite' placeholder="코드페이 아이디를 입력해주세요." value = "<?=$member['account_name']?>" readOnly>
 
             <input type="text" id="deposit_value" class='b_ghostwhite' placeholder="입금액을 입력해주세요" inputmode=numeric>
             <label class='currency-right' id="deposit-currency-right"><?= $curencys[1] ?></label>
@@ -647,16 +647,15 @@ function curency_txt($value, $kind = 'deposit')
           </div> -->
 
           <div class='col-12'><label class="sub_title">- 출금정보 (최초 1회입력)</label></div>
-          <div class='col-6'>
+          <!-- <div class='col-6'>
             <input type="text" id="withdrawal_bank_name" class="b_ghostwhite " placeholder="은행명" value="<?= $member['bank_name'] ?>" <?if($bank_withrawal_info){echo " readonly ";}?>>
-          </div>
-          <div class='col-6'>
-            <input type="text" id="withdrawal_account_name" class="b_ghostwhite " placeholder="예금주" value="<?= $member['account_name'] ?>" <?if($bank_withrawal_info){echo " readonly ";}?>>
-          </div>
+          </div> -->
           <div class='col-12'>
-            <!-- <input type="text" id="withdrawal_bank_account" class="b_ghostwhite " placeholder="출금 계좌번호를 입력해주세요" value="<?= Decrypt($member['eth_my_wallet'], $member['mb_id'], 'x'); ?>"> -->
-            <input type="text" id="withdrawal_bank_account" class="b_ghostwhite " placeholder="출금 계좌번호를 입력해주세요" value="<?= $member['bank_account'] ?>" <?if($bank_withrawal_info){echo " readonly ";}?>>
+            <input type="text" id="withdrawal_account_name" class="b_ghostwhite " placeholder="코드페이 아이디를 입력해주세요." value="<?= $member['account_name'] ?>" readOnly>
           </div>
+          <!-- <div class='col-12'>
+            <input type="text" id="withdrawal_bank_account" class="b_ghostwhite " placeholder="출금 계좌번호를 입력해주세요" value="<?= $member['bank_account'] ?>" <?if($bank_withrawal_info){echo " readonly ";}?>>
+          </div> -->
         </div>
 
         <div class="input_shift_value mb10 pb5">
@@ -1433,7 +1432,7 @@ function curency_txt($value, $kind = 'deposit')
 
       var selected_account_card = deposit_array[select_account_card_id-1];
       
-      // var d_name = $('#deposit_name').val(); // 입금자
+      var account_name = $('#account_name').val(); // 입금자
       var d_name = selected_account_card.no;
       var d_price = conv_number($('#deposit_value').val()); // 입금액
       var coin = $(this).data('currency');
@@ -1468,7 +1467,8 @@ function curency_txt($value, $kind = 'deposit')
           "coin": coin,
           "hash": d_name,
           "d_price": d_price,
-          "calc_coin" : fixed_amt
+          "calc_coin" : fixed_amt,
+          "account_name" : account_name
         },
         success: function(result) {
           if (result.response == "OK") {

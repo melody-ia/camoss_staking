@@ -252,7 +252,7 @@ function return_status_tx($val)
 
 <div class="local_desc01 local_desc">
 	<p>
-		- 결과통계값 : 원코인 / 수수료뺀 출금액총합<br>
+		- 결과통계값 : 원 / 수수료뺀 출금액총합<br>
 		- 기본값 : 요청 | <strong>승인 : </strong> 수동송금처리후 변경 | <strong>취소 : </strong> 취소시 반환처리하면 차감금액 반환<br>
 		- 아이디클릭 > 회원수정 | 출금정보클릭 > 계좌번호 복사
 		<!-- <i class="ri-checkbox-blank-fill" style="color:green;border:1px solid #ccc;font-size:20px;"></i> : 마이닝출금 <i class="ri-checkbox-blank-fill" style="color:#4556ff;border:1px solid #ccc;font-size:20px;"></i> : 수당출금<br> -->
@@ -277,7 +277,7 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 				<th style="width:7%;">아이디 </th>
 				<th style="width:5%;">이름</th>
 				<!-- <th style="width:4%;">KYC인증 </th> -->
-				<th style="width:auto">출금정보</th>
+				<th style="width:auto">코드페이아이디</th>
 				<th style="width:5%;">출금전잔고<br>( <?=$curencys[0]?> )</th>
 				<th style="width:5%;">출금요청액<br>( <?=$curencys[0]?> )</th>
 				<th style="width:7%;">출금변환액</th>
@@ -285,7 +285,7 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 				<th style="width:5%;">출금수수료</th>
 
 				<th style="width:7%;">출금액</th>
-				<th style="width:5%;">출금시세<br>( <?=$curencys[1]?> )</th>
+				<!-- <th style="width:5%;">출금시세<br>( <?=$curencys[1]?> )</th> -->
 
 				<!-- <th style="width:5%;">적용코인시세</th> -->
 
@@ -319,10 +319,10 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 						<td style='color:#777'><?= $mb['mb_name'] ?></td>
 						<!-- <td><?=kyc_cert($row['kyc'])?></td> -->
 
-						<td style="text-align:left;padding-left:7px;" class="copybutton">
+						<td style="text-align:center;padding-left:7px;" class="copybutton">
 							<?php if ($row['addr'] == '') { ?>
-								<?= $row['bank_name'] ?> | <span id="bank_account" style='font-weight:600;font-size:13px;'><?= $row['bank_account'] ?></span>(<?= $row['account_name'] ?>)
-								<!-- <button type="button" class="btn inline_btn copybutton f_right" style='margin-right:10px;vertical-align:top;'>계좌복사</button> -->
+								 <?= $row['account_name'] ?>
+								<!-- <button type="button" class="btn inline_btn copybutton f_right" style='margin-right:10px;vertical-align:top;'>계좌복사</button>  -->
 							<?php } else { 
 
 								$wallet_addr = "";
@@ -376,7 +376,7 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 						</td>
 
 						<!-- 출금시세 -->
-						<td class="gray" style='font-size:11px;'><span><?= shift_auto($row['cost'], $curencys[0]) ?></span></td>
+						<!-- <td class="gray" style='font-size:11px;'><span><?= shift_auto($row['cost'], $curencys[0]) ?></span></td> -->
 						<!-- <td class="gray" style='font-size:11px;'><span><?= $row['cost'] . ' ' . $row['coin']?></span></td> -->
 
 						<td style="font-size:11px;"><?= timeshift($row['create_dt']) ?></td>
@@ -472,19 +472,19 @@ if ($pagelist) {
 			});
 		});
 
-		$('.copybutton').on('click', function() {
-			//commonModal("Address copy",'Your Wallet address is copied!',100);
+		// $('.copybutton').on('click', function() {
+		// 	//commonModal("Address copy",'Your Wallet address is copied!',100);
 
-			console.log($(this).parent().find('#bank_account').text());
+		// 	console.log($(this).parent().find('#bank_account').text());
 
-			var $temp = $("<input>");
-			$("body").append($temp);
-			$temp.val($(this).parent().find('#bank_account').text()).select();
-			document.execCommand("copy");
-			$temp.remove();
+		// 	var $temp = $("<input>");
+		// 	$("body").append($temp);
+		// 	$temp.val($(this).parent().find('#bank_account').text()).select();
+		// 	document.execCommand("copy");
+		// 	$temp.remove();
 
-			alert('주소가 복사되었습니다.');
-		})
+		// 	alert('주소가 복사되었습니다.');
+		// })
 	});
 
 	function select_all_check() {
