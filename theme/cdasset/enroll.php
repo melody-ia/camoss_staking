@@ -47,6 +47,7 @@ if ($_GET['recom_referral']){
 	var verify = false;
 	var recommned = "<?= $mb_recommend ?>";
 	var recommend_search = false;
+	var brecommend_search = false;
 	
 	var center_search = false;
 
@@ -422,7 +423,7 @@ if ($_GET['recom_referral']){
 		}else if(type == 2) {
 			var target_type = "#center";
 		}else {
-			var target_type = "#director";
+			var target_type = "#brecommend";
 		}
 		console.log(target + ' === ' + type);
 
@@ -504,14 +505,18 @@ if ($_GET['recom_referral']){
 
 					$(target_type + ' .modal-footer #btnSave').click(function() {
 
-						if(type == 2){
+						if(type == 1){
+							$(target).val($(target_type + ' .modal-body .user.selected').html());
+							recommend_search = true;
+							$('#reg_mb_center').val($(target_type + ' .modal-body .user.selected').html());
+						}else if(type == 2){
 							$('#reg_mb_center_nick').val($(target_type + ' .modal-body .user.selected').html());
 							$(target).val($(target_type + ' .modal-body .user.selected + .mb_nick').html());
 							center_search = true;
 						}else{
 							$(target).val($(target_type + ' .modal-body .user.selected').html());
-							recommend_search = true;
-							$('#reg_mb_center').val($(target_type + ' .modal-body .user.selected').html());
+							brecommend_search = true;
+
 						}
 						$(target).attr("readonly",true);
 						$(target_type).modal('hide');
@@ -531,14 +536,12 @@ if ($_GET['recom_referral']){
 	// submit 최종 폼체크
 	function fregisterform_submit() {
 		var f = $('#fregisterform')[0];
-		//console.log(recommend_search);
 		/*
 		if(key != sha256($('#vCode').val())){
 		 	commonModal('Do not match','<p>Please enter the correct code</p>',80);
 		 	return false;
 		}
 		*/
-
 		/* 국가선택 검사*/
 		/* if($('#nation_number').val() == "country"){
 			commonModal('country check', '<strong>please select country.</strong>', 80);
@@ -565,21 +568,37 @@ if ($_GET['recom_referral']){
 			return false;
 		}
 
+		//추천인이 본인인지 확인
+		if (f.mb_id.value == f.mb_recommend.value) {
+			commonModal('조직 관계 입력 확인', '<strong> 자신을 추천인으로 등록할수없습니다. </strong>', 80);
+			f.mb_recommend.focus();
+			return false;
+		}
+
 
 		//센터멤버 검사
-		/* if (f.mb_center.value == '' || f.mb_center.value == 'undefined') {
+		if (f.mb_center.value == '' || f.mb_center.value == 'undefined') {
 			dialogModal('센터정보 확인', "<strong>센터명 또는 센터 아이디를 검색하여 목록에서 선택해주세요.</strong>", 'warring');
 			return false;
 		}
 		if (!center_search) {
 			commonModal('센터정보 확인', '<strong>센터정보를 검색하여 선택해 주세요.</strong>', 80);
 			return false;
-		} */
+		} 
 		
-		//추천인이 본인인지 확인
-		if (f.mb_id.value == f.mb_recommend.value) {
-			commonModal('조직 관계 입력 확인', '<strong> 자신을 추천인으로 등록할수없습니다. </strong>', 80);
-			f.mb_recommend.focus();
+		//후원인 검사
+		if (f.mb_brecommend.value == '' || f.mb_brecommend.value == 'undefined') {
+			dialogModal('후원인 정보 확인', "<strong>후원인 아이디를 검색하여 목록에서 선택해주세요.</strong>", 'warning');
+			return false;
+		}
+		if (!brecommend_search) {
+			dialogModal('후원인 정보 확인', "<strong>후원인 아이디를 검색하여 목록에서 선택해주세요.</strong>", 'warning');
+			return false;
+		}
+		//후원인이 본인인지 확인
+		if (f.mb_id.value == f.mb_brecommend.value) {
+			commonModal('조직 관계 입력 확인', '<strong> 자신을 후원인으로 등록할수없습니다. </strong>', 80);
+			f.mb_brecommend.focus();
 			return false;
 		}
 
@@ -705,6 +724,19 @@ if ($_GET['recom_referral']){
 				<i style="color:rgba(255,255,255,0.4)">※센터정보 검색후 선택해주세요.</i>
 				<em class="info_text">※추천회원 검색후 선택해주세요.</em>
 			<!-- <p class="check_appear_title mt40"><span data-i18n='signUp.일반정보'>General Information</span></p> -->
+			
+			<p class="check_appear_title mt20"><span >후원인정보</span></p>
+				<section class='referzone'>
+					<div class="btn_input_wrap">
+						<input type="text" name="mb_brecommend" id="reg_mb_brecommend" placeholder="후원인 아이디" required/>
+
+						<div class='in_btn_ly2'>
+							<button type='button' class="btn_round check" onclick="getUser('#reg_mb_brecommend',3);"
+							><span>검색</span></button>
+						</div>
+					</div>
+				</section>
+			
 			<p class="check_appear_title mt30"><span>개인 정보 & 인증</span></p>
 			<div>
 				<input type="text" minlength="5" maxlength="20" name="mb_name" id="reg_mb_name" required placeholder="이름"  />

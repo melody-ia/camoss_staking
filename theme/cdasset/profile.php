@@ -296,6 +296,13 @@
 							<p ><?=get_name($member['mb_center'])?></p>
 						</li>
 					</ul>
+
+					<ul class='row'>
+						<li class='col-sm-12 col-12'>
+							<label >나의 후원인</label>
+							<p ><?=$member['mb_brecommend']?></p>
+						</li>
+					</ul>
 				</div>
 
 				<div class='col-sm-12 col-12 profile-box'>

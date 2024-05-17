@@ -99,6 +99,7 @@ $mb_addr_jibeon = isset($_POST['mb_addr_jibeon'])   ? trim($_POST['mb_addr_jibeo
 $mb_signature   = isset($_POST['mb_signature'])     ? trim($_POST['mb_signature'])   : "";
 $mb_profile     = isset($_POST['mb_profile'])       ? trim($_POST['mb_profile'])     : "";
 $mb_recommend   = isset($_POST['mb_recommend'])     ? trim($_POST['mb_recommend'])   : "";
+$mb_brecommend   = isset($_POST['mb_brecommend'])     ? trim($_POST['mb_brecommend'])   : "";
 $mb_mailling    = isset($_POST['mb_mailling'])      ? trim($_POST['mb_mailling'])    : 0;
 $mb_sms         = isset($_POST['mb_sms'])           ? trim($_POST['mb_sms'])         : 0;
 $mb_open        = isset($_POST['mb_open'])           ? trim($_POST['mb_open'])       : 0;
@@ -209,12 +210,12 @@ if ($w == '' || $w == 'u') {
 				if(trim($_POST['cert_no']) != $_SESSION['ss_cert_no'] || !$_SESSION['ss_cert_no'])
 					alert("회원가입을 위해서는 본인확인을 해주셔야 합니다.");
 			}
-			/*
+			
 			if ($mb_brecommend) {
 				if (!exist_mb_id($mb_brecommend))
 					alert("후원인이 존재하지 않습니다.");
 			}
-			*/
+			
 			if ($mb_recommend) {
 				if (!exist_mb_id($mb_recommend))
 					alert("추천인이 존재하지 않습니다.");
