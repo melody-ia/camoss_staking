@@ -36,10 +36,8 @@ if($debug){
 	}
 }
 
-$order_list_sql = "select s.*, m.mb_level, m.grade, m.mb_name, m.pv, (m.mb_balance + m.mb_shop_point) as mb_balance, m.mb_balance_ignore, m.mb_index
-from g5_order s 
-join g5_member m 
-on s.mb_id = m.mb_id where m.mb_save_point > 0 and s.od_soodang_date <= curdate() group by m.mb_id";
+$order_list_sql = "select m.mb_level,m.mb_no, m.mb_id, m.grade, m.mb_name, m.pv, (m.mb_balance + m.mb_shop_point) as mb_balance, m.mb_balance_ignore, m.mb_index
+from g5_member m where m.pv > 0 ";
 
 $order_list_result = sql_query($order_list_sql);
 

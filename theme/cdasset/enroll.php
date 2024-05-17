@@ -508,7 +508,7 @@ if ($_GET['recom_referral']){
 						if(type == 1){
 							$(target).val($(target_type + ' .modal-body .user.selected').html());
 							recommend_search = true;
-							$('#reg_mb_center').val($(target_type + ' .modal-body .user.selected').html());
+							// $('#reg_mb_center').val($(target_type + ' .modal-body .user.selected').html());
 						}else if(type == 2){
 							$('#reg_mb_center_nick').val($(target_type + ' .modal-body .user.selected').html());
 							$(target).val($(target_type + ' .modal-body .user.selected + .mb_nick').html());
@@ -728,8 +728,8 @@ if ($_GET['recom_referral']){
 						</div>
 					</div>
 				</section>
-				<i style="color:rgba(255,255,255,0.4)">※센터정보 검색후 선택해주세요.</i>
-				<em class="info_text">※추천회원 검색후 선택해주세요.</em>
+				<!-- <i style="color:rgba(255,255,255,0.4)">※센터정보 검색후 선택해주세요.</i>
+				<em class="info_text">※추천회원 검색후 선택해주세요.</em> -->
 			<!-- <p class="check_appear_title mt40"><span data-i18n='signUp.일반정보'>General Information</span></p> -->
 			
 			<p class="check_appear_title mt20"><span >후원인정보</span></p>
@@ -761,7 +761,7 @@ if ($_GET['recom_referral']){
 				<span class='cabinet_inner' style=''>※'-'를 제외한 숫자만 입력해주세요</span>
 				<!-- <label class='prev_icon'><i class="ri-smartphone-line"></i></label> -->
 
-				<input type="text" name="account_name"  id="account_name" class='cabinet' required  placeholder="코드페이 아이디"/>
+				<input type="text" name="account_name"  id="account_name" class='cabinet' required  placeholder="페이 아이디"/>
 		
 			</div>
 
