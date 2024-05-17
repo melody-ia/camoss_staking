@@ -883,9 +883,9 @@ function get_recommend2_up($m_id,$admin_id)
 
 function get_brecommend2_up($m_id,$admin_id) 
 { 
-	global $g5,$max_up_num,$ru_num, $gubun;
+	global $g5,$max_up_num,$ru_num,$config, $gubun;
 
-	if (!$admin_id) $admin_id="admin";
+	if (!$admin_id) $admin_id= $config['cf_admin'];
 
 	$class_name     = "g5_member_bclass";
 	$recommend_name = "mb_brecommend";
@@ -894,7 +894,7 @@ function get_brecommend2_up($m_id,$admin_id)
 
 	}else{
 		$ru_num++;
-		$sql  = " select ".$recommend_name.",(select mb_name from g5_member where mb_id=m.".$recommend_name.") as recomm_name from {$g5['member_table']} as m where mb_id='{$m_id}' and mb_leave_date = ''";
+		$sql  = " select ".$recommend_name.",(select mb_name from g5_member where mb_id=m.".$recommend_name.") as recomm_name from {$g5['member_table']} as m where mb_id='{$m_id}' and mb_leave_date = '' ";
 
 		$row  = sql_fetch($sql);
 		if ($row['mb_brecommend']){

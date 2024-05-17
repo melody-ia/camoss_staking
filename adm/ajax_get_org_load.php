@@ -38,12 +38,6 @@ $sql = "SELECT c.c_id,c.c_class,(
 	SELECT mb_b_child
 	FROM g5_member
 	WHERE mb_id=c.c_id) AS b_child,(
-	SELECT mb_id
-	FROM g5_member
-	WHERE mb_brecommend=c.c_id AND mb_brecommend_type='L') AS b_recomm,(
-	SELECT mb_id
-	FROM g5_member
-	WHERE mb_brecommend=c.c_id AND mb_brecommend_type='R') AS b_recomm2,(
 	SELECT COUNT(mb_no)
 	FROM g5_member
 	WHERE mb_brecommend=c.c_id AND mb_leave_date = '') AS m_child,  (
