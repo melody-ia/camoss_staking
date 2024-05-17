@@ -7,14 +7,12 @@ include_once('./bonus_inc.php');
 auth_check($auth[$sub_menu], 'r');
 
 
-$debug = 1;
+// $debug = 1;
 
 
-// $month = date('m', $timestr);
+$month = date('m', $timestr);
 
-// echo "이번달 : ".$month;
-
-
+echo "이번달 : ".$month;
 
 /* 
 if($day > 13 && $day <= 20){
@@ -27,7 +25,7 @@ if($day > 13 && $day <= 20){
     $half_todate    = date('Y-m-'.$lastday, $timestr); // 매월 말일
 } */
 
-/* $d_1 = mktime(0,0,0, date("m"), 1, date("Y")); // 이번달 1일
+$d_1 = mktime(0,0,0, date("m"), 1, date("Y")); // 이번달 1일
 
 // 지난달 1일~말일
 $prev_month = strtotime("-1 month", $d_1); // 지난달
@@ -37,15 +35,15 @@ $day = date('d', $timestr);
 $lastday = date('t', $prev_month);
 
 $start_week    = date('Y-m-01', $prev_month); // 매월 1 시작일자
-$end_week    = date('Y-m-'.$lastday, $prev_month); // 매월 말일 */
+$end_week    = date('Y-m-'.$lastday, $prev_month); // 매월 말일 
 
-$previous_week = strtotime("-1 week +1 day");
+/* $previous_week = strtotime("-1 week +1 day");
 
 $start_week = strtotime("last monday midnight",$previous_week);
 $end_week = strtotime("next sunday",$start_week);
 
 $start_week = date("Y-m-d",$start_week);
-$end_week = date("Y-m-d",$end_week);
+$end_week = date("Y-m-d",$end_week); */
 
 
 // 직급 수당
@@ -71,7 +69,7 @@ $bonus_layer = $bonus_row['layer'];
 $bonus_layer_tx = bonus_layer_tx($bonus_layer);
 $bonus_limited = $bonus_row['limited'];
 
-$company_sales = 5;
+$company_sales = 7;
 
 /* 
 //보름간 매출 합계 
@@ -81,7 +79,8 @@ $total_order = $total_order_reult['hap'];
 */
 
 //지난달 매출 합계 
-$total_order_query = "SELECT SUM(od_cash) AS hap FROM g5_order WHERE od_soodang_date BETWEEN '{$start_week}' AND '{$end_week}' ";
+$total_order_query = "SELECT SUM(od_cash) AS hap FROM g5_order WHERE od_soodang_date BETWEEN '{$start_week}' AND '{$end_week}' AND od_cash_no != 'R' ";
+
 $total_order_reult = sql_fetch($total_order_query);
 $total_order = $total_order_reult['hap'];
 
@@ -90,7 +89,7 @@ $grade_order = ($total_order * ($company_sales * 0.01));
 
 
 // 수당제한 제외 
-$balanace_ignore = TRUE;
+$balanace_ignore = FALSE;
 
 
 
@@ -125,7 +124,7 @@ function grade_name($val)
     else if($val == 2){$full_name = '이코노미';} 
     else if($val == 1){$full_name = '여행플래너';} 
 
-    $grade_name = $val . " STAR = ".$full_name;
+    $grade_name = $val . " STAR = ";
 
     return $grade_name;
 }
@@ -153,7 +152,7 @@ ob_start();
 echo "<strong>직급(등급) 지급비율 : ";
 print_R(rate_txt($bonus_row['rate']));
 echo "   </strong> |    지급조건 :".$pre_condition.' | '.$bonus_condition_tx." | ".$bonus_layer_tx."<br>";
-echo "<br><strong> 현재일 : ".$bonus_day." |  ".$half." 매출산정기준 : 구매일 + 3Day | <span class='red'>".$start_week."~".$end_week."</span> | ".$half." PV 합계 : <span class='blue big'>".Number_format($total_order).' '.$curencys[0]."</span>  </strong><br>";
+echo "<br><strong> 현재일 : ".$bonus_day." |  ".$half." 매출산정기준 : 지난달 | <span class='red'>".$start_week."~".$end_week."</span> | ".$half." 패키지 매출 합계 : <span class='blue big'>".Number_format($total_order).' '.$curencys[0]."</span>  </strong><br>";
 echo "<br> 직급수당 대상금액 : <span class='blue big'>".$company_sales."% = ".Number_format($grade_order).' '.$curencys[0]."</span>";
 echo "<br><br>기준대상자(직급 0 이상) : ";
 
@@ -205,12 +204,12 @@ function  excute(){
     global $bonus_day, $bonus_condition, $bonus_rate_array_cnt, $code, $bonus_rate,$bonus_limit,$total_order,$Khan_order,$grade_order;
     global $debug,$prev_m,$live_bonus_rate,$shop_bonus_rate,$balanace_ignore,$member_cnt_result;
 
-    for ($i=$bonus_rate_array_cnt; $i>0; $i--) {   
-        $cnt_sql = "SELECT count(*) as cnt From {$g5['member_table']} WHERE grade = {$i} ".$admin_condition.$pre_condition." ORDER BY mb_no" ;
+    for ($i=1; $i<$bonus_rate_array_cnt+2; $i++) {   
+        $cnt_sql = "SELECT count(*) as cnt From {$g5['member_table']} WHERE grade >= {$i} ".$admin_condition.$pre_condition." ORDER BY mb_no" ;
         $cnt_result = sql_fetch($cnt_sql);
         
 
-        $sql = "SELECT * FROM {$g5['member_table']} WHERE grade = {$i} ".$admin_condition.$pre_condition." ORDER BY mb_no ";
+        $sql = "SELECT * FROM {$g5['member_table']} WHERE grade >= {$i} ".$admin_condition.$pre_condition." ORDER BY mb_no ";
         $result = sql_query($sql);
 
         // 직급표기예외
@@ -232,7 +231,8 @@ function  excute(){
         $star_rate_tx = $bonus_rate[$i -1]."%";
 
 
-        echo "<br><br><span class='title block'>".grade_name($grade_name)." (<span class='red'>".$member_count."</span> | ".$member_grade_count.") - ".$star_rate_tx." (".($grade_order*$star_rate)." usdt)"."</span><br>";
+        // echo "<br><br><span class='title block'>".grade_name($grade_name)." (<span class='red'>".$member_count."</span> | ".$member_grade_count.") - ".$star_rate_tx." (".($grade_order*$star_rate)." usdt)"."</span><br>";
+        echo "<br><br><span class='title block'>".grade_name($grade_name)." (<span class='red'>".$member_count."</span> ".") - ".$star_rate_tx." (".Number_format($total_order*$star_rate)."  원 )"."</span><br>";
 
         // 디버그 로그 
         if($debug){
@@ -282,17 +282,16 @@ function  excute(){
                     $benefit_tx = ' '.$grade_order.' * '.$star_rate.' * 1/'.$member_count.'='.$benefit; 
                 } */
 
-                $benefit = ( ($grade_order*$star_rate) * (1/$member_grade_count) );// 매출자 * 수당비율 * 1/n
+                $benefit = ( ($total_order*$star_rate) * (1/$member_grade_count) );// 매출자 * 수당비율 * 1/n
                 // $benefit = shift_auto($benefit,'$');
 
                 $live_benefit = clean_coin_format($benefit,2);
-                $shop_benefit = 0;
 
-                // $live_benefit = $benefit*$live_bonus_rate;
-                // $shop_benefit = $benefit*$shop_bonus_rate;
+                $live_benefit = $benefit*$live_bonus_rate;
+                $shop_benefit = $benefit*$shop_bonus_rate;
 
-                $benefit_tx = ' '.$grade_order.' * '.$star_rate.' * 1/'.$member_grade_count.'*'.$live_bonus_rate.'='.$live_benefit; 
-                $benefit_limit = $live_benefit;
+                $benefit_tx = ' '.$total_order.' * '.$star_rate.' * 1/'.$member_grade_count.'='.$benefit; 
+                $benefit_limit = $benefit;
 
                 
                 
@@ -326,7 +325,7 @@ function  excute(){
                     echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)."</span><br>";
                 } */
 
-                echo "<span class=blue> ▶▶ 수당 지급 : ".$live_benefit." <br> ▶▶▶ 쇼핑몰보너스 지급 : ".$shop_benefit."</span><br>";
+                echo "<span class=blue> ▶▶ 수당 지급 : ".$live_benefit."  ▶▶▶ 쇼핑몰보너스 지급 : ".$shop_benefit."</span><br>";
                 
 
 

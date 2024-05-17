@@ -42,7 +42,7 @@ $sql = "insert g5_order set
 	, od_soodang_date = '{$soodang_date}'
 	, od_settle_case = '{$curencys}'
 	, od_status = '재구매'
-	, od_cash_no = '재구매'	
+	, od_cash_no = 'R'	
 	, pv = 0 
 	, od_misu = {$max_limit_point}";
 

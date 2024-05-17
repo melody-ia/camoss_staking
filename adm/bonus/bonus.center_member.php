@@ -261,6 +261,7 @@ function fvisit_submit(act)
         <th>PV</th>
         <th>멤버쉽결제</th>
         <th>센터수당</th>
+        <th>소개수당</th>
     </tr>
     </thead>
     <tbody>
@@ -279,8 +280,11 @@ function fvisit_submit(act)
         $total_hap += $order_total['upstair_total'];
         $total_pv +=  $order_total['pv_total'];
         $center_bonus = $order_total['upstair_total']*0.03;
+        $recommand_bonus = $order_total['upstair_total']*0.01;
+
         $total_center_bonus += $center_bonus ;
         $membership_total += $membership_yn; 
+        $recommand_total += $recommand_bonus;
         
     ?>
    
@@ -295,7 +299,8 @@ function fvisit_submit(act)
         <td class='text-center'><?=Number_format($order_total['upstair_total'])?></td>
         <td class='text-center'><?=Number_format($order_total['pv_total'])?></td>
         <td class='text-center'><?=Number_format($membership_yn)?></td>			
-        <td class='text-center'><?=Number_format($center_bonus)?></td>			
+        <td class='text-center'><?=Number_format($center_bonus)?></td>
+        <td class='text-center'><?=Number_format($recommand_bonus)?></td>			
     </tr>
 
     <?php
@@ -313,6 +318,7 @@ function fvisit_submit(act)
         <td><?=number_format($total_pv)?> PV </td>
         <td><?=number_format($membership_total)?></td>
         <td><?=number_format($total_center_bonus)?><?=$curencys[1]?></td>
+        <td><?=number_format($recommand_total)?><?=$curencys[1]?></td>
     </tfoot>
 
     </table>

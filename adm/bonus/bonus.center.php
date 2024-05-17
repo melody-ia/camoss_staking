@@ -6,7 +6,7 @@ include_once('./bonus_inc.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$debug =1;
+// $debug =1;
 
 // 지난주 날짜 구하기 
 /* $today=$bonus_day;
@@ -146,7 +146,7 @@ function  excute(){
 
 
         $recom= 'mb_center'; //센터멤버
-        $sql = " SELECT mb_no, mb_id, mb_name, grade, mb_level, mb_balance, mb_deposit_point,pv FROM g5_member WHERE {$recom} = '{$mb_id}' ";
+        $sql = " SELECT mb_no, mb_id, mb_name, grade, mb_level, mb_balance,mb_recommand, mb_deposit_point,pv FROM g5_member WHERE {$recom} = '{$mb_id}' ";
         $sql_result = sql_query($sql);
         $sql_result_cnt = sql_num_rows($sql_result);
 
