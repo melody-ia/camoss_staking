@@ -1,12 +1,17 @@
 <?php
 include_once('./_common.php');
 
-// $sql = "select * from {$g5['member_table']} where  mb_id in (select c_id from g5_member_bclass where mb_id='".$member['mb_id']."')  ";
-$sql = "select * from g5_member_binary where  ";
-$sql .= "mb_id like '{$binary_seach}%' ";
-$sql .= " order by mb_id";
-
+if ($gubun=="B"){
+	$sql = "select * from {$g5['member_table']} where  mb_leave_date = '' and mb_id in (select c_id from g5_member_bclass where mb_id='".$member['mb_id']."')  ";
+}else{
+	$sql = "select * from {$g5['member_table']} where  mb_leave_date = '' and mb_id in (select c_id from g5_member_class where mb_id='".$member['mb_id']."')  ";
+}
+if ($stx) {
+    $sql .= " and {$sfl} like '{$stx}%' ";
+}
+$sql .= " order by ".$sfl;
 $result = sql_query($sql);
+
 ?>
 
 <style>

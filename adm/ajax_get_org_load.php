@@ -153,7 +153,7 @@ $mdepth = (strlen($row4['c_class'])/2);
 
 if ($srow['c_class']){
 ?>
-		<ul id="org" style="" >
+		<ul id="org" style="display:none" >
 			<li>
 			[<?=(strlen($srow['c_class'])/2)-1?>-<?=($srow['c_child'])?>-<?=($srow['b_child']-1)?>]
 			|<?=get_member_label($srow['mb_level'])?>

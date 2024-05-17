@@ -668,6 +668,8 @@ function edit_member(edit_id) {
 
 function go_member(go_id) {
     $("#now_id").val(go_id);
+	
+	console.log(go_id);
 
     $.get("/util/ajax_get_org_load.php?gubun=<?=$gubun?>&fr_date=<?=$fr_date?>&to_date=<?=$to_date?>&go_id=" + go_id,
         function(data) {
@@ -715,7 +717,7 @@ function btn_search() {
         //	alert("검색어를 입력해주세요.");
         $("#stx").focus();
     } else {
-        $.post("/adm/ajax_get_tree_member.php", $("#sForm").serialize(), function(data) {
+        $.post("/util/ajax_get_tree_member.php", $("#sForm").serialize(), function(data) {
             $("#div_result").html(data);
         });
     }
