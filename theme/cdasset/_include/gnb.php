@@ -159,7 +159,7 @@ $(document).ready(function(){
 				<a href="/page.php?id=structure">
 					<div class="gnb_img_wrap"></div>
 					<div class="gnb_title_Wrap">
-						<span >조직도</span>
+						<span >추천조직도</span>
 					</div>
 				</a>
 			</li>

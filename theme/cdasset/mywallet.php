@@ -515,7 +515,7 @@ function curency_txt($value, $kind = 'deposit')
 
           <div class="btn_ly qrBox_right "></div>
           <div class="col-sm-12 col-12 withdraw mt20">
-            <input type="text" id="account_name" class='b_ghostwhite' placeholder="코드페이 아이디를 입력해주세요." value = "<?=$member['account_name']?>" readOnly>
+            <input type="text" id="account_name" class='b_ghostwhite' placeholder="페이 아이디를 입력해주세요." value = "<?=$member['account_name']?>" readOnly>
 
             <input type="text" id="deposit_value" class='b_ghostwhite' placeholder="입금액을 입력해주세요" inputmode=numeric>
             <label class='currency-right' id="deposit-currency-right"><?= $curencys[1] ?></label>
@@ -651,7 +651,7 @@ function curency_txt($value, $kind = 'deposit')
             <input type="text" id="withdrawal_bank_name" class="b_ghostwhite " placeholder="은행명" value="<?= $member['bank_name'] ?>" <?if($bank_withrawal_info){echo " readonly ";}?>>
           </div> -->
           <div class='col-12'>
-            <input type="text" id="withdrawal_account_name" class="b_ghostwhite " placeholder="코드페이 아이디를 입력해주세요." value="<?= $member['account_name'] ?>" readOnly>
+            <input type="text" id="withdrawal_account_name" class="b_ghostwhite " placeholder="페이 아이디를 입력해주세요." value="<?= $member['account_name'] ?>" readOnly>
           </div>
           <!-- <div class='col-12'>
             <input type="text" id="withdrawal_bank_account" class="b_ghostwhite " placeholder="출금 계좌번호를 입력해주세요" value="<?= $member['bank_account'] ?>" <?if($bank_withrawal_info){echo " readonly ";}?>>

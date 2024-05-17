@@ -269,7 +269,7 @@ $result = sql_query($sql);
         <th scope="col" width='5%'>no</th>
         <th scope="col" width='7%'>아이디</th>
         <th scope="col" width='5%'>이름</th>
-        <th scope="col" width='10%'>코드페이아이디</th>
+        <th scope="col" width='10%'>페이아이디</th>
         <!-- <th scope="col" width='5%'>센터</th> -->
         <th scope="col" width='15%'>입금정보</th>
         <th scope="col" width='5%'>입금요청금액</th>

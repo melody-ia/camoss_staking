@@ -197,8 +197,8 @@ function user_grade($id){
 }
 
 function _user_grade($grade){
-	$array = ["일반","여행플래너","이코노미","비지니스","퍼스트"];
-	return $array[$grade > 4 ? 4 : $grade];
+	$array = ["0 STAR","1 STAR","2 STAR","3 STAR","4 STAR","5 STAR"];
+	return $array[$grade > 5 ? 5 : $grade];
 }
 
 

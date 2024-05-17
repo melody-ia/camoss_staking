@@ -262,29 +262,6 @@ if ($srow['c_class']){
 			</li>
 		</ul>
 
-		<form name="sForm" id="sForm" method="post" style="padding-top:10px" onsubmit="return false;">
-		<input type="hidden" name="gubun" value="<?=$gubun?>">
-		<table width="100%">
-			<tr>
-				<td bgcolor="#f2f5f9" height="30" style="padding-left:10px"><b>회원검색</b></td>
-			</tr>
-			<tr>
-				<td bgcolor="#f2f5f9" height="30" style="padding:10px 10px 10px 10px">
-				
-				<select name="sfl" id="sfl">
-				    <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
-				</select>
-				<input type="text" name="stx" value="<?php echo $stx ?>" id="stx"  class="required frm_input" style="padding:0 5px;" onkeypress="event.keyCode==13?btn_search():''">
-				</div>
-				</td>
-			</tr>
-			<tr>
-				<td bgcolor="#f2f5f9" height="30" align="center">
-				<input type="button" onclick="btn_search();" class="btn_submit" value="검 색">
-				</td>
-			</tr>
-		</table>
-		</form>
 		<div id="div_result"></div>
         <button type='button' id='zoomOut' class='zoom2-btn'>Zoom Out</button>
         <button type='button' id='zoomIn' class='zoom-btn'>Zoom In</button>
@@ -302,9 +279,9 @@ if ($srow['c_class']){
 
         var $container = $('#chart-container');
         var $chart = $('.orgchart');
-
         var div = $chart.css('scale', '0.6');
-        var div = $chart.css('transform');
+		var div = $chart.css('transform','matrix(1,0,0,1,5,-410)');
+        // $chart.css('transform',matrix(1,0,0,1,5,-410));
         var currentZoom = 0.6;
         var zoomval = 1;
 
@@ -315,7 +292,7 @@ if ($srow['c_class']){
         $('#zoomIn').on('click', function() {
             my_num++;
             zoomval = currentZoom += 0.1;
-            $chart.css("transform", 'matrix(' + zoomval + ', 0, 0, ' + zoomval + ', 0 ,' + (-570 + (
+            $chart.css("transform", 'matrix(' + zoomval + ', 0, 0, ' + zoomval + ', 0 ,' + (-410 + (
                 my_num) * 85) + ')');
             $container.scrollLeft(($container[0].scrollWidth - $container.width()) / 2);
         });
@@ -323,7 +300,7 @@ if ($srow['c_class']){
         $('#zoomOut').on('click', function() {
             zoomval = currentZoom -= 0.1;
             my_num--;
-            $chart.css("transform", 'matrix(' + zoomval + ', 0, 0, ' + zoomval + ', 0 ,' + (-570 + (
+            $chart.css("transform", 'matrix(' + zoomval + ', 0, 0, ' + zoomval + ', 0 ,' + (-410 + (
                 my_num) * 85) + ')');
             $container.scrollLeft(($container[0].scrollWidth - $container.width()) / 2);
 

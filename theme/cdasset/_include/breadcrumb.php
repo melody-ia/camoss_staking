@@ -148,7 +148,7 @@ $title = 'Dashboard';
 							<dd class="value" style='font-size:15px;'><?=shift_auto($total_fund,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<li class="col-4">
-							<dt class="title" >구매 가능액</dt>
+							<dt class="title" >구매 가능액(입금)</dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
 						<li class="col-4">

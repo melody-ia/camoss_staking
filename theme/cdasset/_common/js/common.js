@@ -16,7 +16,7 @@ $(function () {
 
 // var debug = '<?=$is_debug?>';
 var debug = "";
-var thisTheme = "dark";
+var thisTheme = "white";
 
 
 
