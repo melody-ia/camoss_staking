@@ -1,10 +1,9 @@
-
 <?php
 $sub_menu = "650200";
 
 include_once('./_common.php');
 include_once('adm/inc.member.class.php');
-include_once(G5_THEME_PATH.'/_include/gnb.php');
+
 
 login_check($member['mb_id']);
 
@@ -23,7 +22,111 @@ if ($gubun=="B"){
 	$class_name     = "g5_member_class";
 	$recommend_name = "mb_recommend";
 }
+
+//adm/recommend_set.php
+// ************************
+
+if(!isset($member['mb_child'])) {
+    sql_query(" ALTER TABLE `g5_member`
+                    ADD `mb_child` int(11) NOT NULL DEFAULT '0'", true);
+}
+if(!isset($member['mb_org_num'])) {
+    sql_query(" ALTER TABLE `g5_member`
+                    ADD `mb_org_num` int(11) NOT NULL DEFAULT '80'", true);
+}
+
+if ($_GET['go']=="Y"){
+	goto_url("page.php?id=binary&gubun=".$gubun."#org_start");
+	exit;
+}
+
+$token = get_token();
+
+
+$sql  = "select count(*) as cnt from g5_member";
+$mrow = sql_fetch($sql);
+
+$sql = "select * from g5_member_class_chk where mb_id='".$tree_id."' and  cc_date='".date("Y-m-d",time())."' order by cc_no desc";
+$row = sql_fetch($sql);
+
+if ($mrow['cnt']>$row['cc_usr'] || !$row['cc_no'] || $_GET["reset"]){
+
+	make_habu('');
+
+	$sql = "delete from g5_member_class ";
+	sql_query($sql);
+
+	get_recommend_down($tree_id,$tree_id,'11');
+
+	$sql  = " select * from g5_member_class where mb_id='{$tree_id}' order by c_class asc";	
+	$result = sql_query($sql);
+	for ($i=0; $row=sql_fetch_array($result); $i++) { 
+		$row2 = sql_fetch("select count(c_class) as cnt from g5_member_class where  mb_id='".$tree_id."' and c_class like '".$row['c_class']."%'");
+		$sql = "update g5_member set mb_child='".$row2['cnt']."' where mb_id='".$row['c_id']."'";
+		sql_query($sql);
+	}
+
+	$sql = "insert into g5_member_class_chk set mb_id='".$tree_id."',cc_date='".date("Y-m-d",time())."',cc_usr='".$mrow['cnt']."'";
+	sql_query($sql);
+
+}
+
+
+$sql = "select * from g5_member_bclass_chk where mb_id='".$tree_id."' and  cc_date='".date("Y-m-d",time())."' order by cc_no desc";
+$row = sql_fetch($sql);
+
+if ($mrow['cnt']>$row['cc_usr'] || !$row['cc_no'] || $_GET["reset"]){
+	
+	make_habu('B');
+	$sql = "delete from g5_member_bclass" ;
+	sql_query($sql);
+
+	get_brecommend_down($tree_id,$tree_id,'11');
+
+	$sql  = " select * from g5_member_bclass where mb_id='{$tree_id}' order by c_class asc";	
+	$result = sql_query($sql);
+	for ($i=0; $row=sql_fetch_array($result); $i++) { 
+		$row2 = sql_fetch("select count(c_class) as cnt from g5_member_bclass where  mb_id='".$tree_id."' and c_class like '".$row['c_class']."%'");
+		$sql = "update g5_member set mb_b_child='".$row2['cnt']."' where mb_id='".$row['c_id']."'";
+		sql_query($sql);
+	}
+
+	$sql = "insert into g5_member_bclass_chk set mb_id='".$tree_id."',cc_date='".date("Y-m-d",time())."',cc_usr='".$mrow['cnt']."'";
+	sql_query($sql);
+
+
+	if ($_GET["reset"]){
+		goto_url("page.php?id=binary&gubun=".$gubun."&sfl=".$sfl."&stx=".$stx."&gubun=".$gubun);
+		exit;		
+	}
+}
+
+if ($mb_org_num){
+	if ($mb_org_num>8) $mb_org_num = 8;
+	$sql = "update g5_member set mb_org_num='".$mb_org_num."' where mb_id='".$tree_id."'";
+	sql_query($sql);	
+	$member['mb_org_num'] = $mb_org_num;
+}
+
+
+$qstr.='&fr_date='.$fr_date.'&to_date='.$to_date.'&starter='.$starter.'&partner='.$partner.'&team='.$team.'&bonbu='.$bonbu.'&chongpan='.$chongpan;
+
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
+
+
+$g5['title'] = '조직도(박스)';
+// include_once ('./admin.head.php');
+
+
+if (strstr($sfl, "mb_id"))
+    $mb_id = $stx;
+else
+    $mb_id = "";
+    
+
+
 ?>
+
 
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 
@@ -111,16 +214,16 @@ if ($gubun=="B"){
 		</div>
 	</div>
 </div> -->
-
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <link type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/themes/base/jquery-ui.css" rel="stylesheet" />
   <link rel="stylesheet" href="/adm/css/font-awesome.min.css">
   <link rel="stylesheet" href="/adm/css/jquery.orgchart.css">
   <link href="/adm/css/scss/member_org.css" rel="stylesheet">
-  <script type="text/javascript" src="/adm/jquery.orgchart.js"></script>
-  <script type="text/javascript" src="/adm/js/bluebird.min.js"></script>
+  <script type="text/javascript" src="/adm/jquery.orgchart2.js"></script>
+  <!-- <script type="text/javascript" src="/adm/js/bluebird.min.js"></script>
   <script type="text/javascript" src="/adm/js/html2canvas.min.js"></script>
-  <script type="text/javascript" src="/adm/js/jspdf.min.js"></script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/adm/js/jspdf.min.js"></script> -->
+  <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.0/jquery-ui.js"></script>
 
 <script>
     $.datepicker.regional["ko"] = {
@@ -373,7 +476,7 @@ if ($gubun=="B"){
 	}
 </script> -->
 
-<div id="div_right" style="width:100%;float:left;min-height:500px">
+<div id="div_right" style="width:fit-content;float:left;min-height:500px">
 
 <?
 
@@ -546,3 +649,152 @@ if (!$srow['b_child']) $srow['b_child']=1;
 		}
 ?>
 	</ul>
+
+
+    <div id="chart-container" class="orgChart"></div>
+    <script>
+    $(function() {
+
+      $('#chart-container').orgchart({
+        'data' : $('#org'),
+		'zoom': true
+		});
+
+		var $container = $('#chart-container');
+		
+		var $chart = $('.orgchart');
+		var div = $chart.css('transform');
+		var values = div.split('(')[1];
+		values = values.split(')')[0];
+		values = values.split(',');
+		var a = values[0];
+		var b = values[1];
+		var currentZoom = 1;
+		var zoomval = .8;
+
+		$container.scrollLeft(($container[0].scrollWidth - $container.width())/2);
+		var my_num = 0;
+
+		// zoom buttons	
+		$('#zoomIn').on('click', function () {
+			my_num++;
+			zoomval = currentZoom += 0.1;
+			$chart.css("transform",'matrix('+zoomval+', 0, 0, '+zoomval+', 0 ,'+((my_num)*85)+')');    
+			$container.scrollLeft(($container[0].scrollWidth - $container.width())/2);
+		});
+
+		$('#zoomOut').on('click', function () {
+			zoomval = currentZoom -= 0.1;
+			my_num--;
+			$chart.css("transform",'matrix('+zoomval+', 0, 0, '+zoomval+', 0 ,'+((my_num)*85)+')');    
+			$container.scrollLeft(($container[0].scrollWidth - $container.width())/2);
+
+		});
+
+    });
+    </script>
+</div>
+
+<script type="text/javascript">
+function set_member(set_id,set_type){
+	window.open('/adm/recommend_set.php?set_id='+set_id+'&set_type='+set_type+'&now_id='+$("#now_id").val(), 'set_recomm', 'width=520, height=500, resizable=no, scrollbars=yes, left=0, top=0');
+}
+function open_register(){
+	window.open('/adm/shop/recommend_register.php?gp=ao&now_id='+$("#now_id").val(), 'set_register', 'width=600, height=500, resizable=no, scrollbars=no, left=0, top=0');
+}
+
+$(document).ready(function(){
+	$("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
+	<?php if ($stx && $sfl){ ?>
+		btn_search();
+	<?php } ?>
+});
+
+function edit_member(edit_id){
+	window.open('/adm/recommend_edit.php?gubun=<?=$gubun?>&edit_id='+edit_id, 'edit_recomm', 'width=520, height=500, resizable=no, scrollbars=yes, left=0, top=0');
+	/*
+	if(event.button==2){	
+		window.open('recommend_edit.php?gubun=<?=$gubun?>&edit_id='+edit_id, 'edit_recomm', 'width=520, height=500, resizable=no, scrollbars=yes, left=0, top=0');
+	}else{
+		go_member(edit_id);
+	}
+	*/
+}
+
+function go_member(go_id){
+	$("#now_id").val(go_id);
+
+	$.get("ajax_get_up_member.php?gubun=<?=$gubun?>&go_id="+go_id, function (data) {
+
+		data = $.trim(data);
+		temp = data.split("|");
+
+		data2 = "<table style='width:100%'>";
+		data2 += "			<tr>";
+		data2 += "				<td bgcolor='#f9f9f9' height='20' style='padding-left:10px'><b>상위 회원</b></td>";
+		data2 += "			</tr>";
+		for(i=(temp.length-1);i>=0;i--){
+			data2 += temp[i];
+		}
+		
+		data2 += "</table>";
+
+		$('#div_member').html(data2);
+		//$('#div_member').html(data);
+		$.get("ajax_get_org_load.php?gubun=<?=$gubun?>&fr_date=<?=$fr_date?>&to_date=<?=$to_date?>&go_id="+go_id, function (data) {
+			$('#div_right').html(data);
+		});
+	});
+
+}
+
+function btn_print(){
+	var html = $('#chart-container');
+
+	var strHtml = `<!doctype html><html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="imagetoolbar" content="no" /><title></title><link rel="stylesheet" type="text/css" media="all" href="/adm/jquery.orgchart.css"></`;
+	strHtml += `head><body style="padding:0px;margin:0px;"><div id="chart-container" class="orgChart"><!--body--></div></body></html>`;
+	var strContent = html.html();
+	var objWindow = window.open('', 'print', 'width=640, height=800, resizable=yes, scrollbars=yes, left=0, top=0');
+	if(objWindow)
+	{
+		 var strSource = strHtml;
+		 strSource  = strSource.replace(/\<\!\-\-body\-\-\>/gi, strContent);
+
+		 objWindow.document.open();
+		 objWindow.document.write(strSource);
+		 objWindow.document.close();
+
+		 setTimeout(function(){ objWindow.print(); }, 500);
+	}
+}
+
+function btn_menu(){
+	if($("#div_left").css("display") == "none"){ 
+		$("#div_left").show();
+		$("#div_right").css("width","85%");
+	} else { 
+		$("#div_left").hide(); 
+		$("#div_right").css("width","100%");
+	} 
+}
+function btn_search(){
+	if($("#stx").val() == ""){ 
+	//	alert("검색어를 입력해주세요.");
+		$("#stx").focus();
+	}else{
+		$.post("/adm/ajax_get_tree_member.php", $("#sForm").serialize(),function(data){
+			$("#div_result").html(data);
+		});
+	}
+}
+
+function btn_org(){
+	if (confirm("조직도를 재구성 하시겠습니까?")){
+		location.href="page.php?id=binary&reset=1&sfl=<?=$sfl?>&stx=<?=$stx?>&gubun=<?=$gubun?>";
+	}
+}
+
+</script>
+
+
+

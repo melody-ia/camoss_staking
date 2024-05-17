@@ -30,10 +30,10 @@
       'exportFilename': 'Org',
       'exportFileextension': 'png',
       'parentNodeSymbol': 'fa-users',
-      'draggable': false,
+      'draggable': true,
       'direction': 't2b',
       'pan': true,
-      'zoom': false,
+      'zoom': true,
       'zoominLimit': 7,
       'zoomoutLimit': 0.5
     };
@@ -179,7 +179,7 @@
     panStartHandler: function (e) {
       var $chart = $(e.delegateTarget);
       if ($(e.target).closest('.node').length || (e.touches && e.touches.length > 1)) {
-//        $chart.data('panning', false);
+       $chart.data('panning', false);
         $chart.css('cursor', 'move').data('panning', true);
 //		return;
       } else {
@@ -252,7 +252,7 @@
     },
     //
     bindPan: function () {
-      this.$chartContainer.css('overflow', 'hidden');
+      this.$chartContainer.css('overflow', 'auto');
       this.$chart.on('mousedown touchstart', this.panStartHandler);
       $(document).on('mouseup touchend', { 'chart': this.$chart }, this.panEndHandler);
     },

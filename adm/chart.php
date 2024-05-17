@@ -3,15 +3,16 @@ $sub_menu = "650200";
 
 include_once('./_common.php');
 include_once('./inc.member.class.php');
-auth_check($auth[$sub_menu], 'r');
 
+
+
+$gubun = "B";
 
 if($member['mb_id'] == 'admin'){
 	$tree_id = $config['cf_admin'];
 }else{
 	$tree_id = $member['mb_id'];
 }
-
 
 if ($gubun=="B"){
 	$class_name     = "g5_member_bclass";
@@ -34,7 +35,7 @@ if(!isset($member['mb_org_num'])) {
 }
 
 if ($_GET['go']=="Y"){
-	goto_url("member_org.php?gubun=".$gubun."#org_start");
+	goto_url("page.php?id=binary&gubun=".$gubun."#org_start");
 	exit;
 }
 
@@ -94,7 +95,7 @@ if ($mrow['cnt']>$row['cc_usr'] || !$row['cc_no'] || $_GET["reset"]){
 
 
 	if ($_GET["reset"]){
-		goto_url("member_org.php?gubun=".$gubun."&sfl=".$sfl."&stx=".$stx."&gubun=".$gubun);
+		goto_url("page.php?id=binary&gubun=".$gubun."&sfl=".$sfl."&stx=".$stx."&gubun=".$gubun);
 		exit;		
 	}
 }
@@ -113,7 +114,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 
 $g5['title'] = '조직도(박스)';
-include_once ('./admin.head.php');
+// include_once ('./admin.head.php');
 
 
 if (strstr($sfl, "mb_id"))
@@ -128,43 +129,30 @@ else
 
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 
-<div class="local_desc01 local_desc">
-    <p>
-		<!-- - <span class='f_green'>MH : </span>보유 마이닝해쉬 (<?=strtoupper($minings[$now_mining_coin])?>)&nbsp&nbsp -->
-        - <span class='f_blue'>PV : </span> 매출(패키지)금액, 단위 : 원 &nbsp&nbsp
-		- <span class='f_pink'>ACC : </span> 승급 대상포인트 (하부 매출), 단위 : 원 &nbsp&nbsp
-		<!-- - <span style='color:red'>LR </span> 추천/후원 하부 매출&nbsp&nbsp -->
-		<!-- - <span class='f_green'>LR# </span> 추천/후원 하부 해쉬 &nbsp&nbsp -->
-	</p>
-</div>
-
+<!-- 
 <div style="padding:0px 0px 0px 10px;">
 	<a name="org_start"></a>
 	<div style="float:left">
 	<input type="button" class="btn_menu" value="검색메뉴닫기" onclick="btn_menu()">
-	<!-- <input type="button" class="btn_menu" value="전체 조직도보기" onclick="location.href='member_org.php?go=Y'">
-	<input type="button" class="btn_menu" style="background:#fadfca" value="신규회원등록" onclick="open_register()"> -->
-<!--	<input type="button" class="btn_menu" style="background:#fadfca" value="조직도 인쇄" onclick="btn_print()"> -->
 	</div>
 	<div style="float:right;padding-right:10px">
 
 	<button type='button' id='zoomOut' class='zoom2-btn'>Zoom Out</button>
 	<button type='button' id='zoomIn' class='zoom-btn'>Zoom In</button>
-	<!-- <button type="button" class="my-class" onclick="clickExportButton();">조직도 인쇄</button> -->
-
-	<input type="button"  class="my-class" value="조직도 재구성" onclick="btn_org()">
 	</div>
 </div>
 <div style="padding-top:10px;clear:both"></div>
+
 <div id="div_left" style="width:15%;float:left;min-height:710px;">
 	<div style="margin-left:10px;padding:5px 5px 5px 5px;border:1px solid #d9d9d9;height:100%">
-<?
-if (!$fr_date) $fr_date = Date("Y-m-d", time()-60*60*24*365);
-if (!$to_date) $to_date = Date("Y-m-d", time());
-?>
+	<?
+	if (!$fr_date) $fr_date = Date("Y-m-d", time()-60*60*24*365);
+	if (!$to_date) $to_date = Date("Y-m-d", time());
+	?>
 
 
-		<form name="sForm2" id="sForm2" method="get" action="member_org.php">
+		<form name="sForm2" id="sForm2" method="get" action="./page.php">
+        <input type="hidden" name="id" value="binary">
 		<input type="hidden" name="now_id" id="now_id" value="<?=$now_id?>">
 		<table width="100%">
 			<tr>
@@ -183,16 +171,12 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 			</style>
 			<tr>
 				<td bgcolor="#f2f5f9" height="20" style="padding:20px 0;" align=center>
-				
-				<input type="radio" id="gubun1" name="gubun" style="display:none" onclick="document.sForm2.submit();" value=""<?if ($gubun=="") echo " checked"?>> 
-				<label for="gubun1" class='btn search_btn <?if($_GET['gubun']=='')echo 'active';?>' >추천조직</label>
 				<input type="radio" id="gubun2" name="gubun" style="display:none" onclick="document.sForm2.submit();" value="B"<?if ($gubun=="B") echo " checked"?>>
 				<label for="gubun2" class='btn search_btn <?if($_GET['gubun']=='B')echo 'active';?>'>후원조직</label>
-				
 				</td>
 			</tr>
 			
-		</table>
+		</table> 
 		</form>
 
 		<div id="div_member"></div>
@@ -208,7 +192,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 				
 				<select name="sfl" id="sfl">
 				    <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
-					<!-- <option value="mb_name"<?php echo get_selected($_GET['sfl'], "mb_name"); ?>>이름</option> -->
+					<option value="mb_name"<?php echo get_selected($_GET['sfl'], "mb_name"); ?>>이름</option>
 					</select>
 				<div style="padding-top:5px">
 				<label for="stx" class="sound_only" >검색어<strong class="sound_only"> 필수</strong></label>
@@ -228,15 +212,16 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 
 		</div>
 	</div>
-</div>
+</div> -->
+<meta name="viewport" content="height=device-height , width=device-width, user-scalable=yes, minimum-scale=1.0">
   <link type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/themes/base/jquery-ui.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/jquery.orgchart.css">
-  <link href="<?=G5_ADMIN_URL?>/css/scss/member_org.css" rel="stylesheet">
-  <script type="text/javascript" src="jquery.orgchart.js"></script>
-  <script type="text/javascript" src="js/bluebird.min.js"></script>
-  <script type="text/javascript" src="js/html2canvas.min.js"></script>
-  <script type="text/javascript" src="js/jspdf.min.js"></script>
+  <link rel="stylesheet" href="/adm/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/adm/css/jquery.orgchart.css">
+  <link href="/adm/css/scss/member_org.css" rel="stylesheet">
+  <script type="text/javascript" src="/adm/jquery.orgchart2.js"></script>
+  <!-- <script type="text/javascript" src="/adm/js/bluebird.min.js"></script>
+  <script type="text/javascript" src="/adm/js/html2canvas.min.js"></script>
+  <script type="text/javascript" src="/adm/js/jspdf.min.js"></script> -->
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
 
 <script>
@@ -280,7 +265,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 		background:#fff;
 		border:2px solid rgb(95, 95, 95);
 		color:#000;
-		height:175px;
+		height:195px;
 		font-weight:normal;
 		line-height:15px;
 		padding-top:5px;
@@ -291,7 +276,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 	}
 	.orgchart .node .title .dec{
 		font-size: 11px;
-		line-height: 16px;
+		line-height: 15px;
 	}
 	.orgchart .node .title .dec.p{
 		margin-top:5px;
@@ -384,7 +369,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 		position: absolute;
 		bottom: 6px;
 		width:100%;
-		height:20px;
+		height:30px;
 		display: inline-block;
 		left:0;
 		padding:0 5px;
@@ -484,13 +469,13 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 	}
 </style>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	function clickExportButton(){
 		 $(".oc-export-btn").click();
 	}
-</script>
+</script> -->
 
-<div id="div_right" style="width:85%;float:left;min-height:500px">
+<div id="div_right" style="width:100%;float:left;min-height:500px">
 
 <?
 
@@ -520,6 +505,12 @@ $sql = "SELECT c.c_id,c.c_class,(
 	SELECT mb_b_child
 	FROM g5_member
 	WHERE mb_id=c.c_id) AS b_child,(
+	SELECT mb_id
+	FROM g5_member
+	WHERE mb_brecommend=c.c_id AND mb_brecommend_type='L') AS b_recomm,(
+	SELECT mb_id
+	FROM g5_member
+	WHERE mb_brecommend=c.c_id AND mb_brecommend_type='R') AS b_recomm2,(
 	SELECT COUNT(mb_no)
 	FROM g5_member
 	WHERE mb_brecommend=c.c_id AND mb_leave_date = '') AS m_child,  (
@@ -529,7 +520,7 @@ $sql = "SELECT c.c_id,c.c_class,(
 	
 	,(select mb_rate FROM g5_member WHERE mb_id=c.c_id) AS mb_rate
 	,(select recom_sales FROM g5_member WHERE mb_id=c.c_id) AS recom_sales
-	,(select pv FROM g5_member WHERE mb_id=c.c_id) AS mb_save_point
+	,(select mb_save_point FROM g5_member WHERE mb_id=c.c_id) AS mb_save_point
 	,(select grade FROM g5_member WHERE mb_id=c.c_id) AS grade
 	,(SELECT mb_child FROM g5_member WHERE mb_id=c.c_id) AS mb_children
 	FROM g5_member m
@@ -587,9 +578,9 @@ if ($order_proc==1){
 
 
 if ($srow['b_recomm']){
-	$left_sql = " SELECT mb_rate,mb_save_point,pv (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm']}' ";
+	$left_sql = " SELECT mb_rate,mb_save_point, (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm']}' ";
 	$mb_self_left_result = sql_fetch($left_sql);
-	$mb_self_left_acc = $mb_self_left_result['pv'] + $mb_self_left_result['noo'];
+	$mb_self_left_acc = $mb_self_left_result['mb_rate'] + $mb_self_left_result['noo'];
 	$row6['tpv'] = $mb_self_left_acc ;
 
 }else{
@@ -598,9 +589,9 @@ if ($srow['b_recomm']){
 
 //바이너리 오른쪽 오늘 매출
 if ($srow['b_recomm2']){
-	$right_sql = " SELECT mb_rate,mb_save_point,pv (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm2']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm2']}' ";
+	$right_sql = " SELECT mb_rate,mb_save_point, (SELECT noo FROM brecom_bonus_noo WHERE mb_id ='{$srow['b_recomm2']}' ) AS noo FROM g5_member WHERE mb_id = '{$srow['b_recomm2']}' ";
 	$mb_self_right_result = sql_fetch($right_sql);
-	$mb_self_right_acc = $mb_self_right_result['pv'] + $mb_self_right_result['noo'];
+	$mb_self_right_acc = $mb_self_right_result['mb_rate'] + $mb_self_right_result['noo'];
 	$row7['tpv'] = $mb_self_right_acc ;
 
 }else{
@@ -625,7 +616,7 @@ $brecom_info = json_decode($member_info_data['brecom_info'],true);
 if (!$srow['b_child']) $srow['b_child']=1;
 
 ?>
-		<ul id="org" style="display:none" >
+		<ul id="org" style="display:none;" >
 			<li>
 				<?=(strlen($srow['c_class'])/2)-1?>-<?=($srow['c_child'])?>-<?=($srow['b_child']-1)?>
 				|<?=get_member_label($srow['mb_level'])?>
@@ -671,7 +662,6 @@ if (!$srow['b_child']) $srow['b_child']=1;
 		var $container = $('#chart-container');
 		
 		var $chart = $('.orgchart');
-		$chart.css('transform', "scale(1,1)");
 		var div = $chart.css('transform');
 		var values = div.split('(')[1];
 		values = values.split(')')[0];
@@ -706,10 +696,10 @@ if (!$srow['b_child']) $srow['b_child']=1;
 
 <script type="text/javascript">
 function set_member(set_id,set_type){
-	window.open('recommend_set.php?set_id='+set_id+'&set_type='+set_type+'&now_id='+$("#now_id").val(), 'set_recomm', 'width=520, height=500, resizable=no, scrollbars=yes, left=0, top=0');
+	window.open('/adm/recommend_set.php?set_id='+set_id+'&set_type='+set_type+'&now_id='+$("#now_id").val(), 'set_recomm', 'width=520, height=500, resizable=no, scrollbars=yes, left=0, top=0');
 }
 function open_register(){
-	window.open('/shop/recommend_register.php?gp=ao&now_id='+$("#now_id").val(), 'set_register', 'width=600, height=500, resizable=no, scrollbars=no, left=0, top=0');
+	window.open('/adm/shop/recommend_register.php?gp=ao&now_id='+$("#now_id").val(), 'set_register', 'width=600, height=500, resizable=no, scrollbars=no, left=0, top=0');
 }
 
 $(document).ready(function(){
@@ -720,7 +710,7 @@ $(document).ready(function(){
 });
 
 function edit_member(edit_id){
-	window.open('recommend_edit.php?gubun=<?=$gubun?>&edit_id='+edit_id, 'edit_recomm', 'width=520, height=500, resizable=no, scrollbars=yes, left=0, top=0');
+	window.open('/adm/recommend_edit.php?gubun=<?=$gubun?>&edit_id='+edit_id, 'edit_recomm', 'width=520, height=500, resizable=no, scrollbars=yes, left=0, top=0');
 	/*
 	if(event.button==2){	
 		window.open('recommend_edit.php?gubun=<?=$gubun?>&edit_id='+edit_id, 'edit_recomm', 'width=520, height=500, resizable=no, scrollbars=yes, left=0, top=0');
@@ -751,7 +741,6 @@ function go_member(go_id){
 		$('#div_member').html(data2);
 		//$('#div_member').html(data);
 		$.get("ajax_get_org_load.php?gubun=<?=$gubun?>&fr_date=<?=$fr_date?>&to_date=<?=$to_date?>&go_id="+go_id, function (data) {
-			console.log(data);
 			$('#div_right').html(data);
 		});
 	});
@@ -761,7 +750,7 @@ function go_member(go_id){
 function btn_print(){
 	var html = $('#chart-container');
 
-	var strHtml = `<!doctype html><html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="imagetoolbar" content="no" /><title></title><link rel="stylesheet" type="text/css" media="all" href="jquery.orgchart.css"><link rel="stylesheet" type="text/css" media="all" href="chart.css"></`;
+	var strHtml = `<!doctype html><html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="imagetoolbar" content="no" /><title></title><link rel="stylesheet" type="text/css" media="all" href="/adm/jquery.orgchart.css"></`;
 	strHtml += `head><body style="padding:0px;margin:0px;"><div id="chart-container" class="orgChart"><!--body--></div></body></html>`;
 	var strContent = html.html();
 	var objWindow = window.open('', 'print', 'width=640, height=800, resizable=yes, scrollbars=yes, left=0, top=0');
@@ -792,7 +781,7 @@ function btn_search(){
 	//	alert("검색어를 입력해주세요.");
 		$("#stx").focus();
 	}else{
-		$.post("ajax_get_tree_member.php", $("#sForm").serialize(),function(data){
+		$.post("/adm/ajax_get_tree_member.php", $("#sForm").serialize(),function(data){
 			$("#div_result").html(data);
 		});
 	}
@@ -800,15 +789,11 @@ function btn_search(){
 
 function btn_org(){
 	if (confirm("조직도를 재구성 하시겠습니까?")){
-		location.href="member_org.php?reset=1&sfl=<?=$sfl?>&stx=<?=$stx?>&gubun=<?=$gubun?>";
+		location.href="page.php?id=binary&reset=1&sfl=<?=$sfl?>&stx=<?=$stx?>&gubun=<?=$gubun?>";
 	}
 }
 
 </script>
-
-<?php
-include_once ('./admin.tail.php');
-?>
 
 
 

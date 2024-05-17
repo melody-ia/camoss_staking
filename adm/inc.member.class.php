@@ -8,12 +8,8 @@ function pv($value){
 	return number_format($value/$pv_unit);
 }
 
-if($member['mb_id'] == 'admin'){
-	$tree_id = $config['cf_admin'];
-}else{
-	$tree_id = $member['mb_id'];
-}
 
+$tree_id = $config['cf_admin'];
 
 $max_num    = 800;
 $max_up_num = 10; //5단계만 보이길 원하실 경우 4로 하시면 됩니다.
@@ -138,7 +134,7 @@ function habu_sales_calc($gubun, $recom, $deep){
 
 function get_org_down($srow){
 	
-	
+
 	global $max_org_num, $org_num, $my_depth, $member, $fr_date, $to_date, $mdepth, $mrow, $gubun, $order_field, $order_split, $ngubun, $order_proc,$tree_id;
 
 	if ($gubun=="B"){
@@ -154,9 +150,10 @@ function get_org_down($srow){
 	$u_id    = $srow['c_id'];
 	$u_depth = strlen($srow['c_class']);
 
-	if ($max_org_num>10){
-		$max_org_num = 10;
+	if ($max_org_num>99){
+		$max_org_num = 99;
 	}
+	
 
 	if (($my_depth+($max_org_num*2)-2)<=$u_depth)  {
 		//넘으면..
@@ -187,14 +184,6 @@ function get_org_down($srow){
 			SELECT mb_b_child
 			FROM g5_member
 			WHERE mb_id=c.c_id) AS b_child,(
-			SELECT mb_id
-			FROM g5_member
-			WHERE mb_brecommend=c.c_id AND mb_brecommend_type='L'
-			LIMIT 1) AS b_recomm,(
-			SELECT mb_id
-			FROM g5_member
-			WHERE mb_brecommend=c.c_id AND mb_brecommend_type='R'
-			LIMIT 1) AS b_recomm2,(
 			SELECT COUNT(mb_no)
 			FROM g5_member
 			WHERE ".$recommend_name."=c.c_id AND mb_leave_date = '') AS m_child
@@ -209,12 +198,8 @@ function get_org_down($srow){
 			ORDER BY c.c_class
 			LIMIT 50
 			";
-
-
-
 		$result = sql_query($sql);
 		$count  = sql_num_rows($result);
-
 
 
 		if ($count){
@@ -376,7 +361,7 @@ function get_org_down($srow){
 	//if ($org_num>$max_org_num)  break;
 
 	$clen = strlen($row['c_class'])+2;
-	$sql = "select count(*) as cnt from ".$class_name."  where mb_id='{$member['mb_id']}' and length(c_class)={$clen} and c_class like '".$row['c_class']."%'";
+	$sql = "select count(*) as cnt from ".$class_name."  where mb_id='{$tree_id}' and length(c_class)={$clen} and c_class like '".$row['c_class']."%'";
 	$trow = sql_fetch($sql);
 
 	if ($trow['cnt']){

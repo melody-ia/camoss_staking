@@ -1,21 +1,13 @@
 <?php
-$sub_menu = "600300";
-include_once('./_common.php');
-include_once('./inc.member.class.php');
 
-if ($member['mb_org_num']){
-	$max_org_num = $member['mb_org_num'];
-}else{
-	$max_org_num = 50;
-}
+include_once('./_common.php');
+include_once('../adm/inc.member.class.php');
+
+$max_org_num = 50;
 $org_num     = 8;
 
-if($member['mb_id'] == 'admin'){
-	$start_id = $config['cf_admin'];
-}else{
-	$start_id = $member['mb_id'];
-}
-
+$start_id = $config['cf_admin'];
+$go_id = $member['mb_id'];
 
 if ($gubun=="B"){
 	$class_name     = "g5_member_bclass";
@@ -24,6 +16,41 @@ if ($gubun=="B"){
 	$class_name     = "g5_member_class";
 	$recommend_name = "mb_recommend";
 }
+
+$mem_list = [];
+
+// 후원트리 하부
+function brecommend_array($brecom_id, $count, $limit=0)
+{
+    global $mem_list;
+
+    // $new_arr = array();
+    $b_recom_sql = "SELECT mb_id,mb_level,mb_name,grade,mb_rate,mb_save_point,mb_brecommend_type,pv from g5_member WHERE mb_brecommend='{$brecom_id}' ";
+    $b_recom_result = sql_query($b_recom_sql);
+    $cnt = sql_num_rows($b_recom_result);
+
+    if ($cnt < 1) {
+        // 마지막
+    } else {
+        ++$count;
+        while ($row = sql_fetch_array($b_recom_result)) {
+            brecommend_array($row['mb_id'], $count,$limit);
+
+            // print_R($count.' :: '.$row['mb_id']."<br>");
+            // $mem_list[$count]['id'] = $brecom_id;
+            if($limit != 0 && $count <= $limit){
+                $row['count'] = $count;
+                array_push($mem_list, $row);
+            }
+            
+        }
+    }
+	
+    return $mem_list;
+} 
+
+
+
 
 $sql = "SELECT c.c_id,c.c_class,(
 	SELECT mb_level
@@ -151,9 +178,12 @@ $mdepth = (strlen($row4['c_class'])/2);
 			$recom_info = json_decode($member_info_data['recom_info'],true);
 			$brecom_info = json_decode($member_info_data['brecom_info'],true);
 
+			
 if ($srow['c_class']){
+	
 ?>
-		<ul id="org" style="" >
+
+		<ul id="org" style="display:none;" >
 			<li>
 			[<?=(strlen($srow['c_class'])/2)-1?>-<?=($srow['c_child'])?>-<?=($srow['b_child']-1)?>]
 			|<?=get_member_label($srow['mb_level'])?>
@@ -173,15 +203,64 @@ if ($srow['c_class']){
 			|<?=($srow['b_child']-1)?>
 			|<?=Number_format($recom_info['hash_10'])?>
 			|<?=$gubun?>
-
-
-<?
+			<?
 			get_org_down($srow);
-?>
+				/* $line = brecommend_array($go_id,0,99);
+
+				if(count($line) > 0){
+					for($i=0; $i < count($line); $i++){
+
+						$mem_row = array_reverse($line)[$i];
+						
+
+						
+						echo "<ul><li>";
+						echo ($i+1)."-1-1";
+						echo "| ".$mem_row['mb_level'];
+						echo "| ".$mem_row['mb_id']."|".$mem_row['mb_name'];
+						echo " |0 ";
+						echo " |0 ";
+						echo " |1 ";
+						echo " |0 ";
+						echo " |0 ";
+						echo " |1000 ";
+						echo " | ";
+						echo " | ";
+						echo " | ";
+						echo " |0 ";
+						echo " |0 ";
+						echo " |0 ";
+						echo " |0 ";
+						echo " |0 ";
+						echo " |".$gubun;
+					}
+
+					for($i=0; $i < count($line); $i++){
+						echo "</li></ul>";
+					}
+				}  */
+
+				
+				
+
+
+
+				/* echo "
+				<ul><li>1-1-2	|비회원	|test15|test15	|0				|0	|1	|0	|0	|1,000,000	|69	|50,000,000	|1	|0	|0	|1	|2	|0	|B
+				
+				<ul><li>2-1-1	|비회원	|test16|test16	|0				|0	|1	|0	|0	|500,000	|68	|500,000	|1	|0	|0	|1	|1	|0	|B
+				
+				<ul><li>3-1-0	|비회원	|test17|test17	|0				|0	|1	|0	|0	|0	|67	|500,000	|0	|0	|0	|1	|0	|0	|B 
+
+				</li></ul>
+				</li></ul>
+				</li></ul>
+				"; */
+				
+			?>
 			</li>
-<?
-?>
 		</ul>
+
     <div id="chart-container" class="orgChart"></div>
     <script>
     $(function() {
