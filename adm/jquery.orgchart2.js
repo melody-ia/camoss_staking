@@ -1080,7 +1080,7 @@
         html += "<div class='dec' style='margin-bottom:5px;'>등급: <span class='badge "+badge_color+"' style='font-size:11px;'>"+temp[12]+"S</span></div>";
         html += '<div class="dec">스폰서(직추천): <strong>' + temp[15] + '명</strong></div>';
 
-        if(temp[17] == 'B'){
+        if(temp[18] == 'B'){
           html += '<div class="dec">후원산하: <strong>' + temp[16] + '명</strong></div>';
         }else{
           html += '<div class="dec">추천산하: <strong>' + temp[10] + '명</strong></div>';
