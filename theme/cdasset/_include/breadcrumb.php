@@ -209,28 +209,28 @@ $title = 'Dashboard';
 									<p class='end'><?=$limited?> %</p>
 								</div>
 							</dd>
-							<dt class="title" style="font-size:10px;" >수당한계 (<?=$boner_per_tx?>%)</dt>
+							<dt class="title" style="font-size:10px;" >수당(순환)한계 (<?=$boner_per_tx?>%)</dt>
 						</li>
 					</ul>
 
 					<ul class="row mb10">
 						<li class="rank_title">다음승급조건달성</li>
 
-						<li class="col-4">
+						<li class="col-6">
 							<dt class="title">구매등급</dt>
 							<dd class="value">
 								<?=check_value($member['mb_5'])?>
 							</dd>
 						</li>
 
-						<li class="col-4">
+						<!-- <li class="col-4">
 							<dt class="title">승급대상</dt>
 							<dd class="value">
 								<?=check_value($member['mb_7'])?>
 							</dd>
-						</li>
+						</li> -->
 
-						<li class="col-4">
+						<li class="col-6">
 							<dt class="title">승급기준</dt>
 							<dd class="value">
 								<?=check_value($member['mb_9'])?>

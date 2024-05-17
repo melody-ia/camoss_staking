@@ -4,6 +4,7 @@
 	$type = $_POST['type'];
 
 	if($_POST['mb_id']){
+		
 		// 추천인 후원인
 		if($type == 1 || $type == 3){
 			$sth = sql_query("select mb_id,mb_level,grade from {$g5['member_table']}  where mb_id like '%".$_POST['mb_id']."%'");
