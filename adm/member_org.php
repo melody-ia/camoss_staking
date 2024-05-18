@@ -230,7 +230,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 	</div>
 </div>
   <link type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/themes/base/jquery-ui.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jquery.orgchart.css">
   <link href="<?=G5_ADMIN_URL?>/css/scss/member_org.css" rel="stylesheet">
   <script type="text/javascript" src="jquery.orgchart.js"></script>

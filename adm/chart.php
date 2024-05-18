@@ -215,7 +215,7 @@ else
 </div> -->
 <meta name="viewport" content="height=device-height , width=device-width, user-scalable=yes, minimum-scale=1.0">
   <link type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/themes/base/jquery-ui.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/adm/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/adm/css/jquery.orgchart.css">
   <link href="/adm/css/scss/member_org.css" rel="stylesheet">
   <script type="text/javascript" src="/adm/jquery.orgchart2.js"></script>
