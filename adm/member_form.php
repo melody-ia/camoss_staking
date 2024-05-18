@@ -761,7 +761,7 @@ $rank_result = sql_fetch($rank_sql);
 
 			$pack_array = package_have_return($mb['mb_id']);
 			$get_shop_item = get_g5_item(null,0);
-			for ($i = 1; $i < count($pack_array); $i++) {
+			for ($i = 0; $i < count($pack_array); $i++) {
 				
 			?>
 				<button type='button' class='btn purchase_btn' value='' data-row='<?= json_encode($get_shop_item[$i], JSON_FORCE_OBJECT) ?>'>

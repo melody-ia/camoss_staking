@@ -1,7 +1,7 @@
 <?php
 $sub_menu = "600200";
 include_once('./_common.php');
-$debug = false;
+// $debug = true;
 include_once('./bonus_inc.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -10,7 +10,7 @@ auth_check($auth[$sub_menu], 'r');
 
 //회원 리스트를 읽어 온다.
 $sql_common = " FROM g5_order AS o, g5_member AS m ";
-$sql_search=" WHERE o.mb_id=m.mb_id AND od_date ='".$bonus_day."'  AND o.od_cash_no LIKE 'P%' ";
+$sql_search=" WHERE o.mb_id=m.mb_id AND od_date ='".$bonus_day."'  AND o.od_cash_no LIKE 'P%' AND od_cash !=0 ";
 $sql_mgroup=' GROUP BY m.mb_id ORDER BY m.mb_no asc';
 
 $pre_sql = "select count(*) 
@@ -47,7 +47,7 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
 $sql = "WITH soodang AS ( 
     SELECT o.mb_id,o.od_name,m.mb_recommend, o.upstair, o.upstair * ({$bonus_row['rate']} * 0.01) AS benefit 
     FROM g5_order o JOIN g5_member m ON o.mb_id = m.mb_id 
-    WHERE o.od_soodang_date = '{$bonus_day}' AND o.od_cash_no LIKE 'P%' 
+    WHERE o.od_soodang_date = '{$bonus_day}' AND o.od_cash_no LIKE 'P%' AND o.od_cash !=0
     ), 
     `member` AS ( 
     SELECT mb_no, mb_id, mb_name, mb_level, grade, mb_deposit_point, mb_balance+mb_shop_point AS total_balance, mb_index 

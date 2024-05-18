@@ -6,7 +6,7 @@ include_once(G5_PATH.'/util/purchase_proc.php');
 // $debug = 1;
 $now_datetime = date('Y-m-d H:i:s');
 $now_date = date('Y-m-d');
-$soodang_date = date('Y-m-d', strtotime("+3 day"));
+$soodang_date = date('Y-m-d', strtotime("+0 day"));
 // $debug=1;
 
 
@@ -29,16 +29,16 @@ $val = substr($pack_maker,1,1);
 $coin_val = $curencys[0];
 
 if($debug){
-	$mb_id = 'test1';
+	$mb_id = 'test3';
 	$mb_no = 2;
-	$mb_rank = 1;
+	$mb_rank = 0;
 	$func = 'new';
-	$input_val =1000; // 결제금액 
-	$output_val =1000; // 구매금액
-	$pack_name = 'P3';
-	$pack_id = 2023040403;
-	$it_point = 1000;
-	$it_supply_point = 6;
+	$input_val =0; // 결제금액 
+	$output_val =0; // 구매금액
+	$pack_name = 'P0';
+	$pack_id = 2023040400;
+	$it_point = 500000;
+	$it_supply_point = 0;
 }
 
 $target = "mb_deposit_calc";
@@ -80,7 +80,7 @@ if($debug){
 
 	$deposit = floor($member_bucks_check_row['deposit']);
 
-	if($deposit < $it_point){
+	if($deposit < $output_val){
 		echo json_encode(array("result" => "failed",  "code" => "0001", "sql" => "잔고가 부족합니다."));
 		return false;
 	}
@@ -90,11 +90,12 @@ if($debug){
 
 $logic = purchase_package($mb_id,$pack_id);
 
-$calc_value = conv_number($input_val);
+$calc_value = conv_number($it_point);
+$price_value = conv_number($output_val);
 
 if($rst && $logic){
 
-	$update_point = " UPDATE g5_member set pv = pv + {$calc_value}, $target = ($target - $calc_value)";
+	$update_point = " UPDATE g5_member set pv = pv + {$calc_value}, $target = ($target - $price_value)";
 	$mb_level = sql_fetch("SELECT mb_level from g5_member WHERE mb_id = '{$mb_id}' ")['mb_level'];
 
 	if($mb_level == 0){
@@ -117,7 +118,7 @@ if($rst && $logic){
 	$max_limit_point = $it_point * ($limited/100);
 	
 	$update_point .= ", mb_rate = ( mb_rate + {$pv}) ";
-	$update_point .= ", mb_save_point = ( mb_save_point + {$it_point}) ";
+	$update_point .= ", mb_save_point = ( mb_save_point + {$price_value}) ";
 	$update_point .= ", mb_index = ( mb_index + {$max_limit_point}) ";
 	$update_point .= ", rank = '{$update_rank}', rank_note = '{$pack_name}', sales_day = '{$now_datetime}' ";
 	$update_point .= " where mb_id ='".$mb_id."'";
