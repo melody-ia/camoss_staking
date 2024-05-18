@@ -132,7 +132,7 @@ $stats_result = sql_query($stats_sql);
 // 구매상품명 리턴
 
 function  od_name_return_rank($val){
-    if(strlen($val) < 5){
+    if(strlen($val) > 1){
         return substr($val,1,1);
     }else{
         return 0;
@@ -427,7 +427,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
             <?php } ?>
         </td>
         <td ><?php echo $row['od_date']; ?></td>
-        <td ><?php echo $row['od_soodang_date']; ?></td>
+        <td style="width:160px;" ><input type="text" id="od_soodang_date" class="frm_input od_soodang_date" style="font-weight:600;color:blue;width:150px;text-align:center" data-id="<?=$row['od_id']?>"  value="<?=$row['od_soodang_date']; ?>"></td>
         <td headers="th_ordnum" class="td_odrnum2">
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo $disp_od_id; ?></a>
             <?php echo $od_mobile; ?>
@@ -436,7 +436,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 		<td class="td_odrstatus" style="width:150px;">
 			<?php echo $row['od_status']; ?>
         </td>
-        <td class="td_numsum" style="text-align:center !important"><span class='badge t_white color<?=od_name_return_rank($row['od_name'])?>' ><?=$row['od_name']?></span></td>
+        <td class="td_numsum" style="text-align:center !important"><span class='badge t_white color<?=od_name_return_rank($row['od_cash_no'])?>' ><?=$row['od_name']?></span></td>
         <td class="td_numsum" style='text-align:right'><?= shift_auto($row['od_cart_price'],$od_settle_case)?> </td>
         <td style="text-align:center"><?php echo $row['od_settle_case'] ?></td>
 		<td style="text-align:right;font-weight:600"><?=shift_auto($row['od_cash'],$od_settle_case)?> </td>
@@ -471,6 +471,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         echo '<tr><td colspan="13" class="empty_table">자료가 없습니다.</td></tr>';
     ?>
     </tbody>
+
     <tfoot>
     <tr class="orderlist">
         <th scope="row" colspan="4">&nbsp;</th>
@@ -573,6 +574,33 @@ $(function(){
         return false;
     });
 
+    // 매출- 수당 발생일 수정
+    $('.od_soodang_date').on('change', function(){
+
+        var od_id = $(this).data('id');
+        var soodang_date = $(this).val();
+        // console.log(od_id+" : "+soodang_date);
+
+        $.ajax({
+            url: './order_proc.php',
+            type: 'POST',
+            cache: false,
+            dataType: 'json',
+            data: {
+            "od_id": od_id,
+            'func' : 'modifyOrder',
+            "soodang_date" : soodang_date
+        },
+        success: function(result) {
+            if (result.response == "OK") {
+                location.reload();
+            }
+        },
+        error: function(e) {
+            alert("시스템오류로 정상처리되지 않았습니다.");
+        }
+        });
+    });
 
     // 구매취소 추가 
     $(".od_cancel").on('click',function(){
@@ -590,6 +618,7 @@ $(function(){
         cache: false,
         dataType: 'json',
         data: {
+          'func' : 'delete',
           "od_id": od_id
         },
         success: function(result) {
