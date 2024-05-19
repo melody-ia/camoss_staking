@@ -17,7 +17,7 @@ function find_rate($rate_array,$pv){
 		if($key <= $pv){
 			$result = $value;
 			break;
-		}/****************************************************************** */
+		}
 	}
 
 	return $result;
@@ -78,8 +78,6 @@ for($i = 0; $i < $row = sql_fetch_array($goods_row); $i++){
 	}
 }
 krsort($rate_array);
-
-print_R($rate_array);
 
 // 설정로그 
 echo "<strong>".strtoupper($code)." 지급비율 : ".$rate."   </strong> | 지급한계 : ".$bonus_row['limited']."% <br>";

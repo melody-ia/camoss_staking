@@ -628,10 +628,10 @@ if ($_GET['recom_referral']){
 		}
 
 		//페이 아이디
-		if (f.account_name.value == '' || f.account_name.value == 'undefined') {
-			commonModal('페이 아이디확인', '<strong>페이 아이디가 잘못되거나 누락되었습니다. </strong>', 80);
-			return false;
-		}
+		// if (f.account_name.value == '' || f.account_name.value == 'undefined') {
+		// 	commonModal('페이 아이디확인', '<strong>페이 아이디가 잘못되거나 누락되었습니다. </strong>', 80);
+		// 	return false;
+		// }
 
 
 		// 패스워드
