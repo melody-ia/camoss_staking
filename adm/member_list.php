@@ -259,12 +259,12 @@ $stats_result = sql_fetch($stats_sql);
 		padding: 5px;
 	}
 
-	.local_sch .btn_submit {
+	.btn_submit {
 		background: #ff3061 !important;
 		color: #fff;
 		font-size: 0.95em;
-		width: 80px;
-		height: 33px;
+		width: 100px;
+		height: 40px;
 		text-indent: 0px;
 	}
 
@@ -516,6 +516,8 @@ $stats_result = sql_fetch($stats_sql);
         background: #f2f5f9;
     }
 
+	
+
 </style>
 <link rel="stylesheet" href="<?=G5_THEME_URL?>/css/scss/custom.css">
 <style>
@@ -566,6 +568,7 @@ $stats_result = sql_fetch($stats_sql);
 		<option value="mb_datetime" <?php echo get_selected($_GET['sfl'], "mb_datetime"); ?>>가입일시</option>
 		<option value="mb_ip" <?php echo get_selected($_GET['sfl'], "mb_ip"); ?>>IP</option>
 		<option value="mb_recommend" <?php echo get_selected($_GET['sfl'], "mb_recommend"); ?>>추천인</option>
+		<option value="mb_brecommend" <?php echo get_selected($_GET['sfl'], "mb_brecommend"); ?>>후원인</option>
 		<!-- <option value="mb_wallet"<?php echo get_selected($_GET['sfl'], "mb_wallet"); ?>>지갑</option> -->
 	</select>
 
@@ -693,14 +696,14 @@ while ($l_row = sql_fetch_array($get_lc)) {
 						<input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
 					</th>
 					<th scope="col" rowspan="2" id="" class="td_chk" style='max-width:50px;width:50px !important;'>등급</th>
-					<th scope="col" id="mb_list_authcheck" style='min-width:130px;' rowspan="2"><?php echo subject_sort_link('mb_level', '', 'desc') ?>직급</a></th>
+					<th scope="col" id="mb_list_authcheck" style='min-width:100px;' rowspan="2"><?php echo subject_sort_link('mb_level', '', 'desc') ?>직급</a></th>
 					<th scope="col" rowspan="2" id="mb_list_id" class="td_name center" style="width:150px"><?php echo subject_sort_link('mb_id') ?>아이디</a></th>
 					<th scope="col" rowspan="2" id="mb_list_id" class="td_name center" style="width:50px"><?php echo subject_sort_link('mb_name') ?>이름</a></th>
 					<!--<th scope="col" rowspan="2"  id="mb_list_cert"><?php echo subject_sort_link('mb_certify', '', 'desc') ?>메일인증확인</a></th>-->
 					<?if($mode=='del'){?><th scope="col" rowspan="2" id="mb_list_member" class="td_leave_date"><?php echo subject_sort_link('mb_name') ?>탈퇴일</a></th><?}?>
 					<th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_recommend') ?>추천인</th>
 					<th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_habu_sum') ?>직추천</th>
-					<!-- <th scope="col" rowspan="2" id="mb_list_mobile" class="center">후원인</th> -->
+					<th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_brecommend') ?>후원인</th>
 					<!-- <th scope="col" rowspan="2" id="mb_list_mobile" class="td_mail">메일주소</th> -->
 					<th scope="col" id="mb_list_auth" class="bonus_eth" rowspan="2"><?php echo subject_sort_link('total_fund') ?>현재잔고<br></a></th>
 					<th scope="col" id="mb_list_auth2" class="bonus_calc" rowspan="2"><?php echo subject_sort_link('deposit_point') ?>총입금액 <br></th>
@@ -836,6 +839,7 @@ while ($l_row = sql_fetch_array($get_lc)) {
 						<?if($mode=='del'){?><th scope="col" rowspan="2" class="td_mbstat" style='letter-spacing:0;'><?=$row['mb_leave_date']?></th><?}?>
 						<td rowspan="2" class="td_name name" style='width:70px;'><?php echo $row['mb_recommend'] ?></td>
 						<td rowspan="2" class="td_name td_index <? if($row['mb_habu_sum']>=2){echo 'strong';}?>"><?=$row['mb_habu_sum'] ?></td>
+						<td rowspan="2" class="td_name name" style='width:70px;'><?php echo $row['mb_brecommend'] ?></td>
 
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($total_fund) ?></td>
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($row['mb_deposit_point']) ?></td>
@@ -881,9 +885,9 @@ while ($l_row = sql_fetch_array($get_lc)) {
 		</table>
 	</div>
 
-	<div class="btn_list01 btn_list">
+	<div class="btn_list">
 		<!-- <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value"> -->
-		<input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+		<input type="submit" name="act_button" class="btn_submit" value="선택회원삭제" onclick="document.pressed=this.value">
 	</div>
 
 </form>

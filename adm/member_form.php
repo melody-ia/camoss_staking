@@ -426,7 +426,7 @@ $rank_result = sql_fetch($rank_sql);
 					<td><?php echo get_member_level_select('mb_level', 0, $member['mb_level'], $mb['mb_level']) ?> <div></td>
 					<th scope="row"><label for="grade">회원 등급</label></th>
 					<?php if($w != "u"){$mb['grade'] = 0;}?>
-					<td><? echo "<img src='/img/" . $mb['grade'] . ".png' style='width:40px;height:40px;'>"; ?><?php echo get_grade_select('grade', 0, 4, $mb['grade']) ?><?= $rank_result['rank_day'] ?></td>
+					<td><? echo "<img src='/img/" . $mb['grade'] . ".png' style='width:40px;height:40px;'>"; ?><?php echo get_grade_select('grade', 0, 5, $mb['grade']) ?><?= $rank_result['rank_day'] ?></td>
 				</tr>
 				<tr>
 					<th scope="row">추천인</th>
@@ -579,6 +579,10 @@ $rank_result = sql_fetch($rank_sql);
 			text-align: right;
 			width: auto;
 		}
+
+		.tbl_frm01 th.manual_modify{
+			background:#cdcdcd;
+		}
 	</style>
 
 	<tr class="ly_up padding-box fund divide-top">
@@ -601,7 +605,7 @@ $rank_result = sql_fetch($rank_sql);
 	</tr>
 
 	<tr class="ly_up padding-box fund">
-		<th scope="row">잔고 수동지급/차감</th>
+		<th scope="row" class="manual_modify">잔고 수동지급/차감</th>
 
 		<td colspan="1">
 			<input type="hidden" name="mb_deposit_point_math" id="math_code" value="">
@@ -609,7 +613,7 @@ $rank_result = sql_fetch($rank_sql);
 			<input type="button" value="-" class='math_btn minus'>
 			<input type="text" name="mb_deposit_point_add" value="" id="field_upstair" class="frm_input wide" size="15" style="max-width:60%" inputmode=price>
 		</td>
-		<th>지급/차감 내용</th>
+		<th class="manual_modify">지급/차감 내용</th>
 		<td colspan="1">
 			<input type="text" name="mb_deposit_point_content" value="" id="field_upstair" class="frm_input wide field_upstair" size="15" style="max-width:60%">
 		</td>
@@ -622,9 +626,26 @@ $rank_result = sql_fetch($rank_sql);
 		<td colspan="1"><span class='strong bonus'>
 		<input type="hidden" class='no-input' name="mb_balance" value="<?= shift_auto($mb['mb_balance'],$curencys[0]) ?>" readonly> <?= shift_auto($mb['mb_balance'],$curencys[0]) ?> </span><?=$curencys[0]?></td>
 		
-		<th scope="row">남은 수당</th>
+		<th scope="row" >남은 수당</th>
 		<td colspan="1"><span class='strong amt'><?=shift_auto($mb['mb_balance'] - $mb['mb_shift_amt'] + $mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>
 
+	</tr>
+
+	<tr class="ly_up padding-box fund">
+		<th scope="row" class="manual_modify">수당 수동지급/차감</th>
+
+		<td colspan="1">
+			<input type="hidden" name="mb_balance_math" id="balance_math_code" value="">
+			<input type="button" value="+" class='balance_math_btn plus'>
+			<input type="button" value="-" class='balance_math_btn minus'>
+			<input type="text" name="mb_balance_add" value="" id="balance_field_upstair" class="frm_input wide" size="15" style="max-width:60%" inputmode=price>
+		</td>
+		<th class="manual_modify">지급/차감 내용</th>
+		<td colspan="1">
+			<input type="text" name="mb_balance_content" value="" id="balance_field_upstair" class="frm_input wide field_upstair" size="15" style="max-width:60%">
+		</td>
+
+		<td></td>
 	</tr>
 
 	<tr class="ly_up padding-box fund">
@@ -633,23 +654,6 @@ $rank_result = sql_fetch($rank_sql);
 
 		<th scope="row">재구매 사용</th>
 		<td colspan="1"><span class='strong amt'><?=shift_auto(-1*$mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>
-	</tr>
-
-	<tr class="ly_up padding-box fund">
-		<th scope="row">수당 수동지급/차감</th>
-
-		<td colspan="1">
-			<input type="hidden" name="mb_balance_math" id="balance_math_code" value="">
-			<input type="button" value="+" class='balance_math_btn plus'>
-			<input type="button" value="-" class='balance_math_btn minus'>
-			<input type="text" name="mb_balance_add" value="" id="balance_field_upstair" class="frm_input wide" size="15" style="max-width:60%" inputmode=price>
-		</td>
-		<th>지급/차감 내용</th>
-		<td colspan="1">
-			<input type="text" name="mb_balance_content" value="" id="balance_field_upstair" class="frm_input wide field_upstair" size="15" style="max-width:60%">
-		</td>
-
-		<td></td>
 	</tr>
 
 	<tr class="ly_up padding-box fund">
@@ -931,7 +935,7 @@ $rank_result = sql_fetch($rank_sql);
 			
 			은행 :<input type="text" name="bank_name" value="<?php echo $mb['bank_name'] ?>" id="bank_name" class="frm_input wide" size="15" style="">
 			&nbsp 계좌번호 : &nbsp<input type="text" name="bank_account" value="<?php echo $mb['bank_account'] ?>" id="bank_account" class="frm_input wide" size="15" style="width:300px;">
-			&nbsp 예금주 : &nbsp<input type="text" name="account_name" value="<?php echo $mb['account_name'] ?>" id="account_name" class="frm_input wide" size="15" style="">
+			&nbsp 예금주 / 페이아이디 : &nbsp<input type="text" name="account_name" value="<?php echo $mb['account_name'] ?>" id="account_name" class="frm_input wide" size="15" style="">
 		</td>
 		<?}else{?>
 			<td colspan="3">

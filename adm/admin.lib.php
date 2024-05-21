@@ -232,8 +232,8 @@ function get_grade_select($name, $start_id=0, $end_id=6, $selected="", $event=""
 
     // $start_id = $start_id > 4 ? 4 : $start_id;
     
-    $level_name=array("일반","여행플래너","이코노미","비지니스","퍼스트");
-	// $level_name=array("0star","1star","2star","3star","4star","5star","6star","7star");
+    // $level_name=array("일반","여행플래너","이코노미","비지니스","퍼스트");
+	$level_name=array("0star","1star","2star","3star","4star","5star");
     $str = "\n<select id=\"{$name}\"  name=\"{$name}\"";
     if ($event) $str .= " $event";
     $str .= ">\n";
