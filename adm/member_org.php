@@ -280,7 +280,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 		background:#fff;
 		border:2px solid rgb(95, 95, 95);
 		color:#000;
-		height:175px;
+		height:185px;
 		font-weight:normal;
 		line-height:15px;
 		padding-top:5px;
@@ -482,6 +482,7 @@ if (!$to_date) $to_date = Date("Y-m-d", time());
 	.lvl_img{
 		width:30px;
 	}
+	.mb_name{margin:-3px 0 5px 0;font-weight:bold}
 </style>
 
 <script type="text/javascript">
