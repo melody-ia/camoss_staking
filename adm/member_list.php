@@ -688,10 +688,10 @@ while ($l_row = sql_fetch_array($get_lc)) {
 
 			<thead>
 				<tr>
-					<!-- <th scope="col" rowspan="2" id="mb_list_chk">
+					<th scope="col" rowspan="2" id="mb_list_chk">
 						<label for="chkall" class="sound_only">회원 전체</label>
 						<input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
-					</th> -->
+					</th>
 					<th scope="col" rowspan="2" id="" class="td_chk" style='max-width:50px;width:50px !important;'>등급</th>
 					<th scope="col" id="mb_list_authcheck" style='min-width:130px;' rowspan="2"><?php echo subject_sort_link('mb_level', '', 'desc') ?>직급</a></th>
 					<th scope="col" rowspan="2" id="mb_list_id" class="td_name center" style="width:150px"><?php echo subject_sort_link('mb_id') ?>아이디</a></th>
@@ -813,11 +813,11 @@ while ($l_row = sql_fetch_array($get_lc)) {
 
 
 					<tr class="<?php echo $bg; ?>">
-						<!-- <td headers="mb_list_chk" class="td_chk" rowspan="2">
+						<td headers="mb_list_chk" class="td_chk" rowspan="2">
 							<input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
 							<label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['mb_name']); ?> <?php echo get_text($row['mb_nick']); ?>님</label>
 							<input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
-						</td> -->
+						</td>
 						<td headers="mb_list_id" rowspan="2" class="td_grade">
 							<input type='hidden' name='grade[]' value="<?= $row['grade'] ?>" />
 							<? echo "<img src='/img/" . $row['grade'] . ".png' class='grade_icon'>"; ?>
@@ -881,10 +881,10 @@ while ($l_row = sql_fetch_array($get_lc)) {
 		</table>
 	</div>
 
-	<!-- <div class="btn_list01 btn_list">
-		<input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+	<div class="btn_list01 btn_list">
+		<!-- <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value"> -->
 		<input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
-	</div> -->
+	</div>
 
 </form>
 

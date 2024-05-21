@@ -254,8 +254,12 @@ $stats_result = sql_fetch($stats_sql);
 	}
 
 	.local_sch .btn_submit {
+		background: #ff3061 !important;
+		color: #fff;
+		font-size: 0.95em;
 		width: 80px;
 		height: 33px;
+		text-indent: 0px;
 	}
 
 	.f_blue {
@@ -490,6 +494,22 @@ $stats_result = sql_fetch($stats_sql);
 		vertical-align:-webkit-baseline-middle !important;
 	}
 	.no-swap{display:block;color:#bbb;font-size:11px;font-weight:300;width:100%;margin:0;padding:0;line-height:10px;}
+
+    .bg0 {background: #fff}
+    .bg1 {background: #f2f5f9}
+    tbody td { border: 1px solid #ececec;}
+    .badge {
+        border-radius: 0.5rem;
+        padding: 5px 8px;
+        margin-left: 5px;
+    }
+    .local_ov01 {
+        position: relative; 
+        padding: 10px 20px;
+        border-bottom: 1px solid #e9e9e9;
+        background: #f2f5f9;
+    }
+
 </style>
 <link rel="stylesheet" href="<?=G5_THEME_URL?>/css/scss/custom.css">
 <style>
