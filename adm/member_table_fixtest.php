@@ -22,11 +22,11 @@ $colspan = 6;
 
 
 $sql = "SELECT SUM(C.cnt) AS cnt FROM 
-(SELECT COUNT(mb_no) AS cnt FROM g5_member WHERE mb_recommend = mb_id OR mb_brecommend = mb_id 
+( SELECT COUNT(mb_no) AS cnt FROM g5_member WHERE mb_recommend = mb_id OR mb_brecommend = mb_id 
 UNION
-SELECT COUNT(mb_no) AS cnt FROM G5_MEMBER AS a WHERE a.mb_brecommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
+SELECT COUNT(mb_no) AS cnt FROM g5_member AS a WHERE a.mb_brecommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
 UNION
-SELECT COUNT(mb_no) AS cnt FROM G5_MEMBER AS a WHERE a.mb_recommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
+SELECT COUNT(mb_no) AS cnt FROM g5_member AS a WHERE a.mb_recommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
 ) AS C ";
 
 $row = sql_fetch($sql);
@@ -38,11 +38,11 @@ if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = " SELECT C.mb_no, C.mb_id, C.mb_name, C.mb_recommend, C.mb_brecommend,C.memo FROM 
-(SELECT *,('1') AS memo FROM g5_member WHERE mb_recommend = mb_id OR mb_brecommend = mb_id 
+( SELECT *,('1') AS memo FROM g5_member WHERE mb_recommend = mb_id OR mb_brecommend = mb_id 
 UNION
-SELECT *,('2') AS memo FROM G5_MEMBER AS a WHERE a.mb_brecommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
+SELECT *,('2') AS memo FROM g5_member AS a WHERE a.mb_brecommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
 UNION
-SELECT *,('3') AS memo FROM G5_MEMBER AS a WHERE a.mb_recommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
+SELECT *,('3') AS memo FROM g5_member AS a WHERE a.mb_recommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
 ) AS C";
 $result = sql_query($sql);
 
