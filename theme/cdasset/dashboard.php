@@ -9,6 +9,15 @@
 	login_check($member['mb_id']);
     $member_info = sql_fetch("SELECT * FROM g5_member_info WHERE mb_id ='{$member['mb_id']}' order by date desc limit 0,1 ");
     
+    $password_sql = "SELECT mb_password,reg_tr_password FROM g5_member WHERE mb_id = '{$member['mb_id']}' " ;
+    $password_result = sql_fetch($password_sql);
+    if($password_result['mb_password'] == 'sha256:12000:38cIHMUY7+MqI/FSl4zzu8fyyYV5v4kp:8UG8WFY+3smLHy4Xi0/D0SsLSSePV7P7' || $password_result['reg_tr_password'] == 'sha256:12000:YnQ4FiYau5CBORv+nqGbayBRfhxllDFL:LLC4COBu4RGCIPcOES4j5yVrPmKZR1TQ'){
+        $newpassword = 1;
+    }else{
+        $newpassword = 0;
+    }
+    
+
 ?>
 
 <link rel="stylesheet" href="<?=G5_THEME_URL?>/css/default.css">
@@ -16,12 +25,12 @@
 
 
 <?php
-		if(defined('_INDEX_')) { // index에서만 실행
-			include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어
-		}
-		$package = package_have_return($member['mb_id']);
+    if(defined('_INDEX_')) { // index에서만 실행
+        include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어
+    }
+    $package = package_have_return($member['mb_id']);
 
-	?>
+?>
 
 
 <?include_once(G5_THEME_PATH.'/_include/breadcrumb.php');?>
@@ -180,5 +189,19 @@
         </div>
     </div>
 </main>
+
+<script>
+$(function() {
+    var new_pass_reg = <?=$newpassword?>;
+    if(new_pass_reg == 1){
+        dialogModal('<p>패스워드를 변경</p>', '<p>초기 로그인패스워드와 핀코드를 반드시 변경해주세요</p>', 'warning');
+        $('.closed').click(function() {
+            location.href = '<?=G5_URL?>/page.php?id=profile';
+        });
+        console.log('password : ' + new_pass_reg);
+    }
+
+});
+</script>
 
 <? include_once(G5_THEME_PATH.'/_include/tail.php'); ?>
