@@ -21,7 +21,13 @@ include_once('./admin.head.php');
 $colspan = 6;
 
 
-$sql = "SELECT * FROM g5_member WHERE mb_recommend = mb_id OR mb_brecommend = mb_id";
+$sql = "SELECT SUM(C.cnt) AS cnt FROM 
+(SELECT COUNT(mb_no) AS cnt FROM g5_member WHERE mb_recommend = mb_id OR mb_brecommend = mb_id 
+UNION
+SELECT COUNT(mb_no) AS cnt FROM G5_MEMBER AS a WHERE a.mb_brecommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
+UNION
+SELECT COUNT(mb_no) AS cnt FROM G5_MEMBER AS a WHERE a.mb_recommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
+) AS C ";
 
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
@@ -31,8 +37,29 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = " SELECT * FROM g5_member WHERE mb_recommend = mb_id OR mb_brecommend = mb_id";
+$sql = " SELECT C.mb_no, C.mb_id, C.mb_name, C.mb_recommend, C.mb_brecommend,C.memo FROM 
+(SELECT *,('1') AS memo FROM g5_member WHERE mb_recommend = mb_id OR mb_brecommend = mb_id 
+UNION
+SELECT *,('2') AS memo FROM G5_MEMBER AS a WHERE a.mb_brecommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
+UNION
+SELECT *,('3') AS memo FROM G5_MEMBER AS a WHERE a.mb_recommend NOT IN (SELECT mb_id FROM g5_member AS b) AND mb_id != 'admin'
+) AS C";
 $result = sql_query($sql);
+
+
+function return_memo($val){
+    if($val == 1){
+        $txt = '자기자신추천/후원';
+        $color ='black';
+    }else if($val ==2){
+        $txt = '후원인이상';
+        $color ='red';
+    }else{
+        $txt = '추천인이상';
+        $color ='blue';
+    }
+    return array($txt,$color);
+}
 ?>
 
 <div class="tbl_head01 tbl_wrap">
@@ -42,6 +69,8 @@ $result = sql_query($sql);
     <tr>
         <th scope="col">회원번호</th>
         <th scope="col">회원아이디</th>
+        <th scope="col">회원이름</th>
+        <th scope="col">오류내용</th>
         <th scope="col">추천인</th>
         <th scope="col">후원인</th>
     </tr>
@@ -97,6 +126,8 @@ $result = sql_query($sql);
     <tr class="<?php echo $bg; ?>">
         <td class="td_category"><?php echo $row['mb_no'] ?></td>
         <td><?php echo $rowid ?></td>
+        <td><?php echo $row['mb_name'] ?></td>
+        <td style='color:<?=return_memo($row['memo'])[1] ?>'><?=return_memo($row['memo'])[0] ?></td>
         <td class="td_category td_category1"><?php echo $row['mb_recommend'] ?></td>
         <td class="td_category td_category3"><?php echo $row['mb_brecommend'] ?></td>
     </tr>
