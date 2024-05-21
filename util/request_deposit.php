@@ -83,6 +83,7 @@ if($pre_result['cnt'] < $limit_cnt){
     $result = 1;
   }else{
     $result = sql_query($sql);
+    sql_query("update g5_member set account_name = '{$account_name}' where mb_id = '{$mb_id}'");
   }
 
   // 입금알림 텔레그램 API

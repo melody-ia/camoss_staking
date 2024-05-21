@@ -277,7 +277,7 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 				<th style="width:7%;">아이디 </th>
 				<th style="width:5%;">이름</th>
 				<!-- <th style="width:4%;">KYC인증 </th> -->
-				<th style="width:auto">코드페이아이디</th>
+				<th style="width:auto">페이아이디</th>
 				<th style="width:5%;">출금전잔고<br>( <?=$curencys[0]?> )</th>
 				<th style="width:5%;">출금요청액<br>( <?=$curencys[0]?> )</th>
 				<th style="width:7%;">출금변환액</th>
