@@ -21,7 +21,7 @@ $print_version = defined('G5_YOUNGCART_VER') ? 'YoungCart Version '.G5_YOUNGCART
 
         
 <!-- Channel Plugin Scripts -->
-<script>
+<!-- <script>
   (function() {
     var w = window;
     if (w.ChannelIO) {
@@ -61,7 +61,7 @@ $print_version = defined('G5_YOUNGCART_VER') ? 'YoungCart Version '.G5_YOUNGCART
     "pluginKey": "51140d30-e453-4d07-b997-8a144c03ec0f",
     "memberId": "TRIPSIA",
   });
-</script>
+</script> -->
 <!-- End Channel Plugin -->
 
     </div>
