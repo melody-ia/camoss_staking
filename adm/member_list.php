@@ -887,7 +887,7 @@ while ($l_row = sql_fetch_array($get_lc)) {
 
 	<div class="btn_list">
 		<!-- <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value"> -->
-		<input type="submit" name="act_button" class="btn_submit" value="선택회원삭제" onclick="document.pressed=this.value">
+		<input type="submit" name="act_button" class="btn_submit" value="선택삭제" onclick="document.pressed=this.value">
 	</div>
 
 </form>
