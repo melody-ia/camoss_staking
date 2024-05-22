@@ -139,7 +139,12 @@ $result  = sql_fetch($pre_sql);
 $mb_recommend_no = $result['recom_no'];
 
 $depth = $result['mb_depth'];
-$mb_center = $_POST['mb_center_nick']; //센터닉네임 사용 by arcthan 2021-09-14
+
+if($_POST['mb_center_nick']){
+	$mb_center = $_POST['mb_center_nick']; //센터닉네임 사용 by arcthan 2021-09-14
+}else{
+	$mb_center = 'cdasset';
+}
 
 
 if ($w == '' || $w == 'u') {

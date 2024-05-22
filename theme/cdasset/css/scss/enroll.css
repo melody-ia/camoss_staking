@@ -82,6 +82,11 @@ $r-card9-1: #cfa21c ; */
   color: white;
 }
 
+.user.selected {
+  background: #0062cc;
+  color: white;
+}
+
 #wrapper {
   margin-lefT: 0;
 }

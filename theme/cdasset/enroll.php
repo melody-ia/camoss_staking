@@ -577,14 +577,14 @@ if ($_GET['recom_referral']){
 
 
 		//센터멤버 검사
-		if (f.mb_center.value == '' || f.mb_center.value == 'undefined') {
+		/* if (f.mb_center.value == '' || f.mb_center.value == 'undefined') {
 			dialogModal('센터정보 확인', "<strong>센터명 또는 센터 아이디를 검색하여 목록에서 선택해주세요.</strong>", 'warring');
 			return false;
-		}
+		} 
 		if (!center_search) {
 			commonModal('센터정보 확인', '<strong>센터정보를 검색하여 선택해 주세요.</strong>', 80);
 			return false;
-		} 
+		} */
 		
 		//후원인 검사
 		if (f.mb_brecommend.value == '' || f.mb_brecommend.value == 'undefined') {
