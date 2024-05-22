@@ -23,6 +23,9 @@ if($_GET['start_dt']){
 	$to_date = $fr_date;
 	// $to_date = $_GET['end_dt'];
 // }
+if($_GET['to_date']){
+	$to_date = $_GET['to_date'];
+}
 
 $sql = "select * from {$g5['bonus_config']} where used > 0 order by no asc";
 $list = sql_query($sql);
@@ -106,7 +109,7 @@ $colspan = 7;
 if($_REQUEST['view'] == 'all'){
 	$rows = 5000;
 }else{
-	$rows = $config['cf_page_rows'];
+	$rows = 100;
 }
 
 
@@ -132,9 +135,9 @@ $qstr.='&stx='.$stx.'&sfl='.$sfl;
 $qstr.='&aaa='.$aaa;
 
 $max_day_sql = "SELECT 
-IFNULL((SELECT SUM(benefit) FROM soodang_pay WHERE allowance_name = 'booster' and day =({$max_date})),0) AS booster,
+IFNULL((SELECT SUM(benefit) FROM soodang_pay WHERE allowance_name = 'rollup' and day =({$max_date})),0) AS rollup,
 IFNULL((SELECT SUM(benefit) FROM soodang_pay WHERE allowance_name = 'daily' and day =({$max_date})),0) AS daily,
-IFNULL((SELECT SUM(benefit) FROM soodang_pay WHERE allowance_name = 'sales' and day =({$max_date})),0) AS sales,
+IFNULL((SELECT SUM(benefit) FROM soodang_pay WHERE allowance_name = 'direct' and day =({$max_date})),0) AS direct,
 IFNULL((SELECT SUM(benefit) FROM soodang_pay WHERE allowance_name = 'grade' and day =({$max_date})),0) AS grade,
 IFNULL((SELECT SUM(benefit) FROM soodang_pay WHERE day =({$max_date})),0) AS total, 
 ({$max_date}) as last_day LIMIT 0,1";
