@@ -108,14 +108,14 @@ if($rst && $logic){
 		$update_rank = $val;
 	}
 
-	$sql = "select q_autopack,b_autopack from g5_member where mb_id = '{$mb_id}'";
+	$sql = "SELECT limited from wallet_bonus_config WHERE idx =0 ";
 	$row = sql_fetch($sql);
-	if($row['b_autopack'] > 0){ 
-		$limited = $row['q_autopack'];
+	if($row['limited'] > 0){ 
+		$limited = $row['limited'];
 	}
 
 	// 해당 패키지로 받을 수 있는 수당 한도(300%)
-	$max_limit_point = $it_point * ($limited/100);
+	$max_limit_point = $calc_value * ($limited/100);
 	
 	$update_point .= ", mb_rate = ( mb_rate + {$pv}) ";
 	$update_point .= ", mb_save_point = ( mb_save_point + {$price_value}) ";
