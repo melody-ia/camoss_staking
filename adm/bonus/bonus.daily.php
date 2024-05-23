@@ -117,7 +117,6 @@ if(!$get_today){
 		
 		$rate = find_rate($rate_array,$pv);
 		
-
 		$benefit = $pv * (0.01 * $rate);
 		
 		$total_benefit = ($mb_balance - $mb_balance_ignore) + $benefit + $total_paid_list[$order_list_row['mb_id']]['total_benefit'];
@@ -143,12 +142,10 @@ if(!$get_today){
 				$benefit = 0;
 			}
 
-			$over_benefit = $origin_benefit - $benefit;
-			$clean_over_benefit = clean_number_format($over_benefit);
-			$clean_origin_benefit = clean_number_format($origin_benefit);
+			$clean_mb_index = clean_number_format($mb_index);
 
 			$total_paid_list[$order_list_row['mb_id']]['real_benefit'] = $cut_benefit;
-			$over_benefit_log = " (over benefit : {$clean_over_benefit} / {$clean_origin_benefit})";
+			$over_benefit_log = " (over benefit : {$clean_number_mb_balance} / {$clean_mb_index})";
 		}
 		
 		$clean_shop_benefit = clean_number_format($benefit * $shop_bonus_rate);
@@ -158,7 +155,7 @@ if(!$get_today){
 		$_clean_number_benefit  = clean_number_format($_benefit);
 
 		$rec = "{$code} bonus {$rate}% : {$_clean_number_benefit} {$unit}, shop bonus : {$clean_shop_benefit} {$shop_unit} {$over_benefit_log}";
-		$benefit_log = "{$clean_number_goods_price}(총 구매액) * {$rate}% (지급률) {$over_benefit_log}";
+		$benefit_log = "{$clean_number_goods_price}(총 구매액) * {$rate}%(지급률) {$over_benefit_log}";
 		
 		$total_paid_list[$order_list_row['mb_id']]['log'] .= "<br><span>{$benefit_log} = </span><span class='blue'>{$clean_number_benefit}</span>";
 		$total_paid_list[$order_list_row['mb_id']]['sub_log'] = "<span>현재총수당 : {$clean_number_mb_balance}, 수당한계점 : {$clean_number_mb_index} </span>";

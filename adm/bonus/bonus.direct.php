@@ -1,7 +1,7 @@
 <?php
 $sub_menu = "600200";
 include_once('./_common.php');
-// $debug = true;
+$debug = false;
 include_once('./bonus_inc.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -50,7 +50,7 @@ $sql = "WITH soodang AS (
     WHERE o.od_soodang_date = '{$bonus_day}' AND o.od_cash_no LIKE 'P%' AND o.od_cash !=0
     ), 
     `member` AS ( 
-    SELECT mb_no, mb_id, mb_name, mb_level, grade, mb_deposit_point, mb_balance+mb_shop_point AS total_balance, mb_index 
+    SELECT mb_no, mb_id, mb_name, mb_level, grade, mb_deposit_point, mb_balance+mb_shop_point-mb_balance_ignore AS total_balance, mb_index 
     FROM g5_member WHERE mb_id IN (select mb_recommend from soodang) 
     ) 
     SELECT m.mb_no,m.mb_id,m.mb_name,m.mb_level,m.grade,s.upstair,s.benefit,s.mb_id AS from_mb_id,m.mb_deposit_point,m.total_balance,m.mb_index,s.od_name
@@ -126,20 +126,22 @@ function  excute(){
         echo "</code>";
         echo $data['history']."<br>";
 
-        $calc_benefit = $data['limit']-($data['benefit']+$data['total_balance']);
+        $calc_benefit = $data['limit']-($data['benefit']+$data['total_balance']) > 0 ? $data['benefit'] : $data['limit']-$data['total_balance'];
         $expected = clean_number_format($data['benefit']);
         $over_benefit = "";
-        if($calc_benefit < 0){
-            $data['benefit'] = $data['limit'] - $data['total_balance'];
-            $clean_total_balance = clean_coin_format($data['total_balance']);
-            $over_benefit .= "(over benefit : {$clean_total_balance} / {$data['limit']})";
+
+        if($calc_benefit <= 0){
+            $calc_benefit = 0;
+            $clean_total_balance = clean_number_format($data['total_balance']);
+            $clean_limit = clean_number_format($data['limit']);
+            $over_benefit .= "(over benefit : {$clean_total_balance} / {$clean_limit})";
         }
 
-        $balance_benefit = $data['benefit'] * $live_bonus_rate;
-        $shop_benefit = $data['benefit'] * $shop_bonus_rate;
+        $balance_benefit = $calc_benefit * $live_bonus_rate;
+        $shop_benefit = $calc_benefit * $shop_bonus_rate;
 
         echo "<code>";
-        echo "<span>실제수당: ".clean_number_format($data['benefit'])." 원</span><br>";
+        echo "<span>실제수당: ".clean_number_format($calc_benefit)." 원</span><br>";
         echo "<span>수당: ".clean_number_format($balance_benefit)." 원 | 쇼핑포인트: ".clean_number_format($shop_benefit)." 원</span>";
         echo "</code>";
 
@@ -154,10 +156,13 @@ function  excute(){
         $clean_total_balance = clean_coin_format($data['total_balance']);
         $clean_mb_deposit_point = clean_coin_format($data['mb_deposit_point']);
 
+        $clean_balance_benefit = clean_number_format($balance_benefit);
+        $clean_shop_benefit = clean_number_format($shop_benefit);
+
         $soodang_pay_values_insert .= "('{$code}','{$bonus_day}','{$key}',{$data['mb_no']},
-        {$data['benefit']},{$data['mb_level']},{$data['grade']},'{$data['mb_name']}',
-        '{$code} bonus {$bonus_row['rate']}% : {$balance_benefit} 원, shop bonus : {$shop_benefit} 원 {$over_benefit}',
-        '{$clean_upstair}(총 구매액)*{$bonus_row['rate']}(지급률) {$over_benefit}={$balance_benefit} 원, shop bonus : {$shop_benefit} 원(expected : {$expected} 원)',
+        {$calc_benefit},{$data['mb_level']},{$data['grade']},'{$data['mb_name']}',
+        '{$code} bonus {$bonus_row['rate']}% : {$clean_balance_benefit} 원, shop bonus : {$clean_shop_benefit} 원 {$over_benefit}',
+        '{$clean_upstair}(총 구매액)*{$bonus_row['rate']}%(지급률) {$over_benefit}={$clean_balance_benefit} 원, shop bonus : {$clean_shop_benefit} 원(expected : {$expected} 원)',
         {$clean_total_balance},{$clean_mb_deposit_point},now()),";
 
     }

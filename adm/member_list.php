@@ -705,6 +705,7 @@ while ($l_row = sql_fetch_array($get_lc)) {
 					<th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_habu_sum') ?>직추천</th>
 					<th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_brecommend') ?>후원인</th>
 					<!-- <th scope="col" rowspan="2" id="mb_list_mobile" class="td_mail">메일주소</th> -->
+					<th scope="col" id="mb_list_auth" class="bonus_aa" rowspan="2"><?php echo subject_sort_link('total_direct') ?>추천수당<br></a></th>
 					<th scope="col" id="mb_list_auth" class="bonus_eth" rowspan="2"><?php echo subject_sort_link('total_fund') ?>현재잔고<br></a></th>
 					<th scope="col" id="mb_list_auth2" class="bonus_calc" rowspan="2"><?php echo subject_sort_link('deposit_point') ?>총입금액 <br></th>
 					<th scope="col" id="mb_list_auth2" class="bonus_bb" rowspan="2"><?php echo subject_sort_link('mb_deposit_calc') ?>사용금액</th>
@@ -811,7 +812,9 @@ while ($l_row = sql_fetch_array($get_lc)) {
 							break;
 					}
 
-					list($total_mining, $total_mining_rate) = mining_bonus_rate($row['mb_id'], $row['mb_rate'])
+					// list($total_mining, $total_mining_rate) = mining_bonus_rate($row['mb_id'], $row['mb_rate']);
+					$total_direct_sql = "select sum(benefit) as direct_benefit from soodang_pay where mb_id = '{$row['mb_id']}' and allowance_name = 'direct'";
+					$direct_benefit = sql_fetch($total_direct_sql)['direct_benefit'];
 				?>
 
 
@@ -840,6 +843,8 @@ while ($l_row = sql_fetch_array($get_lc)) {
 						<td rowspan="2" class="td_name name" style='width:70px;'><?php echo $row['mb_recommend'] ?></td>
 						<td rowspan="2" class="td_name td_index <? if($row['mb_habu_sum']>=2){echo 'strong';}?>"><?=$row['mb_habu_sum'] ?></td>
 						<td rowspan="2" class="td_name name" style='width:70px;'><?php echo $row['mb_brecommend'] ?></td>
+
+						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($direct_benefit) ?></td>
 
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($total_fund) ?></td>
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($row['mb_deposit_point']) ?></td>

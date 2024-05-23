@@ -102,7 +102,7 @@ if(isset($_POST['b_autopack'])){
 	$limited = $_POST['q_autopack'];
 }
 
-$mb_index = "mb_index = (select ifnull(sum(od_cart_price),0)*({$limited}/100) from g5_order where mb_id = '{$mb_id}')";
+$mb_index = "mb_index = pv * ({$limited}/100) ";
 $mb_no_sql = "select count(mb_no) as cnt, mb_no from g5_member where mb_id = '{$_POST['mb_recommend']}'";
 $mb_no_row = sql_fetch($mb_no_sql);
 
