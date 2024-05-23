@@ -696,8 +696,8 @@ while ($l_row = sql_fetch_array($get_lc)) {
 						<input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
 					</th>
 					<th scope="col" rowspan="2" id="" class="td_chk" style='max-width:50px;width:50px !important;'>등급</th>
-					<th scope="col" id="mb_list_authcheck" style='min-width:100px;' rowspan="2"><?php echo subject_sort_link('mb_level', '', 'desc') ?>직급</a></th>
-					<th scope="col" rowspan="2" id="mb_list_id" class="td_name center" style="width:150px"><?php echo subject_sort_link('mb_id') ?>아이디</a></th>
+					<th scope="col" id="mb_list_authcheck" style='min-width:120px;' rowspan="2"><?php echo subject_sort_link('mb_level', '', 'desc') ?>직급</a></th>
+					<th scope="col" rowspan="2" id="mb_list_id" class="td_name center" style="width:130px"><?php echo subject_sort_link('mb_id') ?>아이디</a></th>
 					<th scope="col" rowspan="2" id="mb_list_id" class="td_name center" style="width:50px"><?php echo subject_sort_link('mb_name') ?>이름</a></th>
 					<!--<th scope="col" rowspan="2"  id="mb_list_cert"><?php echo subject_sort_link('mb_certify', '', 'desc') ?>메일인증확인</a></th>-->
 					<?if($mode=='del'){?><th scope="col" rowspan="2" id="mb_list_member" class="td_leave_date"><?php echo subject_sort_link('mb_name') ?>탈퇴일</a></th><?}?>
