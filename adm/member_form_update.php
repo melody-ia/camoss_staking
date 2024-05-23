@@ -366,6 +366,48 @@ else if ($w == 'u')
 				sql_query($update_sql);
 			}
 		}
+
+
+		// 쇼핑몰수당입 금처리
+		$shop_adm = conv_number($_POST['mb_shop_add']);
+		$shop_adm_content = $_POST['mb_shop_content'];
+		$shop_code = $_POST['mb_shop_math'];
+		$shop = $mb['mb_shop_point'];
+		
+		// 수당 수동 입금
+		if($shop_adm != 0){
+
+			if($shop_code == '+'){
+				if($shop_adm_content === '') {
+					$shop_adm_code = '관리자 지급';
+				} else {
+					$shop_adm_code = $shop_adm_content;
+				}
+			}else{
+				if($shop_adm_content === '') {
+					$shop_adm_code = '관리자 차감';
+				} else {
+					$shop_adm_code = $shop_adm_content;
+				}
+			}
+	
+			$in_shop_adm_value = $shop_code.$shop_adm;
+
+			$shop_adm_sql = "insert mb_shop_point_history set
+					mb_id             = '{$mb_id}'
+					, origin_mb_shop_point     =  '{$shop}'
+					, state         = '{$shop_code}'
+					, in_mb_shop_point    		= {$shop_adm}
+					, reason = '{$shop_adm_content}'
+					, created_at   			= now()";
+
+			$shop_adm_result = sql_query($shop_adm_sql);
+			
+			if($shop_adm_result){
+				$update_sql = "update g5_member set mb_shop_point = mb_shop_point  {$in_shop_adm_value} WHERE mb_id = '{$mb_id}' ";
+				sql_query($update_sql);
+			}
+		}
 	
 
 

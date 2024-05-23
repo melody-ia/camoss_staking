@@ -202,9 +202,12 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 			var after = $(this).val().replace(/,/g, '');
 			var before = "<?= $mb['mb_balance'] ?>";
 			console.log(after + '/' + before);
+		});
 
-			// var calc = (after - conv_number(before));
-			// $('#be_to').val(Price(calc));
+		$('#shop_field_upstair').on('change', function() {
+			var after = $(this).val().replace(/,/g, '');
+			var before = "<?= $mb['mb_shop_point'] ?>";
+			console.log(after + '/' + before);
 		});
 
 		function copyAddress(param) {
@@ -519,6 +522,15 @@ $rank_result = sql_fetch($rank_sql);
 			cursor: pointer
 		}
 
+		.shop_math_btn {
+			width: 39px;
+			height: 39px;
+			border: 1px solid #ccc;
+			padding: 1px;
+			font-size: 20px;
+			cursor: pointer
+		}
+
 		.math_btn.plus.active {
 			background: blue;
 			border: 1px solid blue;
@@ -538,6 +550,18 @@ $rank_result = sql_fetch($rank_sql);
 		}
 
 		.balance_math_btn.minus.active {
+			background: red;
+			border: 1px solid red;
+			color: white
+		}
+
+		.shop_math_btn.plus.active {
+			background: blue;
+			border: 1px solid blue;
+			color: white
+		}
+
+		.shop_math_btn.minus.active {
 			background: red;
 			border: 1px solid red;
 			color: white
@@ -613,7 +637,7 @@ $rank_result = sql_fetch($rank_sql);
 			<input type="button" value="-" class='math_btn minus'>
 			<input type="text" name="mb_deposit_point_add" value="" id="field_upstair" class="frm_input wide" size="15" style="max-width:60%" inputmode=price>
 		</td>
-		<th class="manual_modify">지급/차감 내용</th>
+		<th class="manual_modify">잔고 지급/차감 내용</th>
 		<td colspan="1">
 			<input type="text" name="mb_deposit_point_content" value="" id="field_upstair" class="frm_input wide field_upstair" size="15" style="max-width:60%">
 		</td>
@@ -622,7 +646,7 @@ $rank_result = sql_fetch($rank_sql);
 	</tr>
 
 	<tr class="ly_up padding-box fund">
-		<th scope="row">총 받은보너스(수당)</th>
+		<th scope="row">총 수당 총액</th>
 		<td colspan="1"><span class='strong bonus'>
 		<input type="hidden" class='no-input' name="mb_balance" value="<?= shift_auto($mb['mb_balance'],$curencys[0]) ?>" readonly> <?= shift_auto($mb['mb_balance'],$curencys[0]) ?> </span><?=$curencys[0]?></td>
 		
@@ -640,7 +664,7 @@ $rank_result = sql_fetch($rank_sql);
 			<input type="button" value="-" class='balance_math_btn minus'>
 			<input type="text" name="mb_balance_add" value="" id="balance_field_upstair" class="frm_input wide" size="15" style="max-width:60%" inputmode=price>
 		</td>
-		<th class="manual_modify">지급/차감 내용</th>
+		<th class="manual_modify">수당 지급/차감 내용</th>
 		<td colspan="1">
 			<input type="text" name="mb_balance_content" value="" id="balance_field_upstair" class="frm_input wide field_upstair" size="15" style="max-width:60%">
 		</td>
@@ -654,6 +678,32 @@ $rank_result = sql_fetch($rank_sql);
 
 		<th scope="row">재구매 사용</th>
 		<td colspan="1"><span class='strong amt'><?=shift_auto(-1*$mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>
+	</tr>
+
+
+	<tr class="ly_up padding-box fund">
+		<th scope="row">쇼핑몰수당 총액</th>
+		<td colspan="1"><span class='strong amt'><?= shift_auto($mb['mb_shop_point'],$curencys[0])?></span> <?=$curencys[0]?></td>
+
+		<th scope="row">남은 쇼핑몰 수당</th>
+		<td colspan="1"><span class='strong amt'><?=shift_auto($mb['mb_shop_point']-$mb['mb_shop_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>
+	</tr>
+
+	<tr class="ly_up padding-box fund">
+		<th scope="row" class="manual_modify">쇼핑몰수당 수동지급/차감</th>
+
+		<td colspan="1">
+			<input type="hidden" name="mb_shop_math" id="shop_math_code" value="">
+			<input type="button" value="+" class='shop_math_btn plus'>
+			<input type="button" value="-" class='shop_math_btn minus'>
+			<input type="text" name="mb_shop_add" value="" id="shop_field_upstair" class="frm_input wide" size="15" style="max-width:60%" inputmode=price>
+		</td>
+		<th class="manual_modify">쇼핑몰수당 지급/차감 내용</th>
+		<td colspan="1">
+			<input type="text" name="mb_shop_content" value="" id="shop_field_upstair" class="frm_input wide field_upstair" size="15" style="max-width:60%">
+		</td>
+
+		<td></td>
 	</tr>
 
 	<tr class="ly_up padding-box fund">
@@ -803,6 +853,13 @@ $rank_result = sql_fetch($rank_sql);
 				$('.balance_math_btn').removeClass('active');
 				$(this).addClass('active');
 				$('#balance_math_code').val(value);
+			});
+
+			$('.shop_math_btn').click(function() {
+				var value = $(this).val();
+				$('.shop_math_btn').removeClass('active');
+				$(this).addClass('active');
+				$('#shop_math_code').val(value);
 			});
 
 			var total_fund = '<?= $mb['mb_deposit_point'] + $mb['mb_deposit_calc']?>';
@@ -1298,6 +1355,17 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
 			if ($('#balance_math_code').val() == '') {
 				$('.balance_math_btn.plus').focus();
 				alert('수당 수동입금 기호를 선택해주세요');
+
+				return false;
+			}
+
+		}
+
+		if (f.mb_shop_add.value != '') {
+			
+			if ($('#shop_math_code').val() == '') {
+				$('.shop_math_btn.plus').focus();
+				alert('쇼핑몰수당 수동입금 기호를 선택해주세요');
 
 				return false;
 			}
