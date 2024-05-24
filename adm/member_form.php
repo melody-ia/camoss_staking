@@ -645,7 +645,7 @@ $rank_result = sql_fetch($rank_sql);
 	<tr class="ly_up padding-box fund">
 		<th scope="row">총 수당 총액</th>
 		<td colspan="1"><span class='strong bonus'>
-		<input type="hidden" class='no-input' name="mb_balance" value="<?= shift_auto($mb['mb_balance'],$curencys[0]) ?>" readonly> <?= shift_auto($mb['mb_balance'],$curencys[0]) ?> </span><?=$curencys[0]?></td>
+		<input type="hidden" class='no-input' name="mb_balance" value="<?= shift_auto($mb['mb_balance'],$curencys[0]) ?>" readonly> <?= shift_auto($mb['mb_balance'],$curencys[0]) ?> </span><?=$curencys[0]?> / (MAX :: <?= shift_auto($mb['mb_index'],$curencys[0]) ?> <?=$curencys[0]?>)</td>
 		
 		<th scope="row" >남은 수당</th>
 		<td colspan="1"><span class='strong amt'><?=shift_auto($mb['mb_balance'] - $mb['mb_shift_amt'] + $mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>

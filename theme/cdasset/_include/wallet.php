@@ -229,13 +229,13 @@ function bonus_per($mb_id ='',$mb_balance='', $mb_limit = ''){
 
 	if($mb_id == ''){
 		if($member['pv'] != 0 && $member['mb_balance'] !=0 && $limited_per != 0){
-			$bonus_per = (($member['mb_balance'] + $member['mb_shop_point'] - $member['mb_balance_ignore']) /($member['pv'] * $limited_per));
+			$bonus_per = (($member['mb_balance'] + $member['mb_shop_point'] - $member['mb_balance_ignore']) /($member['mb_index'] * 0.01));
 		}else{
 			$bonus_per = 0;
 		}
 	}else{
 		if($mb_limit != 0 && $mb_balance !=0 && $limited_per != 0){
-			$bonus_per = (($total_fund-$mb_balance_ignore)/($mb_limit * $limited_per));
+			$bonus_per = (($mb_balance-$mb_balance_ignore)/($mb_limit * 0.01));
 		}else{
 			$bonus_per = 0;
 		}

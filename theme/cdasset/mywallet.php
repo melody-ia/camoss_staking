@@ -16,7 +16,8 @@ $coin = get_coins_price();
 
 $withdrawal_price = shift_coin($coin['usdt_krw'],KRW_NUMBER_POINT);
 $withdrawal_price_sell = shift_coin($default['de_token_sell_price'],KRW_NUMBER_POINT);
-// echo $withdrawal_price_sell;
+$withdrawal_price_sell = 1;
+
 $shift_auto_withdrawal_price = shift_auto($coin['usdt_krw'], 'krw');
 $shift_auto_withdrawal_price_sell = shift_auto($default['de_token_sell_price'],'krw');
 
@@ -425,7 +426,7 @@ function curency_txt($value, $kind = 'deposit')
     <!-- 입금 -->
     <section id='deposit' class='loadable'>
 
-      <h3 class="wallet_title">입금계좌</h3>
+     <!--  <h3 class="wallet_title">입금계좌</h3>
 
       <section id="account_select" class="account_select">
         <?
@@ -450,7 +451,7 @@ function curency_txt($value, $kind = 'deposit')
 
         <? $i++;
         } ?>
-      </section>
+      </section> -->
 
       <!-- 미사용
         <div class="content-box round transparent">
@@ -532,9 +533,9 @@ function curency_txt($value, $kind = 'deposit')
               <span>입금신청</span>
             </button>
 
-            <div class='txt-box deposit_alert col-12'>
+            <!-- <div class='txt-box deposit_alert col-12'>
               신청금액과 실제 입금액이 다른경우 처리가 지연될수 있습니다.
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
