@@ -297,7 +297,7 @@ function  excute(){
                 if($benefit_limit > 0){
                     $benefit_limit = $benefit;
                 }else{
-                    $benefit_limit = $benefit_limit*-1;
+                    $benefit_limit = 0;
                 }
 
                 $benefit_limit_point = shift_auto($benefit_limit);
