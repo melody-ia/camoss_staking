@@ -9,7 +9,6 @@ auth_check($auth[$sub_menu], 'r');
 
 // $debug = 1;
 
-
 $month = date('m', $timestr);
 
 echo "이번달 : ".$month;
@@ -91,7 +90,8 @@ $grade_order = ($total_order * ($company_sales * 0.01));
 // 수당제한 제외 
 $balanace_ignore = FALSE;
 
-
+$live_bonus_rate = 0.9;
+$shop_bonus_rate = 0.1;
 
 // 디버그 로그 
 if($debug){
@@ -246,7 +246,9 @@ function  excute(){
             $mb_no=$row['mb_no'];
             $mb_id=$row['mb_id'];
             $mb_name=$row['mb_name'];
+            $mb_index = $row['mb_index'];
             $mb_level=$row['mb_level'];
+            $mb_shop_point = $row['mb_shop_point'];
             $mb_deposit=$row['mb_deposit_point'];
             $mb_balance=$row['mb_balance'];
             $grade=$row['grade'];
@@ -287,29 +289,31 @@ function  excute(){
 
                 $live_benefit = clean_coin_format($benefit,2);
 
-                $live_benefit = $benefit*$live_bonus_rate;
-                $shop_benefit = $benefit*$shop_bonus_rate;
-
                 $benefit_tx = ' '.$total_order.' * '.$star_rate.' * 1/'.$member_grade_count.'='.$benefit; 
-                $benefit_limit = $benefit;
-
                 
-                
-                /* list($mb_balance,$balance_limit,$benefit_limit) = bonus_limit_check($mb_id,$benefit);
+                $balance_limit = $mb_index; // 수당한계
+                $benefit_limit = $mb_index - ($mb_balance + $mb_shop_point + $benefit); // 수당합계
 
-                echo "<code>";
-                echo "현재수당 : ".Number_format($mb_balance)."  | 수당한계 :". Number_format($balance_limit).' | ';
-                echo "발생할수당: ".Number_format($benefit)." | 지급할수당 :".Number_format($benefit_limit);
-                echo "</code><br>"; */
+                if($benefit_limit > 0){
+                    $benefit_limit = $benefit;
+                }else{
+                    $benefit_limit = $benefit_limit*-1;
+                }
+
+                $benefit_limit_point = shift_auto($benefit_limit);
+
+                $live_benefit = $benefit_limit*$live_bonus_rate;
+                $shop_benefit = $benefit_limit*$shop_bonus_rate;
+                
                 
                 echo $benefit_tx;
                 
-                $rec= $code.' Bonus from '.$grade_name;
-                $rec_adm= $prev_m."M | ".$grade_name.' : '.$benefit_tx;
+                $rec= $code.' Bonus from '. $prev_m."M | ".$grade_name.' star';
+                $rec_adm= $benefit_tx;
 
-                /* if($benefit > $benefit_limit && $balance_limit != 0 ){
+                if($benefit > $benefit_limit && $balance_limit != 0 ){
 
-                    $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit)."</span>";
+                    $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit)." (P:".$live_benefit." / SP:".$shop_benefit.")</span>";
                     echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)."</span>";
                     echo "<span class=red> ▶▶▶ 수당 초과 (한계까지만 지급) : ".Number_format($benefit_limit)." </span><br>";
                 }else if($benefit != 0 && $balance_limit == 0 && $benefit_limit == 0){
@@ -322,11 +326,13 @@ function  excute(){
                     echo "<span class=blue> ▶▶ 수당 미발생 </span>";
             
                 }else{
-                    echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)."</span><br>";
-                } */
-
-                echo "<span class=blue> ▶▶ 수당 지급 : ".$live_benefit."  ▶▶▶ 쇼핑몰보너스 지급 : ".$shop_benefit."</span><br>";
+                    echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P : ".$live_benefit." / SP : ".$shop_benefit.")</span><br>";
+                }
                 
+                echo "<code>";
+                echo "현재수당 : ".Number_format($mb_balance + $mb_shop_point)."  | 수당한계 :". Number_format($balance_limit).' | ';
+                echo "발생할수당: ".Number_format($benefit)." | 지급할수당 :".Number_format($benefit_limit);
+                echo "</code><br>";
 
 
                 if($benefit > 0 && $benefit_limit > 0){
@@ -341,7 +347,7 @@ function  excute(){
                             $balance_ignore_sql = "";
                         }
 
-                        $balance_up = "update g5_member set mb_balance = mb_balance + {$benefit_limit} {$balance_ignore_sql}, mb_shop_point = mb_shop_point + {$shop_benefit}   where mb_id = '".$mb_id."'";
+                        $balance_up = "update g5_member set mb_balance = mb_balance + {$live_benefit} {$balance_ignore_sql}, mb_shop_point = mb_shop_point + {$shop_benefit}   where mb_id = '".$mb_id."'";
 
                         // 디버그 로그
                         if($debug){

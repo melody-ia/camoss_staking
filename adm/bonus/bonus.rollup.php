@@ -287,6 +287,7 @@ function  excute(){
         $comp=$row['mb_id'];
         $mb_balance = $row['mb_balance'];
         $mb_index = $row['mb_index'];
+        $mb_shop_point = $row['mb_shop_point'];
         $pv = $row['pv'];
 
         // 직추천자수 
@@ -345,7 +346,7 @@ function  excute(){
                                  
                     
                     $balance_limit = $mb_index; // 수당한계
-                    $benefit_limit = $mb_index - ($mb_balance + $benefit); // 수당합계
+                    $benefit_limit = $mb_index - ($mb_balance + $mb_shop_point + $benefit); // 수당합계
 
                     if($benefit_limit > 0){
                         $benefit_limit = $benefit;
@@ -368,7 +369,7 @@ function  excute(){
 
                     if($benefit > $benefit_limit && $balance_limit != 0 ){
 
-                        $rec_adm .= "<span class=red> |  Bonus overflow :: ".shift_auto($benefit_limit - $benefit)."</span>";
+                        $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit)." (P:".$live_benefit." / SP:".$shop_benefit.")</span>";
                         echo "<span class=blue> ▶▶ 수당 지급 : ".$benefit_point."</span>";
                         echo "<span class=red> ▶▶▶ 수당 초과 (한계까지만 지급) : ".$benefit_limit_point." </span><br>";
 
@@ -387,7 +388,7 @@ function  excute(){
                             // 디버그 로그
                             if($debug){
                                 echo "<code>";
-                                echo "현재수당 : ".shift_auto($mb_balance)."  | 수당한계 :". shift_auto($balance_limit);
+                                echo "현재수당 : ".Number_format($mb_balance + $mb_shop_point)."  | 수당한계 :". shift_auto($balance_limit);
                                 echo " | 발생할수당: ".$benefit." | 지급할수당 :".$benefit_limit;
                                 echo "</code><br>";
                             }
