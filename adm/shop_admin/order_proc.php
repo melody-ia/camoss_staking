@@ -49,7 +49,7 @@ if($func == 'delete'){
         
             // 금액반환처리
 
-            $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$upstair}, mb_rate = mb_rate - {$pv}, 
+            $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$amt}, mb_rate = mb_rate - {$pv}, 
             pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
         
             if($rank_num == 0){
