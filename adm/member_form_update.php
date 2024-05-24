@@ -331,7 +331,12 @@ else if ($w == 'u')
 
 	// 수당입금처리
 	$balance_adm = conv_number($_POST['mb_balance_add']);
-	$balance_adm_content = $_POST['mb_balance_content'];
+	if($_POST['mb_balance_content'] != ''){
+		$balance_adm_content = $_POST['mb_balance_content'];
+	}else{
+		$balance_adm_content ='';
+	}
+
 	$balance_code = $_POST['mb_balance_math'];
 	$balance = $mb['mb_balance'];
 	
@@ -352,6 +357,7 @@ else if ($w == 'u')
 			}
 		}
 
+
 		$in_balance_adm_value = $balance_code.$balance_adm;
 
 		$balance_adm_sql = "insert mb_balance_history set
@@ -359,7 +365,7 @@ else if ($w == 'u')
 				, origin_mb_balance     =  {$balance}
 				, state         = '{$balance_code}'
 				, in_mb_balance    		= {$balance_adm}
-				, reason = '{$balance_adm_content}'
+				, reason = '{$balance_adm_code}'
 				, created_at   			= now()";
 
 		$balance_adm_result = sql_query($balance_adm_sql);
@@ -369,7 +375,7 @@ else if ($w == 'u')
 			sql_query($update_sql);
 
 			$soodang_log_value_sql = "('balance changed',curdate(),'{$mb_id}',{$mb_no}, {$in_balance_adm_value}, {$mb_level}, {$_POST['grade']},
-			'{$mb_name}','{$balance_adm_content}','{$balance_adm_content}',{$balance},{$origin_deposit_point},now())";
+			'{$mb_name}','{$balance_adm_code}','{$balance_adm_code}',{$balance},{$origin_deposit_point},now())";
 			sql_query($soodang_log_sql.$soodang_log_value_sql);
 		}
 	}
