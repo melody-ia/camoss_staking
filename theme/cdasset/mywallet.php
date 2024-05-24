@@ -692,18 +692,18 @@ function curency_txt($value, $kind = 'deposit')
             <button id="pin_open" class="btn wd yellow form-send-button">인증</button>
           </div>
           <div class="col-7">
-            <button type="button" class="btn wd btn_wd form-send-button" id="Withdrawal_btn" data-toggle="modal" data-target="" data-currency="<?= $curencys[0]; ?>" disabled>출금(판매) 신청</button>
+            <button type="button" class="btn wd btn_wd form-send-button" id="Withdrawal_btn" data-toggle="modal" data-target="" data-currency="<?= $curencys[0]; ?>" disabled>출금 신청</button>
           </div>
         </div>
       </div>
 
       <!-- 출금내역 -->
       <div class="history_box content-box">
-        <h3 class="hist_tit wallet_title">출금(판매) 신청내역</h3>
+        <h3 class="hist_tit wallet_title">출금 신청내역</h3>
         <div class="b_line2"></div>
 
         <? if (sql_num_rows($result_withdraw) == 0) { ?>
-          <div class="no_data">출금(판매) 신청내역이 존재하지 않습니다</div>
+          <div class="no_data">출금 신청내역이 존재하지 않습니다</div>
         <? } ?>
 
         <? while ($row = sql_fetch_array($result_withdraw)) {
