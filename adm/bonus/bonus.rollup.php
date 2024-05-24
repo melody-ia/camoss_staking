@@ -56,8 +56,7 @@ $rollup_config = bonus_pick('rollup');
 
 if(strpos($rollup_config['rate'],',') > 0){
     $rollup_rate_1 = explode(',',$rollup_config['rate']);
-}
-$rollup_rate_array =[];
+} 
 for($i=0; $i < count($rollup_rate_1); $i++){
     $rollup_rate_array[$i] = explode(':', preg_replace("/[^0-9-:]/", "", $rollup_rate_1[$i]));
 }
@@ -102,29 +101,30 @@ function find_rank_index($val,$mem_cnt){
     global $rollup_rate;
     $result = 0;
 
-    if($mem_cnt >= 5){
-        if($val >= $rollup_rate[8]) {$result = 8;}
-        if($val >= $rollup_rate[7]) {$result = 7;}
-        if($val >= $rollup_rate[6]) {$result = 6;}
-    }
     
-    if($mem_cnt == 4){
-        if($val >= $rollup_rate[5]) {$result = 5;}
+    if($mem_cnt >= 0){
+        if($val < $rollup_rate[0]) {$result = -1;}
+        if($val >= $rollup_rate[0]) {$result = 0;}
+        if($val >= $rollup_rate[1]) {$result = 1;}
+        if($val >= $rollup_rate[2]) {$result = 2;}
     }
-    
-    if($mem_cnt == 3){
-        if($val >= $rollup_rate[4]) {$result = 4;}
-    }
-    
-    if($mem_cnt == 2){
+
+    if($mem_cnt >= 2){
         if($val >= $rollup_rate[3]) {$result = 3;}
     }
-    
-    if($mem_cnt < 2){
-        if($val >= $rollup_rate[2]) {$result = 2;}
-        if($val >= $rollup_rate[1]) {$result = 1;}
-        if($val >= $rollup_rate[0]) {$result = 0;}
-        if($val < $rollup_rate[0]) {$result = -1;}
+
+    if($mem_cnt >= 3){
+        if($val >= $rollup_rate[4]) {$result = 4;}
+    }
+
+    if($mem_cnt >= 4){
+        if($val >= $rollup_rate[5]) {$result = 5;}
+    }
+
+    if($mem_cnt >= 5){
+        if($val >= $rollup_rate[6]) {$result = 6;}
+        if($val >= $rollup_rate[7]) {$result = 7;}
+        if($val >= $rollup_rate[8]) {$result = 8;}
     }
 
     return $result;

@@ -22,7 +22,7 @@ if($func == 'delete'){
     if($od_item){
 
         $amt = $od_item['od_cart_price'];
-        $upstair = $od_item['od_cash'];
+        $upstair = $od_item['upstair'];
         $pv = $od_item['pv'];
         $od_misu = $od_item['od_misu'];
         $mb_id = $od_item['mb_id'];
@@ -50,7 +50,7 @@ if($func == 'delete'){
             // 금액반환처리
 
             $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$upstair}, mb_rate = mb_rate - {$pv}, 
-            pv = pv - {$amt}, mb_index = mb_index - {$od_misu} ";
+            pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
         
             if($rank_num == 0){
                 $update_member_sql .=", sales_day = '0000-00-00' , rank_note = '' , rank = 0 ";
