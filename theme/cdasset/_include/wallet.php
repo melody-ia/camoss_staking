@@ -228,8 +228,8 @@ function bonus_per($mb_id ='',$mb_balance='', $mb_limit = ''){
 	global $member,$limited_per,$mb_balance_ignore,$total_fund;
 
 	if($mb_id == ''){
-		if($member['mb_save_point'] != 0 && $member['mb_balance'] !=0 && $limited_per != 0){
-			$bonus_per = (($member['mb_balance'] + $member['mb_shop_point'] - $member['mb_balance_ignore']) /($member['mb_save_point'] * $limited_per));
+		if($member['pv'] != 0 && $member['mb_balance'] !=0 && $limited_per != 0){
+			$bonus_per = (($member['mb_balance'] + $member['mb_shop_point'] - $member['mb_balance_ignore']) /($member['pv'] * $limited_per));
 		}else{
 			$bonus_per = 0;
 		}

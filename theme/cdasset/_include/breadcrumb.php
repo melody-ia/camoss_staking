@@ -5,6 +5,7 @@ $mysales = $member['mb_deposit_point'];
 //보너스/예치금 퍼센트
 // $bonus_per = bonus_state($member['mb_id']);
 $bonus_per = bonus_per();
+
 $boner_per_tx = ($limited_per*($bonus_per))*100;
 
 //시세 업데이트 시간
