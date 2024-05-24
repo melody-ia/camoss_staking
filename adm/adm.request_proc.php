@@ -5,6 +5,7 @@ include_once('./bonus/bonus_inc.php');
 
 // 자동후원인등록 시스템 
 $auto_brecomend_system = false;
+// $debug=1;
 
 $now_datetime = date('Y-m-d H:i:s');
 $now_date = date('Y-m-d');
@@ -37,12 +38,13 @@ $drain = 1;
 
 
 if ($func == 'withrawal') {
-	if ($status == '4' && $refund == 'Y') {
-		$get_row = "SELECT * from {$g5['withdrawal']} where uid = {$uid} ";
+	$get_row = "SELECT * from {$g5['withdrawal']} where uid = {$uid} ";
 
 		$ret = sql_fetch($get_row);
 		$mb_id = $ret['mb_id'];
 		$in_amt_total = $ret['out_amt'];
+
+	if ($status == '4' && $refund == 'Y') {
 
 		// 출금반환처리
 		$update_member_return = "update g5_member set mb_shift_amt = mb_shift_amt - {$in_amt_total}  where mb_id='{$mb_id}' ";
@@ -64,7 +66,15 @@ if ($func == 'withrawal') {
 			$return_result = sql_query($update_member_return);
 		}
 	} else {
-		$return_result = 1;
+		$in_amt_total = $ret['out_amt'];
+		$update_member_return = "UPDATE g5_member set mb_index = mb_index - {$in_amt_total}  where mb_id='{$mb_id}' ";
+		
+		if ($debug) {
+			print_r($update_member_return);
+			echo "<br>";
+		} else {
+			$return_result = sql_query($update_member_return);
+		}
 	}
 
 	$sql = "UPDATE {$g5['withdrawal']} set status = '{$status}' ";
