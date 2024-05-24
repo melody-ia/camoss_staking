@@ -240,6 +240,10 @@ function bonus_per($mb_id ='',$mb_balance='', $mb_limit = ''){
 			$bonus_per = 0;
 		}
 	}
+
+	if($bonus_per > 100){
+		$bonus_per = 100;
+	}
 	return round($bonus_per);
 }
 
