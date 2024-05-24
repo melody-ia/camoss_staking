@@ -92,7 +92,7 @@ for($i =0; $i < count($rollup_rate_array); $i++){
     echo " | 추천인 : ".$rollup_condition[$i]." 명";
     echo "<br>";
 }
-print_R($rollup_rate);
+// print_R($rollup_rate);
 
 echo "<strong>".$bonus_day."</strong><br>";
 echo "<br><span class='red'> 기준대상자(매출발생자) : ".$result_cnt."</span><br><br>";
@@ -100,24 +100,34 @@ echo "<div class='btn' onclick=bonus_url('".$category."')>돌아가기</div>";
 
 function find_rank_index($val,$mem_cnt){
     global $rollup_rate;
+    $result = 0;
+
     if($mem_cnt >= 5){
-        if($val >= $rollup_rate[8]) {return 8;}
-        if($val >= $rollup_rate[7]) {return 7;}
-        if($val >= $rollup_rate[6]) {return 6;}
-    }else if($mem_cnt == 4){
-        if($val >= $rollup_rate[5]) {return 5;}
-    }else if($mem_cnt == 3){
-        if($val >= $rollup_rate[4]) {return 4;}
-    }else if($mem_cnt == 2){
-        if($val >= $rollup_rate[3]) {return 3;}
-    }else if($mem_cnt < 2){
-        if($val >= $rollup_rate[2]) {return 2;}
-        if($val >= $rollup_rate[1]) {return 1;}
-        if($val >= $rollup_rate[0]) {return 0;}
-        if($val < $rollup_rate[0]) {return -1;}
-    }else{
-        return -1;
+        if($val >= $rollup_rate[8]) {$result = 8;}
+        if($val >= $rollup_rate[7]) {$result = 7;}
+        if($val >= $rollup_rate[6]) {$result = 6;}
     }
+    
+    if($mem_cnt == 4){
+        if($val >= $rollup_rate[5]) {$result = 5;}
+    }
+    
+    if($mem_cnt == 3){
+        if($val >= $rollup_rate[4]) {$result = 4;}
+    }
+    
+    if($mem_cnt == 2){
+        if($val >= $rollup_rate[3]) {$result = 3;}
+    }
+    
+    if($mem_cnt < 2){
+        if($val >= $rollup_rate[2]) {$result = 2;}
+        if($val >= $rollup_rate[1]) {$result = 1;}
+        if($val >= $rollup_rate[0]) {$result = 0;}
+        if($val < $rollup_rate[0]) {$result = -1;}
+    }
+
+    return $result;
 
 }
 

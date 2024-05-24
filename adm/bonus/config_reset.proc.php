@@ -23,7 +23,7 @@ if($_POST['nw_soodang_reset'] == 'on'){
 
     $trunc16 = sql_query(" TRUNCATE TABLE `iwol` ");
 
-    $member_update_sql = " UPDATE g5_member set  mb_balance = 0,mb_balance_calc = 0, mb_shop_point=0,mb_shop_calc=0 WHERE mb_level < 9 ";
+    $member_update_sql = " UPDATE g5_member set  mb_balance = 0,mb_balance_calc = 0, mb_shop_point=0, mb_shop_calc=0,mb_4='',mb_5='',mb_6='',mb_7='',mb_8='',mb_9='' WHERE mb_level < 9 ";
     sql_query($member_update_sql);
     
 
