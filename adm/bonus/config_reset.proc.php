@@ -7,7 +7,8 @@ $today = date("Y-m-d H:i:s",time());
 $todate = date("Y-m-d",time());
 $datemd = date("mdis",time());
 
-if($_GET['debug']) $debug = 1;
+// if($_GET['debug']) $debug = 1;
+// $debug = 1;
 
 if($_POST['nw_soodang_reset'] == 'on'){
     $trunc1 = sql_query(" TRUNCATE TABLE `soodang_pay` ");
@@ -55,10 +56,10 @@ if($_POST['nw_order_reset'] == 'on'){
     $pack_name = substr($pack_name_sql,0,1);
     
     for($i=0;$i<=$pack_cnt;$i++){
-        $pack_where = "package_".$pack_name.$i;
+        $pack_where = "package_".strtolower($pack_name).$i;
         sql_query(" TRUNCATE TABLE {$pack_where}; ");
-        
     }
+
     $trunc15 = sql_query(" TRUNCATE TABLE `rank` ");
 
     $order_reset_sql = " UPDATE g5_member set  sales_day='0000-00-00', rank_note='', rank=0, recom_sales=0, mb_index=0  WHERE mb_level < 9 ";
