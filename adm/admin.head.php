@@ -80,9 +80,9 @@ if( ! empty($_COOKIE['g5_admin_btn_gnb']) ){
 ?>
 
 <?if($excel_down){?>
-    <script src="../excel/tabletoexcel/xlsx.core.min.js"></script>
-    <script src="../excel/tabletoexcel/FileSaver.min.js"></script>
-    <script src="../excel/tabletoexcel/tableExport.js"></script>
+    <script src="/excel/tabletoexcel/xlsx.core.min.js"></script>
+    <script src="/excel/tabletoexcel/FileSaver.min.js"></script>
+    <script src="/excel/tabletoexcel/tableExport.js"></script>
 <?}?>
 
 <style>

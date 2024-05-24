@@ -276,7 +276,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
     <button type="button" onclick="javascript:set_date('지난달');">지난달</button>
     <button type="button" onclick="javascript:set_date('전체');">전체</button>
     <input type="submit" value="검색" class="btn_submit"> | 
-    <input type="button" style="width:auto;" class="btn_submit excel" id="btnExport"  data-name='tripsia_order_list' value="엑셀 다운로드"/>
+    <input type="button" style="width:auto;" class="btn_submit excel" id="btnExport"  data-name='shop_order_list' value="엑셀 다운로드"/>
     <button type='button' class="btn cancle_log_btn" style='margin-left:10px'>취소 내역보기</button>
 </div>
 
