@@ -1005,8 +1005,8 @@ input.p15 {
   min-height: 40px;
   font-size: 0.9rem;
   padding: 15px;
-	-webkit-box-shadow: 0 0 8px 0 rgba(0,0,0,0.02);
-	box-shadow: 0 0 8px 0 rgba(0,0,0,0.02);
+	-webkit-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.15);
+	box-shadow: 0 3px 3px 0 rgba(0,0,0,0.15)
 }
 
 .content-box .innerBox {
@@ -1038,7 +1038,7 @@ input.p15 {
   list-style: none;
 }
 .content-box + .content-box {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .content-box.primary {
@@ -3451,7 +3451,7 @@ input.input_price {
   border-left: 3px solid sienna;
 }
 
-#matching.content-box {
+#matching.content-box,#direct.content-box {
   border-left: 3px solid teal;
 }
 

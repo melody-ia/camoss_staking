@@ -77,7 +77,7 @@ SELECT allowance_name AS cate, DAY, SUM(benefit) AS c_sum  FROM soodang_pay WHER
 
                 <div class="box-body history_detail">
                     <?
-                        $row['cate'] = $row['cate'] == "matching" ? "booster" : $row['cate'];
+                        // $row['cate'] = $row['cate'] == "matching" ? "booster" : $row['cate'];
                         $sub_sql = "SELECT *,SUM(benefit) as total_benefit FROM soodang_pay WHERE day between '{$fr_date}' and '{$to_date}' AND mb_id = '{$member['mb_id']}' and allowance_name='{$row['cate']}' GROUP BY DAY";
                         $sub_result = sql_query($sub_sql);
                         while($row_ = sql_fetch_array($sub_result) ){?>
