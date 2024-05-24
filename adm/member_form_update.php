@@ -107,13 +107,13 @@ $mb_no_sql = "select count(mb_no) as cnt, mb_no from g5_member where mb_id = '{$
 $mb_no_row = sql_fetch($mb_no_sql);
 
 
-if($mb_brecommend != ""){
+/* if($mb_brecommend != ""){
 	$mb_brecommend_check_sql = "select exists (select 1 from g5_member where mb_id = '{$mb_brecommend}') as exist";
 	$mb_brecommend_is_exist = sql_fetch($mb_brecommend_check_sql)['exist'];
 	if(!$mb_brecommend_is_exist){
 		alert('존재하지 않는 후원인 정보 입니다.');
 	}
-}
+} */
 
 if($mb_no_row['cnt'] <= 0){alert('존재하지 않는 추천인 정보 입니다.');}
 

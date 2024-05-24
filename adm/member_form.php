@@ -393,12 +393,9 @@ $rank_result = sql_fetch($rank_sql);
 					<th scope="row"><label for="mb_id">이름<?php echo $sound_only ?></label></th>
 
 					<td>
-						<? if ($w == "u") { ?>
-							<input type="hidden" name="mb_name" value="<?= $mb['mb_name'] ?>" />
-							<span class="td_id"><?= $mb['mb_name'] ?></span>
-							<? } else { ?>
-								<input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" id="mb_name" class="frm_input" size="15" minlength="3" maxlength="20">
-						<? } ?>
+						
+						<input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" style="font-weight:bold;font-size:16px;" id="mb_name" class="frm_input" size="15" minlength="3" maxlength="20">
+						
 
 					</td>
 				</tr>
