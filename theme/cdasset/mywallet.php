@@ -1315,7 +1315,6 @@ function curency_txt($value, $kind = 'deposit')
 
   /* 입금 */
   $(function() {
-  
     // P2P 입금 계좌 카드 선택
     var select_account_card_id = -1;
     var deposit_array = <?= json_encode($deposit_array)?>;

@@ -5,6 +5,17 @@ include_once(G5_THEME_PATH.'/_include/wallet.php');
 include_once(G5_LIB_PATH.'/Telegram/telegram_api.php');
 include_once(G5_PLUGIN_PATH.'/Encrypt/rule.php');
 
+$use_withdraw_time = true;
+$start_time = "09:00";
+$end_time = "17:00";
+$current_time = time(); 
+$open_withdraw = strtotime($start_time);
+$close_withdraw = strtotime($end_time);
+
+if ($use_withdraw_time && ($current_time <= $open_withdraw || $current_time >= $close_withdraw)) {
+	echo (json_encode(array("result" => "Failed", "code" => "0002","sql"=>"출금시간은 {$start_time}:00 ~ {$end_time}:00 까지 이용 가능합니다.")));
+	return false;
+}
 
 // 출금처리 PROCESS
 $user_ip = $_SERVER['REMOTE_ADDR'];
