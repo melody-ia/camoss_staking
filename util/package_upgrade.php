@@ -32,7 +32,8 @@ if ($up_pack_info['cnt'] <= 0) {
 // 3. 회원 잔고 확인
 $mb_info = sql_fetch("SELECT mb_deposit_point + mb_deposit_calc AS sum_deposit, 
 mb_balance - mb_shift_amt + mb_balance_calc AS sum_soodang, 
-mb_balance + mb_deposit_point + mb_deposit_calc - mb_shift_amt AS balance 
+mb_balance + mb_deposit_point + mb_deposit_calc - mb_shift_amt AS balance,
+b_autopack, q_autopack
 FROM {$g5['member_table']} 
 WHERE mb_id = '{$mb_id}'");
 
@@ -47,6 +48,8 @@ if(((int)$up_pack_info['it_cust_price'] - (int)$exist_package['od_cart_price']) 
 $up_log_sql = "INSERT INTO g5_order_upgrade (SELECT * from {$g5['g5_order_table']} WHERE od_id = '{$od_id}')";
 sql_query($up_log_sql);
 
+$limit = $up_pack_info['it_cust_price'] * ($mb_info['q_autopack']/100);
+
 // 2. 패키지 업그레이드 진행
 $pack_update_sql = "UPDATE {$g5['g5_order_table']} SET
 		od_cart_price				= " . $up_pack_info['it_cust_price'] . ",
@@ -58,6 +61,7 @@ $pack_update_sql = "UPDATE {$g5['g5_order_table']} SET
 		od_receipt_time   = '" . $now_datetime . "', 
 		od_time           = '" . $now_datetime . "', 
 		od_date           = '" . $now_date . "',
+		od_misu = {$limit},
 		od_status					= '패키지업그레이드',
 		od_pg							= '" . $exist_package['od_name'] . '->' . $up_pack_info['it_name'] . "',
 		od_app_no							= '" . $exist_package['no'] . "',

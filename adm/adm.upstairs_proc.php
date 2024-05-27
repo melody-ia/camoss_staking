@@ -50,6 +50,8 @@ if($func == "new"){
 	$orderid = $_POST['od_id'];
 }
 
+$max_limit_point = $it_point * ($limited/100);
+
 $sql = "insert g5_order set
 	od_id				= '".$orderid."'
 	, mb_no             = '".$mb_no."'
@@ -66,7 +68,8 @@ $sql = "insert g5_order set
 	, od_cash_no 		= '".$pack_maker."'	
 	, od_status         = '패키지구매(관리자)'
 	, upstair    		= ".$it_point."
-	, pv				= ".$pv." ";
+	, pv				= ".$pv." 
+	, od_misu           = ".$max_limit_point."";
 
 
 if($debug){

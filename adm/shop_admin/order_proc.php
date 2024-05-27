@@ -11,11 +11,13 @@ $od_item = sql_fetch($od_item_sql);
 $now_datetime = G5_TIME_YMDHIS;
 
 function  od_name_return_rank($val){
-    if(strlen($val) < 5){
-        return substr($val,1,1);
-    }else{
-        return 0;
-    }
+    // if(strlen($val) < 5){
+    //     return substr($val,1,1);
+    // }else{
+    //     return 0;
+    // }
+    $sql = "select it_maker from g5_item where it_name = '{$val}'";
+    return strtolower(sql_fetch($sql)['it_maker']);
 }
 
 if($func == 'delete'){
@@ -31,7 +33,8 @@ if($func == 'delete'){
 
             //상품생성 테이블 삭제 
             $rank_num = od_name_return_rank($od_item['od_name']);
-            $package_group = "package_p".$rank_num;
+            $package_group = "package_".$rank_num;
+
             $package_have_sql = "SELECT * from {$package_group} WHERE od_id = '{$od_item['od_id']}' ";
             $package_have = sql_fetch($package_have_sql);
         
@@ -50,7 +53,7 @@ if($func == 'delete'){
             // 금액반환처리
 
             $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$amt}, mb_rate = mb_rate - {$pv}, 
-            pv = pv - {$upstair}, mb_index = mb_index - {$upstair} ";
+            pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
         
             if($rank_num == 0){
                 $update_member_sql .=", sales_day = '0000-00-00' , rank_note = '' , rank = 0 ";
@@ -90,6 +93,10 @@ if($func == 'delete'){
                 
                 echo $del_odlist_sql;
                 echo "<br><br>";
+
+                for($i = 0; $i <= 9; $i++){
+                    $del_package = "DELETE from g5_order WHERE od_id = {$od_id} ";
+                }
 
                 $del_odlist_result = sql_query($del_odlist_sql);
             }
