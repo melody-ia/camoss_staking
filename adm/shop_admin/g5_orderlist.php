@@ -440,7 +440,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         <td class="td_numsum" style='text-align:right'><?= shift_auto($row['od_cart_price'],$od_settle_case)?> </td>
         <td style="text-align:center"><?php echo $row['od_settle_case'] ?></td>
 		<td style="text-align:right;font-weight:600"><?=shift_auto($row['od_cash'],$od_settle_case)?> </td>
-		<td style="text-align:right"><?=number_format($row['upstair'])?> </td>
+		<td style="text-align:right;font-weight:600"><?=number_format($row['upstair'])?> </td>
         <!-- <td > <?php echo $row['pv']; ?></td> -->
         <td style="text-align:center"><input type='button' class='btn od_cancel' value='구매취소' data-id="<?=$row['od_id']?>"></td>
        
@@ -463,7 +463,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 		/*@@End.  #####*/
 
         $tot_couponprice   += $row['couponprice'];
-        $tot_misu          += $row['od_misu'];
+        $tot_misu          += $row['upstair'];
 		$tot_odcount     = $i+1;
     }
     sql_free_result($result);
@@ -483,7 +483,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         <td class="td_numsum" style='text-align:right; padding: 7px 5px'><?=shift_auto($tot_orderprice,$curencys[1])?> <?=$curencys[1]?></td>
         <td></td>
         <td style='text-align:right; padding: 7px 5px'><?=shift_auto($tot_receiptprice,$curencys[1])?> <?=$curencys[1]?></td>
-        <td></td>
+        <td style='text-align:right; padding: 7px 5px'><?=shift_auto($tot_misu,0)?></td>
         <td></td>
     </tr>
     </tfoot>

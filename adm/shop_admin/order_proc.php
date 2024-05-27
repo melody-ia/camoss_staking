@@ -50,7 +50,7 @@ if($func == 'delete'){
             // 금액반환처리
 
             $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$amt}, mb_rate = mb_rate - {$pv}, 
-            pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
+            pv = pv - {$upstair}, mb_index = mb_index - {$upstair} ";
         
             if($rank_num == 0){
                 $update_member_sql .=", sales_day = '0000-00-00' , rank_note = '' , rank = 0 ";
@@ -73,7 +73,7 @@ if($func == 'delete'){
         }
 
         if($update_result){
-            $de_data = $od_item['od_name']." | ".$amt." | ".$od_item['od_status'].' 건 구매취소처리';
+            $de_data = $od_item['od_name']." | ".$amt." | ".$od_item['od_status'].' 건 구매취소처리 | '.$upstair;
             $od_del_log_sql = "INSERT g5_order_delete set de_key = {$od_item['od_id']}
             , de_data = '{$de_data}'
             , mb_id = '{$od_item['mb_id']}'
