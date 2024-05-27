@@ -94,10 +94,6 @@ if($func == 'delete'){
                 echo $del_odlist_sql;
                 echo "<br><br>";
 
-                for($i = 0; $i <= 9; $i++){
-                    $del_package = "DELETE from g5_order WHERE od_id = {$od_id} ";
-                }
-
                 $del_odlist_result = sql_query($del_odlist_sql);
             }
         }
