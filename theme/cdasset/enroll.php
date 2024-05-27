@@ -746,7 +746,7 @@ if ($_GET['recom_referral']){
 			
 			<p class="check_appear_title mt30"><span>개인 정보 & 인증</span></p>
 			<div>
-				<input type="text" minlength="5" maxlength="20" name="mb_name" id="reg_mb_name" required placeholder="이름"  />
+				<input type="text" minlength="2" maxlength="20" name="mb_name" id="reg_mb_name" required placeholder="이름"  />
 				<!-- <div class='in_btn_ly'><input type="button" id='name_check' class='btn_round check' value="중복확인"></div> -->
 
 				<input type="text" minlength="5" maxlength="20" name="mb_id" class='cabinet' id="reg_mb_id" required placeholder="아이디"/>

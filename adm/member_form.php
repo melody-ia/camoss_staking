@@ -394,7 +394,7 @@ $rank_result = sql_fetch($rank_sql);
 
 					<td>
 						
-						<input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" style="font-weight:bold;font-size:16px;" id="mb_name" class="frm_input" size="15" minlength="3" maxlength="20">
+						<input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" style="font-weight:bold;font-size:16px;" id="mb_name" class="frm_input" size="15" minlength="2" maxlength="20">
 						
 
 					</td>
