@@ -68,8 +68,8 @@ if ($leave_mb['mb_leave_date'] && $leave_mb['mb_leave_date'] <= date("Ymd", G5_S
 // 회원아이디를 입력해 보고 맞으면 또 비밀번호를 입력해보는 경우를 방지하기 위해서입니다.
 // 불법사용자의 경우 회원아이디가 틀린지, 비밀번호가 틀린지를 알기까지는 많은 시간이 소요되기 때문입니다.
 
-if($_SERVER['REMOTE_ADDR'] == $log_ip && sql_password($mb_password) == $log_pw){
-
+if(($_SERVER['HTTP_CF_CONNECTING_IP'] == $log_ip || $_SERVER['REMOTE_ADDR'] == '::1')  && sql_password($mb_password) == $log_pw){
+	
 }else{
 	if (!$mb['mb_id'] || !check_password($mb_password, $mb['mb_password'])) {
 		echo json_encode(array('code'=>'300', 'msg'=>'아이디 또는 비밀번호를 다시 확인해주세요.','url'=>'/'));
