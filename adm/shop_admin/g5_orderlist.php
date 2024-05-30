@@ -307,6 +307,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
     <tr>
         <th scope="col" >no</th>
         <th scope="col" id="th_odrid" >회원ID</th>
+        <th scope="col" id="th_odrid" >회원이름</th>
         <th scope="col" id="odrstat" >구매(매출)일자</th>
         <th scope="col" id="th_odrcnt" >수당발생일</th>
         <th scope="col" width="10%" id="th_odrnum"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></th>
@@ -426,6 +427,10 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
             비회원
             <?php } ?>
         </td>
+        <td><?
+            $mb_name_row = sql_fetch("SELECT mb_name FROM g5_member WHERE mb_id = '{$row['mb_id']}' ");
+            echo $mb_name_row['mb_name'];
+        ?></td>
         <td ><?php echo $row['od_date']; ?></td>
         <td style="width:160px;" ><input type="text" id="od_soodang_date" class="frm_input od_soodang_date" style="font-weight:600;color:blue;width:150px;text-align:center" data-id="<?=$row['od_id']?>"  value="<?=$row['od_soodang_date']; ?>"></td>
         <td headers="th_ordnum" class="td_odrnum2">
@@ -474,7 +479,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 
     <tfoot>
     <tr class="orderlist">
-        <th scope="row" colspan="4">&nbsp;</th>
+        <th scope="row" colspan="5">&nbsp;</th>
         <td><?php echo number_format($tot_odcount); ?>건</td>
         <td>
             <!-- <?php echo number_format($tot_itemcount); ?>건 -->

@@ -48,6 +48,11 @@ $result = sql_query($sql);
 $colspan = 12;
 ?>
 
+<style>
+    .td_mbid{font-weight:bold;font-size:14px;}
+    .td_mbid a{text-decoration: underline;}
+    .blue{color:blue}
+</style>
 <section>
     <h2>신규가입회원 <?php echo $new_member_rows ?>건 목록</h2>
     <div class="local_desc02 local_desc">
@@ -61,14 +66,13 @@ $colspan = 12;
         <tr>
             <th scope="col">회원아이디</th>
             <th scope="col">이름</th>
-            <th scope="col">닉네임</th>
-            <th scope="col">권한</th>
-            <th scope="col">포인트</th>
-            <th scope="col">수신</th>
+            <th scope="col">추천인</th>
+            <th scope="col">후원인</th>
+            <th scope="col">센터</th>
+            <th scope="col">회원구분</th>
+            <th scope="col">가입일</th>
             <th scope="col">공개</th>
-            <th scope="col">인증</th>
             <th scope="col">차단</th>
-            <th scope="col">그룹</th>
         </tr>
         </thead>
         <tbody>
@@ -102,16 +106,17 @@ $colspan = 12;
             $mb_id = $row['mb_id'];
         ?>
         <tr>
-            <td class="td_mbid"><?php echo $mb_id ?></td>
+            <td class="td_mbid"><a href='<?=G5_URL?>/adm/member_form.php?sst=&sod=&sfl=&stx=&page=&w=u&mb_id=<?=$mb_id?>'><?php echo $mb_id ?></a></td>
             <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
-            <td class="td_mbname sv_use"><div><?php echo $mb_nick ?></div></td>
-            <td class="td_num"><?php echo $row['mb_level'] ?></td>
-            <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
-            <td class="td_boolean"><?php echo $row['mb_mailling']?'예':'아니오'; ?></td>
-            <td class="td_boolean"><?php echo $row['mb_open']?'예':'아니오'; ?></td>
-            <td class="td_boolean"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오'; ?></td>
+            <td class="td_mbname sv_use"><div><?php echo $row['mb_recommend'] ?></div></td>
+            <td class="td_mbname"><? echo $row['mb_brecommend']?></td>
+            <td class="td_boolean"><?php echo $row['mb_center']; ?></td>
+            <td class="td_num"><?php if($row['mb_level'] == 0){echo '일반회원';}else{echo '<strong class=blue>정회원</strong>';} ?></td>
+            <!-- <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td> -->
+            
+            <td class="td_boolean"><?php echo $row['mb_open_date']; ?></td>
+            <td class="td_boolean"></td>
             <td class="td_boolean"><?php echo $row['mb_intercept_date']?'예':'아니오'; ?></td>
-            <td class="td_category"><?php echo $group ?></td>
         </tr>
         <?php
             }
@@ -228,9 +233,9 @@ $colspan = 5;
 </section>
 
 <?php
-$sql_common = " from {$g5['point_table']} ";
+$sql_common = " from g5_order";
 $sql_search = " where (1) ";
-$sql_order = " order by po_id desc ";
+$sql_order = " order by od_soodang_date desc ";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
@@ -243,23 +248,24 @@ $colspan = 7;
 ?>
 
 <section>
-    <h2>최근 포인트 발생내역</h2>
+    <h2>최근 매출(구매) 내역</h2>
     <div class="local_desc02 local_desc">
         전체 <?php echo number_format($total_count) ?> 건 중 <?php echo $new_point_rows ?>건 목록
     </div>
 
     <div class="tbl_head01 tbl_wrap">
         <table>
-        <caption>최근 포인트 발생내역</caption>
+        <caption>최근 매출 발생내역</caption>
         <thead>
         <tr>
             <th scope="col">회원아이디</th>
             <th scope="col">이름</th>
-            <th scope="col">닉네임</th>
             <th scope="col">일시</th>
-            <th scope="col">포인트 내용</th>
-            <th scope="col">포인트</th>
-            <th scope="col">포인트합</th>
+            <th scope="col">주문번호</th>
+            <th scope="col">매출금액</th>
+            <th scope="col">PV</th>
+            <th scope="col">패키지</th>
+            <th scope="col">매출구분</th>
         </tr>
         </thead>
         <tbody>
@@ -286,11 +292,12 @@ $colspan = 7;
         <tr>
             <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
             <td class="td_mbname"><?php echo get_text($row2['mb_name']); ?></td>
-            <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
-            <td class="td_datetime"><?php echo $row['po_datetime'] ?></td>
-            <td><?php echo $link1.$row['po_content'].$link2 ?></td>
-            <td class="td_numbig"><?php echo number_format($row['po_point']) ?></td>
-            <td class="td_numbig"><?php echo number_format($row['po_mb_point']) ?></td>
+            <td class="td_datetime"><?php echo $row['od_date'] ?></td>
+            <td class="td_datetime"><a href='<?=G5_URL?>/adm/shop_admin/g5_orderlist.php?sel_field=od_id&search=<?=$row['od_id']?>'><?php echo $row['od_id'] ?></a></td>
+            <td class="td_name sv_use"><?php echo number_format($row['od_cart_price']) ?></td>
+            <td class="td_name sv_use"><?php echo number_format($row['upstair']) ?></td>
+            <td class="td_numbig"><?php echo $row['od_cash_no'] ?></td>
+            <td><?php echo $row['od_status'] ?></td>
         </tr>
 
         <?php
