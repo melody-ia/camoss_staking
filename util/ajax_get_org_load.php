@@ -20,6 +20,63 @@ if ($gubun=="B"){
 
 $mem_list = [];
 
+if($_GET['reset']){
+	$sql  = "select count(*) as cnt from g5_member";
+	$mrow = sql_fetch($sql);
+
+	$sql = "select * from g5_member_class_chk where mb_id='".$tree_id."' and  cc_date='".date("Y-m-d",time())."' order by cc_no desc";
+	$row = sql_fetch($sql);
+
+	if ($mrow['cnt']>$row['cc_usr'] || !$row['cc_no'] || $_GET["reset"]){
+
+		make_habu('');
+
+		$sql = "delete from g5_member_class ";
+		sql_query($sql);
+
+		get_recommend_down($tree_id,$tree_id,'11');
+
+		$sql  = " select * from g5_member_class where mb_id='{$tree_id}' order by c_class asc";	
+		$result = sql_query($sql);
+		for ($i=0; $row=sql_fetch_array($result); $i++) { 
+			$row2 = sql_fetch("select count(c_class) as cnt from g5_member_class where  mb_id='".$tree_id."' and c_class like '".$row['c_class']."%'");
+			$sql = "update g5_member set mb_child='".$row2['cnt']."' where mb_id='".$row['c_id']."'";
+			sql_query($sql);
+		}
+
+		$sql = "insert into g5_member_class_chk set mb_id='".$tree_id."',cc_date='".date("Y-m-d",time())."',cc_usr='".$mrow['cnt']."'";
+		sql_query($sql);
+
+	}
+
+
+	$sql = "select * from g5_member_bclass_chk where mb_id='".$tree_id."' and  cc_date='".date("Y-m-d",time())."' order by cc_no desc";
+	$row = sql_fetch($sql);
+
+	if ($mrow['cnt']>$row['cc_usr'] || !$row['cc_no'] || $_GET["reset"]){
+		
+		make_habu('B');
+		$sql = "delete from g5_member_bclass" ;
+		sql_query($sql);
+
+		get_brecommend_down($tree_id,$tree_id,'11');
+
+		$sql  = " select * from g5_member_bclass where mb_id='{$tree_id}' order by c_class asc";	
+		$result = sql_query($sql);
+		for ($i=0; $row=sql_fetch_array($result); $i++) { 
+			$row2 = sql_fetch("select count(c_class) as cnt from g5_member_bclass where  mb_id='".$tree_id."' and c_class like '".$row['c_class']."%'");
+			$sql = "update g5_member set mb_b_child='".$row2['cnt']."' where mb_id='".$row['c_id']."'";
+			sql_query($sql);
+		}
+
+		$sql = "insert into g5_member_bclass_chk set mb_id='".$tree_id."',cc_date='".date("Y-m-d",time())."',cc_usr='".$mrow['cnt']."'";
+		sql_query($sql);
+
+	}
+
+	exit;
+}
+
 // 후원트리 하부
 function brecommend_array($brecom_id, $count, $limit=0)
 {
@@ -83,6 +140,7 @@ $sql = "SELECT c.c_id,c.c_class,(
 ";
 $srow = sql_fetch($sql);
 $my_depth = strlen($srow['c_class']);
+
 
 
 if ($order_proc==1){
@@ -175,10 +233,9 @@ $mdepth = (strlen($row4['c_class'])/2);
 
 			
 if ($srow['c_class']){
-	
 ?>
 
-		<ul id="org" style="display:none;" >
+		<ul id="org" style="display:none" >
 			<li>
 			[<?=(strlen($srow['c_class'])/2)-1?>-<?=($srow['c_child'])?>-<?=($srow['b_child']-1)?>]
 			|<?=get_member_label($srow['mb_level'])?>
@@ -200,6 +257,8 @@ if ($srow['c_class']){
 			|<?=$gubun?>
 			<?
 			get_org_down($srow);
+
+			
 				/* $line = brecommend_array($go_id,0,99);
 
 				if(count($line) > 0){
@@ -251,7 +310,6 @@ if ($srow['c_class']){
 				</li></ul>
 				</li></ul>
 				"; */
-				
 			?>
 			</li>
 		</ul>
@@ -262,7 +320,16 @@ if ($srow['c_class']){
 
 
     </div>
+	<?
+if(count($depth_arr) > 0){
+	$org_depth = max($depth_arr) - min($depth_arr);
+}else{
+	$org_depth	=0;
+}
+
+?>
     <div id="chart-container" class="orgChart"></div>
+
     <script>
     $(function() {
 
@@ -271,10 +338,13 @@ if ($srow['c_class']){
             'zoom': true,
         });
 
+		console.log('b_child ::' + '<?=$org_depth ?>');
+		var org_depth = <?=$org_depth ?>;
         var $container = $('#chart-container');
         var $chart = $('.orgchart');
         var div = $chart.css('scale', '0.6');
-		var div = $chart.css('transform','matrix(1,0,0,1,5,-410)');
+		var _height = org_depth*-40;
+		var div = $chart.css('transform','matrix(1,0,0,1,5,'+_height+')');
         // $chart.css('transform',matrix(1,0,0,1,5,-410));
         var currentZoom = 0.6;
         var zoomval = 1;

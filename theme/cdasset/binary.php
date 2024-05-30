@@ -618,7 +618,7 @@ if (!$srow['b_child']) $srow['b_child']=1;
         var $chart = $('.orgchart');
 
         var div = $chart.css('scale', '0.6');
-        // var div = $chart.css('transform','matrix(1,0,0,1,315,-570)');
+        var div = $chart.css('transform','matrix(1,0,0,1,315,-570)');
         var div = $chart.css('transform');
         var currentZoom = 0.6;
         var zoomval = 1;

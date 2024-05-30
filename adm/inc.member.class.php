@@ -130,12 +130,12 @@ function habu_sales_calc($gubun, $recom, $deep){
 	} 
 	 return array($noo,$mon,$today);
 }  
-
+$depth_arr = [];
 
 function get_org_down($srow){
 	
 
-	global $max_org_num, $org_num, $my_depth, $member, $fr_date, $to_date, $mdepth, $mrow, $gubun, $order_field, $order_split, $ngubun, $order_proc,$tree_id;
+	global $max_org_num, $org_num, $my_depth, $member, $fr_date, $to_date, $mdepth, $mrow, $gubun, $order_field, $order_split, $ngubun, $order_proc,$tree_id,$depth_arr;
 
 	if ($gubun=="B"){
 		$class_name     = "g5_member_bclass";
@@ -334,6 +334,8 @@ function get_org_down($srow){
 				$recom_info = json_decode($member_info_data['recom_info'],true);
 				$brecom_info = json_decode($member_info_data['brecom_info'],true);
 				
+
+			array_push($depth_arr,strlen($row['c_class']));
 
 ?>
 	<li><?=(strlen($row['c_class'])/2)-$mdepth?>-<?=($row['c_child'])?>-<?=($row['b_child']-1)?>

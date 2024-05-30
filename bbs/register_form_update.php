@@ -5,22 +5,8 @@ include_once(G5_LIB_PATH.'/register.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 include_once(G5_THEME_PATH.'/_include/wallet.php');
+// $debug =1;
 
-/*
-mb_recommend: zeta
-mb_center_nick: admin
-mb_center: 슈퍼관리자
-mb_name: 한은수
-mb_id: arcthan
-mb_email: arcthan@naver.com
-mb_hp: 
-mb_password: zx235689
-mb_password_re: zx235689
-reg_tr_password: 235689
-reg_tr_password_re: 235689
-term: on
-term: on
-*/
 ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -133,6 +119,19 @@ $mb_mprecommend       = trim($_POST['mb_mprecommend']);
 $nation_number    = isset($_POST['nation_number'])            ? trim($_POST['nation_number'])          : 0;
 $reg_tr_password    = trim($_POST['reg_tr_password']);
 
+/* if($debug){
+	$mb_recommend = 'test77';
+	$mb_brecommend = 'test77';
+	$mb_name = 'test555';
+	$mb_id = 'test111';
+	$mb_email = 'arcthan@naver.com';
+	$mb_hp = '01088889999';
+	$mb_password = 'zx235689';
+	$mb_password_re = 'zx235689';
+	$reg_tr_password = '235689';
+	$reg_tr_password_re = '235689';
+	$term = 'on';
+} */
 
 $pre_sql = "SELECT mb_no as recom_no, depth+1 as mb_depth FROM g5_member WHERE mb_id ='".$mb_recommend."'";
 $result  = sql_fetch($pre_sql);
@@ -699,7 +698,7 @@ if ($msg)
 	echo '<script>alert(\''.$msg.'\');</script>';
 
 if ($w == '') {
-	goto_url(G5_THEME_URL.'/register_result.php');
+	// goto_url(G5_THEME_URL.'/register_result.php');
 
 	// echo "<script>
 	// 	function enroll_result(){
@@ -712,7 +711,25 @@ if ($w == '') {
 
 	// 	enroll_result();
 	// 	</script>";
+	
+	$url = G5_URL.'/util/ajax_get_org_load.php?reset=1';
+	//$header_data = array('Authorization: Bearer access_token_value'); //에러 발생
 
+	$ch = curl_init(); //curl 사용 전 초기화 필수(curl handle)
+
+	curl_setopt($ch, CURLOPT_URL, $url); //URL 지정하기
+	curl_setopt($ch, CURLOPT_POST, 0); //0이 default 값이며 POST 통신을 위해 1로 설정해야 함
+	curl_setopt ($ch, CURLOPT_POSTFIELDS, $post_data); //POST로 보낼 데이터 지정하기
+	curl_setopt($ch, CURLOPT_ENCODING ,"");
+
+	curl_setopt($ch, CURLOPT_HEADER, true);//헤더 정보를 보내도록 함(*필수)
+	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); //이 옵션이 0으로 지정되면 curl_exec의 결과값을 브라우저에 바로 보여줌. 이 값을 1로 하면 결과값을 return하게 되어 변수에 저장 가능(테스트 시 기본값은 1인듯?)
+	$res = curl_exec ($ch);
+
+	curl_close($ch);
+
+	goto_url(G5_THEME_URL.'/register_result.php');
+	
 } else if ($w == 'u') {
 	$row  = sql_fetch(" select mb_password from {$g5['member_table']} where mb_id = '{$member['mb_id']}' ");
 	$tmp_password = $row['mb_password'];
