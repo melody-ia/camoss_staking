@@ -259,11 +259,17 @@ $result = sql_query($sql);
 		// 패키지구매
 		$('#purchase').on('click', function() {
 			var nw_purchase = '<?= $nw_purchase ?>'; // 점검코드
+			console.log(goods_price);
 
 			// 부분시스템 점검
 			if (nw_purchase == 'N') {
 				dialogModal('구매 처리 실패', '<strong>현재 이용 가능 시간이 아닙니다.</strong>', 'warning');
 				if (debug) console.log('error : 1');
+				return false;
+			}
+
+			if(goods_price  < 1){
+				dialogModal('구매 처리 실패', '<strong>재구매 수량을 입력해주세요</strong>', 'warning');
 				return false;
 			}
 
