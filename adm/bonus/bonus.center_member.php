@@ -218,7 +218,7 @@ function fvisit_submit(act)
 <div class='head_bar'>
     <input type='hidden' id='select_id' value='<?=$select_id?>' />
     <?if($select_id){?>
-        <p class="labelM title"> <?=$center?>
+        <p class="labelM title"> <?=$center?>[<?=$select_result['mb_center_name']?>]
         <!-- <span class='eng'>(<?=strtoupper($select_id)?>)</span> -->
         의 센터회원 </p>
 
