@@ -418,6 +418,11 @@ if ($_GET['recom_referral']){
 	/*추천인, 센터멤버 등록*/
 	function getUser(etarget, type) {
 		var target = etarget;
+		if($(target).val().length < 2){
+			dialogModal('검색', '두글자 이상 입력해주세요', 'warning');
+			return false;
+		}
+
 		if (type == 1) {
 			var target_type = "#referral";
 		}else if(type == 2) {
@@ -447,10 +452,10 @@ if ($_GET['recom_referral']){
 						if(type == 2){
 							if(obj.mb_level > 0){
 								vHtml.append($("<div style='text-indent:-999px'>").addClass('user').html(obj.mb_id));
-								vHtml.append($("<label>").addClass('mb_nick').html(obj.mb_nick));
+								vHtml.append($("<label>").addClass('mb_nick').html(obj.mb_center_name));
 							}else{
 								vHtml.append($("<div style='color:red;text-indent:-999px'>").addClass('non_user').html(obj.mb_id));
-								vHtml.append($("<label style='color:red'>").addClass('mb_nick').html(obj.mb_nick));
+								vHtml.append($("<label style='color:red'>").addClass('mb_nick').html(obj.mb_center_name));
 							}
 						}else{
 							if(obj.mb_level >= 0){
@@ -706,7 +711,7 @@ if ($_GET['recom_referral']){
 			<p class="check_appear_title mt10"><span>추천인정보</span></p>
 			<section class='referzone'>
 				<div class="btn_input_wrap">
-					<input type="text" name="mb_recommend" id="reg_mb_recommend" value="<?= $mb_recommend ?>" required placeholder="추천인 아이디" />
+					<input type="text" minlength="2" name="mb_recommend" id="reg_mb_recommend" value="<?= $mb_recommend ?>" required placeholder="추천인 아이디" />
 					<div class='in_btn_ly2'>
 						<button type='button' class="btn_round check " onclick="getUser('#reg_mb_recommend',1);" ><span>검색</span></button>
 					</div>
@@ -720,7 +725,7 @@ if ($_GET['recom_referral']){
 				<section class='referzone'>
 					<div class="btn_input_wrap">
 						<input type="hidden" name="mb_center_nick" id="reg_mb_center_nick" value=""  required  />
-						<input type="text" name="mb_center" id="reg_mb_center" value="<? if($mb_center){echo $mb_center;}?>" placeholder="센터명 또는 센터아이디" required  />
+						<input type="text" minlength="2" name="mb_center" id="reg_mb_center"  value="<? if($mb_center){echo $mb_center;}?>" placeholder="센터명 또는 센터아이디" required  />
 
 						<div class='in_btn_ly2'>
 							<button type='button' class="btn_round check " onclick="getUser('#reg_mb_center',2);"
@@ -735,7 +740,7 @@ if ($_GET['recom_referral']){
 			<p class="check_appear_title mt20"><span >후원인정보</span></p>
 				<section class='referzone'>
 					<div class="btn_input_wrap">
-						<input type="text" name="mb_brecommend" id="reg_mb_brecommend" placeholder="후원인 아이디" required/>
+						<input type="text" minlength="2" name="mb_brecommend" id="reg_mb_brecommend" placeholder="후원인 아이디" required/>
 
 						<div class='in_btn_ly2'>
 							<button type='button' class="btn_round check" onclick="getUser('#reg_mb_brecommend',3);"
