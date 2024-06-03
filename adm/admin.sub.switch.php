@@ -46,13 +46,14 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 		<td>
             <p style="padding:0;"><input type="checkbox" id="nw_change" name="nw_change" <?if($nw['nw_change'] == 'Y') {echo "checked";}?>/><label for="nw_change" style=""><span class="ui"></span><span class="nw_change_txt">사용 설정</span></label></p>
 		</td>
+		-->
 
-		<th scope="row"><label for="nw_change"> 입금<strong class="sound_only"> 필수</strong></label></th>
+		<th scope="row"><label for="nw_wallet"> 입출금<strong class="sound_only"> 필수</strong></label></th>
 		<td>
-            <p style="padding:0;"><input type="checkbox" id="nw_change" name="nw_change" <?if($nw['nw_change'] == 'Y') {echo "checked";}?>/><label for="nw_change" style=""><span class="ui"></span><span class="nw_change_txt">사용 설정</span></label></p>
+            <p style="padding:0;"><input type="checkbox" id="nw_wallet" name="nw_wallet" <?if($nw['nw_wallet'] == 'Y') {echo "checked";}?>/><label for="nw_wallet" style=""><span class="ui"></span><span class="nw_wallet_txt">사용 설정</span> <span class='red' style='margin-left:10px;'>   *사용중지시 메뉴 숨김</span></label></p>
 		</td> 
- 		-->
-		<th scope="row"><label for="nw_with">입출금<strong class="sound_only"> 필수</strong></label></th>
+ 		
+		<th scope="row"><label for="nw_with">출금<strong class="sound_only"> 필수</strong></label></th>
         <td>
             <p style="padding:0;"><input type="checkbox" id="nw_with" name="nw_with" <?if($nw['nw_with'] == 'Y') {echo "checked";}?>/><label for="nw_with" style=""><span class="ui"></span><span class="nw_with_txt">사용 설정</span></label></p>
         </td>
@@ -102,6 +103,15 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <script>
 
 $(document).ready(function(){
+	
+	$('#nw_wallet').on('click',function(){
+		if($('#nw_wallet').is(":checked")){
+			$('.nw_wallet_txt').html('사용함');
+		}else{
+			$('.nw_wallet_txt').html('사용안함');
+		}
+	});
+
 	$('#nw_with').on('click',function(){
 		if($('#nw_with').is(":checked")){
 			$('.nw_with_txt').html('사용함');
@@ -125,6 +135,8 @@ $(document).ready(function(){
 			$('.nw_change_txt').html('사용안함');
 		}
 	});
+
+	
 	
 	$('#nw_purchase').on('click',function(){
 		if($('#nw_purchase').is(":checked")){
@@ -182,6 +194,14 @@ function frmnewwin_check(f)
 	}
 
 	f.nw_change = $('#nw_change').val();
+
+	if ($('input[name=nw_wallet]').is(":checked")) {
+    $('input[name=nw_wallet]').val('Y');
+	} else {
+		$('input[name=nw_wallet]').val('N');
+	}
+
+	f.nw_wallet = $('#nw_wallet').val();
 
 
 	if ($('input[name=nw_purchase]').is(":checked")) {

@@ -7,7 +7,7 @@ include_once(G5_PLUGIN_PATH . '/Encrypt/rule.php');
 $title = 'Mywallet';
 login_check($member['mb_id']);
 
-if ($nw['nw_with'] == 'N') {
+if ($nw['nw_wallet'] == 'N') {
   alert("현재 서비스를 이용할수없습니다.");
 }
 
@@ -662,7 +662,7 @@ function curency_txt($value, $kind = 'deposit')
         <div class="input_shift_value mb10 pb5">
           <label class="sub_title">- 출금금액 (수수료:<?= $withdrwal_fee ?>%)</label>
           <span style='display:inline-block;float:right;'><button type='button' id='max_value' class='btn inline' value=''>max</button></span>
-          <input type="text" id="sendValue" class="send_coin b_ghostwhite " placeholder="출금 수량을 입력해주세요">
+          <input type="text" id="sendValue" class="send_coin b_ghostwhite " placeholder="출금 수량을 입력해주세요" inputmode="numeric">
           <label class='currency-right'><?= $curencys[0] ?></label>
           <!-- <div class='fee' style='color:black;padding-right:3px;letter-spacing:-0.5px'>
               <span>실 출금 금액(수수료 제외) : </span><span id='fee_val' style='color:red;margin-right:10px;font-size:14px;font-weight:bold'></span>
@@ -893,6 +893,10 @@ function curency_txt($value, $kind = 'deposit')
     var eth_curency = '<?= $curencys[0] ?>';
     var etc_curency = '<?= $curencys[4] ?>';
     var erc20_curency = '<?= $curencys[3] ?>';
+
+    /*출금시간*/
+    var withdrawal_start_time = '<?=$withdrawal_start_time?>';
+    var withdrawal_end_time = '<?=$withdrawal_end_time?>';
     
     /* 입출금 서비스 사용여부*/
     var nw_with = '<?= $nw_with ?>'; // 출금서비스 가능여부
@@ -1164,7 +1168,7 @@ function curency_txt($value, $kind = 'deposit')
 
       // 출금서비스 이용가능 여부 확인
       if (nw_with == 'N') {
-        dialogModal('서비스이용제한', '<strong>현재 출금가능한 시간이 아닙니다.</strong>', 'warning');
+        dialogModal('서비스이용제한', '<strong>현재 출금가능한 시간이 아닙니다.<br>출금시간은 평일(공휴일제외) '+ withdrawal_start_time +' ~ ' + withdrawal_end_time +' 까지 이용 가능합니다.</strong>', 'warning');
         return false;
       }
 

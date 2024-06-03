@@ -87,7 +87,7 @@ $(document).ready(function(){
 					</div>
 				</a>
 			</li>
-			<?if($nw['nw_with'] == 'Y'){?>
+			<?if($nw['nw_wallet'] == 'Y'){?>
 			<li class="mywallet_icon <? if($_GET['id'] === 'mywallet') {echo 'active';}?>">
 				<a href="/page.php?id=mywallet">
 					<div class="gnb_img_wrap"></div>
@@ -142,7 +142,7 @@ $(document).ready(function(){
 				</a>
 			</li>
 			
-			<!-- <?if($member['center_use'] == 1){?>
+			<?if($member['center_use'] == 1){?>
 			<li class="center_page_icon <? if($_GET['id'] === 'center_page') {echo 'active';}?>">
 				<a href="/page.php?id=center_page">
 					<div class="gnb_img_wrap"></div>
@@ -152,7 +152,7 @@ $(document).ready(function(){
 				</a>
 			</li>
 			<?}?>
-			-->
+			
 
 			<? if($member['mb_level'] > 0){?>
 			<li class="recommend_icon <? if($_GET['id'] === 'structure') {echo 'active';}?>">

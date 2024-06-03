@@ -23,6 +23,12 @@ if(!$_POST['nw_change']){
 	$nw_change = $_POST['nw_change'];
 }
 
+if(!$_POST['nw_wallet']){
+	$nw_wallet = 'N';
+}else{
+	$nw_wallet = $_POST['nw_wallet'];
+}
+
 if(!$_POST['nw_purchase']){
 	$nw_purchase = 'N';
 }else{
@@ -47,7 +53,8 @@ $sql_common = "
 				nw_change = '{$nw_change}',
 				nw_purchase = '{$nw_purchase}',
 				nw_enroll = '{$nw_enroll}',
-				nw_shop = '{$nw_shop}'";
+				nw_shop = '{$nw_shop}',
+				nw_wallet = '{$nw_wallet}' ";
 
 $sql = "update maintenance set $sql_common ";
 
