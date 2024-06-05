@@ -21,10 +21,10 @@ if ($_GET['recom_referral']){
 	$recom_sql = "select mb_id,mb_nick from g5_member where mb_no = '{$_GET['recom_referral']}'";
 	$recom_result = sql_fetch($recom_sql);
 	$mb_recommend = $recom_result['mb_id'];
-
-	if($recom_result['mb_nick'] != ''){
-		$mb_center = $mb_recommend;
-	}
+	$mb_brecommend = $mb_recommend;
+	/* if($recom_result['mb_nick'] != ''){
+		$mb_brecommend = $mb_recommend;
+	} */
 }
 ?>
 
@@ -721,7 +721,7 @@ if ($_GET['recom_referral']){
 			</section>
 
 			<!-- 센터 정보 -->
-			<p class="check_appear_title mt20"><span >센터정보</span></p>
+			<p class="check_appear_title mt20"><span >센터정보 (선택)</span></p>
 				<section class='referzone'>
 					<div class="btn_input_wrap">
 						<input type="hidden" name="mb_center_nick" id="reg_mb_center_nick" value=""  required  />
@@ -740,7 +740,7 @@ if ($_GET['recom_referral']){
 			<p class="check_appear_title mt20"><span >후원인정보</span></p>
 				<section class='referzone'>
 					<div class="btn_input_wrap">
-						<input type="text" minlength="2" name="mb_brecommend" id="reg_mb_brecommend" placeholder="후원인 아이디" required/>
+						<input type="text" minlength="2" name="mb_brecommend" id="reg_mb_brecommend" placeholder="후원인 아이디" value="<?= $mb_brecommend ?>" required/>
 
 						<div class='in_btn_ly2'>
 							<button type='button' class="btn_round check" onclick="getUser('#reg_mb_brecommend',3);"
@@ -860,7 +860,7 @@ if ($_GET['recom_referral']){
 
 <div class='footer' style="position:relative;bottom:25px;">
 		<p class='company mb10'> <?=CONFIG_SUB_TITLE?> <br>이메일 : <?=$config['cf_admin_email']?>
-		<p class='copyright'>Copyright ⓒ 2023. <?=CONFIG_TITLE?> Co. ALL right reserved.</p>
+		<p class='copyright'>Copyright ⓒ 2024. <?=CONFIG_TITLE?> Co. ALL right reserved.</p>
 	</div>
 </section>
 

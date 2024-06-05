@@ -59,7 +59,7 @@
 	</div>
 
 	<div class='footer'>
-		<p class='copyright'>Copyright ⓒ 2023. <?=CONFIG_TITLE?> Co. ALL right reserved.</p>
+		<p class='copyright'>Copyright ⓒ 2024. <?=CONFIG_TITLE?> Co. ALL right reserved.</p>
 	</div>
 	
 </section>

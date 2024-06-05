@@ -126,7 +126,7 @@ $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall" style="margin: 0px 20px">전체목록</a>';
 
 // 통계 데이터 산출
-$stats_sql = "select od_name, COUNT(*) AS cnt, SUM(od_cash) AS amt ".$sql_common."group by od_name ";
+$stats_sql = "select CASE WHEN od_cash_no = 'R' THEN '재구매' ELSE od_name END AS od_name, COUNT(*) AS cnt, SUM(od_cash) AS amt ".$sql_common."group by od_cash_no";
 $stats_result = sql_query($stats_sql);
 
 // 구매상품명 리턴
