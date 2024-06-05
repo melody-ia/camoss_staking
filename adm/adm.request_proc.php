@@ -66,7 +66,7 @@ if ($func == 'withrawal') {
 			$return_result = sql_query($update_member_return);
 		}
 	} else {
-		$in_amt_total = $ret['out_amt'];
+		/* $in_amt_total = $ret['out_amt'];
 		$update_member_return = "UPDATE g5_member set mb_index = mb_index - {$in_amt_total}  where mb_id='{$mb_id}' ";
 		
 		if ($debug) {
@@ -74,7 +74,8 @@ if ($func == 'withrawal') {
 			echo "<br>";
 		} else {
 			$return_result = sql_query($update_member_return);
-		}
+		} */
+		$return_result = 1;
 	}
 
 	$sql = "UPDATE {$g5['withdrawal']} set status = '{$status}' ";
