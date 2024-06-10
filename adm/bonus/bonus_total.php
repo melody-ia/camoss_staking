@@ -144,11 +144,11 @@ $result = sql_query($sql);
         MAX(IF(allowance_name = 'rollup', hap, 0)) AS rollup_hap,
         MAX(IF(allowance_name = 'grade', hap, 0)) AS grade_hap,
         MAX(IF(allowance_name = 'center', hap, 0)) AS center_hap,
-        MAX(IF(allowance_name = 'balance changed', hap, 0)) AS etc_hap
+        IF(allowance_name = 'balance changed', hap, 0) AS etc_hap
          FROM 
         (SELECT allowance_name, SUM(benefit) AS hap
         FROM soodang_pay WHERE DAY = '{$bonus_day}' GROUP BY allowance_name)  A  ";
-        
+        // echo $day_total;
         $day_total_result = sql_query($day_total);
 
         while( $row = sql_fetch_array($day_total_result)){

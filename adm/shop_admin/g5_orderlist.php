@@ -311,7 +311,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         <th scope="col" id="odrstat" >구매(매출)일자</th>
         <th scope="col" id="th_odrcnt" >수당발생일</th>
         <th scope="col" width="10%" id="th_odrnum"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></th>
-        <th scope="col" id="odrstat" >주문상태</th>
+        <th scope="col" id="odrstat" ><a href="<?php echo title_sort("od_status", 1)."&amp;$qstr1"; ?>">주문상태</a></th>
         <th scope="col" id="odrstat" ><a href="<?php echo title_sort("od_name", 1)."&amp;$qstr1"; ?>">구매상품</th>
         <th scope="col" id="th_odrall" >결제금액</th>
         <th scope="col" id="odrpay" >결제수단</th>

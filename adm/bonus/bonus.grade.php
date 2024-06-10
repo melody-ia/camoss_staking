@@ -337,7 +337,7 @@ function  excute(){
 
                 if($benefit > 0 && $benefit_limit > 0){
 
-                    $record_result = soodang_record($mb_id, $code, $benefit_limit,$rec,$rec_adm,$bonus_day);
+                    $record_result = soodang_record($mb_id, $code, $benefit_limit,$rec,$rec_adm,$bonus_day,$mb_no,$mb_level,$mb_name);
     
                     if($record_result){
                         

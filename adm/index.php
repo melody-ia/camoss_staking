@@ -290,10 +290,10 @@ $colspan = 7;
         ?>
 
         <tr>
-            <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
+            <td class="td_mbid"><a href="/adm/member_form.php?sst=&sod=&sfl=&stx=&page=&w=u&mb_id=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
             <td class="td_mbname"><?php echo get_text($row2['mb_name']); ?></td>
             <td class="td_datetime"><?php echo $row['od_date'] ?></td>
-            <td class="td_datetime"><a href='<?=G5_URL?>/adm/shop_admin/g5_orderlist.php?sel_field=od_id&search=<?=$row['od_id']?>'><?php echo $row['od_id'] ?></a></td>
+            <td class="td_datetime"><a href='<?=G5_URL?>/adm/shop_admin/g5_orderlist.php?sel_field=od_id&search=<?=$row['od_id']?>' style='text-decoration:underline'><?php echo $row['od_id'] ?></a></td>
             <td class="td_name sv_use"><?php echo number_format($row['od_cart_price']) ?></td>
             <td class="td_name sv_use"><?php echo number_format($row['upstair']) ?></td>
             <td class="td_numbig"><?php echo $row['od_cash_no'] ?></td>

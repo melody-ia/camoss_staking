@@ -288,6 +288,9 @@ function  excute(){
         $mb_balance = $row['mb_balance'];
         $mb_index = $row['mb_index'];
         $mb_shop_point = $row['mb_shop_point'];
+        $mb_name = $row['mb_name'];
+        $mb_level = $row['mb_level'];
+        $mb_no = $row['mb_no'];
         $pv = $row['pv'];
 
         // 직추천자수 
@@ -365,7 +368,7 @@ function  excute(){
 
                     // 기록용 
                     $rec = $code.' Bonus from '. $recomm.' - '.$count."대  | P =".$live_benefit.", SP = ".$shop_benefit;
-                    $rec_adm = ''. $recomm.' - '.$count.'대 :'.shift_auto($today_sales).'*0.5 *'.$bonus_rate.'='.$benefit."P =".$live_benefit.", SP = ".$shop_benefit; 
+                    $rec_adm = ''. $recomm.' - '.$count.'대 :'.shift_auto($today_sales).'*0.5 *'.$bonus_rate.'='.$benefit." | P =".$live_benefit.", SP = ".$shop_benefit; 
 
                     if($benefit > $benefit_limit && $balance_limit != 0 ){
 
@@ -398,7 +401,7 @@ function  excute(){
 
                     if($benefit > 0 && $benefit_limit > 0){
     
-                        $record_result = soodang_record($comp, $code, $benefit_limit,$rec,$rec_adm,$bonus_day);
+                        $record_result = soodang_record($comp, $code, $benefit_limit,$rec,$rec_adm,$bonus_day,$mb_no,$mb_level,$mb_name);
         
                         if($record_result){
                             

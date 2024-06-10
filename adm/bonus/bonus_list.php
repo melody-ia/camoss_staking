@@ -105,7 +105,7 @@ $row = sql_fetch($sql);
 
 $total_count = $row['cnt'];
 
-$colspan = 7;
+$colspan = 8;
 if($_REQUEST['view'] == 'all'){
 	$rows = 5000;
 }else{
@@ -290,6 +290,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
     <tr>
 		<th scope="col">보너스날짜</th>
 		<th scope="col">회원아이디</th>
+		<th scope="col">회원이름</th>
         <th scope="col">보너스이름</th>
         <th scope="col">발생보너스</th>
 		<th scope="col">보너스단위</th>
@@ -312,9 +313,11 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 		<td width="100" style='text-align:center'>
 			<a href='/adm/member_form.php?w=u&mb_id=<?=$row['mb_id']?>'><?php echo get_text($row['mb_id']); ?></a>
 		</td>
-
+		<td width="100" style='text-align:center'>
+			<?php echo get_text($row['mb_name']); ?>
+		</td>
 		<td width='80' style='text-align:center'><?=get_text($row['allowance_name']); ?></td>
-		<td width="100" class='bonus'><?=Number_format($soodang,BONUS_NUMBER_POINT) ?></td>
+		<td width="100" class='bonus' style='text-align:right'><?=Number_format($soodang,BONUS_NUMBER_POINT) ?></td>
 		<td width="30" class='bonus'><?=$curencys[0]?></td>
 		
 
@@ -333,6 +336,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 		<td colspan=3>TOTAL :</td>
 		<td width="150" class='bonus' style='color:red'><?=number_format($soodang_sum,BONUS_NUMBER_POINT)?></td>
         <td ></td>
+		<td ></td>
 		<td ></td>
 		<td ></td>
     </tr>
