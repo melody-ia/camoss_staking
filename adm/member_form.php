@@ -27,6 +27,7 @@ $week_bonus_result = bonus_pick('weekend')['rate'];
 $week_bonus = explode(',', $week_bonus_result);
 
 
+
 if ($w == '') {
 	$required_mb_id = 'required';
 	$required_mb_id_class = 'required alnum_';
@@ -166,6 +167,7 @@ $bonus_per = bonus_per($mb['mb_id'], $mb['mb_balance'], $mb['mb_index']);
 if ($mb['mb_intercept_date']) $g5['title'] = "차단된 ";
 else $g5['title'] .= "";
 $g5['title'] .= '회원 ' . $html_title;
+
 include_once('./admin.head.php');
 
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
@@ -612,8 +614,12 @@ $rank_result = sql_fetch($rank_sql);
 		<td colspan="1">
 			<?php $sql = "SELECT SUM(in_amt) as amt FROM {$g5['deposit']} WHERE mb_id = '{$mb['mb_id']}' AND status = 1";
 			$deposit_sum = sql_fetch($sql);
+
+			// 보유잔고
+			$mb_balance_total = $mb['mb_deposit_point'] + $mb['mb_deposit_calc'] + $mb['mb_balance'] - $mb['mb_shift_amt'] + $mb['mb_balance_calc'];
+
 			?>
-			<strong><?= shift_auto($mb['mb_deposit_point'] + $mb['mb_deposit_calc'] + $mb['mb_balance'] - $mb['mb_shift_amt'] + $mb['mb_balance_calc'],$curencys[0]) ?></strong> <?=$curencys[0]?> &nbsp&nbsp (총 입금액 : <?= shift_auto($deposit_sum['amt']) ?> <?=$curencys[0]?>)
+			<strong><?= shift_auto($mb_balance_total ,$curencys[0]) ?></strong> <?=$curencys[0]?> &nbsp&nbsp (총 입금액 : <?= shift_auto($deposit_sum['amt']) ?> <?=$curencys[0]?>)
 		</td>
 		<th></th>
 		<!-- <td>
@@ -709,10 +715,14 @@ $rank_result = sql_fetch($rank_sql);
 
 		<th scope="row">수당제한비율</th>
 			<td colspan="1">
-				<span style="margin-right: 20px;">
+				<!-- <span style="margin-right: 20px;">
 					<input type="checkbox" name="b_autopack" value="1" <?=$mb['b_autopack'] ? "checked" : "" ?>/>
-				</span>
-				<input type="text" value="<?=$mb['q_autopack'] ? $mb['q_autopack'] : $limited?>" class="frm_input wide" name="q_autopack"/> % <span style="color:red;">(제한 : <?=shift_auto($mb['mb_index'], $curencys[0])?>)</span>
+				</span> 
+				<input type="text" value="<?=$mb['q_autopack'] ? $mb['q_autopack'] : $limited?>" class="frm_input" name="q_autopack"/>
+				-->
+				<?=$limited?>
+				% 
+				<span style="color:red;">( <?=shift_auto($mb['mb_index'], $curencys[0])?> )</span> / <span class='strong bonus'><?= shift_auto(($mb['mb_balance']+$mb['mb_shop_point'])*100 / $mb['mb_index']) ?> % </span>
 			</td>
 	</tr>
 
