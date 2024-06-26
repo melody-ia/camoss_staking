@@ -431,7 +431,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
             $mb_name_row = sql_fetch("SELECT mb_name FROM g5_member WHERE mb_id = '{$row['mb_id']}' ");
             echo $mb_name_row['mb_name'];
         ?></td>
-        <td ><?php echo $row['od_date']; ?></td>
+        <td ><?php echo $row['od_time']; ?></td>
         <td style="width:160px;" ><input type="text" id="od_soodang_date" class="frm_input od_soodang_date" style="font-weight:600;color:blue;width:150px;text-align:center" data-id="<?=$row['od_id']?>"  value="<?=$row['od_soodang_date']; ?>"></td>
         <td headers="th_ordnum" class="td_odrnum2">
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo $disp_od_id; ?></a>
