@@ -56,7 +56,7 @@ $lvlimit_recom_val = 10000;
 //회원 리스트를 읽어 온다.
 $sql_common = " FROM g5_member ";
 // $sql_search=" WHERE o.mb_id=m.mb_id AND DATE_FORMAT(o.od_time,'%Y-%m-%d')='".$bonus_day."'";
-$search_condition = " and mb_level > 0  ";
+$search_condition = " and mb_level >= 0  ";
 $sql_search = " WHERE grade < {$grade_cnt} {$search_condition} " . $pre_condition . $admin_condition;
 $sql_mgroup = " GROUP BY grade ORDER BY grade asc ";
 
