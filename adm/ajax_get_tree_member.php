@@ -2,11 +2,17 @@
 $sub_menu = "600300";
 include_once('./_common.php');
 
+if($member['mb_id'] == 'admin'){
+	$tree_id = $config['cf_admin'];
+}else{
+	$tree_id = $member['mb_id'];
+}
+
 
 if ($gubun=="B"){
-	$sql = "select * from {$g5['member_table']} where  mb_leave_date = '' and mb_id in (select c_id from g5_member_bclass where mb_id='".$member['mb_id']."')  ";
+	$sql = "select * from {$g5['member_table']} where  mb_leave_date = '' and mb_id in (select c_id from g5_member_bclass where mb_id='".$tree_id."')  ";
 }else{
-	$sql = "select * from {$g5['member_table']} where  mb_leave_date = '' and mb_id in (select c_id from g5_member_class where mb_id='".$member['mb_id']."')  ";
+	$sql = "select * from {$g5['member_table']} where  mb_leave_date = '' and mb_id in (select c_id from g5_member_class where mb_id='".$tree_id."')  ";
 }
 if ($stx) {
     $sql .= " and {$sfl} like '{$stx}%' ";
