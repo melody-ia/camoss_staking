@@ -314,7 +314,7 @@ a.btn_secondary:hover,
 
 a.btn_primary,
 .btn_primary {
-  background: linear-gradient(90deg, #2bb17a, #1bffa1);
+  background: linear-gradient(90deg, #1cd8b8, #0dbbd9);
   border-radius: 8px;
   border: none;
   color: #fff;
@@ -322,7 +322,7 @@ a.btn_primary,
 }
 a.btn_primary:hover,
 .btn_primary:hover {
-  background: linear-gradient(90deg, #1bffa1, #1bffa1) !important;
+  background: linear-gradient(90deg, #0dbbd9, #0ab2e3) !important;
   border: none;
 }
 

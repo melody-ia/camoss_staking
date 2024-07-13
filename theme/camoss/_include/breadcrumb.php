@@ -28,9 +28,10 @@ $brecom_sale =  refferer_habu_sales($member['mb_id'],'b');
 $total_hash = $member['recom_mining'] + $member['brecom_mining'] + $member['brecom2_mining'] + $member['super_mining'];
 
 // 공지사항
-$notice_sql = "select * from g5_write_notice where wr_1 = '1' order by wr_datetime desc limit 0,1";
-$notice_sql_query = sql_query($notice_sql);
-$notice_result_num = sql_num_rows($notice_sql_query);
+$notice_sql = "select wr_subject from g5_write_notice where wr_1 = '1' order by wr_id desc limit 0,1";
+$notice_result = sql_query($notice_sql);
+$notice_result_num = sql_num_rows($notice_result);
+$notice_row = sql_fetch($notice_sql);
 
 function check_value($val){
 	if($val == 1){
@@ -100,25 +101,19 @@ $title = 'Dashboard';
 ?>
 
 <section class='breadcrumb'>
-		<!-- 공지사항 -->
+		
+		<!-- 공지/뉴스사항 -->
 		<?if($notice_result_num > 0){ ?>
 			
-			<div class="col-sm-12 col-12 content-box round dash_news" style='margin-bottom:-10px;'>
+			<!-- <div class="col-sm-12 col-12 content-box round dash_news" style='margin-bottom:-10px;'>
 				<h5>
 					<span class="title">공지사항</span>					
 					<i class="ri-close-circle-line close_news" style="font-size: 30px;float: right;cursor: pointer;"></i>
 					<button class="f_right btn line_btn close_today" >
 						<span >오늘 하루 열지 않기</span>
 					</button>
-					<!-- <img class="close_news f_right small" src="<?=G5_THEME_URL?>/_images/close_round.gif" alt="공지사항 닫기"> -->
 				</h5>
-
-				<?while( $row = sql_fetch_array($notice_sql_query) ){ ?>
-				<div>
-					<span><?=$row['wr_content']?></span>
-				</div>
-				<?}?>
-			</div>
+			</div> -->
 		<?}?>
 
 		<div class="user-info">

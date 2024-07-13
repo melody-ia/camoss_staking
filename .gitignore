@@ -17,5 +17,5 @@ initests01/
 SIRsoft000/
 data/*
 config.php
-wizclass.php
+codelabel.php
 m3cron/dbconfig.php

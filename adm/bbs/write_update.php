@@ -132,6 +132,9 @@ for ($i=1; $i<=10; $i++) {
     }
 }
 
+//공지사항 체크 
+$wr_1 = $notice;
+
 @include_once($board_skin_path.'/write_update.head.skin.php');
 
 run_event('write_update_before', $board, $wr_id, $w, $qstr);

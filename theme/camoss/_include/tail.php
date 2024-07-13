@@ -1,11 +1,5 @@
 
-<?php 
-$notice_sql = "select wr_subject from g5_write_notice order by wr_id desc limit 0,1";
-$notice_result = sql_query($notice_sql);
-$notice_row = sql_fetch($notice_sql);
-?>
-
-<?php if(sql_num_rows($notice_result) > 0 && $_GET['id'] != "news"){?>
+<!-- <?php if(sql_num_rows($notice_result) > 0 && $_GET['id'] != "news"){?>
 <section class="notice_wrap">
 	<div class='notice_box notice_oneline'>
 		<a href="/page.php?id=news">
@@ -18,6 +12,8 @@ $notice_row = sql_fetch($notice_sql);
 		</a>
 	</div>
 </section>
+-->
+
 <?php } ?>
 	<div class="gnb_dim"></div>
 </section>
