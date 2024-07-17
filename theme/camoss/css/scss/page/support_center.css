@@ -29,12 +29,12 @@
   font-size: 18px;
   margin: 0 50px;
   transition: all 0.3s linear;
-  color: #29386b;
+  color: #fff;
 }
 .main-container .support-container .support-panels .support-tabs li.active {
   border-color: #000;
   font-weight: bold;
-  color: #29386b;
+  color: #fff;
 }
 .main-container .support-container .support-panels .panel {
   display: none;
@@ -79,7 +79,7 @@
   background: #492191;
 }
 .main-container .support-container .support-panels .email {
-  color: #29386b;
+  color: #fff;
   font-size: 14px;
   padding: 15px;
   border-radius: 5px;
@@ -108,7 +108,7 @@
   transition: all 0.2s linear;
   width: 100%;
   display: table;
-  color: #29386b;
+  color: #fff;
 }
 .ticket-header .ticket-time {
   float: right;
@@ -212,7 +212,7 @@
 
 .support-message {
   background-color: #f3f7ff;
-  color: #29386b;
+  color: #fff;
   font-weight: bold;
   border-radius: 4px;
   margin-bottom: 15px;

@@ -1,9 +1,11 @@
 <?
     $bbs_page = strpos($_SERVER['PHP_SELF'],'/bbs/');
-
+    
+    $lang_visible =1;
     if($bbs_page>-1 || $lang_visible == 1){?>
     <style>
         a.gflag{display:none !important}
+        /* .lang_palette{visibility: hidden;margin-top:-34px;} */
     </style>
     <?}
 ?>
@@ -51,7 +53,7 @@
 </style>
 
 
-
+<div class='lang_palette'>
 <a href="#" onclick="doGTranslate('ko|ko');return false;" title="한국어" class="gflag nturl"
    style="background-position:-0px -205px;"><img src="//gtranslate.net/flags/blank.png" 
                                                alt="한국어"/></a>
@@ -67,7 +69,7 @@ style="background-position:-200px -405px;"><img src="//gtranslate.net/flags/blan
 <a href="#" onclick="doGTranslate('ko|ja');return false;" title="日本語" class="gflag nturl"
    style="background-position:-700px -105px;"><img src="//gtranslate.net/flags/blank.png" 
                                                    alt="日本語"/></a>
-
+</div>
 <div id="google_translate_element2"></div>
 
 <script type="text/javascript">

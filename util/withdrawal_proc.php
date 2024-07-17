@@ -5,7 +5,7 @@ include_once(G5_THEME_PATH.'/_include/wallet.php');
 include_once(G5_LIB_PATH.'/Telegram/telegram_api.php');
 include_once(G5_PLUGIN_PATH.'/Encrypt/rule.php');
 
-
+// $debug=1;
 
 $current_time = time(); 
 $open_withdraw = strtotime($withdrawal_start_time);
@@ -37,7 +37,7 @@ $select_coin 	= $_POST['select_coin'];
 $fixed_amt 		= $_POST['fixed_amt'];
 $fixed_fee 		= $_POST['fixed_fee'];
 
-$coin = get_coins_price();
+// $coin = get_coins_price();
 
 /* 멀티코인 
 	if($select_coin == 'hja') {
@@ -65,15 +65,15 @@ $account_name = trim($_POST['account_name']);
 // $debug = 1;
 
 if($debug){
-	$mb_id = 'test1';
+	$mb_id = 'admin';
 	$func = 'withdraw';
-	$total_amt = 100;
-	$select_coin = '원';
-	$fixed_amt = 1294423;
-	$fixed_fee = 6813;
-	$bank_name = '국민은행';
-	$account_name = '한은수';
-	$bank_account = '123-456789-012';
+	$total_amt = 200;
+	$select_coin = 'usdt';
+	$fixed_amt = 190;
+	$fixed_fee = 10;
+	$account_name = 'TAkam7aue3mWcvxhivnSQyNPkPRdWT7beL';
+	// $bank_account = '123-456789-012';
+	$rate = 1405;
 }
 
 // 출금 설정 
@@ -161,8 +161,9 @@ if($fund_check_val < $total_amt){
 
 
 $amt_total = $fixed_amt+$fixed_fee;
+
 if($select_coin != '원'){
-	$Enc_wallet_addr = Encrypt($bank_account,$secret_key,$secret_iv);
+	$Enc_wallet_addr = Encrypt($account_name,$secret_key,$secret_iv);
 }
 
 //출금 처리
@@ -170,7 +171,7 @@ $proc_receipt = "insert {$g5['withdrawal']} set
 mb_id ='{$mb_id}'
 , addr = '{$Enc_wallet_addr}'
 , bank_name = '{$bank_name}'
-, bank_account = '{$bank_account}'
+, bank_account = '{$account_name}'
 , account_name = '{$account_name}'
 , account = '{$fund_check_val}'
 , amt ={$fixed_amt}

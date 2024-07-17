@@ -9,6 +9,7 @@
 	
 	$title = 'profile';
 	// $str = '한은수,8301131058000';
+	$config_title = CONFIG_TITLE;
 
 
 	/* 추천 링크 */
@@ -108,6 +109,8 @@
 		.hja_addr{color:black;min-width:80%;color:black !important;background:#f1f4fb !important;border:1px solid #dae0ef !important}
 		.dark .hja_addr{color:black;min-width:80%;background:rgba(255,255,255,0.9)}
 
+		.refferal_btn{position: absolute; right: 15px;margin: 0;}
+
 	</style>
 
 	<link href="<?=G5_THEME_URL?>/css/scss/radio_set_<?=$_COOKIE['mode']?>.css" rel="stylesheet">
@@ -189,7 +192,7 @@
 					</ul>
 				</div>
 
-				<!-- <div class='col-sm-12 col-12 profile-box certificate'>
+				<div class='col-sm-12 col-12 profile-box certificate'>
 					<h3 class='title b_line'>
 						<i class="ri-account-box-line kyc_icon"></i>
 						<span >KYC 인증 정보</span>
@@ -214,18 +217,7 @@
 						</li>
 					</ul>
 
-					<ul class='row'>
-						<li class='col-sm-9 col-8'>
-							<label >환불계좌(실명계좌) 등록</label>
-							<p ><?=get_name($member['mb_center'])?></p>
-						</li>
-						<li class='col-sm-3 col-4 text-right'>
-							<span class="reg_btn" data-name="ch_cert_bank"> 변경</span>
-						</li>
-					</ul>
-
-					<div class="google-auth-top-qr" id="qrcode"></div>
-				</div> -->
+				</div>
 
 				<div class='col-sm-12 col-12 profile-box certificate'>
 					<!-- <h3 class='title b_line'>
@@ -282,6 +274,7 @@
 					<h3 class='title b_line'>
 						<i class="p3"><img src="<?=G5_THEME_URL?>/img/recommendation_information.png" alt=""></i>
 						<span >추천인 정보</span>
+						<a href='/page.php?id=referral_link' class="btn refferal_btn" data-name="refferal" > 내추천링크코드</a>
 					</h3>
 					<ul class='row mt10'>
 						<li class='col-sm-12 col-12'>
@@ -310,25 +303,30 @@
 					<ul class='row mt10'>
 						
 						<li class='col-12 '>
-							<button class="btn wd" onclick="location.href='page.php?id=member_leave'">회원 탈퇴</button>
+							<button class="btn wd logout_pop_open">로그아웃</button>
+						</li>
+						<li class='col-12 text-center'>
+							<a href='page.php?id=member_leave' class='member_leave'>회원 탈퇴</a>
 						</li>
 					</ul>
 				</div>
 
-				
-
 
 			</section>
     	</div>
+
+
 	</main>
+	
 	<?php include_once(G5_THEME_PATH.'/_include/tail.php'); ?>
-	<div class="gnb_dim"></div>
+	
 </section>
+
 
 <script>
 	$(function(){
 		var agree_content = $("#argee_content");
-			agree_content.load("user_agree.html");
+			agree_content.load("user_agree.php?config_title=" + '<?=$config_title?>');
 
 		$(".top_title h3").html("<span>개인정보&보안설정</span>")
 
@@ -995,6 +993,7 @@ $(function() {
 	</form>
 </div>
 
+<div class="gnb_dim"></div>
 
 <script type="text/javascript">
 	$(function(){  

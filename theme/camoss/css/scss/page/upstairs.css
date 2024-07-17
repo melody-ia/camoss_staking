@@ -14,7 +14,7 @@
   vertical-align: middle;
   font-weight: bold;
   font-size: 16px;
-  color: #29386b;
+  color: #fff;
   line-height: 40px;
 }
 .upstairs_buy_wrap .box-body {
@@ -85,7 +85,7 @@
 }
 .pakage_sale .tit {
   font-size: 14px;
-  color: #29386b;
+  color: #fff;
   font-weight: bold;
 }
 .pakage_sale .shift_usd {
@@ -136,11 +136,11 @@
   font-weight: bold;
 }
 .pakage_sale .submit .purchase_btn {
-  background: #302783 !important;
+  background: #516feb !important;
   color: #fff;
 }
 .pakage_sale .submit .deposit_btn {
-  background: #516feb !important;
+  background: #e30413 !important;
   color: #fff;
 }
 .pakage_sale #usd {

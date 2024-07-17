@@ -13,7 +13,7 @@
 }
 .mywallet .loadable .wallet_title {
   margin: 5px 0 20px;
-  color: #29386b;
+  color: #fff;
   font-weight: bold;
   text-align: left;
   display: inline-block;
@@ -93,7 +93,7 @@
   box-shadow: 0 0 0 2px royalblue;
 }
 .mywallet .btn span {
-  color: #29386b;
+  color: #fff;
   font-weight: bold;
 }
 
@@ -108,134 +108,8 @@
   color: #fff;
 }
 .my_btn_wrap .withdraw_btn {
-  background: #ec2b38 !important;
+  background: #516feb !important;
   color: #fff;
-}
-
-input[type=text].modal_input {
-  background: #ededed;
-  margin-top: 10px;
-  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.5);
-  border: 0;
-  text-align: center;
-  width: 50%;
-}
-
-.time_remained {
-  display: block;
-  text-align: center;
-}
-
-.processcode {
-  color: red;
-  display: block;
-  text-align: center;
-  font-size: 13px;
-}
-
-#upbit_curency {
-  margin-bottom: 20px;
-  margin-top: -20px;
-}
-
-.coin_icon {
-  background: white;
-  border-radius: 50%;
-  padding: 5px;
-}
-
-.upbit_logo {
-  width: 65px;
-  display: inline-block;
-  margin-left: 10px;
-}
-
-.checkbox-tile {
-  width: 100%;
-}
-
-.refresh_btn {
-  flex: auto;
-  text-align: right;
-  line-height: 24px;
-}
-
-#coin_refresh {
-  line-height: 30px;
-}
-
-.checkbox-tile {
-  display: block;
-  text-align: center;
-}
-
-#curency_usdt_eth {
-  display: inline;
-}
-
-#select_deposit_coin,
-#select_coin {
-  height: 44px;
-  border: 2px solid #1f9df5;
-}
-
-.txt-box {
-  font-size: 12px;
-  color: red;
-}
-
-.dark .txt-box {
-  color: #fac707;
-}
-
-.in_coin i {
-  font-size: 16px;
-}
-
-.in_coin {
-  margin-top: -10px;
-  font-size: 13px;
-}
-
-.account_select {
-  margin-bottom: 10px;
-}
-
-.card_title {
-  text-align: center;
-}
-
-.cabinet {
-  padding: 10px 0;
-  text-align: center;
-  font-size: 20px;
-}
-
-.account_card.active {
-  background: #3b86ff;
-  color: white;
-}
-
-.account_card.active p {
-  color: white;
-  font-weight: bold;
-}
-
-.dark .account_card.active {
-  background: #fac707;
-}
-.dark .account_card.active p {
-  color: black;
-  font-weight: bold;
-}
-.dark #coin_refresh:hover i {
-  color: #FECE00;
-}
-.dark #upbit_curency {
-  color: white;
-}
-.dark .checkbox-tile {
-  color: rgba(255, 255, 255, 0.75);
 }
 
 #pin_open {
@@ -246,7 +120,7 @@ input[type=text].modal_input {
 }
 
 #Withdrawal_btn {
-  background: #29386b;
+  background: #fff;
   color: white;
   font-weight: bold;
   border-radius: 6px;

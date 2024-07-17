@@ -253,4 +253,8 @@ if ($board['bo_use_rss_view']) {
 }
 
 $stx = get_text(stripslashes($stx));
+if($bo_table == 'kyc'){
+    $board_skin_path    = get_skin_path('board', $board['bo_skin']);
+}
+
 include_once($board_skin_path.'/list.skin.php');

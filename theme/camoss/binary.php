@@ -42,7 +42,6 @@ $g5['title'] = '조직도(박스)';
 ?>
 
 
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 
 <!-- 
 <div style="padding:0px 0px 0px 10px;">

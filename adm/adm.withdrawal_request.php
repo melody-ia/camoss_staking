@@ -118,10 +118,10 @@ function return_status_tx($val)
 <style>
 	strong.red{color:magenta !important}
 	.user_ip{width:130px;height:20px;text-overflow: ellipsis;text-align:left;padding-left:5px;margin-top:-5px;}
+	.cert_icon img{width:30px;height:30px;}
 </style>
 
-<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet"> -->
-<!-- <link href="<?= G5_ADMIN_URL ?>/css/scss/adm.withdrawal_request.css" rel="stylesheet"> -->
+
 
 
 <script>
@@ -236,7 +236,7 @@ function return_status_tx($val)
 <!-- <input type="button" class="btn_submit excel" id="btnExport"  data-name='hwajo_bonus_withdrawal' value="엑셀 다운로드" /> -->
 
 <div class="local_ov01 local_ov" style="display:flex; align-items:center">
-	<a href="./adm.withdrawal_request.php?<?= $qstr ?>" class="ov_listall"> 결과통계 <?= $total_count ?> 건 = <?= shift_auto($total_out,2)?> <?=$curencys[0]?> / <?=shift_auto($total_amt,0)?><?=$curencys[1]?>  </a>
+	<a href="./adm.withdrawal_request.php?<?= $qstr ?>" class="ov_listall"> 결과통계 <?= $total_count ?> 건 = <?= shift_auto($total_out,2)?> <?=$curencys[0]?> / <?=shift_auto($total_amt,0)?>  <?=$curencys[0]?>  </a>
 	<?
 	// 현재 통계치
 	$stats_sql = "SELECT status, sum(out_amt)  as hap, count(out_amt) as cnt from {$g5['withdrawal']} as A WHERE 1=1 " . $sql_condition . " GROUP BY status";
@@ -252,9 +252,9 @@ function return_status_tx($val)
 
 <div class="local_desc01 local_desc">
 	<p>
-		- 결과통계값 : 원 / 수수료뺀 출금액총합<br>
+		- 결과통계값 : 원 / 수수료뺀 출금액 총합<br>
 		- 기본값 : 요청 | <strong>승인 : </strong> 수동송금처리후 변경 | <strong>취소 : </strong> 취소시 반환처리하면 차감금액 반환<br>
-		- 아이디클릭 > 회원수정 | 출금정보클릭 > 계좌번호 복사
+		- 아이디클릭 > 회원수정 | 출금정보클릭 > Explorer
 		<!-- <i class="ri-checkbox-blank-fill" style="color:green;border:1px solid #ccc;font-size:20px;"></i> : 마이닝출금 <i class="ri-checkbox-blank-fill" style="color:#4556ff;border:1px solid #ccc;font-size:20px;"></i> : 수당출금<br> -->
 	</p>
 </div>
@@ -276,16 +276,16 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 				<th style="width:3%;"><a href="?ord=<?php echo $ord_rev; ?>&ord_word=uid">No <?php echo $ord_arrow[$ord_key]; ?></a></th>
 				<th style="width:7%;">아이디 </th>
 				<th style="width:5%;">이름</th>
-				<!-- <th style="width:4%;">KYC인증 </th> -->
-				<th style="width:auto">페이아이디</th>
+				<th style="width:4%;">KYC인증 </th>
+				<th style="width:auto">출금정보</th>
 				<th style="width:5%;">출금전잔고<br>( <?=$curencys[0]?> )</th>
 				<th style="width:5%;">출금요청액<br>( <?=$curencys[0]?> )</th>
-				<th style="width:7%;">출금변환액</th>
+				<!-- <th style="width:7%;">출금변환액</th> -->
 				<th style="width:4%;">출금단위</th>
 				<th style="width:5%;">출금수수료</th>
 
 				<th style="width:7%;">출금액</th>
-				<!-- <th style="width:5%;">출금시세<br>( <?=$curencys[1]?> )</th> -->
+				<th style="width:5%;">출금시세<br>( <?=$curencys[1]?> )</th>
 
 				<!-- <th style="width:5%;">적용코인시세</th> -->
 
@@ -317,7 +317,7 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 						
 						<input type="hidden" value="<?= $row['mb_id'] ?>" name="mb_id[]">
 						<td style='color:#777'><?= $mb['mb_name'] ?></td>
-						<!-- <td><?=kyc_cert($row['kyc'])?></td> -->
+						<td><?=kyc_cert($row['kyc'])?></td>
 
 						<td style="text-align:center;padding-left:7px;" class="copybutton">
 							<?php if ($row['addr'] == '') { ?>
@@ -325,27 +325,17 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 								<!-- <button type="button" class="btn inline_btn copybutton f_right" style='margin-right:10px;vertical-align:top;'>계좌복사</button>  -->
 							<?php } else { 
 
-								$wallet_addr = "";
-								if($row['coin'] == $curencys[0]){
-									$wallet_addr = $mb['eth_my_wallet'];
-								}else if($row['coin'] == $curencys[1]){
-									$wallet_addr = $mb['usdt_my_wallet'];
-								}else if($row['coin'] == $curencys[3]){
-									$wallet_addr = $mb['mb_wallet'];
-								}else if($row['coin'] == $curencys[4]){
-									$wallet_addr = $mb['etc_my_wallet'];
-								}
 
 								$wallet_addr1 = Decrypt($row['addr'],$secret_key,$secret_iv);
-								$wallet_addr2 = Decrypt($wallet_addr,$row['mb_id'],'x');
+								$wallet_addr2 = $mb['account_name'];
 
-								if($wallet_addr1 == $wallet_addr2){ ?>
-								<a href='https://etherscan.io/address/<?=$wallet_addr1?>' target='_blank'><?=$wallet_addr1?></a> 
-								<!-- <div class='eth_addr'><a href='https://filfox.info/ko/address/<?= $row['addr'] ?>' target='_blank'><?= $row['addr'] ?></a></div> -->
-							<?php }else{ ?>
-								<div class='eth_addr' style='color:red;border-bottom:1px solid red'>출금주소 불일치(확인요망)</div>
-								<div class='eth_addr' style="text-align:left;font-size:10px">출금요청주소: <?=$wallet_addr1?></div>
-								<div class='eth_addr' style="text-align:left;font-size:10px">등록지갑주소: <?=$wallet_addr2?></div>
+								if($wallet_addr1 == $wallet_addr2){ 
+									echo retrun_addr_func($wallet_addr2,'usdt');
+									
+								}else{ ?>
+									<div class='eth_addr' style='color:red;border-bottom:1px solid red'>출금주소 불일치(확인요망)</div>
+									<div class='eth_addr' style="text-align:left;font-size:10px">출금요청주소: <?=$wallet_addr1?></div>
+									<div class='eth_addr' style="text-align:left;font-size:10px">등록지갑주소: <?=$wallet_addr2?></div>
 							<?php }
 								} ?>
 						</td>
@@ -357,7 +347,7 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 						<td><?=shift_auto($row['out_amt'],$curencys[1])?></td>
 						
 						<!-- 출금변환액 -->
-						<td class="td_amt <?= $coin_class ?>"><?= shift_auto($row['amt_total'], $row['coin']) ?></td>
+						<!-- <td class="td_amt <?= $coin_class ?>"><?= shift_auto($row['amt_total'], $row['coin']) ?></td> -->
 						
 						<!-- 출금단위 -->
 						<input type="hidden" value="<?= $row['addr'] ?>" name="addr[]">
@@ -370,13 +360,13 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 						<td><span style='display:block;font-size:11px;'><?= shift_auto($row['fee'], $row['coin'])?></span></td>
 
 
-						<td class="td_amt" style="color:red">
+						<td class="td_amt" style="color:red;font-weight:600">
 							<!-- <input type="hidden" value="<?= shift_auto($row['out_amt']) ?>" name="out_amt[]"> -->
 							<?= shift_auto($row['amt'], $row['coin'])?> 
 						</td>
 
 						<!-- 출금시세 -->
-						<!-- <td class="gray" style='font-size:11px;'><span><?= shift_auto($row['cost'], $curencys[0]) ?></span></td> -->
+						<td class="gray" style='font-size:11px;'><span><?= shift_auto($row['cost'], $curencys[0]) ?></span></td>
 						<!-- <td class="gray" style='font-size:11px;'><span><?= $row['cost'] . ' ' . $row['coin']?></span></td> -->
 
 						<td style="font-size:11px;"><?= timeshift($row['create_dt']) ?></td>

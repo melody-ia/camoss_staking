@@ -87,7 +87,6 @@ $sql = " select day
 $result = sql_query($sql);
 ?>
 
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 
 <form name="fvisit" id="fvisit" class="local_sch02 local_sch" method="get">
 <div>

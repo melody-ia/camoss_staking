@@ -326,7 +326,7 @@ a:focus, a:active {
 }
 
 #wrapper {
-  background: #eff3f9 !important;
+  background: #27282d !important;
   color: #333;
 }
 
@@ -351,29 +351,29 @@ a:focus, a:active {
 
 /* 인트로 */
 #myBar {
-  background-color: #967adb;
+  background-color: #b1b1b1;
 }
 
 .b_sub {
-  background: linear-gradient(180deg, #967adb, #36307d) !important;
+  background: linear-gradient(180deg, #b1b1b1, #808080) !important;
   color: #fff !important;
 }
 
 .b_main {
-  background: linear-gradient(180deg, #4a8ed1, #225991) !important;
+  background: linear-gradient(180deg, #8ddc30, #6eca02) !important;
   color: #fff !important;
 }
 
 .b_main:hover {
-  background: #4a8ed1;
+  background: #8ddc30;
 }
 
 a.btn_primary, .btn_primary, .btn.btn_primary {
-  border: 1px solid #967adb;
+  border: 1px solid #b1b1b1;
   color: white;
   border-radius: 8px;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
-  background: linear-gradient(90deg, #967adb, #36307d);
+  background: linear-gradient(90deg, #b1b1b1, #808080);
   transition: all 1s;
 }
 
@@ -396,16 +396,16 @@ a.btn_cancle, .btn_cancle {
   background: #ccc;
 }
 a.btn_cancle:hover, .btn_cancle:hover {
-  color: #4a8ed1;
+  color: #8ddc30;
   background: white;
 }
 
 .user.selected {
-  background: #4a8ed1;
+  background: #8ddc30;
 }
 
 .btn-primary {
-  background: #967adb;
+  background: #b1b1b1;
 }
 
 /* 버튼 */
@@ -940,7 +940,7 @@ i {
 }
 
 .badge {
-  background: #5d96c6;
+  background: #6eca02;
   border-radius: 1rem;
   padding: 5px 8px;
   font-size: 80%;
@@ -1173,7 +1173,7 @@ input.p15 {
 }
 
 .content-box2 {
-  background: #fff;
+  background: #3e4048;
   padding: 20px 10px 20px 10px;
   position: relative;
 }
@@ -2829,7 +2829,7 @@ a.btn_admin:focus, a.btn_admin:hover {
 }
 .history_box .pack_maker {
   font-size: 14px;
-  color: #29386b;
+  color: #fff;
   font-weight: bold;
 }
 
@@ -2840,14 +2840,14 @@ a.btn_admin:focus, a.btn_admin:hover {
   text-align: left;
   margin: 0;
   margin-bottom: 15px;
-  color: #29386b;
+  color: #fff;
 }
 
 .hist_con {
   background-color: #fff;
   overflow: hidden;
   box-sizing: border-box;
-  color: #29386b;
+  color: #fff;
   margin-top: 10px;
   padding-top: 0px;
   padding-bottom: 0px;
@@ -2905,7 +2905,7 @@ a.btn_admin:focus, a.btn_admin:hover {
 .hist_name {
   width: 50%;
   font-size: 12px;
-  color: #29386b;
+  color: #fff;
   display: inline;
   line-height: 24px;
 }
@@ -2921,7 +2921,7 @@ a.btn_admin:focus, a.btn_admin:hover {
 .hist_bank {
   width: 100%;
   font-size: 12px;
-  color: #29386b;
+  color: #fff;
   display: inline;
   line-height: 24px;
 }
@@ -2930,7 +2930,7 @@ a.btn_admin:focus, a.btn_admin:hover {
   width: 50%;
   font-size: 12px;
   line-height: 30px;
-  color: #29386b;
+  color: #fff;
   font-weight: bold;
   margin-top: -5px;
 }
@@ -2949,7 +2949,7 @@ a.btn_admin:focus, a.btn_admin:hover {
   width: 60%;
   line-height: 24px;
   display: inline;
-  color: #29386b;
+  color: #fff;
   text-align: left;
   font-size: 14px;
   font-weight: 600;
@@ -2958,7 +2958,7 @@ a.btn_admin:focus, a.btn_admin:hover {
 .hist_value.status {
   width: 40%;
   font-size: 13px;
-  color: #29386b;
+  color: #fff;
 }
 
 .hist_th {
@@ -2973,7 +2973,7 @@ a.btn_admin:focus, a.btn_admin:hover {
   text-align: left;
   font-size: 14px;
   margin-top: -5px;
-  color: #29386b;
+  color: #fff;
 }
 
 .row2_left {
@@ -2989,12 +2989,12 @@ a.btn_admin:focus, a.btn_admin:hover {
 }
 
 .content-box {
-  -webkit-box-shadow: 0 2px 3px 0 #ccc;
-  -moz-box-shadow: 0 2px 3px 0 #ccc;
-  box-shadow: 0 2px 3px 0 #ccc;
+  -webkit-box-shadow: 0 0 3px 0 #ccc;
+  -moz-box-shadow: 0 0 3px 0 #ccc;
+  box-shadow: 0 0 3px 0 #ccc;
   border-radius: 8px;
-  background: #ffffff;
-  color: #000000;
+  background: #3e4048;
+  color: #fff;
   width: 100%;
   min-height: 40px;
   font-size: 0.9rem;
@@ -3005,8 +3005,8 @@ a.btn_admin:focus, a.btn_admin:hover {
   -moz-box-shadow: 0 0 0 0 #ccc;
   box-shadow: 0 0 0 0 #ccc;
   border-radius: 8px;
-  background: #ffffff;
-  color: #000000;
+  background: #3e4048;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3020,8 +3020,8 @@ a.btn_admin:focus, a.btn_admin:hover {
   -moz-box-shadow: 0 2px 3px 0 #ccc;
   box-shadow: 0 2px 3px 0 #ccc;
   border-radius: 8px;
-  background: #ffffff;
-  color: #000000;
+  background: #3e4048;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3185,7 +3185,7 @@ a.btn_admin:focus, a.btn_admin:hover {
   }
   .fold_wrap .fold_img_wrap {
     box-shadow: 0px 5px 1px rgba(0, 0, 0, 0.08);
-    background: #967adb;
+    background: #b1b1b1;
     text-align: center;
     width: 34px;
     height: 34px;

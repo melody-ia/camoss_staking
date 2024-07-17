@@ -1,5 +1,6 @@
 <? 
 	include_once(G5_THEME_PATH.'/_include/head.php'); 
+	include_once(G5_THEME_PATH.'/_include/lang.php');
 	$temp_id = get_cookie("ck_ca_id", $mb_id, time() + 86400*31);
 ?>
 <style>
@@ -30,11 +31,7 @@
 					<label for="u_pw"><span >비밀번호</span></label>
 					<input type="password" name="mb_password" id="u_pw" style="line-height:22px;" placeholder="비밀번호 입력" onkeyup="press(event)"/>
 				</div>
-				<style>
-					input:active {
-						/* background: yellow; */
-					}
-				</style>
+				
 
 				
 				<!-- <div style='text-align:left'>

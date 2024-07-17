@@ -490,7 +490,6 @@ $stats_result = sql_fetch($stats_sql); */
 	}
 </style>
 
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 
 <div class="local_ov">
 	<?= $listall ?>

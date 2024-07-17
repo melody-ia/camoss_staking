@@ -28,11 +28,11 @@
 .btn_input_wrap {
   margin: auto;
   padding: 10px;
-  background: #eff3f9;
+  background: #27282d;
 }
 
 .btn_input_wrap:first-child {
-  background: #fff;
+  background: #3e4048;
 }
 
 .user_search_wrap input {
@@ -71,7 +71,7 @@
   font-size: 14px;
   line-height: 30px;
   padding: 0 5px;
-  color: #29386b;
+  color: #fff;
 }
 
 .accordion_wrap dl {
@@ -156,9 +156,9 @@
 }
 
 .accordion_wrap dt {
-  color: #29386b;
+  color: #fff;
   _background: #f6f9fe;
-  background: #fff;
+  background: #525561;
   border: none;
   margin-bottom: 5px;
   padding: 6px 10px 6px 10px;
@@ -747,7 +747,7 @@
 }
 
 .binary_search {
-  background: #fff;
+  background: #3e4048;
 }
 
 .binary-card {
@@ -973,7 +973,7 @@
 }
 
 .tree .box {
-  background: #fff;
+  background: #3e4048;
 }
 
 .lvl, .lvl-open {
@@ -1433,7 +1433,7 @@
 }
 
 .sumary_lr li.right {
-  background: #4a8ed1;
+  background: #8ddc30;
 }
 
 .sumary_lr li strong {

@@ -24,131 +24,82 @@ function fix_value (val){
 }
 
 var options = {
-series: [fix_value(chart_data.mega), fix_value(chart_data.zeta), fix_value(chart_data.zetaplus), fix_value(chart_data.super), chart_data.hash],
+series: [chart_data],
 chart: {
-    height: '400px',
-    type: 'donut',
+    height: '360px',
+    type: 'radialBar',
 },
-colors: circle_color,
-labels: ['Mega', 'Zeta', 'ZetaPlus', 'Super','My'],
-
+// colors: circle_color,
+labels: ['Bonus'],
 plotOptions: {
-  pie: {
-    startAngle: 0,
-    endAngle: 360,
-    expandOnClick: true,
-    offsetX: 0,
-    offsetY: 0,
-    customScale: 1,
+  radialBar: {
+    startAngle: -135,
+    endAngle: 225,
+     hollow: {
+      margin: 0,
+      size: '60%',
+      background: '#fff',
+      image: undefined,
+      imageOffsetX: 0,
+      imageOffsetY: 0,
+      position: 'front',
+      dropShadow: {
+        enabled: true,
+        top: 3,
+        left: 0,
+        blur: 4,
+        opacity: 0.24
+      }
+    },
+    track: {
+      background: '#e5e5e5',
+      strokeWidth: '97%',
+      margin: 0, // margin is in pixels
+      dropShadow: {
+        enabled: true,
+        top: -3,
+        left: 0,
+        blur: 4,
+        opacity: 0.35
+      }
+    },
+
     dataLabels: {
-        offset: 0,
-        minAngleToShowLabel: 10
-    },
-    
-    donut: {
-        size: '60%',
-        background: 'transparent',
-        labels: {
-            show: true,
-            name: {
-            show: true,
-            fontSize: '24px',
-            fontFamily: 'Helvetica, Arial, sans-serif',
-            fontWeight: 600,
-            color: '#3b86ff',
-            offsetY: -10,
-                formatter: function (val) {
-                    return val;
-                }
-            },
-            value: {
-            show: true,
-            fontSize: '16px',
-            fontFamily: 'Helvetica, Arial, sans-serif',
-            fontWeight: 400,
-            color: pie_value_color,
-            offsetY: 16,
-                formatter: function (val) {
-                    return val;
-                }
-            },
-            total: {
-            show: true,
-            showAlways: false,
-            label: 'Total',
-            fontSize: '22px',
-            fontFamily: 'Helvetica, Arial, sans-serif',
-            fontWeight: 600,
-            color: '#3b86ff',
-                formatter: function (w) {
-                    return w.globals.seriesTotals.reduce((a, b) => {
-                     
-                    return Math.round(((a + b)*100) /100)
-                    }, 0)
-                }
-            }
-        }
-    } // donut end
+      show: true,
+      name: {
+        offsetY: -10,
+        show: true,
+        fontSize: '17px'
+      },
+      value: {
+        /* formatter: function(val) {
+          return parseInt(val);
+        }, */
+        color: '#111',
+        fontSize: '36px',
+        fontWeight: 600,
+        show: true,
+      }
+    }
   }
-},
-title: {
-    text: 'My Mining Bonus Hash',
-    align: 'center',
-    margin: 10,
-    offsetX: 0,
-    offsetY: 0,
-    floating: false,
-    style: {
-    fontSize:  '14px',
-    fontWeight:  'bold',
-    fontFamily:  undefined,
-    color:  title_color
-    },
 },
 fill: {
-  opacity: 0.8
-},
-legend: {
-  show: true,
-  floating: false,
-  fontSize: '14px',
-  position: 'right',
-  offsetX: 0,
-  offsetY: 100,
-  verticalAlign:'left',
-  labels: {
-    useSeriesColors: true,
-  },
-markers: {
-    width: 12,
-    height: 12,
-    strokeWidth: 0,
-    strokeColor: '#fff',
-    fillColors: undefined,
-    radius: 12,
-    customHTML: undefined,
-    onClick: undefined,
-    offsetX: 0,
-    offsetY: 0
-},
-itemMargin: {
-    horizontal: 5,
-    vertical: 0
-},
-onItemClick: {
-    toggleDataSeries: true
-},
-onItemHover: {
-    highlightDataSeries: true
-},
-formatter: function(seriesName, opts) {
-    return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex] 
-  },
-  itemMargin: {
-    vertical: 4,
-    horizontal: 8,
+  type: 'gradient',
+  gradient: {
+    shade: 'dark',
+    type: 'horizontal',
+    shadeIntensity: 0.5,
+    gradientToColors: ['#ABE5A1'],
+    inverseColors: true,
+    opacityFrom: 1,
+    opacityTo: 1,
+    stops: [0, 100]
   }
 },
+stroke: {
+  lineCap: 'round'
+},
+
 responsive: [{
   breakpoint: 1000,
   options: {

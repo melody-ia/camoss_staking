@@ -206,7 +206,6 @@ function fvisit_submit(act)
 
 
 
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 
 <div class="local_desc01 local_desc">
 	<p>

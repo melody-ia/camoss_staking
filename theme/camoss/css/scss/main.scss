@@ -1,0 +1,3607 @@
+@import "./_variable";
+@import "./_mixin";
+
+main {
+  background-color: #f8fbff;
+  padding-bottom: 100px;
+  position: relative;
+  z-index: 0;
+}
+
+// common
+.content-box {
+  @include content_box(0, 0px, 8px, 0px, #fff, #000);
+}
+.box_ty01 {
+  margin: 15px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(49 104 116 / 0.03);
+  background-color: #fff;
+  padding: 20px;
+}
+.null_data {
+  background-color: #fff;
+  box-shadow: 0 1px 3px #eee;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 300;
+  color: #333;
+  font-size: 0.8rem;
+  min-height: 120px;
+  line-height: 120px;
+}
+
+// 타이틀
+.main_title {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #191919;
+  margin-bottom: 9px;
+}
+.main_title2 {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.user_icon i {
+  vertical-align: middle;
+}
+.line {
+  width: 150%;
+  height: 10px;
+  background-color: #eff4fb;
+  margin: 30px -15px;
+}
+b {
+  color: #000;
+  font-weight: 500;
+}
+hr {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+strong {
+  color: #333;
+}
+#wrapper {
+  background-color: #fff;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"] {
+  box-shadow: none;
+}
+
+.basic_input {
+  border: 1px solid #dfe4ec;
+  border-radius: 5px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-transition: background-color 9999s ease-out;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+#tax_person_number_2 {
+  height: 46px;
+}
+
+// 업로드 파일 삭제 버튼
+.btn_del {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// (공통) 안내사항
+.guide {
+  text-align: right;
+  font-size: 1rem;
+  font-weight: 100;
+  color: #333;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  img {
+    vertical-align: sub;
+    width: 20px;
+    margin-left: 5px;
+    filter: grayscale(1);
+  }
+}
+.guide_content {
+  font-size: 1rem;
+  padding: 20px;
+  border: 1px solid #e3e7ed;
+  border-radius: 10px;
+  color: #333;
+  margin-bottom: 30px;
+
+  ul {
+    list-style: decimal;
+    padding-left: 15px;
+  }
+
+  .title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    float: none !important;
+
+    img {
+      width: 18px;
+      vertical-align: middle;
+      margin: 0 5px 2px 0;
+    }
+  }
+}
+
+// 인트로
+.intro_wrapper {
+  width: 550px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 0;
+  display: block;
+  position: relative;
+
+  @for $i from 1 through 3 {
+    .intro_slide#{$i} {
+      background-image: url($img_path + "launcher_0906.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100vh;
+      width: 100%;
+    }
+  }
+
+  .intro_dots {
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+  }
+
+  .intro_dots li button {
+    background: url($img_path + "dot1.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 20px;
+    font-size: 0;
+    border: 0;
+    outline: 0;
+  }
+
+  .intro_dots li.slick-active button {
+    background: url($img_path + "dot2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 0;
+    border: 0;
+    outline: 0;
+  }
+
+  .skip {
+    width: 100%;
+    position: absolute;
+    bottom: 4%;
+    display: flex;
+    justify-content: center;
+    color: #ff0000;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+.closed {
+  background: #c7ccd5;
+}
+
+// 아이디, 비밀번호찾기
+.find_wrap {
+  input {
+    font-size: 0.8rem !important;
+    border-radius: 3px !important;
+
+    &::placeholder {
+      color: #babfc7;
+    }
+  }
+
+  .title {
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 100;
+  }
+
+  .sub_title {
+    color: #000;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    align-items: center;
+  }
+
+  .id_sub_title {
+    font-size: 1rem;
+    line-height: 28px;
+
+    span {
+      border-bottom: 1px solid #000;
+      padding: 0;
+    }
+  }
+
+  .id_submit_wrap {
+    display: flex;
+  }
+
+  .result_wrap {
+    background-color: #f8fbff;
+    text-align: center;
+    padding: 80px 0;
+    border-radius: 10px;
+
+    p {
+      &:first-child {
+        font-size: 0.9rem;
+      }
+    }
+
+    .find_id {
+      font-size: 1.1rem;
+    }
+  }
+
+  .login_btn {
+    border: 1px solid $main_color;
+    color: $main_color;
+    margin-left: 8px;
+
+    &:hover {
+      background: $main_color;
+      color: #fff;
+    }
+  }
+
+  .auth_wrap {
+    display: flex;
+
+    #auth_number {
+      margin: 0;
+      flex: 0.8;
+    }
+
+    #auth_number_confirm {
+      margin: 0 auto 0 5px;
+      font-size: 0.7rem !important;
+      flex: 0.2;
+      height: 44px;
+    }
+  }
+
+  .timer_down_wrap {
+    justify-content: space-between;
+
+    .timer-down {
+      color: #ff0000;
+      font-size: 0.9rem;
+      flex: 0.8;
+      text-align: right;
+
+      &:after {
+        content: "";
+        flex: 0.2;
+        margin: 0 auto 0 -2px;
+        padding: 0.375rem 0.75rem;
+      }
+    }
+  }
+
+  .line {
+    width: 110%;
+    height: 10px;
+    background-color: #f8fbff;
+  }
+}
+
+// 상단 헤더 회원정보
+.breadcrumb {
+  .user-info {
+    background: #fff;
+    width: 100%;
+    padding: 0 20px 15px;
+    box-shadow: 0px 6px 8px rgba(49, 104, 116, 0.03);
+
+    .user-content {
+      background-color: #fff;
+      width: 100%;
+      position: relative;
+      align-items: center;
+      padding: 10px;
+
+      .user_info_wrap {
+        h4:not(.user_id) {
+          display: inline-block;
+        }
+      }
+
+      .user_img_wrap,
+      .user_info_wrap {
+        flex: 0 0 auto;
+      }
+
+      .user_level {
+        width: 40px;
+        height: 40px;
+      }
+
+      .user_id {
+        color: #b4bac5;
+        font-size: 0.8rem;
+        letter-spacing: -0.3px;
+        text-align: left;
+      }
+
+      .mygrade {
+        background: none;
+        color: #8b8b8b;
+        font-weight: 300;
+        font-size: 1rem;
+        padding: 0;
+        margin: 0;
+        vertical-align: middle;
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 1px;
+          height: 10px;
+          background-color: #e5e9f3;
+          margin: 0 10px;
+        }
+      }
+    }
+
+    .extra {
+      background: #fece00;
+      border-radius: 3px;
+      color: black;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  .total_view_wrap {
+    .total_view_top {
+      .sideexp {
+        font-size: 11px;
+        letter-spacing: -0.5px;
+      }
+
+      .before_fund {
+        font-size: 11px;
+        margin: 0;
+        padding: 0;
+        line-height: 10px;
+      }
+
+      .row.top {
+        margin: 0;
+        background: #fff;
+        width: 100%;
+        position: relative;
+        padding: 15px 0;
+        justify-content: space-between;
+      }
+
+      .title {
+        color: $main_color;
+      }
+
+      .value {
+        color: #000;
+        font-size: 15px;
+        padding: 0 10px;
+        display: flex;
+        justify-content: center;
+        text-align: left;
+        word-break: break-all;
+        line-height: 24px;
+      }
+
+      li+li::before {
+        content: "";
+        width: 5px;
+        height: 20px;
+        margin-top: 10px;
+        float: left;
+        border-left: 2px solid #ecf3fa;
+        display: inline-block;
+      }
+    }
+
+    .quote_wrap {
+      font-size: 0.8rem;
+      color: #8b8b8b;
+      text-align: right;
+      cursor: pointer;
+
+      &:hover,
+      &:active {
+        color: $main_color;
+      }
+    }
+
+    .refresh {
+      width: 12px;
+      vertical-align: middle;
+      margin-top: -2px;
+    }
+  }
+}
+
+// 회원가입
+.enroll_wrap {
+  .btn2_wrap {
+    display: flex;
+
+    .btn_cancle {
+      flex-grow: 0.3;
+    }
+
+    li {
+      text-align: center;
+      font-weight: bold;
+      padding: 0px;
+    }
+  }
+}
+
+// 회원탈퇴
+.member_leave {
+  padding: 10px 30px 60px;
+
+  .main_title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .info_text {
+    color: #686767;
+    font-size: 15px;
+
+    @include mobile {
+      font-size: 14px;
+    }
+
+    br:not(.block) {
+      display: none;
+
+      @include mobile {
+        display: block;
+      }
+
+      @media all and (max-width: 580px) {
+        display: none;
+      }
+    }
+
+    &.red {
+      color: #ff4646;
+      margin-top: 15px;
+    }
+  }
+  .leave_info_wrap {
+    margin-top: 40px;
+
+    @include mobile {
+      margin-top: 30px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      width: 100%;
+    }
+    input {
+      margin-top: 15px;
+      width: 100%;
+      max-width: 100%;
+      font-weight: normal;
+
+      &::placeholder {
+        font-weight: normal;
+        color: #babfc7;
+      }
+    }
+  }
+  .btn_wrap {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+
+    @include mobile {
+      margin-top: 30px;
+    }
+
+    .btn_cancel,
+    .btn_leave {
+      border: none;
+      outline: none;
+      width: 49%;
+      display: inline-block;
+      border-radius: 5px;
+      color: #fff;
+      text-align: center;
+      line-height: 45px;
+
+      @include mobile {
+        font-size: 14px;
+      }
+    }
+  }
+}
+// 로그인
+.login_wrap {
+  .login_btn_bottom {
+    .login_btn_wrap {
+      margin-top: 20px;
+      display: flex;
+
+      >* {
+        flex-grow: 1;
+
+        &:nth-child(2) {
+          margin-left: 10px;
+        }
+      }
+
+      button,
+      a {
+        padding: 16px 15px;
+      }
+    }
+
+    .desc {
+      float: none;
+      display: inline-block;
+      color: #333;
+      margin: 0;
+
+      &.find_pw {
+        &::before {
+          content: "";
+          background-color: #e6ecf3;
+          width: 2px;
+          height: 10px;
+          display: inline-block;
+          margin: 0 15px;
+        }
+      }
+    }
+  }
+
+  input {
+    &::placeholder {
+      color: #b5b5b5;
+    }
+  }
+
+  #u_name,
+  #u_pw {
+    border: none;
+  }
+}
+
+// 로그아웃 팝업
+.logout_pop {
+  .pop_title+div {
+    margin: 0;
+  }
+}
+
+// 대시보드
+.dashboard {
+  .nav_wrap {
+    @include flexbox(row, space-between, center);
+    padding-top: 20px;
+
+    .nav1,
+    .nav2,
+    .nav3 {
+      position: relative;
+      flex-grow: 1;
+      background-color: #ecf3fa;
+      border-radius: 5px;
+      text-align: center;
+      height: 40px;
+      line-height: 40px;
+      gap: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      
+
+      &::after {
+        content: "+";
+        color: $main_color;
+        display: inline-block;
+        position: absolute;
+        right: 10%;
+        font-weight: bold;
+      }
+
+      &:hover{
+        background:#d5dfe9;
+      }
+
+    }
+
+    a:not(:last-child) {
+      margin-right:10px;
+    }
+  }
+  // 사용 가능한 상품권
+  .gift_box_wrap {
+    position: relative;
+
+    .slide_cont {
+      background-color: #ecf3fa;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .giftcard_more_btn {
+      align-items: center;
+      color: $main_color;
+      font-size: 1.2rem;
+      width: 50px;
+      position: absolute;
+      top: 40%;
+      z-index: 10;
+      right: 0%;
+      opacity: 0;
+
+      a {
+        background-color: #ecf3fa;
+        width: inherit;
+        height: inherit;
+        text-align: center;
+        line-height: 50px;
+        border-radius: 10px;
+        display: block;
+      }
+    }
+
+    .giftcard_active {
+      transition: all 0.2s;
+      opacity: 1;
+    }
+  }
+
+  .page_move_btn {
+    color: #333;
+    font-size: 0.9rem;
+    float: right;
+    font-weight: 300;
+
+    img {
+      width: 18px;
+      height: 18px;
+      vertical-align: inherit;
+      margin-left: 5px;
+    }
+  }
+}
+
+// 대시보드/자산형황 템플릿
+.asset_status_wrap {
+  @include content_box(0, 0, 0, 0, auto, #fff);
+}
+
+// 대시보드/최근 입출금 내역
+.container {
+  .history_box {
+    .hist_con {
+      .hist_con_row1 {
+        border-top: none;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
+// 유저 정보
+.profile {
+  .mb_name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #000;
+    display: flex;
+  }
+
+  .mb_level {
+    font-weight: 100;
+    font-size: 0.9rem;
+    color: #8b8b8b;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 1px;
+      height: 10px;
+      background-color: #e5e9f3;
+      margin: 0 7px;
+    }
+  }
+
+  .mb_id {
+    font-weight: 100;
+    font-size: 0.9rem;
+    color: #b4bac5;
+    margin-top: -8px;
+  }
+
+  .user_img_wrap {
+    display: inline-block;
+
+    img {
+      width: 40px;
+      margin-top: 12px;
+    }
+  }
+
+  .title {
+    color: #333;
+
+    &.b_line {
+      padding-bottom: 10px;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      vertical-align: baseline;
+      margin-right: 5px;
+      filter: grayscale(1);
+    }
+  }
+
+  .profile-box {
+    margin: 40px 0;
+
+    &:first-child {
+      margin: 0;
+    }
+
+    &.leave { 
+      .t_line {
+        display: inline-block;
+        width: 100%;
+        height: 2px;
+        background-color: #f1f4fb;
+      }
+    }
+
+    ul {
+      &.row.person_info {
+        .col-4.text-right {
+          margin-top: -4px;
+        }
+      }
+
+      li {
+        margin-bottom: 5px;
+
+        label {
+          color: $main_color;
+          display: block;
+          margin: 0 0 3px;
+        }
+
+        p {
+          color: #333;
+          font-weight: 100;
+          font-size: 14px;
+        }
+      }
+
+      &.user_wrap {
+        li:first-child {
+          margin: 0 10px 0 0;
+        }
+
+        img {
+          margin-top: 5px;
+          width: 45px;
+        }
+      }
+    }
+  }
+
+  .row+.row {
+    margin-top: 0;
+  }
+
+  .row.mt10 {
+    .status_1 {
+      height: 22px;
+      background: url(../../_images/okay_icon.png) no-repeat top 3px left;
+      background-size: auto;
+      background-size: 12px;
+      padding-left: 20px;
+      margin-top: 7px;
+    }
+  }
+
+  .ch_pw_open,
+  .ch_tpw_open,
+  .num_pop_open,
+  .reg_btn,
+  .btn_leave {
+    border: 1px solid #d2d2d2;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    text-align: center;
+    padding-top: 0;
+    height: 30px;
+    line-height: 27px;
+    font-size: 0.7rem;
+    display: inline-block;
+    width: 70px;
+    margin-top: 7px;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .reg_btn {
+    margin-top: 10px;
+  }
+
+  .status_1,
+  .status_2 {
+    display: flex;
+    align-items: center;
+  }
+
+  .person_info {
+    font-weight: 300;
+
+    li:not(:nth-child(1)) {
+      p {
+        text-indent: 0;
+        word-break: break-all;
+      }
+    }
+  }
+
+  #logpw {
+    margin-top: 10px;
+  }
+}
+// 개인정보&보안설정 모달창
+.pop_wrap {
+  font-size: 0.9rem;
+
+  .ch_tax_wrap {
+    overflow-y: auto;
+    padding: 15px;
+  }
+
+  .half {
+    width: calc(50% - 10px);
+    display: inline-block;
+  }
+
+  .half+.half {
+    width: calc(50% - 10px);
+  }
+
+  .half+.half::after {
+    clear: both;
+  }
+
+  #ch_tax [type="checkbox"] {
+    width: auto;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle
+  }
+
+  .person_agree_view {
+    font-size: 11px;
+    border: none;
+    color: #fff !important;
+    background: #ced3dc;
+    border-radius: 5px;
+    padding: 1px 5px 2px;
+    vertical-align: middle;
+  }
+
+  .textbox {
+    width: 100%;
+    min-height: 200px;
+    text-align: left;
+    font-size: 11px;
+  }
+
+  .preclose {
+    display: none;
+  }
+
+  .open {
+    display: block;
+  }
+
+  .filebox {
+    width: 100%;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    background: white
+  }
+
+  #tax_person_file {
+    font-size: 14px;
+  }
+
+  .status_2 {
+    background: url(../../_images/x_icon.png) no-repeat top 16px left;
+    background-size: 13px;
+    padding-left: 20px;
+  }
+
+  .kyc_icon {
+    color: #2b3a6d;
+  }
+
+  .box+.box {
+    margin-top: 20px;
+  }
+
+  &.input_pop_css {
+    label {
+      color: #333;
+      display: inline-flex;
+      align-items: center;
+      margin: 0;
+    }
+    
+    .kyc_label {
+      color: #45d1a4 !important;
+      font-size: 11px;
+      margin: 3px;
+      font-weight: 100;
+    }
+
+    .radio_set {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    input[type="checkbox"] {
+      vertical-align: middle;
+      display: none;
+
+      &:checked+label {
+        background-position: 0 -20px;
+      }
+    }
+
+    input[type="radio"] {
+      vertical-align: middle;
+      display: none;
+
+      &:checked+label {
+        background-position: 0 -20px;
+      }
+    }
+
+    input[type="file"] {
+      position: absolute;
+      width: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+    }
+
+    .upload-name1,
+    .upload-name2 {
+      display: inline-block;
+      width: 100%;
+      height: 46px;
+      padding: 0 10px 0 100px;
+      vertical-align: middle;
+      border: 1px solid #dddddd;
+      color: #333;
+      font-weight: 100;
+      font-size: 0.8rem;
+      text-overflow: ellipsis;
+      padding-right: 15px;
+      border-radius: 5px;
+
+      &::placeholder {
+        color: #c7ccd5;
+        font-size: 0.8rem;
+      }
+    }
+
+    .file_label {
+      position: absolute;
+      top: 33%;
+      left: 0;
+      padding: 10px 20px;
+      color: #fff;
+      vertical-align: middle;
+      height: 25px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 0.7rem;
+      border-radius: 3px;
+
+      background: {
+        color: #c7ccd5;
+        repeat: no-repeat;
+        position: center;
+        size: 35%;
+      }
+    }
+
+    .tax_person_number_agree {
+      display: inline-block;
+      width: 100%;
+      height: 20px;
+      padding-left: 30px;
+
+      background: {
+        image: url($img_path + "chk_btn.png");
+        repeat: no-repeat;
+        position: 0 0;
+        size: 20px;
+      }
+
+      vertical-align: top;
+    }
+
+    .wallet_type1,
+    .wallet_type2,
+    .wallet_type3 {
+      display: inline-block;
+      width: 100%;
+      height: 20px;
+      padding: 1px 0 0 26px;
+
+      background: {
+        image: url($img_path + "chk_btn.png");
+        repeat: no-repeat;
+        position: 0 0;
+        size: 20px;
+      }
+
+      vertical-align: top;
+    }
+  }
+}
+// 고유식별정보 처리방침 모달
+#commonModal {
+  .modal-body {
+    height: 60vh; 
+    overflow-y: auto; 
+    padding-top: 0;
+  }
+
+  .modal-content {
+    #closeModal {
+      background-color: #45d1a4; 
+      color: #fff;
+    }
+  }
+}
+
+// ********* 입출금 *********
+.mywallet {
+  // 입금 신청
+  #deposit {
+    .content_wrap {
+      .qr_img {
+        margin: 15px auto 0;
+
+        img {
+          margin: 0 auto;
+        }
+      }
+
+      .qrBox_right {
+        #my_eth_wallet {
+          color: #000;
+          text-align: center;
+          box-shadow: none;
+        }
+
+        .explain_text {
+          color: #333;
+          text-align: center;
+        }
+
+        #accountCopy {
+          box-shadow: none;
+          border: 1px solid $main_color;
+          background: none;
+          border-radius: 8px;
+
+          &:hover {
+            background: $main_color;
+
+            span {
+              color: #fff;
+            }
+          }
+
+          span {
+            color: $main_color;
+          }
+        }
+      }
+
+      #deposit_name {
+        border: 1px solid #dfe4ec;
+        border-radius: 8px;
+        color: #333;
+        margin-bottom: 10px;
+
+        &::placeholder {
+          text-align: left;
+          font-weight: 100;
+          color: #c7ccd5;
+        }
+      }
+
+      .deposit_value_wrap {
+        position: relative;
+      }
+
+      #deposit_value {
+        text-align: right;
+        padding-right: 60px;
+        background: none;
+        border: 1px solid #dfe4ec;
+        border-radius: 8px;
+        color: #333;
+
+        &::placeholder {
+          text-align: left;
+          font-weight: 100;
+          color: #c7ccd5;
+        }
+      }
+
+      .currency-right {
+        padding: 16px 0;
+        margin: 0;
+      }
+
+      .price {
+        text-align: right;
+        color: #333;
+        font-weight: 100;
+        margin-bottom: 30px;
+      }
+
+      .won {
+        font-weight: 100;
+        margin-left: 10px;
+      }
+
+      .deposit_request {
+        background: $main_color;
+      }
+
+      input {
+        &:focus {
+          border: 1px solid $main_color !important;
+        }
+      }
+    }
+  }
+
+  // 출금 신청
+  #withdraw {
+    .content_wrap {
+      >div {
+        position: relative;
+        display: flow-root;
+        margin: 10px 0;
+
+        &:first-child {
+          margin: 0;
+        }
+      }
+
+      input {
+        &:focus {
+          border: 1px solid $main_color !important;
+        }
+      }
+
+      #withdraw_wallet_address {
+        border: 1px solid #dfe4ec;
+        border-radius: 8px;
+        margin: 0;
+
+        &::placeholder {
+          text-align: left;
+          font-weight: 100;
+          color: #c7ccd5;
+        }
+      }
+
+      #max_value {
+        position: relative;
+        background: $main_color;
+        color: #fff;
+        right: 0%;
+        flex-grow: 1;
+        margin-left: 5px;
+        max-height: none;
+        height: 52px;
+      }
+
+      #sendValue {
+        text-align: right;
+        padding-right: 60px;
+        border: 1px solid #dfe4ec;
+        border-radius: 8px;
+        flex-grow: 1;
+        color: #333;
+        font-weight: 300;
+
+        &::placeholder {
+          text-align: left;
+          font-weight: 100;
+          color: #c7ccd5;
+          padding-right: 80px;
+        }
+      }
+
+      #pin_auth_with {
+        border: 1px solid #dfe4ec;
+        border-radius: 8px;
+        color: #333;
+
+        &::placeholder {
+          text-align: left;
+          font-weight: 100;
+          color: #c7ccd5;
+        }
+      }
+
+      #pin_open {
+        background: #03dac3;
+        color: #fff;
+      }
+
+      #Withdrawal_btn {
+        background: $main_color;
+        color: #fff;
+      }
+
+      #available_withdraw {
+        width: 100%;
+        text-align: right;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        height: 50px;
+        line-height: 50px;
+        color: $main_color;
+        padding: 0 15px;
+      }
+
+      .withdraw_fee_wrap {
+        display: flex;
+        position: relative;
+      }
+
+      #withdraw_currency {
+        color: #333;
+        font-size: 0.9rem;
+        float: none;
+        top: 0;
+        right: 75px;
+        padding: 15px 0;
+      }
+
+      .real_withdraw {
+        font-size: 0.8rem;
+        text-align: right;
+        font-weight: 300;
+
+        #fee_val {
+          color: #ff0000;
+          margin-left: 10px;
+        }
+
+        span {
+          color: #333;
+        }
+      }
+
+      .input_head_title {
+        font-size: 1rem;
+        position: absolute;
+        top: 20%;
+        left: 0%;
+      }
+    }
+
+    &.eth {
+      .content_wrap {
+        #sendValue {
+          padding-right: 50px;
+        }
+      }
+    }
+  }
+
+  // (공통) 입금/출금 신청
+  #deposit,
+  #withdraw {
+    .title {
+      float: none;
+      font-size: 0.9rem;
+      margin: 10px 0;
+      color: #333;
+      height: auto;
+      text-align: left;
+      width: auto;
+      display: block;
+    }
+  }
+}
+// 입출금내역 탭버튼
+.history_nav_wrap {
+  @include flexbox(row, space-between, center);
+  padding: 30px 15px;
+  background-color: #fff;
+
+  a {
+    text-align: center;
+    flex-grow: 1;
+    border: 1px solid #d0d0d0;
+    color: #333;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 3px;
+    font-weight: 300;
+
+    &:nth-child(2) {
+      margin: 0 10px;
+    }
+
+    &.convert_nav {
+      margin-left: 10px;
+    }
+
+    &.active {
+      border: 1px solid $main_color;
+      color: $main_color;
+    }
+  }
+}
+// 입출금내역 내용
+.history_box {
+  box-shadow: none;
+  padding-bottom: 0 !important;
+  padding: 0;
+
+  >* {
+    color: #333;
+  }
+
+  .hist_con {
+    margin: 0;
+
+    .hist_con_row1 {
+      @include flexbox(row, space-between, center);
+      background: #fff;
+      border-top: 1px solid #eef2f8;
+      min-height: 100px;
+      padding: 15px 28px 15px 28px;
+
+      .hist_left {
+        flex: 0 0 auto;
+      }
+
+      &.deposit {
+        .hist_value {
+          color: $main_color;
+        }
+      }
+
+      &.withdraw {
+        .hist_value {
+          color: #333;
+        }
+      }
+
+      &.convert {
+        .hist_left {
+          img {
+            filter: contrast(0);
+          }
+        }
+      }
+    }
+
+    .hist_mid {
+      flex-grow: 1;
+      padding: 0 10px 0 18px;
+
+      .tx_id {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+
+        a {
+          text-decoration: none;
+          color: #333;
+        }
+      }
+
+      .hist_date {
+        width: auto;
+        font-weight: 300;
+        font-size: 0.9rem;
+        color: #333;
+      }
+
+      .process_result {
+        font-size: 0.9rem;
+        color: #333;
+      }
+    }
+
+    .hist_right {
+      text-align: right;
+
+      .hist_value {
+        width: auto;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .hist_won {
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: #333;
+      }
+
+      .process_result {
+        font-size: 0.9rem;
+        color: #333;
+        display: inline-block;
+      }
+    }
+
+    img {
+      width: 18px;
+    }
+  }
+}
+// 입출금내역 디테일
+.history_detail {
+  box-shadow: 0 0 8px 0 rgba(211, 211, 211, 0.18);
+
+  .history_box {
+    .hist_con {
+      .hist_con_row1 {
+        border-top: 1px solid #eef2f8;
+        border-radius: 0;
+        padding: 10px;
+        min-height: 80px;
+
+        .hist_mid {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.status_card_wrap {
+  color: #fff;
+  padding: 30px 25px;
+  border-radius: 10px;
+  min-height: 300px;
+  position: relative;
+  margin: 20px 0;
+  box-shadow: 2px 2px 2px #ccc;
+  background: {
+    image: url($img_path + "card.png");
+    color: #a1dc75;
+    repeat: no-repeat;
+    position: calc(100% - 20px) 40%;
+    size: 141px;
+  }
+
+  &.esgc {
+    .link_btn_wrap {
+      background-color: #8ed261;
+
+      a:nth-child(1) {
+        &::after {
+          content: "";
+          width: 1px;
+          height: 18px;
+          background-color: #fff;
+          display: inline-block;
+          position: absolute;
+          right: 50%;
+          top: 33%;
+        }
+      }
+    }
+  }
+
+  &.eth {
+    background: {
+      color: $eth_color;
+    }
+
+    .link_btn_wrap {
+      background-color: $eth_color_2;
+    }
+  }
+
+  &.nft{
+    background: {
+      color:$third-color;
+    }
+    .link_btn_wrap{
+      background-color: $nft-color;
+    }
+  }
+
+  h5 {
+    font-size: 1.2rem;
+    font-weight: 100;
+  }
+
+  .quantity_wrap {
+    margin: 55px 0;
+  }
+
+  .esgc_quantity {
+    font-size: 2.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .price {
+    font-size: 1.4rem;
+    opacity: 0.5;
+  }
+
+  .currency {
+    font-size: 1.4rem;
+    vertical-align: baseline;
+  }
+
+  .link_btn_wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 60px;
+    line-height: 60px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    a {
+      flex-grow: 1;
+      text-align: center;
+    }
+  }
+}
+.loadable {
+  display: none;
+}
+.loadable.active {
+  display: block;
+  animation: slidein 0.5s ease-out;
+  -webkit-animation: slidein 0.5s ease-out;
+}
+// 더보기 버튼
+.more {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+  display: inline-block;
+  width: 100%;
+  padding: 15px 0;
+  border-top: 1px solid #919191;
+}
+
+// ********* 스테이킹 *********
+.staking {
+  position: relative;
+
+  .sub_title {
+    display: block;
+    color: #333;
+    font-weight: 300;
+  }
+
+  .card_fill {
+    position: absolute;
+    min-height: 110px;
+    width: 20px;
+    border-radius: 10px;
+    z-index: -1;
+    height: 100%;
+  }
+
+  .card_border {
+    position: absolute;
+    min-height: 110px;
+    width: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 7px;
+    background-color: transparent;
+  }
+
+  .caution {
+    width: 15px;
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-top: -4px;
+
+    +span {
+      font-size: 0.9rem;
+      color: #333;
+    }
+  }
+
+  &.finish_staking {
+    .finish_staking_text {
+      font-size: 0.8rem;
+      color: #f42f2f;
+      font-weight: bold;
+      position: relative;
+      padding-left: 20px;
+
+      &::before {
+        content: "!";
+        width: 15px;
+        height: 15px;
+        line-height: 15px;
+        border-radius: 50%;
+        color: #fff;
+        background: #f42f2f;
+        position: absolute;
+        left: 0;
+        top: 3px;
+        text-align: center;
+      }
+    }
+
+    .item_character,
+    .text_color {
+      color: #7a7a7a;
+    }
+
+    .info_wrap {
+      color: #333;
+    }
+
+    .card_fill {
+      background-color: #939393;
+    }
+  }
+}
+.staking_card_wrap {
+  box-shadow: 0 2px 3px rgba(49, 104, 116, 0.14);
+  border-radius: 10px 45px 10px 10px;
+  padding: 0;
+}
+.staking_card_fill_wrap {
+  box-shadow: 0 0 8px 0 rgba(211, 211, 211, 0.18);
+  position: relative;
+  padding: 0;
+  background-color: transparent;
+  margin: 15px 0;
+  border-radius: 10px;
+}
+.staking_card {
+  @include flexbox(row, space-between, center);
+
+  background: white;
+  min-height: 110px;
+  margin-left: 7px;
+  font-size: 1.4rem;
+  cursor: pointer;
+
+  .img_marker {
+    flex-grow: 0;
+  }
+
+  .item_character {
+    flex-wrap: wrap;
+    flex-basis: auto;
+    flex: auto;
+    padding: 0 10px;
+  }
+
+  .divide {
+    width: 1px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.5);
+    margin-right: 10px;
+
+    &.dark {
+      background: #f1f5fa;
+    }
+  }
+
+  .currency {
+    flex-basis: 25%;
+    font-size: 1rem;
+    text-align: center;
+    padding-left: 10px;
+  }
+
+  .item_character,
+  .value {
+    letter-spacing: -0.3px;
+    vertical-align: bottom;
+
+    .percent_marker,
+    .year_marker {
+      margin-left: 2px;
+      font-size: 1rem !important;
+      vertical-align: bottom;
+    }
+  }
+
+  .staking_left_wrap {
+    flex: auto;
+
+    .item_character {
+      padding: 0;
+    }
+
+    .date {
+      font-weight: 300;
+      font-size: 0.8rem;
+    }
+  }
+
+  .staking_right_wrap {
+    flex-basis: 25%;
+
+    .value {
+      font-size: 1.2rem;
+      text-align: right;
+    }
+
+    .currency {
+      font-size: 0.8rem;
+      text-align: right;
+    }
+  }
+
+  .finish_staking_text {
+    position: absolute;
+    right: 30%;
+    top: 0;
+    width: 100px;
+    height: 30px;
+    background: #595959;
+    box-shadow: 2px 6px 7px 0 rgba(0, 0, 43, 0.05);
+    color: #fff;
+    font-size: 0.95rem;
+    text-align: center;
+    line-height: 28px;
+  }
+
+  &.recruit_staking,
+  &.application {
+    width: calc(100% - 7px);
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    border: none;
+    position: relative;
+  }
+
+  &.my_staking {
+    width: calc(100% - 7px);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    color: black;
+    background: white;
+
+    .date,
+    .currency {
+      margin-top: 10px;
+      color: #333;
+    }
+  }
+
+  &.finish_staking {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -7px;
+      top: 0;
+      width: calc(100% + 7px);
+      height: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 10px;
+    }
+  }
+}
+// 스테이킹 ETH 구분선
+.horizon_divide {
+  margin: 5px auto;
+  text-align: center;
+  display: block;
+  font-size: 13px;
+  padding: 2px 0;
+  background: #ecf3fb;
+  border-radius: 5px;
+}
+
+/*스테이킹 카드 컬러셋 */
+@for $i from 1 to 7 {
+  .border_card#{$i} {
+    border-color: getcolors($i);
+  }
+
+  .fill_card#{$i} {
+    background: getcolors($i);
+  }
+
+  .text_color#{$i} {
+    color: getcolors($i);
+  }
+}
+// 스테이킹 신청
+.staking_application {
+  .staking_card {
+    cursor: default;
+  }
+
+  input[type="text"] {
+    border: 1px solid #dfe4ec;
+    border-radius: 6px;
+    text-align: right;
+    color: #333;
+    padding-right: 55px;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  .input_wrap {
+    position: relative;
+
+    .currency-right {
+      margin-top: 13px;
+      right: 10px;
+    }
+  }
+
+  .staking_input_wrap {
+    @include flexbox(column, space-around, inherit);
+
+    border: 1px solid #dfe4ec;
+    border-radius: 6px;
+    padding: 12px 10px;
+    background-color: #fff;
+    min-height: 100px;
+    position: relative;
+    margin-bottom: 50px;
+
+    +.main_title2 {
+      border-bottom: 1px solid #dfe4ec;
+      padding-bottom: 20px;
+    }
+  }
+
+  .fee_top_wrap {
+    @include flexbox(row, space-between, center);
+
+    &>p {
+      flex: 0 0 auto;
+      margin-left: 8px;
+    }
+
+    .title {
+      color: #333;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    .value {
+      color: #333;
+      font-size: 0.95rem;
+      font-weight: 300;
+      padding-right: 10px;
+      vertical-align: bottom;
+    }
+
+    .currency-right {
+      position: static;
+      color: #333;
+      font-size: 14px;
+      font-weight: 300;
+      cursor: default;
+      float: none;
+      vertical-align: middle;
+    }
+  }
+
+  .fee_bottom_wrap {
+    @include flexbox(row, space-between, center);
+
+    &>p {
+      flex: 0 0 auto;
+      margin-left: 8px;
+    }
+
+    .title {
+      color: #333;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    .value {
+      color: #333;
+      font-size: 0.95rem;
+      font-weight: 300;
+      padding-right: 10px;
+      color: $main_color;
+      vertical-align: bottom;
+    }
+
+    .currency-right {
+      position: static;
+      color: #333;
+      font-size: 14px;
+      font-weight: 300;
+      cursor: default;
+      float: none;
+      vertical-align: middle;
+    }
+  }
+
+  .sub_title {
+    padding: 0;
+    margin: 15px 0;
+    font-weight: 100;
+  }
+
+  .agree_wrap {
+    position: relative;
+    float: right;
+
+    input[type="checkbox"] {
+      vertical-align: middle;
+      display: none;
+
+      &:checked+label {
+        background-position: 0 -20px;
+      }
+    }
+
+    .chk_all {
+      display: inline-block;
+      width: 100%;
+      height: 20px;
+      padding-left: 27px;
+      vertical-align: middle;
+
+      background: {
+        image: url($img_path + "chk_btn.png");
+        repeat: no-repeat;
+        position: 0 0;
+        size: 20px;
+      }
+    }
+
+    +p {
+      color: #949494;
+    }
+
+    label {
+      div {
+        display: contents;
+      }
+    }
+
+    &::after {
+      clear: both;
+      content: "";
+      display: inline-block;
+    }
+  }
+
+  .agree_content_wrap {
+    .text_wrap {
+      @include flexbox(row, space-between, center);
+
+      span {
+        font-size: 1rem;
+        letter-spacing: -1px;
+        flex-grow: 1;
+      }
+
+      .caution {
+        align-self: flex-start;
+        margin-top: 5px;
+      }
+
+      +.text_wrap {
+        margin: 15px 0;
+      }
+    }
+
+    input[type="checkbox"] {
+      vertical-align: middle;
+      display: none;
+
+      &:checked+label {
+        background-position: 0 -20px;
+      }
+    }
+
+    .chk_all {
+      display: inline-block;
+      width: 100%;
+      height: 20px;
+      padding-left: 30px;
+
+      background: {
+        image: url($img_path + "chk_btn.png");
+        repeat: no-repeat;
+        position: 0 0;
+        size: 20px;
+      }
+
+      vertical-align: top;
+    }
+
+    +p {
+      color: #949494;
+    }
+
+    label {
+      div {
+        display: contents;
+      }
+    }
+
+    &::after {
+      clear: both;
+      content: "";
+      display: inline-block;
+    }
+
+    .content_all_view {
+      position: absolute;
+      background-color: #ced3dc;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 100;
+      padding: 2px 9px;
+      margin-left: 5px;
+
+      &:hover {
+        background-color: #a9a9a9;
+      }
+    }
+  }
+}
+// 참여 스테이킹
+.participation_staking {
+  width: 100%;
+  background-color: #fff;
+  font-size: 0.9rem;
+  color: #333;
+
+  .staking_left_wrap {
+    flex-grow: 1;
+  }
+
+  .staking_right_wrap {
+    text-align: right;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 1px;
+      height: 70px;
+      background-color: #eee;
+      position: absolute;
+      opacity: 0.5;
+      left: 17%;
+    }
+  }
+
+  @for $i from 1 through 8 {
+    &.card#{$i} {
+      .quantity_wrap {
+
+        .values,
+        .currency {
+          font-size: 0.8rem;
+          color: getcolors($i);
+        }
+      }
+    }
+  }
+}
+// 스테이킹 정보
+.info_wrap {
+  background: white;
+  margin-left: 7px;
+  padding: 15px;
+  width: calc(100% - 7px);
+  display: inline-block;
+  border-bottom-right-radius: 10px;
+  border-top: 2px dotted rgba(0, 0, 0, 0.2);
+
+  >div {
+    @include flexbox(row, space-between, center);
+    margin: 15px 0;
+    font-size: 0.8rem;
+  }
+}
+
+// ********* 상품권 *********
+// (공통) 상품권 카드
+.gift_card_wrap {
+  background: {
+    image: url($img_path + "gift_logo_icon.svg"), linear-gradient(-90deg,  #6ece63, #bce47e);
+    repeat: no-repeat;
+    position: calc(100% - 20px) 20px, center center;
+    size: 38px, 100%;
+  }
+
+  width: 100%;
+  border-radius: 10px;
+  border-top-right-radius: 45px;
+  padding: 20px;
+  color: #fff;
+  min-height: 110px;
+  border: 2px solid #fff;
+
+  .product_cash_wrap {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    min-height: 75px;
+
+    img {
+      width: 80px;
+    }
+
+    .product_cash_box {
+      @include flexbox(row, space-between, end);
+      line-height: 22px;
+
+      .product_text {
+        font-size: 1.1rem;
+      }
+
+      .product_price {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
+// (공통) 상품권 텍스트
+.gift_card_sub_wrap {
+  @include flexbox(row, space-between, center);
+  font-size: 1.1rem;
+  margin: 15px 0;
+  padding: 0 10px;
+  color: #333;
+  line-height: 25px;
+}
+// 상품권
+.giftcard_purchase {
+  .sub_title {
+    display: block;
+    color: #333;
+    font-weight: 300;
+    margin: 15px 0;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(49 104 116 / 0.03);
+  }
+
+  .caution {
+    width: 15px;
+    vertical-align: middle;
+    margin: 0 5px 2px 0;
+  }
+
+  .giftcard_box>a.dp-flex {
+    justify-content: space-between;
+  }
+
+  .gift_card_wrap {
+    min-height: 140px;
+
+    .product_cash_wrap {
+      min-height: 110px;
+    }
+  }
+
+  .gift_card_sub_wrap {
+    @include flexbox(column, space-between, end);
+    font-size: 1.1rem;
+    padding: 0;
+    text-align: right;
+    margin-left: 10px;
+    flex: 0 0 auto;
+    width: 150px;
+
+    p:last-child {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #000;
+      width: 100%;
+    }
+  }
+
+  .collapse, .collapsing {
+    .gift_card_wrap {
+      width: 70%;
+      margin: 0 auto;
+    }
+
+    .box_ty01 {
+      margin: 0 0 15px;
+    }
+  }
+  .pruchase_detail_title {
+    margin: 30px 0;
+
+    p:first-child {
+      color: #333;
+    }
+
+    p:last-child {
+      font-weight: bold;
+    }
+  }
+
+  .info_box {
+    border: 1px solid #e3e7ed;
+    margin: 0 0 15px;
+    box-shadow: none;
+  }
+
+  .input_wrap {
+    @include flexbox(row, space-between, center);
+    margin-bottom: 18px;
+  }
+
+  .input_wrap2 {
+    @include flexbox(row, space-between, center);
+    margin: 5px 0;
+    min-height: 0;
+  }
+
+  .period_wrap {
+    span:first-child {
+      color: #333;
+    }
+
+    span:last-child {
+      color: #333;
+    }
+  }
+
+  .use_wrap {
+    span:first-child {
+      color: #333;
+    }
+
+    span:last-child {
+      color: #333;
+    }
+  }
+
+  .sum_purchase_wrap {
+    .value {
+      color: $main_color;
+      display: flex;
+
+      .unit {
+        margin-left: 8px;
+        color: #333;
+      }
+    }
+  }
+
+  .submit_wrap {
+    .purchase {
+      border-radius: 7px;
+    }
+
+    .deposit {
+      margin: 0;
+      border-radius: 7px;
+    }
+  }
+}
+// 상품권 구매내역
+.giftcard_history {
+  @include flexbox(row, center, center);
+  margin: 15px 0;
+  box-shadow: 0 0 10px 0 rgba(148, 148, 148, 0.08);
+  position: relative;
+  background: #fff;
+
+  .gift_card_wrap {
+    border-radius: 0;
+    border: none;
+    position: relative;
+  }
+
+  .circle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background: #f8fbff;
+    z-index: 11;
+
+    &.circle1 {
+      right: -10px;
+      top: -10px;
+    }
+
+    &.circle2 {
+      right: -10px;
+      bottom: -10px;
+    }
+  }
+
+  .gift_card_sub_wrap {
+    @include flexbox(column, center, center);
+    min-height: 140px;
+    margin: 0;
+    text-align: center;
+
+    p.status {
+      color: $main_color;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    p.until_date {
+      color: #333;
+      font-size: 0.9rem;
+      font-weight: normal;
+    }
+  }
+
+  // 사용완료
+  &.used_giftcard {
+    width: 100%;
+    height: 100%;
+
+    &::before {
+      content: "";
+      background: #000;
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      opacity: 0.3;
+    }
+
+    p.status {
+      color: #333;
+    }
+  }
+}
+// 상품권 일련번호
+.serial_number_wrap {
+  text-align: center;
+  margin-top: 30px;
+
+  p {
+    color: #333;
+    font-size: 0.9rem;
+  }
+
+  .serial_number {
+    font-weight: bold;
+    display: block;
+    margin: 5px 0;
+  }
+
+  .copy {
+    border: 1px solid $main_color;
+    border-radius: 3px;
+    color: $main_color !important;
+    width: 100%;
+    margin: 20px 0;
+
+    &:hover {
+      background: $main_color;
+      color: #fff !important;
+    }
+  }
+}
+
+// ********* 공지사항 *********
+.news_wrap {
+  padding: 20px 30px 0;
+
+  .title {
+    color: #000;
+    font-weight: bold;
+  }
+
+  .sub_title {
+    color: #333;
+    margin: 15px 0;
+  }
+
+  .news {
+    padding: 18px 20px;
+    min-height: 80px;
+    border-bottom: 1px solid #eef2f8;
+    margin: 0 -30px;
+    max-width: none;
+    width: calc(100% + 60px);
+
+    &:first-of-type {
+      border-top: 1px solid #eef2f8;
+    }
+
+    .question {
+      color: #000;
+      padding: 0 25px;
+      cursor: pointer;
+      font-size: 14px;
+
+      .left_wrap {
+        padding-left: 0px;
+        width: 80px;
+
+        .tit {
+          color: $main_color;
+          font-weight: bold;
+          border: 1px solid $main_color;
+          border-radius: 10px;
+          text-align: center;
+          padding-left: 9px;
+          padding-right: 9px;
+          width: 65px;
+        }
+
+        .date {
+          color: #999;
+          margin-top: 3px;
+          font-size: 12px;
+        }
+      }
+
+      .mid_wrap {
+        font-weight: bold;
+        padding-left: 0px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .right_wrap {
+        i {
+          font-size: 20px;
+          color: #333;
+        }
+      }
+    }
+
+    .answer {
+      font-size: 13px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 0;
+
+      p:not(.writing) {
+        margin: 10px 0px;
+        color: #333 !important;
+
+        span {
+          color: #333 !important;
+        }
+      }
+
+      .writing {
+        margin-top: 15px;
+        background-color: aliceblue;
+        border-radius: 8px;
+        padding: 5px 10px;
+      }
+    }
+  }
+}
+
+// ********* 1:1 문의사항 *********
+.support_center,
+.support_center_admin {
+  input {
+    &::placeholder {
+      color: #c7ccd5;
+    }
+  }
+
+  .btn.main_btn {
+    box-shadow: none;
+
+    &:hover {
+      background: $main_color_2 !important;
+      border-color: $main_color_2;
+    }
+  }
+
+  .input-group.noborder {
+    border: none;
+    box-shadow: none;
+  }
+
+  .input-group-append {
+    .main_btn {
+      border: 1px solid $main_color;
+
+      &:hover {
+        border-color: $main_color_2;
+      }
+    }
+  }
+
+  .support-container {
+    label,
+    div,
+    select,
+    input,
+    span {
+      color: #333;
+    }
+  }
+
+  #open-new-ticket {
+    margin: 30px 15px 15px;
+  }
+  #closed-tickets {
+    .ticket-header:hover,
+    .ticket-header.active {
+      background-color: #adadad;
+    }
+  }
+
+  .input-group-text {
+    background-color: #f8fbff;
+    border: none;
+    font-size: 0.9rem;
+    text-align: left;
+    flex-basis: 100px;
+  }
+
+  .input-group-prepend {
+    width: 100px;
+  }
+
+  .input-group {
+    border: 1px solid #dfe4ec;
+    border-radius: 5px;
+
+    &-append {
+      .btn {
+        border-radius: 5px;
+      }
+    }
+
+    .custom-select {
+      border: none;
+      flex-direction: column;
+      color: #333;
+    }
+  }
+
+  .support-tabs {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 15px;
+    box-shadow: 0px 6px 8px rgba(49, 104, 116, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    li {
+      color: #333;
+      font-size: 1rem;
+
+      &.active {
+        border: none;
+
+        span {
+          color: $main_color;
+          height: 2px;
+          margin: 7px auto;
+          border-bottom: 2px solid $main_color;
+          padding: 5px 5px 3px;
+        }
+      }
+    }
+  }
+
+  .support-panels {
+    .form-control {
+      border: none;
+      font-size: 0.9rem;
+      color: #333;
+    }
+  }
+
+  input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+  }
+
+  .upload-name {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    padding: 0 10px 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dfe4ec;
+    color: #333;
+    font-weight: 100;
+    font-size: 0.8rem;
+
+    &::placeholder {
+      color: #c7ccd5;
+    }
+  }
+
+  .upload-name1 {
+    display: inline-block;
+    width: 100%;
+    height: 38px;
+    padding: 0 10px 0 100px;
+    vertical-align: middle;
+    border: none;
+    color: #333;
+    font-weight: 100;
+    font-size: 0.8rem;
+    text-overflow: ellipsis;
+    padding-right: 15px;
+    border-radius: 5px;
+
+    &::placeholder {
+      color: #c7ccd5;
+    }
+  }
+
+  .upload-name2 {
+    display: inline-block;
+    width: 100%;
+    height: 38px;
+    padding: 0 10px 0 100px;
+    vertical-align: middle;
+    border: 1px solid #dfe4ec;
+    color: #333;
+    font-weight: 100;
+    font-size: 0.8rem;
+    text-overflow: ellipsis;
+    padding-right: 15px;
+    border-radius: 5px;
+
+    &::placeholder {
+      color: #c7ccd5;
+    }
+  }
+
+  .file_label {
+    position: absolute;
+    top: 18%;
+    width: 82px;
+    left: 0;
+    padding: 4px 20px;
+    color: #fff !important;
+    vertical-align: middle;
+    height: 25px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    border-radius: 3px;
+    background-color: #c7ccd5;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%;
+
+    &:hover {
+      background-color: #a9a9a9;
+    }
+  }
+
+  .file_label2 {
+    position: absolute;
+    top: 18%;
+    width: 82px;
+    left: 0;
+    padding: 4px 20px;
+    color: #fff !important;
+    vertical-align: middle;
+    height: 25px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    border-radius: 3px;
+    background-color: #c7ccd5;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%;
+
+    &:hover {
+      background-color: #a9a9a9;
+    }
+  }
+
+  #addFile {
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .guide_text {
+    color: $main_color !important;
+    font-size: 0.9rem;
+    margin: 10px 0;
+    display: block;
+  }
+}
+// 1:1문의 관리자
+.ticket-header {
+  border: none;
+  box-shadow: 0 1px 3px rgba(49, 104, 116, 0.2);
+  font-size: 1rem;
+
+  .ticket-title {
+    color: #333;
+    font-size: 1rem;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    margin: 0 0 5px 5px;
+  }
+
+  .ticket-time {
+    color: #333;
+    font-size: 1rem;
+  }
+
+  .topic {
+    color: #333;
+    font-size: 1rem;
+  }
+
+  &.active {
+    background-color: $main_color;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    .ticket-title,
+    .ticket-time,
+    .topic {
+      color: #fff;
+    }
+
+    .ticket-title {
+      display: inline-block;
+    }
+  }
+
+  @media all and (min-width: 768px) {
+    &:hover {
+      background-color: $main_color;
+
+      .ticket-title,
+      .ticket-time,
+      .topic {
+        color: #fff;
+      }
+    }
+  }
+}
+.ticket-header.closed {
+
+  .topic,
+  .ticket-title,
+  .ticket-time {
+    color: #333;
+  }
+
+  &:hover {
+    background-color: #adadad;
+  }
+
+  &.active {
+    background-color: #adadad;
+
+    .topic,
+    .ticket-header,
+    .ticket-title,
+    .ticket-time {
+      color: #fff;
+    }
+
+    &::before {
+      color: #fff;
+    }
+  }
+}
+.chat-box {
+  .writer {
+    background: none;
+    color: #333;
+    width: 100%;
+    text-align: right;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+
+    .name {
+      vertical-align: baseline;
+    }
+
+    i {
+      vertical-align: middle;
+      margin-right: 3px;
+    }
+  }
+
+  .send {
+    background: $main_color;
+    width: 63px;
+    border: none;
+    box-shadow: none;
+  }
+
+  &.active {
+    padding: 15px;
+  }
+}
+.support-panels {
+  .form-control {
+    &::placeholder {
+      font-size: 0.8rem;
+    }
+  }
+
+  .custom-file-label {
+    border: 1px solid #dfe4ec;
+    color: #c7ccd5;
+
+    &::after {
+      content: "검색";
+      background-color: #d7dde8;
+      color: #fff;
+      padding: 0.375rem 1.25rem;
+    }
+  }
+}
+.member-message {
+  background-color: #f8fbff;
+  color: #000;
+}
+// 티켓비활성화 버튼
+.cl {
+  color: $main_color;
+  border: 1px solid $main_color !important;
+  background: none;
+
+  &:hover {
+    color: #fff;
+    background: $main_color;
+  }
+}
+
+// 모달
+.modal {
+  font-size: 0.9rem;
+  z-index: 99999;
+
+  .modal-header {
+    border-bottom: none;
+  }
+
+  .modal-footer {
+    border-top: none;
+  }
+
+  .modal_title {
+    margin-bottom: 15px;
+  }
+
+  .modal_sub_text {
+    font-weight: 300;
+    font-size: 0.9rem;
+    line-height: 20px;
+  }
+
+  .modal_basic_btn {
+    background: $main_color;
+    color: #fff;
+  }
+}
+#commonModalTerms {
+  font-size: 0.9rem;
+
+  .modal-header {
+    .modal-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+  }
+
+  .modal-body {
+    background-color: #f4f4f4;
+    margin: 0 15px;
+    overflow: scroll;
+    height: 300px !important;
+
+    .modal_content {
+      p:first-child {
+        color: #333;
+      }
+
+      .title {
+        margin: 20px 0;
+        color: #333;
+      }
+    }
+  }
+
+  #closeModalTerms {
+    background-color: $main_color;
+    width: 100%;
+    padding: 15px 0;
+  }
+}
+
+// 모바일
+@include mobile {
+  .main_title2 {
+    font-size: 0.9rem;
+  }
+
+  // (공통) 안내사항
+  .guide {
+    font-size: 0.8rem;
+    color: #333;
+    font-weight: 100;
+
+    img {
+      width: 14px;
+    }
+  }
+
+  .guide_content {
+    font-size: 0.8rem;
+
+    .title {
+      font-size: 0.9rem;
+
+      img {
+        width: 15px;
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  // 인트로
+  .intro_wrapper {
+    width: 100%;
+  }
+
+  // 회원가입
+  .enroll_wrap {
+    input[type="password"] {
+      padding: 12px 4px;
+
+      &::placeholder {
+        font-size: 0.5rem;
+      }
+    }
+  }
+
+  // 아이디, 비밀번호찾기
+  .find_wrap {
+    input {
+      &::placeholder {
+        font-size: 0.7rem;
+      }
+    }
+
+    .timer_down_wrap {
+      .timer-down {
+        font-size: 0.7rem;
+      }
+    }
+
+    .sub_title {
+      font-size: 0.8rem;
+    }
+
+    .result_wrap {
+      p {
+        &:first-child {
+          font-size: 0.8rem;
+        }
+      }
+
+      .find_id {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  // 상단 헤더 회원정보
+  .breadcrumb {
+    .user-info {
+      .user-content {
+        .mygrade {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .total_view_wrap {
+      .total_view_top {
+        .title {
+          font-size: 0.8rem;
+        }
+
+        .value {
+          font-size: 0.8rem;
+        }
+      }
+
+      .quote_wrap {
+        font-size: 0.8rem;
+        color: #8b8b8b;
+        text-align: right;
+        font-weight: 100;
+      }
+    }
+  }
+
+  // 대시보드
+  .dashboard {
+    .nav_wrap {
+
+      .nav1,
+      .nav2,
+      .nav3 {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  // 유저 정보
+  .profile {
+    .mb_name {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .mb_level {
+      font-weight: 100;
+      font-size: 0.8rem;
+    }
+
+    .mb_id {
+      font-size: 0.7rem;
+    }
+  }
+
+  // 입출금
+  .mywallet {
+    #deposit {
+      .content_wrap {
+        .qr_img {
+          margin: 15px auto 0;
+
+          img {
+            margin: 0 auto;
+          }
+        }
+
+        .qrBox_right {
+          #my_eth_wallet {
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+          }
+
+          .explain_text {
+            color: #333;
+            text-align: center;
+            font-size: 0.7rem;
+          }
+        }
+
+        .currency-right {
+          font-size: 0.8rem;
+          padding-top: 17px;
+        }
+
+        .price {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    #withdraw {
+      .content_wrap {
+        #withdraw_wallet_address {
+          &::placeholder {
+            text-align: left;
+            font-weight: 100;
+          }
+        }
+
+        #max_value {
+          background: $main_color;
+          color: #fff;
+          right: 0%;
+        }
+
+        #withdraw_currency {
+          font-size: 0.8rem;
+          padding-top: 17px;
+        }
+
+        .input_head_title {
+          font-size: 0.8rem;
+          position: absolute;
+          top: 20%;
+          left: 4%;
+        }
+      }
+    }
+  }
+
+  .status_card_wrap {
+    min-height: 200px;
+    background: {
+      size: 70px;
+      position: calc(100% - 20px) 26%;
+    }
+
+    h5 {
+      font-size: 0.9rem;
+    }
+
+    .esgc_quantity {
+      font-size: 1.6rem;
+    }
+
+    .price {
+      font-size: 1rem;
+    }
+
+    .currency {
+      font-size: 1rem;
+    }
+
+    .link_btn_wrap {
+      a {
+        font-size: 0.9rem;
+      }
+    }
+
+    .quantity_wrap {
+      margin: 20px 0;
+    }
+  }
+  // 입출금내역 내용
+  .history_box {
+    .hist_con {
+      .hist_mid {
+
+        .tx_id {
+          font-size: 0.7rem;
+        }
+
+        .hist_date {
+          font-size: 0.7rem;
+        }
+
+        .process_result {
+          font-size: 0.7rem;
+        }
+      }
+
+      .hist_right {
+        .hist_value {
+          font-size: 0.7rem;
+        }
+
+        .hist_won {
+          font-size: 0.7rem;
+          min-height: 20px;
+        }
+
+        .process_result {
+          font-size: 0.7rem;
+        }
+      }
+
+      img {
+        width: 15px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  // 더보기 버튼
+  .more {
+    width: calc(100% - 30px);
+    margin: 0 15px;
+    font-size: 14px;
+  }
+
+  // 스테이킹
+  .staking {
+    .sub_title {
+      font-size: 0.8rem;
+      margin: 0;
+      padding: 15px;
+      color: #333;
+
+      .caution {
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .staking_card {
+    .finish_staking_text {
+      width: 85px;
+      height: 28px;
+      line-height: 28px;
+      font-size: 0.8rem;
+    }
+  }
+
+  .staking_application {
+    .fee_top_wrap {
+      .title {
+        font-size: 0.8rem;
+      }
+
+      .value {
+        font-size: 0.8rem;
+      }
+
+      .currency-right {
+        font-size: 0.8rem;
+      }
+    }
+
+    .fee_bottom_wrap {
+      @include flexbox(row, space-between, center);
+
+      .title {
+        font-size: 0.8rem;
+      }
+
+      .value {
+        font-size: 0.8rem;
+      }
+
+      .currency-right {
+        font-size: 0.8rem;
+      }
+    }
+
+    .sub_title {
+      padding: 0;
+      margin: 15px 0;
+      font-weight: 100;
+    }
+
+    .agree_content_wrap {
+      .text_wrap {
+        span {
+          font-size: 0.8rem;
+        }
+
+        .caution {
+          margin-top: 3px;
+        }
+      }
+
+      .content_all_view {
+        background-color: #ced3dc;
+        color: #fff;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 100;
+        padding: 2px 9px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  // 참여 스테이킹
+  .participation_staking {
+    font-size: 0.9rem;
+
+    &.card1 {
+      .percent {
+        font-size: 1.4rem;
+      }
+
+      .value {
+        font-size: 1.4rem;
+      }
+    }
+
+    &.card2 {
+      .percent {
+        font-size: 1.4rem;
+      }
+
+      .value {
+        font-size: 1.4rem;
+      }
+    }
+
+    &.card3 {
+      .percent {
+        font-size: 1.4rem;
+      }
+
+      .value {
+        font-size: 1.4rem;
+      }
+    }
+
+    &.card4 {
+      .percent {
+        font-size: 1.4rem;
+      }
+
+      .value {
+        font-size: 1.4rem;
+      }
+    }
+
+    .info_wrap {
+      width: 90%;
+
+      >div {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  // (공통) 상품권 카드
+  .gift_card_wrap {
+    background: {
+      size: 30px, 100%;
+    }
+
+    .product_cash_wrap {
+      img {
+        width: 70px;
+      }
+
+      .product_cash_box {
+        line-height: 20px;
+
+        .product_text {
+          font-size: 0.9rem;
+        }
+
+        .product_price {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+
+  // (공통) 상품권 텍스트
+  .gift_card_sub_wrap {
+    font-size: 0.9rem;
+    line-height: 20px;
+  }
+
+  // 상품권
+  .giftcard_purchase {
+    .sub_title {
+      font-size: 0.8rem;
+    }
+
+    .gift_card_wrap {
+      width: 80%;
+      padding: 15px;
+      min-height: 110px;
+
+      .product_cash_wrap {
+        min-height: 75px;
+
+        .product_cash_box {
+          line-height: 15px;
+
+          .product_price {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+    .gift_card_sub_wrap {
+      line-height: 18px;
+      width: 90px;
+
+      p:first-child {
+        font-size: 0.9rem;
+      }
+
+      p:last-child {
+        font-size: 1rem;
+      }
+    }
+
+    .pruchase_detail_title {
+      p:first-child {
+        font-size: 0.9rem;
+      }
+
+      p:last-child {
+        font-size: 0.9rem;
+      }
+    }
+
+    .null_data {
+      font-size: 0.8rem;
+    }
+  }
+
+  // 상품권 구매내역
+  .giftcard_history {
+    .gift_card_wrap {
+      width: 100%;
+    }
+
+    .gift_card_sub_wrap {
+      min-height: 110px;
+      width: 100px;
+
+      p.status {
+        font-size: 0.8rem;
+      }
+
+      p.until_date {
+        font-size: 0.8rem;
+        letter-spacing: -0.5px;
+      }
+    }
+  }
+
+  // 1:1 문의사항
+  .support-tabs {
+    flex-direction: column;
+  }
+
+  .support_center {
+    .input-group-text {
+      font-size: 0.8rem;
+    }
+
+    .guide_text {
+      font-size: 0.7rem;
+    }
+  }
+}
+
+// 애니메이션
+@keyframes slidein {
+  from {
+    margin-top: 50px;
+    opacity: 0.7;
+  }
+
+  to {
+    margin-top: 0;
+    opacity: 1;
+  }
+}
+
+// 230705 라디오 박스 추가
+.staking_select{display:flex; justify-content:space-between; align-items:center; margin:15px 0;
+    .main_title2{margin:0;}
+    .staking_radio{display:flex; align-items:center; column-gap:50px;
+        .radio_box{position:relative;
+            input[type="radio"]{position:absolute;
+                + label{display:flex; align-items:center; column-gap:10px; font-size:14px;
+                    span{width:17px; height:17px; display:block; position:relative; overflow:hidden; border:1px solid #eee; border-radius:50%;
+                        &::before{content:""; width:110%; height:110%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0; visibility:hidden; background:#45d1a4; border-radius:50%;}
+                    }
+                }
+                &:checked{
+                    + label{
+                        span{border-color:#45d1a4;
+                            &::before{opacity:1; visibility:visible;}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+

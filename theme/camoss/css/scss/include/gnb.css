@@ -38,7 +38,7 @@ header .menu img {
 }
 header .menu .menu_icon {
   font-size: 20px;
-  color: #29386b;
+  color: #fff;
 }
 header .menuback {
   position: absolute;
@@ -56,8 +56,8 @@ header .back_icon {
   color: inherit;
 }
 header .top_title {
-  background: #fff;
-  color: #29386b;
+  background: #3e4048;
+  color: #eee;
   text-align: left;
   box-sizing: border-box;
   padding: 15px 20px;
@@ -85,7 +85,7 @@ header .left_gnbWrap {
   width: 300px;
   left: -200px;
   top: 0;
-  background-color: #fff;
+  background-color: #27282d;
   z-index: 999;
   transition: all 0.3s;
   visibility: hidden;
@@ -112,10 +112,10 @@ header .left_gnbWrap .user-content {
   margin-bottom: 0px;
   padding: 0 10px;
   text-align: left;
-  background: aliceblue;
+  background: #636b73;
 }
 header .left_gnbWrap .user-content .user_id {
-  color: #29386b;
+  color: #fff;
 }
 header .left_gnbWrap .user-content .userid {
   display: inline-block;
@@ -161,7 +161,7 @@ header .left_gnbWrap .left_gnb li a {
   display: inline-block;
   width: 100%;
   height: 30px;
-  color: #29386b;
+  color: #fff;
   font-size: 15px;
   padding: 3px 0 0 18px;
   position: relative;

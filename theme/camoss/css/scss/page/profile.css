@@ -78,7 +78,7 @@
   font-size: 16px;
   float: left;
   clear: left;
-  color: #29386b;
+  color: #fff;
   font-weight: bold;
 }
 .profile-box ul li span {
@@ -91,7 +91,7 @@
 .profile-box .title {
   font-size: 16px;
   font-weight: bold;
-  color: #29386b;
+  color: #fff;
   border-bottom: 2px solid #f1f4fb;
 }
 .profile-box .title i {

@@ -398,8 +398,13 @@ header {
 }
 
 .b_third {
-    background: linear-gradient(0deg, #1a1a1a, #343434) !important;
-    color: #fff !important;
+    background: white !important;
+    border:1px solid rgb(186, 197, 207);
+    color: #333 !important;
+
+    &:hover {
+        background: linear-gradient(0deg, #e6ecf3, #e6ecf3) !important;
+    }
 }
 
 .btn,
@@ -526,7 +531,7 @@ a.btn_cancle,
 .regist_latest {
     display: grid;
     line-height: 24px;
-    font-size: 12px;
+    font-size: 0.9rem;
 
     .card_title_wrap {
         display: flex;
@@ -695,7 +700,7 @@ a.btn_cancle,
 
     i {
         font-weight: 300;
-        vertical-align: sub;
+        vertical-align: baseline;
     }
 
     &.lv0 {
@@ -1799,9 +1804,30 @@ a.btn_cancle,
 .curency_value{
     width:100%;
     text-align:right;
-    font-size:14px;
+    font-size:13px;
     line-height:20px;
-    font-weight:bold;
+    font-weight:300;
+    font-weight:600;
+}
+
+.hist_date{
+    width:100%;
+    border-bottom:1px solid
+}
+
+.hist_value{
+    width:50%;
+}
+
+.hist_value.status{
+    width:50%;
+    text-align: left;
+    font-size:16px;
+}
+.hist_name a{vertical-align:top}
+
+.b_line2{
+    border-top:3px solid #e6ecf3
 }
 
 
@@ -1843,6 +1869,7 @@ a.btn_cancle,
             color:black;
         }
     }
+
     // datepicker
     #ui-datepicker-div.ui-datepicker {
         background: #17191d;
@@ -2733,6 +2760,10 @@ a.btn_cancle,
 
     // mywallet
     .mywallet {
+        .curency_value{
+            color:white;
+        }
+
         #deposit {
             .desc {
                 color: $main-colors !important;
@@ -2761,7 +2792,7 @@ a.btn_cancle,
                     box-shadow: 0 0 0 2px #ccad00;
                 }
                 span {
-                    color: #000;
+                    color: white;
                 }
             }
 
@@ -2772,7 +2803,8 @@ a.btn_cancle,
 
             .history_box {
                 .hist_con {
-                    background: $main-background3;
+                    background: transparent;
+                    
 
                     &:hover {
                         background: $main-background2;
@@ -2790,10 +2822,6 @@ a.btn_cancle,
                         }
                         .bank_info_desc{
                             color: $main-colors;
-                        }
-
-                        .curency_value{
-                            color:white;
                         }
 
                         .hist_name {
@@ -2851,7 +2879,7 @@ a.btn_cancle,
 
             .history_box {
                 .hist_con {
-                    background: $main-background3;
+                    background: transparent;
 
                     &:hover {
                         background: $main-background2;
@@ -2880,6 +2908,7 @@ a.btn_cancle,
                         }
 
                         .hist_withval {
+                            
                             color: #fff;
                         }
                     }
@@ -2991,6 +3020,8 @@ a.btn_cancle,
             }
 
             .hist_con {
+                
+
                 .hist_con_row1 {
                     background: $main-background3;
 
@@ -4146,7 +4177,7 @@ a.btn_cancle,
     }
 
     .b_line2 {
-        border-top: 1px solid #333f49;
+        border-top: 3px solid #17191d;
     }
 
     .b_line5 {
@@ -4492,3 +4523,337 @@ a.btn_cancle,
 }
 
 
+
+#fnb{
+    position: fixed; 
+    bottom: 0px; 
+    left: 0px; 
+    width: 100%;
+    margin:auto;
+    left:0;right:0; 
+    height: 60px; 
+    z-index:100;
+    border-top:1px solid rgba(0,0,0,0.2);
+    box-shadow:  0px -1px 7px rgba(0, 0, 0, 0.25); 
+    background-color: white;
+    // display:flex;
+    
+    & div{
+        float: left; 
+        width: 25%; 
+        height: 100%;
+        text-align: center; 
+        padding-top: 5px; 
+        height:50px;
+
+        label{
+            
+            font-size:11px;
+            display:block;
+        }
+
+        .fnb_menu{
+            font-size:30px;
+            
+        }
+    }
+
+    :hover{
+        .fnb_menu{
+            color:#3b86ff;
+        }
+        label{
+            color:#3b86ff;
+        }
+    }
+}
+
+/* .hist_con{
+    margin-left:-15px;
+    margin-right:-15px;
+    width:auto;
+    float:initial;
+} */
+
+.hist_withval {       
+    font-size:12px;
+    width:100%;
+}
+.member_leave{font-size:12px;}
+.box-wrap{display:flex;height:100%;flex-wrap: wrap;align-items: center;justify-content: center;}
+.box{display: flex; align-items: center; justify-content: center;min-height:120px}
+.main_centent{
+    font-family: Montserrat, Arial, sans-serif; font-size:24px; font-weight: 600;
+
+    .currency{
+        font-weight:300; font-size:20px;
+    }
+}
+
+.profile-box .btn{font-weight:600;}
+
+
+.dashboard {
+    .r_card_wrap .r_card{padding-top:10px; padding-bottom:10px;}
+    .r_card_wrap .r_card_box{padding-left:0px !important; padding-right:0px !important;}
+    .r_card_wrap .r_card .text_wrap{
+        text-align:left;
+        display:flex;
+    
+        .value_rate{flex-grow:1;font-size:14px;}
+        .value_date{}
+    }
+    
+}
+
+
+
+
+.puchase_agree{
+    padding:20px 15px 0 15px;
+    background:#ededf1;
+    border-radius: 10px;
+    color:#333;
+    font-size:12px;
+    margin:15px 0;
+
+    .main_title2 {
+        font-weight: 400;
+        font-size: 0.9rem;
+        color: #000;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        width: 100%;
+        border-bottom:1px solid #ddd;
+    }
+
+    .agree_wrap {
+        position: relative;
+        float: right;
+    
+        input[type="checkbox"] {
+          vertical-align: middle;
+          display: none;
+    
+          &:checked+label {
+            background-position: 0 -20px;
+          }
+        }
+    
+        .chk_all {
+          display: inline-block;
+          width: 100%;
+          height: 20px;
+          padding-left: 27px;
+          vertical-align: middle;
+    
+          background: {
+            image: url($img_path + "chk_btn.png");
+            repeat: no-repeat;
+            position: 0 0;
+            size: 20px;
+          }
+        }
+    
+        +p {
+          color: #949494;
+        }
+    
+        label {
+          div {
+            display: contents;
+          }
+        }
+    
+        &::after {
+          clear: both;
+          content: "";
+          display: inline-block;
+        }
+      }
+    
+      .agree_content_wrap {
+        .text_wrap {
+          @include flexbox(row, space-between, center);
+    
+          span {
+            font-size: 0.8rem;
+            letter-spacing: -1px;
+            flex-grow: 1;
+          }
+    
+          .caution {
+            align-self: flex-start;
+            margin-top: 2px;
+            width:16px;height:16px;
+            margin-right:5px;
+          }
+    
+          +.text_wrap {
+            margin: 20px 0;
+          }
+        }
+    
+        input[type="checkbox"] {
+          vertical-align: middle;
+          display: none;
+    
+          &:checked+label {
+            background-position: 0 -20px;
+          }
+        }
+    
+        .chk_all {
+          display: inline-block;
+          width: 100%;
+          height: 20px;
+          padding-left: 30px;
+    
+          background: {
+            image: url($img_path + "chk_btn.png");
+            repeat: no-repeat;
+            position: 0 0;
+            size: 20px;
+          }
+    
+          vertical-align: top;
+        }
+    
+        +p {
+          color: #949494;
+        }
+    
+        label {
+          div {
+            display: contents;
+          }
+        }
+    
+        &::after {
+          clear: both;
+          content: "";
+          display: inline-block;
+        }
+    
+        .content_all_view {
+          position: absolute;
+          background-color: #ced3dc;
+          color: #fff;
+          border-radius: 10px;
+          font-size: 0.8rem;
+          font-weight: 100;
+          padding: 2px 9px;
+          margin-left: 5px;
+    
+          &:hover {
+            background-color: #a9a9a9;
+          }
+        }
+      }
+}
+
+.dashline {
+    width:100%;
+    height:1px;
+    float:left;
+    display: block;
+    border-top:2px dotted rgba(0, 0, 0, 0.2);
+
+    &.dark {
+        border-top:2px dotted rgba(255, 255, 255, 0.2);
+    }
+
+  }
+
+
+.content_border {
+    border-top:8px solid #28d2eb;
+}
+
+.l_div{ border-left:1px dashed #ddd}
+
+.dark {
+
+    .puchase_agree{
+        background:#373b41;
+
+        .main_title2{
+            color:white;
+        }
+
+        .agree_content_wrap{
+            
+            .text_wrap{ 
+                span{
+                    color:#efefef;
+                }
+
+            }
+        }
+    }
+}
+
+
+
+
+
+
+.item_icon{font-size:22px;font-weight:300;}
+.click{cursor: pointer;}
+
+.fold_wrap{height:20px;}
+
+.notice_wrap_top{
+    top:50px;
+    cursor:pointer;
+    z-index:1;
+    width:100%;
+
+    .notice_box {
+        background:#e6ecf3;
+        box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 0.9em;
+        font-weight: bold;
+        padding: 10px 0;
+
+        .caret {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #3b86ff;
+            border: 1px solid #3b86ff;
+            border-radius: 10px;
+            padding: 0px 7px 0px 7px;
+            margin-right: 3px;
+            vertical-align: bottom;
+        }    
+    }
+
+    /* p {
+        text-align: center;
+        font-size: 0.8em;
+        font-weight: bold;
+
+        span {
+            font-weight: normal;
+            color: #3b86ff;
+            border: 1px solid #3b86ff;
+            border-radius: 10px;
+            padding: 0px 7px 0px 7px;
+            margin-right: 3px;
+            vertical-align: bottom;
+        }
+    } */
+}
+
+
+/* .icon_marker{
+    position:absolute;
+    margin-top:24px;
+    width:46px;
+    height:46px;
+    background:url($img_path +'/card_logo2.png');
+} */

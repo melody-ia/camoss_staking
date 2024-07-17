@@ -153,12 +153,13 @@ $result = sql_query($sql);
 												<span style='vertical-align:middle'><?= $row[$i - 1]['it_name'] ?></span>
 												<span style='font-size:13px;float:right;line-height:36px;'><?= $row[$i - 1]['it_option_subject'] ?></span>
 											</p>
-
+											<div class='icon_marker'>
+											</div>
 											<div class="b_blue_bottom"></div>
 											<div>
 
 												<div class=" text_wrap">
-													<div class="it_price"><?= shift_auto($row[$i - 1]['it_price'], $curencys[0]) ?> <?= $curencys[0] ?></div>
+													<div class="it_price"><?= shift_auto($row[$i - 1]['it_price'], $curencys[0]) ?> <?= strtoupper($curencys[0]) ?></div>
 													<div class='origin_price' style="font-size:14px;">수익률 : <?= $row[$i - 1]['it_supply_point'] ?> %</div>
 												</div>
 											</div>
@@ -218,6 +219,41 @@ $result = sql_query($sql);
 						</div>
 					</div>
 
+					<div class="puchase_agree">
+
+						<h1 class="main_title2">
+							<span>유의사항 확인/동의</span>
+							<div class="agree_wrap">
+								<input type="checkbox" name="all_check" id="all_check">
+								<label for="all_check" class="chk_all"></label>
+							</div>
+						</h1>
+
+						<div class="agree_content_wrap">
+							<!-- <div class="text_wrap">
+								<img class="caution" src="<?=G5_THEME_URL?>/img/caution.png" alt=""><span>패키지 상품 유의사항 확인<a href="#" class="content_all_view">약관보기</a></span>
+								<div class="agree_btn_wrap">
+									<input type="checkbox" name="check1" id="check1">
+									<label for="check1" class="chk_all"></label>
+								</div>
+							</div> -->
+							<div class="text_wrap">
+								<img class="caution" src="<?=G5_THEME_URL?>/img/caution.png" alt=""><span>본 패키지 상품의 내용과 설명을 이해하였으며, 상품 투자 및 패키지 구매에 <b>동의</b>합니다.</span>
+								<div class="agree_btn_wrap">
+									<input type="checkbox" name="check2" id="check2">
+									<label for="check2" class="chk_all"></label>
+								</div>
+							</div>
+							<div class="text_wrap">
+								<img class="caution" src="<?=G5_THEME_URL?>/img/caution.png" alt=""><span>구매 직후부터 양도 및 구매 취소, 철회가 <b>불가</b>하며 이를 동의합니다.</span>
+								<div class="agree_btn_wrap">
+									<input type="checkbox" name="check3" id="check3">
+									<label for="check3" class="chk_all"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="mt20">
 						<button id="purchase" class="btn wd main_btn b_blue b_darkblue round">구매</button>
 						<button id="upgrade" class="btn wd main_btn round" style="background:#ff555d !important;">패키지 업그레이드</button>
@@ -227,14 +263,16 @@ $result = sql_query($sql);
 				</div>
 			</div>
 
-		
-			
-			
-
 			<!-- <div class="col-sm-12 col-12 content-box round secondary mt20" > -->
 				
 			<div class="history_box content-box mt40">
-				<h3 class="hist_tit title" style="margin-top: 0;">Package 구매 내역</h3>
+				<div class='row  mt10'>
+				<h3 class="col-8 hist_tit title" style="margin-top: 0;">Package 구매 내역</h3>
+
+				<li class="col-4 text-right grid">
+					<a href="/page.php?id=upstairs_detail"><i class="ri-arrow-drop-right-line click" style="font-size:24px;"></i></a>
+				</li>
+				</div>
 
 				<? if (sql_num_rows($result) == 0) { ?>
 					<div class="no_data"> Package 구매 내역이 존재하지 않습니다</div>
@@ -246,23 +284,24 @@ $result = sql_query($sql);
 					$od_settle_case = $row['od_settle_case'];
 				?>
 
-					<div class="hist_con">
+					<div class="hist_con click">
+						<a href="/page.php?id=upstairs_detail&od_id=<?=$row['od_id']?>">
 						<div class="hist_con_row1">
 							<div class="row">
-								<span class="hist_date"><?= $row['od_receipt_time'] ?></span>
-								<span class="hist_value"><?= shift_auto($row['od_cart_price'], $od_settle_case) ?> <?= $od_settle_case ?></span>
+								<span class="hist_date"><?= $row['od_date'] ?></span>
+								<span class="hist_value status mt20">보유중</span>
+								<span class="hist_value mt20 pack_f_<?= substr($od_name, 1, 1)?>"><i class="ri-discount-percent-line item_icon"></i><?= strtoupper($row['od_name']) ?> Package</span>
+								<span class="curency_value mt20"><?= $row['pv'] ?>% / <?= shift_auto($row['od_cart_price'], $od_settle_case) ?> <?= strtoupper($od_settle_case) ?></span>
 							</div>
 
 							<div class="row">
-								<h2 class="pack_name pack_f_<?= substr($od_name, 1, 1) ?>"><?= strtoupper($row['od_name']) ?> <?=$od_name?></h2>
-								<!-- <span class='hist_sub_price'><?= shift_auto($row['od_cash'], $od_settle_case) ?> <?= $od_settle_case ?></span> -->
-
-								<?php if($od_name != "P0" || $od_name != "P8"){?>
+								<!-- <?php if($od_name != "P0" || $od_name != "P8"){?>
 									<button class="btn upgradeBtn" style="margin: 0 0 0 auto" data-od_id="<?= $row['od_id'] ?>">UPGRADE</button>
-								<?php } ?>
+								<?php } ?> -->
 
 							</div>
 						</div>
+						</a>
 					</div>
 				<? } ?>
 
@@ -330,7 +369,7 @@ $result = sql_query($sql);
 			func = "new";
 			od_id = "";
 			origin_bal = '<?= shift_auto($available_fund, $curencys[0]) ?>';
-			price_calc = origin_bal.replace(/,/g, '') - won_price.replace(/,/g, '');
+			price_calc = origin_bal.replace(/,/g, '') - won_price;
 			$('#upgrade').hide().attr("disabled", true);;
 			$('#purchase').show().attr("disabled", false);
 			$('#total_coin_val').val(origin_bal);
@@ -360,8 +399,8 @@ $result = sql_query($sql);
 		}); */
 
 		function change_coin_status() {
-			$('#trade_total').val(Price(it_price) + ' <?= $curencys[0] ?>');
-			$('#shift_won').text('VAT 포함 : ' + Price(won_price) + ' <?= $curencys[0] ?>');
+			$('#trade_total').val(Price(Number(it_price)) + ' <?= strtoupper($curencys[0]) ?>');
+			$('#shift_won').text('VAT 포함 : ' + Price(won_price) + ' <?= strtoupper($curencys[0]) ?>');
 			$('#shift_dollor').val(Price(price_calc));
 
 			// 상품구매로 이동
@@ -371,6 +410,60 @@ $result = sql_query($sql);
 				behavior: 'smooth'
 			});
 		}
+
+		$('.content_all_view').on('click',function(e) {
+        e.preventDefault();
+        const html = `
+            <div class="modal_content">
+                <p> 상품 투자 유의사항</p>
+                <p class="title">
+                    1. 는 NFT & 스테이킹에 관한 수익을 보장하지
+                    않으며, 가상 프로젝트나 밸리데이터의 사정에 따라 손실이
+                    발생할 수도 있습니다.
+                </p>
+                <p class="title">
+                    2. 스테이킹 신청한 디지털 자산은 스테이킹 목적으로 고객님
+                    의 ESG Global 지갑에서 출금 처리되며, 보유자산 및 출금 가능
+                    자산에서 제외 됩니다. 고객님은 여전히 해당 디지털 자산에
+                    대한 권리를 보유하고 있으며, ESG GLOBAL VINA 는 고객님
+                    을 위하여 스테이킹 업무를 처리합니다.
+                </p>
+                <p class="title">
+                    3. 스테이킹 신청이후, 스테이킹 완료 및 보상 발생 시작까지
+                    대기기간이 발생 할 수 있습니다. 스테이킹 신청 전에 스테이킹
+                    대기기간을 확인해 주시기 바랍니다.
+                </p>
+                <p class="title">
+                    4. 보상 수익은 매월 정기 지급됩니다.
+                </p>
+                <p class="title">
+                    5. 스테이킹 신청 직후부터 취소가 불가합니다.
+                </p>
+            </div>
+        `;
+
+        show_alert_terms(html)
+    })
+        
+        $('#all_check').click(function(){
+            var checked = $('#all_check').is(':checked');
+            
+            if(checked) {
+                $('input:checkbox').prop('checked',true);
+            } else {
+                $('input:checkbox').prop('checked',false);
+            }
+        });
+
+        $('#check2, #check3').on('click',function() {
+            if($('#all_check').is(":checked") == true) {
+                $('#all_check').prop('checked',false);
+            }
+
+            if($('#check2').prop('checked') == true && $('#check3').prop('checked') == true) {
+                $('#all_check').prop('checked',true)
+            }
+        });
 
 
 		// 패키지구매
@@ -390,6 +483,12 @@ $result = sql_query($sql);
 				if (debug) console.log('error : 2');
 				return false;
 			}
+
+			// 유의사항 동의
+			if($("#check2").prop('checked') == false || $("#check3").prop('checked') == false) {
+                dialogModal('','유의사항 확인/동의를 체크해 주세요', 'warning');
+                return false;
+            }
 
 			// 잔고 확인 
 			// if (price_calc < 0) {

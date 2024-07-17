@@ -19,7 +19,7 @@
   z-index: 1;
 }
 .breadcrumb .user-info {
-  background: #fff;
+  background: #3e4048;
   width: 100%;
   padding: 0 30px;
   box-shadow: 0 4px 2px rgba(0, 0, 0, 0.05);
@@ -27,7 +27,7 @@
 .breadcrumb .user-info .user-content {
   border-radius: 20px;
   text-align: left;
-  background: aliceblue;
+  background: #636b73;
 }
 .breadcrumb .user-info .user-content .userid {
   display: inline-block;
@@ -42,7 +42,7 @@
 }
 .breadcrumb .user-info .user-content .userid + h4 {
   display: inline-block;
-  color: #29386b;
+  color: #fff;
   vertical-align: text-top;
 }
 .breadcrumb .user-info .user-content .mygrade {
@@ -57,7 +57,7 @@
 }
 .breadcrumb .user-info .total_view_wrap .row.top {
   margin: 10px 0px;
-  background: aliceblue;
+  background: #636b73;
   border-radius: 10px;
 }
 .breadcrumb .user-info .total_view_wrap .rank_title {
@@ -73,7 +73,7 @@
   padding: 15px 0 10px;
 }
 .breadcrumb .user-info .total_view_wrap li .title {
-  color: #29386b;
+  color: #fff;
   font-size: 12px;
   line-height: 20px;
 }

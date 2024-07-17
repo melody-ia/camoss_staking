@@ -5,7 +5,12 @@ if($_COOKIE['myLang'])
 {
 	$myLang = $_COOKIE['myLang'];
 }
+
+$menubar =1;
+include_once(G5_THEME_PATH.'/_include/lang.php');
 ?>
+
+
 
 <script>
 $(document).ready(function(){
@@ -259,15 +264,6 @@ $(document).ready(function(){
 	</div>
 </header>
 
-
-<section id="fnb">
-<ul>
-<li>순환마케팅</li>
-<li>스테이킹</li>
-<li>마이월렛</li>
-<li></li>
-</ul>	
-</section>
 
 
 <div id="loading" class="wrap-loading display-none"><span class="loading_img"></span></div>

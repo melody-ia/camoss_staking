@@ -154,7 +154,6 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 </div>
 
 <link href="<?=G5_ADMIN_URL?>/css/scss/bonus/bonus_mining.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 
 <script src="../../excel/tabletoexcel/xlsx.core.min.js"></script>
 <script src="../../excel/tabletoexcel/FileSaver.min.js"></script>

@@ -28,10 +28,9 @@ $brecom_sale =  refferer_habu_sales($member['mb_id'],'b');
 $total_hash = $member['recom_mining'] + $member['brecom_mining'] + $member['brecom2_mining'] + $member['super_mining'];
 
 // 공지사항
-$notice_sql = "select wr_subject from g5_write_notice where wr_1 = '1' order by wr_id desc limit 0,1";
+$notice_sql = "select * from g5_write_notice where wr_1 = '1' order by wr_id desc";
 $notice_result = sql_query($notice_sql);
 $notice_result_num = sql_num_rows($notice_result);
-$notice_row = sql_fetch($notice_sql);
 
 function check_value($val){
 	if($val == 1){
@@ -102,19 +101,45 @@ $title = 'Dashboard';
 
 <section class='breadcrumb'>
 		
-		<!-- 공지/뉴스사항 -->
-		<?if($notice_result_num > 0){ ?>
-			
-			<!-- <div class="col-sm-12 col-12 content-box round dash_news" style='margin-bottom:-10px;'>
-				<h5>
-					<span class="title">공지사항</span>					
-					<i class="ri-close-circle-line close_news" style="font-size: 30px;float: right;cursor: pointer;"></i>
-					<button class="f_right btn line_btn close_today" >
-						<span >오늘 하루 열지 않기</span>
-					</button>
-				</h5>
-			</div> -->
-		<?}?>
+		<!-- 공지사항 슬라이드 -->
+		<?php if($notice_result_num > 0 ){?>
+
+		<link href="/js/swiper/swiper.min.css" rel="stylesheet">
+		<script src="/js/swiper/swiper.min.js"></script>
+		<style>
+			.swiper-container{width:100%;height:40px;}
+		</style>
+		
+		<section class="notice_wrap_top">
+			<a href="/page.php?id=news">
+			<div class="swiper-container notice_box">
+				<div class="swiper-wrapper">
+					<?while($notice_row = sql_fetch_array($notice_result)){?>
+						<div class="swiper-slide"><span class='caret'>새소식</span><?=$notice_row['wr_subject']?></div>
+					<?}?>
+				</div>
+			</div>
+			</a>
+		</section>
+		
+
+
+		<script>
+			var mySwiper = new Swiper('.swiper-container',{
+				direction : 'vertical',
+				slidesPerView :1,
+				autoHeight : true,
+				loop:true,
+				autoplay: {   
+					delay: 5000, 
+					disableOnInteraction: false, 
+				},
+			})
+		</script>
+		<?php } ?>
+		
+		
+		
 
 		<div class="user-info">
 			<!-- 회원기본정보 -->
@@ -125,11 +150,11 @@ $title = 'Dashboard';
 				<h4 class='mygrade badge color<?=user_grade($member['mb_id'])?>'><?=_user_grade($member['grade'])?></h4>
 				<h4 class='mygrade badge' style="margin-left:0;"><?=$user_level?></h4>
 
-				<?if($notice_result_num > 0){ ?>
+				<!-- <?if($notice_result_num > 0){ ?>
 					<button class="btn notice_open">
 					<i class="ri-broadcast-line"></i>
 					</button>
-				<?}?>
+				<?}?> -->
 			</div>
 			<style>
 				.total_view_wrap .currency{font-size:12px;padding-left:3px;}
@@ -151,38 +176,23 @@ $title = 'Dashboard';
 							<dt class="title" >출금/재구매 가능액 </dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
 						</li>
-						<!-- <li class="col-4">
-							<dt class="title">출금 가능 코인</dt>
-							<dd class="value" style='font-size:14px;'>
-								<?=shift_auto($mining_total,$minings[$now_mining_coin])?><span class='currency'><?=$minings[$now_mining_coin]?></span>
-								<?if($member['swaped'] == 0){?>
-									<br><div class='before_fund'>(  <?=$before_mining_total?><span class='currency'><?=$minings[$before_mining_coin]?></span> )</div>
-								<?}?>
-							</dd>
-						</li> -->
+						
 					</ul> 
 				</div>
-				<div class="total_view_top" id="collapseExample">
+
+				<!-- <div class="total_view_top" id="collapseExample">
 					
 					<ul class="row">
 					<li class="col-4">
-							<!-- <dt class="title"><span class='badge'>Mining : <?=Number_format($member['mb_rate'])?> mh/s</span></dt>
-							<dd class="value"><?=$mining_total?> <span style='font-size:12px;'><?=$minings[$now_mining_coin]?></span></dd> -->
 							<dt class="title" >직추천인</dt>
 							<dd class="value"><?=$direct_reffer?></dd>
 						</li>
 
 						<li class="col-4">
 							<dt class="title" >구매등급(PV)</dt>
-							<!-- <dd class="value"><?=$member['rank_note']?><?=rank_name($member['rank_note'])?></dd> -->
-							<!-- <dd class="value" style='font-size:11px;font-weight:300;line-height:11px;'>(<?=shift_auto($rank_note_price['it_price'], $curencys[0])?> <?=$curencys[0]?>)</dd> -->
 							<dd class="value" ><?=shift_auto($member['pv'], $curencys[0])?> <?=$curencys[0]?></dd>
 						</li>
 
-						<!-- <li class="col-4">
-							<dt class="title">승급대상 USDT</dt>
-							<dd class="value"><?=Number_format($member['recom_sales'])?> </dd>
-						</li> -->
 						<li class="col-4">
 							<dt class="title">쇼핑몰 포인트</dt>
 							<dd class="value"><?=shift_auto($shop_balance,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
@@ -219,12 +229,6 @@ $title = 'Dashboard';
 							</dd>
 						</li>
 
-						<!-- <li class="col-4">
-							<dt class="title">승급대상</dt>
-							<dd class="value">
-								<?=check_value($member['mb_7'])?>
-							</dd>
-						</li> -->
 
 						<li class="col-6">
 							<dt class="title">승급기준</dt>
@@ -235,15 +239,17 @@ $title = 'Dashboard';
 					</ul>
 					</div>
 				</div>
-				<div class="fold_wrap">
-					<a href="javascript:collapse('#collapseExample',thisTheme);">
+				 -->
+				 <div class="fold_wrap">
+					<!-- <a href="javascript:collapse('#collapseExample',thisTheme);">
 						<div class="collap"><p class='txt'>접기</p></div>
 							<div class="fold_img_wrap">
 								<img class="updown" src="<?=G5_THEME_URL?>/img/arrow_up.png">
 							</div>
 						</div>
-					</a>
+					</a> -->
 				</div>
+			</div>
 		</div>
 
 </section>

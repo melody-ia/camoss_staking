@@ -1,0 +1,107 @@
+@import "./_variable";
+@import "./_mixin";
+
+
+// NFT 추가 
+.staking_card.nft_card .staking_left_wrap{display:flex;flex-direction:row;}
+.staking_card.my_staking .date{margin-top:5px;}
+.nft_card .item_character{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.nft_img {
+    padding-right:10px;
+    img{width:68px;margin-top:5px;}
+}
+
+.nft_card {
+    border:3px solid white;
+    
+    &:hover{
+        // background:rgb(244, 245, 245);
+        // box-shadow: 0px 0px 1px 3px #28d2eb;
+        border:3px solid #28d2eb;
+    }
+
+    .item_character{
+        .badge{font-size:13px;margin:0 0 0 -5px;font-weight:500;background:#28d2eb;padding:2px 10px;}
+    }
+}
+.nft_card .staking_right_wrap .value{font-weight:600;font-size:1.4rem}
+.nft_card .staking_right_wrap {flex-basis:15%;}
+
+/* detail */
+.esg_logo img{width:50px;}
+
+h3{
+    &.title{
+        margin-bottom:10px; 
+        font-size:14px; font-weight:bold;
+    }
+}
+
+.nft_content{
+    width:100%;height:100%;box-shadow:0 0 4px rgba(0,0,0,0.5);
+    
+
+    .content_foot{
+        
+        background:black;
+        padding:10px;
+        
+
+        ul li{
+            font-family: 'Encode Sans', sans-serif;font-size:0.7em;
+            color:white;font-weight:500;letter-spacing: 0.5px;line-height:20px;
+
+            &.title{
+                font-size:1.4em;
+                letter-spacing: -0.2px;
+            }
+        }
+    }
+}
+
+.nft_container{
+    margin:10px 0;
+    border:5px solid red;padding:5px;font-size:0.9em;
+
+    .title{
+        font-family: 'Damion', cursive;
+        font-size:40px;
+        font-weight:600;
+        text-align:center;
+        text-decoration: underline;
+        margin:30px 0;
+    }
+
+    .sub_title{
+        font-size:1.1em;
+        margin:0 5px;
+    }
+
+    ul {
+        margin:20px 10px;
+        line-height:28px;
+        font-weight:600;
+
+        i{
+            vertical-align: middle;
+        }
+        li{
+            line-height:28px;
+        }
+    }
+
+    .signature{text-align: center; font-size:20px; font-weight:600;font-family: 'Encode Sans', sans-serif;}
+
+    .company_sign{
+        text-align: right;
+        margin:20px -40px 20px 0;
+
+        img{
+            width:250px;
+        }
+    }
+}

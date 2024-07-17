@@ -1,25 +1,27 @@
-$breakpoint-mobile: 335px;
+$breakpoint-mobile: 320px;
 $breakpoint-iphone-678: 413px;
 $breakpoint-tablet: 758px;
 $breakpoint-desktop: 1024px;
 $breakpoint-desktop-wide: 1200px;
 
-$main-color: #3b86ff;
-$sub-color: #8734d4;
+$main-color: #45d1a4;
+$sub-color: #2ace9a;
+$third-color: #28d2eb;
 
-$main2-color:#37d2fd;
-$sub2-color:#c73bda;
-
+$main2-color:rgba(255,255,255,0.6);
+$sub2-color:rgba(255,255,255,1);
 $second-color: #f5c97a;
-$third-color: #c47c2e;
+// $third-color: #c47c2e;
 $back-color: #171716;
 
 $navy-color: #1e5ab9;
 $sky-color: #3b86ff;
+$nft-color: #19aabf;
+
+
 
 $main-colors: #ffd965 ;
 $font-sub-colors: #fff ;
-$main-button-color:#fff ;
 
 $main-button: #fbe591 ;
 $main-button2: #fac707 ;
@@ -40,7 +42,6 @@ $binary-left1: #5f9eec ;
 $binary-left1-1: #1d76e4 ;
 $binary-right1: #445d72 ;
 $binary-right1-1: #2a3e53 ;
-
 
 $r-card0: #736ad0 ;
 $r-card0-1: #5647ad ;
@@ -63,23 +64,11 @@ $r-card8-1: #38b649 ;
 $r-card9:  #cbae4e ;
 $r-card9-1: #b49738  ;
 
-/* 
-$r-card7:  #658b27 ;
-$r-card7-1: #658b27 ;
-$r-card8:  #c04819 ;
-$r-card8-1: #c04819 ;
-$r-card9:  #bda253 ;
-$r-card9-1: #cfa21c ; */
-
-
-
 // 유저 아이콘
 $user-icon0: #363c46 ;
-// $user-icon1: 
 
 $withdraw-btn-background: #ffd965 ;
-$main-point-color: #3b86ff ;
-$main-button-color:#3b86ff ;
+$main-point-color: #492191 ;
 
 // enroll
 $userSelected_background: #cfa831 ;
@@ -102,22 +91,21 @@ $super_mining1:#2f568f ;
 $super_mining1_1:#733f88 ;
 $super_mining1_2: #9c3284 ;
 
-// $zeta_mining1: #5677ca ;
-// $zeta_mining1_1: #274090 ;
-// $zetaplus_mining1: #6b56db ;
-// $zetaplus_mining1_1: #473890 ;
-// $super_mining1: #414d5a ;
-// $super_mining1_1: #252e38 ;
-
 // support
-$ticket_header_background: #FECE00 ;
+$ticket_header_background: #cfa831 ;
 
 // structure
 $search_background: #cfa831 ;
 
+
+
+
+
 // gnb메뉴 아이콘 
-$white: "../../img/gnb/menu_set_white.svg";
-$white_hover: "../../img/gnb/menu_set_white_hover.svg";
+// $white: "../../img/gnb/menu_set_white.png";
+// $white_hover: "../../img/gnb/menu_set_white_hover.png";
+$white: "../../img/gnb/menu_set_default.svg";
+$white_hover: "../../img/gnb/menu_set_hover_green.svg";
 $dark: "../../img/gnb/menu_set_dark.svg";
 $dark_hover: "../../img/gnb/menu_set_dark_hover.svg";
 
@@ -128,4 +116,24 @@ $main-theme-type: white-theme; // 테마 모드 설정
     $mypool_title: #333 ;
 } @else if($main-theme-type == dark-theme) {
     $mypool_title: #fff ;
+}
+
+$img_path: "../../img/";
+
+$main_color: #45d1a4;
+$main_color_2: #2ace9a;
+$main_color_3: #6ece63;
+$main_color_4: #51c943;
+$main_color_5: #0fb3cc;
+
+
+
+$eth_color: #45d1a4;
+$eth_color_2: #35c591;
+
+/*스테이킹 컬러셋 6개만 사용 */
+$color-set : #a3e679, #45d1a4, #28d2eb, deepskyblue, cornflowerblue, #1772ee, dodgerblue, lightskyblue;
+
+@function getcolors($findkey) {
+    @return nth($color-set,$findkey);
 }

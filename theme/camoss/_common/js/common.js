@@ -398,6 +398,22 @@ function dialogModal(title, htmlBody, category, dim = true) {
 
 }
 
+
+function commonModalTerms(htmlBody, bodyHeight) {
+    $('#commonModalTerms').modal('show');
+    $('#commonModalTerms .modal-body').html(htmlBody);
+
+    if (bodyHeight) {
+        $('#commonModalTerms .modal-body').css('height', bodyHeight);
+    }
+    $('#closeModalTerms').focus();
+
+    $(document).on('click','#closeModalTerms',function () {
+		$('#check1').prop('checked',true);
+        $('#commonModalTerms').modal('hide');
+    });
+}
+
 // 테마 변경 함수
 function mode_init() {
 	
@@ -664,3 +680,55 @@ function mode_colorset2(mode) {
 	}
 }
 
+
+function show_alert_terms(args) {
+    commonModalTerms(`<p>${args}`, 'auto');
+}
+
+function ajax(url, type, data, callback, async=true) {
+       
+    $.ajax({
+        url: url,
+        type: type,
+        dataType: "json",
+        cache: false,
+        async: async,
+        data: data,
+        success: (result) => {
+            callback(result);
+        }
+    });
+        
+}
+
+function count_down(){
+
+	let time = 299;
+	let min = "";
+	let sec = "";
+
+	$("#mb_hp").attr("readonly", true);
+	$('#hp_button').attr('disabled', true);
+	$('#timer_auth').show();
+	$('#timer_down').css('color', 'red');
+
+	let _count_down = setInterval(function() {
+	min = parseInt(time / 60);
+	sec = time % 60;
+	sec_temp = "";
+	if(sec < 10){ sec_temp = "0"; }
+	document.getElementById('timer_down').innerHTML = "남은시간 : 0" +min + ":"+sec_temp + sec;
+	time--;
+
+	if (time < 0) {
+		clearInterval(_count_down);
+		dialogModal('', '시간이 초과되었습니다.', 'failed');
+		$('#modal_return_url').click(function(){
+			window.location.reload();
+		})
+	}
+
+	}, 1000);
+
+	return _count_down;
+}

@@ -20,6 +20,7 @@
 
 ?>
 
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?=G5_THEME_URL?>/css/default.css">
 <script src="<?=G5_URL?>/js/common.js"></script>
 
@@ -36,100 +37,97 @@
 <?include_once(G5_THEME_PATH.'/_include/breadcrumb.php');?>
 <main>
     <div class='container dashboard'>
-        <div class="my_btn_wrap">
+        <!--  <div class="my_btn_wrap">
             <div class='row'>
-                <div class='col-lg-6 col-12'>
+               <div class='col-lg-6 col-12'>
                     <button type='button' class='btn wd main_btn b_sub' onclick="go_to_url('mywallet');"> 입출금</button>
-                </div>
+                </div> 
                 <div class='col-lg-6 col-12'>
                     <button type='button' class='btn wd main_btn b_main' onclick="go_to_url('upstairs');">패키지구매</button>
                 </div>
-                <!-- <div class='col-lg-12 col-12'>
-							<button type='button' class='btn wd main_btn b_third' onclick="move_to_shop()" >쇼핑몰바로가기</button>
-						</div> -->
+                <div class='col-lg-12 col-12'>
+                    <button type='button' class='btn wd main_btn b_third' onclick="move_to_shop()" >쇼핑몰바로가기</button>
+                </div>
+            </div>
+        </div>
+         -->
+
+
+        <div class='r_card_wrap content-box round mt30'>
+            <div class="card_title">구매 가능 금액(입금액)</div>
+            <div class="box-wrap">
+                <div class='box'>
+                    <p class='main_centent'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'> <span class='currency'><?=strtoupper($curencys[0])?></span></p>    
+                </div>
+                <button type='button' class='btn wd main_btn b_sub' onclick="go_to_url('mywallet');"> 입출금</button>
             </div>
         </div>
 
-<!-- 
-        <div style="clear:both;"></div>
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-        <div class='r_card_wrap content-box round mb30 mt30'>      
-            
-            <div style='max-width:700px;width:100%;text-align:center;margin:0 auto;'>
-                <div id="myChart2"></div>
+        <div class='r_card_wrap content-box round mt30'>
+            <div class="card_title">출금 & 재구매 가능 금액</div>
+            <div class="box-wrap">
+                <div class='box'>
+                    <p class='main_centent'><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'> <span class='currency'><?=strtoupper($curencys[0])?></span></p>    
+                </div>
+                <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('reupstairs');"> 재구매</button>
             </div>
-            
         </div>
-
-        
-
-        <script>
-            var chart_data = JSON.parse('<?=($member_info['hash_info'])?>');
-            $(function(){
-                
-                $(window).scroll(function () {
-                    var wrapper_height = $(window).scrollTop();
-                    
-                    if(wrapper_height > 110){
-                    chart();
-                    chart = function(){};
-                    }else{
-
-                    }
-                }); 
-
-                function chart(){
-                    var chart = new ApexCharts(document.querySelector("#myChart2"), options);
-                        chart.render();
-                }
-
-                $('#mode_select').on('change',function(e) {
-                    mode_colorset2(this.value);
-                });
-            });
-        </script>
-        <script src="<?=G5_THEME_URL?>/_common/js/chart/apexchart.js"></script> -->
 
         <div class='r_card_wrap content-box round mt30'>
             <?$ordered_items = ordered_items($member['mb_id']);?>
-            <div class="card_title">보유 패키지 (<?=count($ordered_items)?>) <a href='<?=G5_URL?>/page.php?id=upstairs'
-                    class='f_right inline more'><span>더보기<i class="ri-add-circle-fill"></i></span></a></div>
+            <div class="card_title mb20">보유 패키지 (<?=count($ordered_items)?>) 
+            <a href='<?=G5_URL?>/page.php?id=upstairs' class='f_right inline more'><span>더보기<i class="ri-add-circle-fill"></i></span></a></div>
+
+            <p>구매등급(PV) :</p>
+            <p class='main_centent mb20'><?=shift_auto($member['pv'], $curencys[0])?> <span class='currency'> <?=strtoupper($curencys[0])?></span></p>
+
             <?
-					if(count($ordered_items) < 1) { 
-							echo "<div class='no_data'>내 보유 상품이 존재하지 않습니다</div>";
-					}else{
-						
-						for($i = 0; $i < count($ordered_items); $i++){
-							$row = $ordered_items[$i];
-							?>
-							<div class="col-12 r_card_box">
-							<a href='/page.php?id=upstairs'>
-							
-								<div class="r_card r_card_<?=substr($row['od_name'],1,1)?>">
-									<p class="title">
-										<span style='font-size:14px;'><?=$ordered_items[$i]['it_option_subject']?></span> 
-										- <?=$ordered_items[$i]['it_name']?>
-										<span class='f_right more_arrow'><img src="<?=G5_THEME_URL?>/img/arrow.png" alt=""></span>
-									</p>
-									<div class="b_blue_bottom"></div>
-									<div class="text_wrap">
-										<span class="value1"><?=$row['od_time']?></span>
-									</div>
-								</div>
-							</a>
-							</div>
-						<?}
-					}
-					?>
+            if(count($ordered_items) < 1) { 
+                    echo "<div class='no_data'>내 보유 상품이 존재하지 않습니다</div>";
+            }else{
+                
+                for($i = 0; $i < count($ordered_items); $i++){
+                    $row = $ordered_items[$i];
+                    ?>
+                    <div class="col-12 r_card_box">
+                    <a href='/page.php?id=upstairs_detail'>
+                    
+                        <div class="r_card r_card_<?=substr($row['od_name'],1,1)?>">
+                            <p class="title">
+                                
+                                <?=$ordered_items[$i]['it_name']?>  
+                                <!-- <span style='font-size:14px;'><?=$ordered_items[$i]['it_option_subject']?></span> -->
+                                <span class='f_right more_arrow'><img src="<?=G5_THEME_URL?>/img/arrow.png" alt=""></span>
+                            </p>
+                            <div class="b_blue_bottom"></div>
+                            <div class="text_wrap">
+                                <p class="value_rate">수익률 : <?=$row['pv']?>%</p>
+                                <p class="value_date" style='text-align:right'><?=$row['od_date']?></p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                <?}
+            }
+			?>
+            <button type='button' class='btn wd main_btn b_main' onclick="go_to_url('upstairs');">패키지구매</button>
         </div>
 
-
-        <div class='r_card_wrap content-box round history_latest'>
+        <!-- <div style="clear:both;"></div> -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+        <div class='r_card_wrap content-box round history_latest mb30 mt30'>
             <div class="card_title_wrap">
-                <div class="card_title">최근 발생 보너스 </div>
+                <div class="card_title">순환 보너스 (200%)</div>
                 <a href='<?=G5_URL?>/page.php?id=bonus_history'
                     class='inline more'><span>더보기<i class="ri-add-circle-fill"></i></span></a>
             </div>
+
+            <p >총누적보너스 :</p>
+            <p class='main_centent'><?=shift_auto($total_fund,'usdt')?><span class='currency'> <?=strtoupper($curencys[0])?></span></p>    
+            
+
+            <div id="myChart2"></div>
             <?
 					$bonus_history_sql	 = "SELECT * from `{$g5['bonus']}` WHERE mb_id = '{$member['mb_id']}' order by day desc limit 0,5";
 					$bonus_history_result = sql_query($bonus_history_sql);
@@ -150,43 +148,169 @@
 
             <?}?>
             <?}else{
-						echo "<div class='no_data'>보너스 내역이 존재하지 않습니다</div>";
-					}?>
+                echo "<div class='no_data'>보너스 내역이 존재하지 않습니다</div>";
+            }?>
+            <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('bonus_history');"> 상세내역보기</button>
         </div>
+
+        <script>
+            // var chart_data = JSON.parse('<?=($member_info['hash_info'])?>');
+            
+            var chart_data = <?=$bonus_per?>;
+
+            $(function(){
+                
+                $(window).scroll(function () {
+                    var wrapper_height = $(window).scrollTop();
+                    
+                    if(wrapper_height > 500){
+                        chart();
+                        chart = function(){};
+                    }else{
+
+                    }
+                }); 
+
+                
+
+                function chart(){
+                    var chart = new ApexCharts(document.querySelector("#myChart2"), options);
+                        chart.render();
+                }
+
+              /*   $('#mode_select').on('change',function(e) {
+                    mode_colorset2(this.value);
+                }); */
+            });
+        </script>
+        <script src="<?=G5_THEME_URL?>/_common/js/chart/apexchart.js"></script>
+        
+
+
+        <div class='r_card_wrap content-box round mt30 content_border '>
+            <div class="card_title">탄소포인트 (C.P)</div>
+            <div class="box-wrap">
+                <div class='box'>
+                    <p class='main_centent'><?=shift_auto($shop_balance,$curencys[0])?> <span class='currency'> CP</span></p>    
+                </div>
+            </div>
+        </div>
+
+
 
         <div class='r_card_wrap content-box round regist_latest'>
             <div class="card_title_wrap">
-                <div class="card_title">최근 추천 등록 회원 </div>
+                <div class="card_title">추천내역 </div>
                 <a href='<?=G5_URL?>/page.php?id=structure'
                     class='inline more'><span>더보기<i class="ri-add-circle-fill"></i></span>
                 </a>
             </div>
-            
-            <?
-					$bonus_history_sql	 = "SELECT * from `{$g5['member_table']}` WHERE mb_recommend = '{$member['mb_id']}' order by mb_open_date desc limit 0,3";
-					$bonus_history_result = sql_query($bonus_history_sql);
-					$bonus_history_cnt = sql_num_rows($bonus_history_result);
-					if($bonus_history_cnt > 0){
-						while($row = sql_fetch_array($bonus_history_result)){
+
+            <p>직추천 정회원 :</p>
+            <p class='main_centent mb20 mt10'><?=$direct_reffer?> 명</p>
+            <P class='dashline mb20'></P>
+            <p>최근 추천 회원 :</p>
+
+                    <?
+					$recommend_sql	 = "SELECT * from `{$g5['member_table']}` WHERE mb_recommend = '{$member['mb_id']}' order by mb_open_date desc limit 0,2";
+					$recommend_result = sql_query($recommend_sql);
+					$recommend_cnt = sql_num_rows($recommend_result);
+					if($recommend_cnt > 0){
+						while($row = sql_fetch_array($recommend_result)){
 					?>
 
-            <div class="line row">
-                <div class='col-9'>
-                    <span class='badge'><?=$member_level_array[$row['mb_level']]?> </span>
-                    <span class='badge color<?=user_grade($member['mb_id'])?>'><?=$row['grade'].' star'?> </span>
-                    <span class='id'><?=$row['mb_id']?> </span>
+                    <div class="line row">
+                        <div class='col-9'>
+                            <span class='badge'><?=$member_level_array[$row['mb_level']]?> </span>
+                            <span class='badge color<?=user_grade($member['mb_id'])?>'><?=$row['grade'].' star'?> </span>
+                            <span class='id'><?=$row['mb_id']?> </span>
 
+                        </div>
+                        <div class='col-3 text-right'>
+                            <span class='day'><?=timeshift($row['mb_open_date'])?> </span>
+                        </div>
+                    </div>
+
+                    <?}?>
+                    <?}else{
+						echo "<div class='no_data'>추천 등록 회원이 존재하지 않습니다</div>";
+					}?>
+
+            <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('structure');"> 추천조직도</button>
+        </div>
+
+        <div class='r_card_wrap content-box round regist_latest'>
+            <div class="card_title_wrap">
+                <div class="card_title">후원내역 </div>
+                <a href='<?=G5_URL?>/page.php?id=structure'
+                    class='inline more'><span>더보기<i class="ri-add-circle-fill"></i></span>
+                </a>
+            </div>
+
+            <p>후원산하 :</p>
+            <p class='main_centent mb20 mt10'><?=$mb_b_child?> 명</p>
+            <P class='dashline mb20'></P>
+            <p>최근 후원 등록 회원 :</p>
+            
+                    <?
+                    $brecommend_binary_sql	 = "SELECT * from `{$g5['member_table']}` WHERE mb_brecommend = '{$member['mb_id']}' order by mb_open_date desc limit 0,2";
+                    $brecommend_binary_result = sql_query($brecommend_binary_sql);
+                    $brecommend_binary_cnt = sql_num_rows($brecommend_binary_result);
+                    if($brecommend_binary_cnt > 0){
+                        while($row = sql_fetch_array($brecommend_binary_result)){
+                    ?>
+
+                    <div class="line row">
+                        <div class='col-9'>
+                            <span class='badge'><?=$member_level_array[$row['mb_level']]?> </span>
+                            <span class='badge color<?=user_grade($member['mb_id'])?>'><?=$row['grade'].' star'?> </span>
+                            <span class='id'><?=$row['mb_id']?> </span>
+
+                        </div>
+                        <div class='col-3 text-right'>
+                            <span class='day'><?=timeshift($row['mb_open_date'])?> </span>
+                        </div>
+                    </div>
+
+                    <?}?>
+                    <?}else{
+						echo "<div class='no_data'>추천 등록 회원이 존재하지 않습니다</div>";
+					}?>
+
+            <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('binary');"> 후원조직도</button>
+        </div>
+
+        <div class='r_card_wrap content-box round mt30'>
+            <div class="card_title mb20">다음 승급</div>
+            <div class='row'>
+
+                <div class='col-6 text-center'>
+                <p style='font-size:0.9rem'>구매등급 : </p> 
+                <p class='main_centent mb20 mt10'><?=check_value($member['mb_5'])?></p>
                 </div>
-                <div class='col-3 text-right'>
-                    <span class='day'><?=timeshift($row['mb_open_date'])?> </span>
+                
+                <div class='col-6 text-center l_div'>
+                <p style='font-size:0.9rem'>승급기준 :</p>
+                <p class='main_centent mb20 mt10'><?=check_value($member['mb_9'])?></p>
                 </div>
             </div>
+            
+            <!-- <P class='dashline mb20'></P>
+            <?
+                $rank_sql = "SELECT * FROM rank WHERE mb_id = '{$member['mb_id']}' ";
+                $rank_sql_result = sql_query($rank_sql);
+                $rank_history_cnt = sql_num_rows($rank_sql_result);
+					if($bonus_history_cnt > 0){
+						while($row = sql_fetch_array($rank_sql_result)){
+			?>
+
 
             <?}?>
             <?}else{
-						echo "<div class='no_data'>추천 등록 회원이 존재하지 않습니다</div>";
-					}?>
+                echo "<div class='no_data'>승급기록이 없습니다.</div>";
+            }?> -->
         </div>
+
     </div>
 </main>
 

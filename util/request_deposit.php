@@ -12,13 +12,13 @@ $now_datetime = date('Y-m-d H:i:s');
 $now_date = date('Y-m-d');
 
 if($debug ==1){
-  $mb_id = 'test1';
-  $txhash = 3;
-  $coin = '원';
-  $d_price = 300000;
+  $mb_id = 'admin';
+  $txhash = '0x792A6fE819FdFdE940189A7CeD12d6a31904cbf5';
+  $coin = 'usdt';
+  $d_price = 3000;
   $mb_name = '테스터1';
-  $calc_coin = 300000;
-  $account_name = "pay_id";
+  $calc_coin = 1383;
+  $account_name = "company address";
 }else{
   $mb_id = $_POST['mb_id'];
   $txhash = $_POST['hash'];
@@ -60,30 +60,20 @@ if($pre_result['cnt'] < $limit_cnt){
     $point = $calc_coin;
 
   }else{
-    if($coin == 'etc') {
-      $usdt = $get_coins_price['usdt_etc'];
-    } else if ($coin == 'hja') {
-      $result = sql_fetch("SELECT current_cost, used FROM wallet_coin_price WHERE idx = '1'");
-      $usdt = $result['used'] == '1' ? $result['current_cost'] : 1;
-    } else if ($coin == 'eth') {
-      $usdt = $get_coins_price['usdt_eth'];
-    } else if ($coin == 'usdt') {
-      $usdt = 1;
-    }else {
-      $usdt = null;
-    }
-    $point = $usdt * $d_price;
+    $usdt = $calc_coin;
+    $point = $d_price;
+    $deposit_infomation = $calc_coin*$d_price;
   }
 
   $sql = "INSERT INTO wallet_deposit_request(mb_id,od_id, txhash, bank_account, create_dt,create_d,status,coin,cost,amt,in_amt) 
-  VALUES('$mb_id',{$txhash},'$deposit_infomation','{$account_name}','$now_datetime','$now_date',0,'$coin', {$usdt},{$d_price},{$point})";
+  VALUES('$mb_id','{$deposit_infomation}','{$txhash}','{$account_name}','$now_datetime','$now_date',0,'$coin', {$usdt},{$d_price},{$point})";
   
   if($debug){
     print_R($sql);
     $result = 1;
   }else{
     $result = sql_query($sql);
-    sql_query("update g5_member set account_name = '{$account_name}' where mb_id = '{$mb_id}'");
+    // sql_query("update g5_member set account_name = '{$account_name}' where mb_id = '{$mb_id}'");
   }
 
   // 입금알림 텔레그램 API

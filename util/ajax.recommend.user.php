@@ -16,7 +16,7 @@
 
 		// 센터멤버, 센터이름검색 
 		}else if($type == 2){
-			$sth = sql_query("select mb_id,mb_name,mb_nick,grade,mb_level,mb_center_name from {$g5['member_table']}  where (mb_center_name like '{$_POST['mb_id']}_%' OR mb_id like '{$_POST['mb_id']}_%' ) and center_use ='1' AND mb_id != 'admin'");
+			$sth = sql_query("select mb_id,mb_name,mb_nick,grade,mb_level,mb_center_name from {$g5['member_table']}  where (mb_center_name like '%{$_POST['mb_id']}%' OR mb_id like '%{$_POST['mb_id']}%' ) and center_use ='1' AND mb_id != 'admin'");
 			$rows = array();
 			while($r = mysqli_fetch_assoc($sth)) {
 				$rows[] = $r;

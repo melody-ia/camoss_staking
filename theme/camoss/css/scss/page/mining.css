@@ -16,7 +16,7 @@
   vertical-align: middle;
   font-weight: bold;
   font-size: 16px;
-  color: #29386b;
+  color: #fff;
   padding-left: 10px;
   display: inline-block;
 }
@@ -48,7 +48,7 @@
 }
 
 #withdraw {
-  background: #ec2b38;
+  background: #516feb;
 }
 #withdraw .polding_btn {
   color: white;
@@ -98,11 +98,11 @@
   margin-top: -5px;
 }
 #withdraw .input_shift_value .fee #active_amt, #withdraw .input_shift_value .fee #fee_val {
-  color: #ec2b38;
+  color: #516feb;
 }
 #withdraw .input_shift_value .fee i {
   font-size: 18px;
-  color: #ec2b38;
+  color: #516feb;
 }
 #withdraw .hidden {
   display: none;
@@ -114,7 +114,7 @@
   color: red;
 }
 #withdraw #withdrawal_btn {
-  background: #ec2b38;
+  background: #516feb;
   color: white;
 }
 
@@ -155,10 +155,10 @@
 }
 #mining_amt_log .hist_tit {
   width: 100%;
-  color: #ec2b38;
+  color: #516feb;
 }
 #mining_amt_log .mymining_total {
-  color: #ec2b38;
+  color: #516feb;
 }
 #mining_amt_log ul li span {
   display: inline-block;
@@ -167,7 +167,7 @@
   font-size: 12px;
 }
 #mining_amt_log .amt_total {
-  color: #ec2b38;
+  color: #516feb;
   font-weight: 600;
   font-size: 13px;
 }

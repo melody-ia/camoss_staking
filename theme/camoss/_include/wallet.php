@@ -23,7 +23,7 @@ if (empty($to_date)) {$to_date =  date("Y-m-d", strtotime(date("Y-m-d")));}
 /*출금시간 설정*/
 $use_withdraw_time = true;
 $withdrawal_start_time = "09:00";
-$withdrawal_end_time = "17:00";
+$withdrawal_end_time = "24:00";
 
 // 회원 자산, 보너스 정보
 $total_deposit = $member['mb_deposit_point'] + $member['mb_deposit_calc'];
@@ -37,6 +37,7 @@ $total_fund = ($member['mb_balance'] + $member['mb_shop_point']);
 // 출금가능금액 :: 총보너스 - 기출금
 $total_withraw = $total_bonus - $total_shift_amt;
 $shop_balance = $member['mb_shop_point'] - $member['mb_shop_calc'];
+
 // 구매가능잔고 :: 입금액 - 구매금액 = 남은금액
 $available_fund = $total_deposit;
 
@@ -48,7 +49,13 @@ $mining_total = calculate_math($mining_acc - $mining_amt,COIN_NUMBER_POINT);
  */
 
 // 이전자산
-$before_mining_total = ($member[$before_mining_target] - $member[$before_mining_amt_target]);
+// $before_mining_total = ($member[$before_mining_target] - $member[$before_mining_amt_target]);
+
+//후원산하 
+$mb_b_child = $member['mb_b_child'] -1;
+if($mb_b_child < 0){
+	$mb_b_child = 0;
+}
 
 $bonus_sql = "select * from {$g5['bonus_config']} order by idx";
 $list = sql_query($bonus_sql);
@@ -489,8 +496,7 @@ function shift_auto($val,$type = 'eth'){
 	return clean_number_format($val,$decimal);
 }
 
-function get_coins_price(){
-
+/* function get_coins_price(){
 	$result = array();
 	$result['usdt_krw'] = 1;
 	$result['usdt_eth'] = 1;
@@ -501,36 +507,27 @@ function get_coins_price(){
 	$result['hja'] = 1;
 
 	return $result;
-}
+} */
 
-// function get_coins_price(){
+function get_coins_price(){
 
-// 	global $default;
+	global $default;
 
-// 	$result = array();
-// 	$url_list = array(
-// 		'https://api.upbit.com/v1/ticker?markets=KRW-ETH&markets=KRW-ETC&markets=USDT-ETH&markets=USDT-ETC',
-// 		"https://pro-api.coinmarketcap.com/v1/tools/price-conversion?CMC_PRO_API_KEY=9a0e9663-df7f-431b-9561-d46935376d5b&amount=1&symbol=eth",
-// 		"https://api.bitforex.com/api/v1/market/ticker?symbol=coin-usdt-hja"
-// 		);
+	$result = array();
+	$url_list = array(
+		'https://api.upbit.com/v1/ticker?markets=KRW-USDT',
+		"https://pro-api.coinmarketcap.com/v2/tools/price-conversion?CMC_PRO_API_KEY=8e568f73-a447-48c8-8074-3cb3f74e9745&amount=1&symbol=usdt&convert=krw",
+		);
 
-// 	$data = multi_curl($url_list);
+	$data = multi_curl($url_list);
 	
-// 	$eth_krw = $data[0][0]['trade_price'];
-// 	$etc_krw = $data[0][1]['trade_price'];
-// 	$usdt_eth = $data[0][2]['trade_price'];
-// 	$usdt_etc = $data[0][3]['trade_price'];
+	$krw_usdt = $data[0][0]['trade_price'];
+	$usdt_krw = $data[1]['data'][0]['quote']['KRW']['price'];
 
-// 	$result['usdt_krw'] = $default['de_coin_auto'] ? $eth_krw / $usdt_eth : $default['de_token_price'];
-// 	$result['usdt_eth'] = $usdt_eth;
-// 	$result['usdt_etc'] = $usdt_etc;
-// 	$result['eth_krw'] = $eth_krw;
-// 	$result['etc_krw'] = $etc_krw;
-// 	$result['eth_usdt'] = $data[1]['data']['quote']['USD']['price'];
-// 	$result['hja'] = $data[2]['data']['last'];
-
-// 	return $result;
-// }
+	$result['krw_usdt'] = $krw_usdt;
+	$result['usdt_krw'] = $usdt_krw;
+	return $result;
+}
 
 function multi_curl($url){
 	$ch = array();
@@ -739,6 +736,7 @@ function ordered_items($mb_id, $table=null){
 				"od_cart_price" => $order_row['od_cart_price'],
 				"upstair" => $order_row['upstair'],
 				"pv" => $order_row['pv'],
+				"od_date" => $order_row['od_date'],
 				"od_time" => $order_row['od_time'],
 				"od_settle_case" => $order_row['od_settle_case'],
 				"row" => $row
@@ -819,9 +817,11 @@ function retrun_tx_func($tx,$coin){
 		}else{
 			echo $tx;
 		}
-
 	}else if(strtolower($coin) =='fil'){
 		return "<a href ='https://filfox.info/ko/message/".$tx."' target='_blank' style='text-decoration:underline'>".$tx."</a>";
+
+	}else if(strtolower($coin) =='usdt'){
+		return "<a href ='https://www.oklink.com/ko/trx/tx/".$tx."' target='_blank' style='text-decoration:underline'>".utf8_strcut( $tx, 12, $suffix='...' )."</a>";
 	}else{
 		return $tx;
 	}
@@ -834,6 +834,8 @@ function retrun_addr_func($tx,$coin){
 		return "<a href ='https://filfox.info/ko/address/".$tx."' target='_blank' style='text-decoration:underline'>".$tx."</a>";
 	}else if (strtolower($coin) == 'etc'){
 		return "<a href ='https://blockscout.com/etc/mainnet/address/".$tx."' target='_blank' style='text-decoration:underline'>".$tx."</a>";
+	}else if(strtolower($coin) =='usdt'){
+		return "<a href ='https://www.oklink.com/ko/trx/address/".$tx."/token-transfer' target='_blank' style='text-decoration:underline'>".utf8_strcut( $tx, 30, $suffix='...' )."</a>";
 	}else{
 		return $tx;
 	}

@@ -1,7 +1,7 @@
 <?
 $menubar = 1;
 $email_auth = 1;
-$phone_auth = 0;
+$phone_auth = 1;
 
 
 include_once(G5_THEME_PATH.'/_include/head.php');
@@ -33,6 +33,10 @@ if ($_GET['recom_referral']){
 
 <style>
 	.gflag{display:none !important;}
+	/* .verify_phone{display:none} */
+	.btn_cancle {background:#cdd4e1}
+	input.auth_phone::placeholder{color:red}
+	.dark input.auth_phone::placeholder{color:#ffd965}
 </style>
 
 
@@ -42,14 +46,18 @@ if ($_GET['recom_referral']){
 	})
 	$('#mode_select').val(Theme).change();
 
+
 	var captcha;
 	var key;
 	var verify = false;
 	var recommned = "<?= $mb_recommend ?>";
 	var recommend_search = false;
 	var brecommend_search = false;
-	
+	var is_sms_submitted = false;
 	var center_search = false;
+	var is_sms_submitted = false;
+
+	var phone_auth = Number(<?= $phone_auth ?>);
 
 	if (recommned) {
 		recommend_search = true;
@@ -66,11 +74,18 @@ if ($_GET['recom_referral']){
 		$('.cabinet').on('mouseout',function(){
 			$(this).next().css('display','none');
 		})
+		
+		// 휴대폰 번호 유형 체크
+		function phoneNumberCheck(number){
+			let result = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+			return result.test(number);
+		}
 
 
 		/*초기설정*/
 		//$('.agreement_ly').hide();
 		$('#verify_txt').hide();
+		$('.verify_phone').hide();
 
 
 		/* 핸드폰 SMS 문자인증 사용 */
@@ -78,38 +93,94 @@ if ($_GET['recom_referral']){
 			// $('#reg_mb_hp').val($(this).val());
 		});
 
-		var phone_auth = "<?= $phone_auth ?>";
-		if (phone_auth > 0) {
-			$('.verify_phone').hide();
+		
+		
 
-			//SMS발송
-			$('#sendSms').on('click', function(e) {
-				if (!$('#reg_mb_hp').val()) {
-					dialogModal("모바일 본인 인증", "연락가능한 모바일 번호를 등록해주세요.", 'failed');
-					return;
-				}
-				var reg_mb_hp = +($('#reg_mb_hp').val().replace(/-/gi, ''));
-				$.ajax({
-					url: '/bbs/register.sms.verify.php',
-					type: 'post',
-					async: false,
-					data: {
-						"nation_no": $('#nation_number').val(),
-						"mb_hp": reg_mb_hp
-					},
-					dataType: 'json',
-					success: function(result) {
-						// console.log(result);
-						smsKey = result.key;
+		//SMS발송
+		$('#sendSms').on('click', function(e) {
+
+			var input_phone_number = $('#reg_mb_hp').val();
+			var verify_phone_number = phoneNumberCheck(input_phone_number);
+
+			var registerId = $('#reg_mb_id').val();
+
+			// console.log(`input : ${input_phone_number} | verify : ${verify_phone_number}`)
+
+			if (phone_auth > 0) {
+				$('.verify_phone').show();
+			}
+
+			if (!input_phone_number || !verify_phone_number) {
+				dialogModal("모바일 본인 인증", "연락가능한 모바일 번호를 등록해주세요.", 'failed');
+				return;
+			}
+
+			// var reg_mb_hp = +($('#reg_mb_hp').val().replace(/-/gi, ''));
+			var reg_mb_hp = input_phone_number;
+
+			// console.log(`phone_number : ${reg_mb_hp}`);
+
+			$.ajax({
+				url: '/util/enroll_send_sms.php',
+				type: 'post',
+				async: false,
+				data: {
+					"mb_id": registerId,
+					"mb_hp": reg_mb_hp
+				},
+				dataType: 'json',
+				success: function(e) {
+					if(e.result == 'success'){
 						dialogModal("SMS 인증", "모바일로 인증 코드를 보냈습니다.", 'success');
-					},
-					error: function(e) {
-						console.log(e);
 					}
-				});
+				},
+				error: function(e) {
+					console.log(e);
+				}
 			});
-		}
-	
+		});
+
+
+		$('#check_hp').on('click',function(){
+			
+			var input_auth_phone_number = $('#auth_phone').val();
+			var registerId = $('#reg_mb_id').val();
+			var reg_mb_hp = $('#reg_mb_hp').val();
+
+			console.log(input_auth_phone_number);
+
+			$.ajax({
+				url: '/util/check_enroll_auth_sms.php',
+				type: 'post',
+				async: true,
+				data: {
+					"mb_id": registerId,
+					"mb_hp": reg_mb_hp,
+					"pin" : input_auth_phone_number
+				},
+				dataType: 'json',
+				success: function(e) {
+					if(e.result == 'success'){
+						dialogModal("SMS 인증", "인증되었습니다.", 'success');
+						is_sms_submitted = true;
+
+						$('#reg_mb_id').prop('readonly', true);
+						$('#reg_mb_hp').prop('readonly', true);
+						$('.verify_phone').hide();
+
+					}else{
+						dialogModal("SMS 인증", "인증번호가 일치하지 않습니다.", 'failed');
+					}
+
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+
+		});
+
+		
 	/* 메일발송 로더 */
 	/* var loading = $('<div id="loading" class="loading"></div><img id="loading_img" src="/img/Spinner-1s-200px2.gif" />');
 	loading.appendTo(document.body).hide(); */
@@ -541,6 +612,9 @@ if ($_GET['recom_referral']){
 	// submit 최종 폼체크
 	function fregisterform_submit() {
 		var f = $('#fregisterform')[0];
+		console.log(`is_sms_submitted : ${is_sms_submitted}`);
+		
+		
 		/*
 		if(key != sha256($('#vCode').val())){
 		 	commonModal('Do not match','<p>Please enter the correct code</p>',80);
@@ -552,13 +626,6 @@ if ($_GET['recom_referral']){
 			commonModal('country check', '<strong>please select country.</strong>', 80);
 			return false;
 		} */
-
-		/* 이사멤버 검사
-		if (f.mb_director.value == '' || f.mb_director.value == 'undefined') {
-			commonModal('recommend check', '<strong>please check recommend search Button and choose recommend.</strong>', 80);
-			return false;
-		}
-		*/
 
 		/* console.log(`센터검색 : ${center_search}\n센터: ${f.mb_center.value}`); */
 		
@@ -629,6 +696,12 @@ if ($_GET['recom_referral']){
 		// 연락처
 		if (f.mb_hp.value == '' || f.mb_hp.value == 'undefined') {
 			commonModal('휴대폰번호확인', '<strong>휴대폰 번호가 잘못되거나 누락되었습니다. </strong>', 80);
+			return false;
+		}
+
+		// 휴대폰인증
+		if(phone_auth > 0 && !is_sms_submitted){
+			dialogModal('개인 정보 확인', "<strong>휴대폰 인증을 완료해주세요.</strong>", 'warning');
 			return false;
 		}
 
@@ -762,11 +835,29 @@ if ($_GET['recom_referral']){
 				<span class='cabinet_inner' style=''>※수신가능한 이메일주소를 직접 입력해주세요</span>
 				<!-- <div class='in_btn_ly'><input type="button" id='EmailChcek' class='btn_round check' value="이메일 전송"></div> -->
 				
-				<input type="text" name="mb_hp"  id="reg_mb_hp" class='cabinet'  pattern="[0-9]*" required  placeholder="휴대폰번호"/>
-				<span class='cabinet_inner' style=''>※'-'를 제외한 숫자만 입력해주세요</span>
+				<!-- <input type="text" name="mb_hp"  id="reg_mb_hp" class='cabinet'  pattern="[0-9]*" required  placeholder="휴대폰번호"/> -->
+				<!-- <span class='cabinet_inner' style=''>※'-'를 제외한 숫자만 입력해주세요</span> -->
 				<!-- <label class='prev_icon'><i class="ri-smartphone-line"></i></label> -->
 
-				<input type="text" name="account_name"  id="account_name" class='cabinet' required  placeholder="페이 아이디"/>
+				<!-- 폰인증 -->
+				<input type="text" name="mb_hp"  id="reg_mb_hp" class='cabinet'  pattern="[0-9]*" required  placeholder="휴대폰번호"/>
+				<span class='cabinet_inner' style=''>※'-'를 제외한 숫자만 입력해주세요</span>
+
+				<?if($phone_auth > 0){?>
+					<div class='in_btn_ly'><input type="button" id='sendSms' class='btn_round check' value="인증요청"></div>
+				<?}?>
+				<!-- <label class='phone_num'><i class="ri-smartphone-line"></i></label> -->
+			
+				<?if($phone_auth > 0){?>
+				<div class="ecode_div mt10">
+
+				<div class="verify_phone">
+					<input type="text" name='auth_phone' id='auth_phone' class='auth_phone' placeholder="인증번호를 입력해주세요"/>
+					<div class='in_btn_ly'><input type="button" id='check_hp' class='btn_round check' value="인증확인"></div>
+				</div>
+				<?}?>
+
+				<!-- <input type="text" name="account_name"  id="account_name" class='cabinet' required  placeholder="페이 아이디"/> -->
 		
 			</div>
 
@@ -798,26 +889,8 @@ if ($_GET['recom_referral']){
 			</ul>
 
 
-			<!-- 폰인증
-			<section id="personal">
-				<div>
-					<span style='display:block;margin-left:10px;' class='' data-i18n='signUp.핸드폰 번호'> Phone number</span>
-					<input type="text" name="mb_hp"  id="reg_mb_hp"  pattern="[09]*" placeholder="Phone number" value='' data-i18n='[placeholder]signUp.핸드폰 번호'/>
-					<label class='phone_num'><i class="ri-smartphone-line"></i></label>
-				</div>
-					<?if($phone_auth > 1){?>
-					<div class="clear_fix ecode_div">
-					<div class="verify_phone">
-						<input type="text" placeholder="Enter Phone Authtication Code"/>
-						<a href="javascript:void(0)" class=""  id="sendSms">
-							<img src="<?= G5_THEME_URL ?>/_images/email_send_icon.gif" alt="이메일코드">
-							Enter Phone Authtication Code
-						</a>
-						</div>
-					</div>
-					<?}?>
-			</section>
-			-->
+			
+			
 
 			<!--
 			<hr>

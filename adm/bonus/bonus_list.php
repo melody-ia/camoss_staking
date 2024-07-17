@@ -178,7 +178,6 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 
 
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <div class="local_ov01 local_ov" style="border-bottom:1px dashed black;padding-bottom:20px;background:white;">
 
 	<li class="right-border outbox{">
