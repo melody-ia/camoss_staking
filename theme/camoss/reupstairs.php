@@ -134,7 +134,7 @@ $result = sql_query($sql);
 							<!-- <input type='radio' value='eth' class='radio_btn' name='currency'><input type="text" id="trade_money_eth" class="trade_money" placeholder="0" min=5 data-currency='eth' readonly> -->
 							<div>
 								<input type="text" id="total_coin_val" class='input_price' value="<?= shift_auto($total_withraw, $curencys[0]) ?>" readonly>
-								<span class="currency-right coin"><?= $curencys[0] ?></span>
+								<span class="currency-right coin"><?= strtoupper($curencys[0]) ?></span>
 							</div>
 						</div>
 
@@ -143,8 +143,8 @@ $result = sql_query($sql);
 						</div>
 
 						<div class='col-6'>
-							<input type="text" id='shift_dollor' class='input_price red' style='text-align:right' readOnly>
-							<span class="currency-right coin "><?= $curencys[0] ?></span>
+							<input type="text" id='shift_dollor' class='input_price red'  readOnly>
+							<span class="currency-right coin "><?= strtoupper($curencys[0]) ?></span>
 						</div>
 					</div>
 
@@ -174,19 +174,26 @@ $result = sql_query($sql);
 					$od_settle_case = $row['od_settle_case'];
 				?>
 
+				
+
 					<div class="hist_con">
 						<div class="hist_con_row1">
 							<div class="row">
-								<span class="hist_date"><?= $row['od_receipt_time'] ?></span>
+								<span class="hist_date"><?= $row['od_date'] ?></span>
+								<span class="hist_value status mt20">보유중</span>
+								<span class="hist_value mt20 pack_f_<?= substr($od_name, 1, 1)?>"><?= strtoupper($row['od_name']) ?> <?=$od_name?></span>
+								<span class="curency_value mt20"><?= shift_auto($row['od_cart_price'], $od_settle_case)?> <?=strtoupper($curencys[0])?></span>
+							</div>
+
+							<!-- 
+							<div class="row">
+								<span class="hist_date"><?= $row['od_date'] ?></span>
 								<span class="hist_value"><?= shift_auto($row['od_cart_price'], $od_settle_case) ?> <?= $od_settle_case ?></span>
 							</div>
 
 							<div class="row">
 								<h2 class="pack_name pack_f_<?= substr($od_name, 1, 1) ?>"><?= strtoupper($row['od_name']) ?> <?=$od_name?></h2>
-								<!-- <span class='hist_sub_price'><?= shift_auto($row['od_cash'], $od_settle_case) ?> <?= $od_settle_case ?></span> -->
-
-					
-							</div>
+							</div> -->
 						</div>
 					</div>
 				<? } ?>
@@ -278,7 +285,7 @@ $result = sql_query($sql);
 				return false;
 			}
 
-			dialogModal('재구매 확인', '<strong>' + Price(goods_price) + '<?=$curencys[0]?>'+'을 구매 하시겠습니까?</strong>', 'confirm');
+			dialogModal('재구매 확인', '<strong> ' + Price(goods_price) + ' <?=strtoupper($curencys[0])?>'+'을 구매 하시겠습니까?</strong>', 'confirm');
 
 			$('#modal_confirm').on('click', function() {
 				dimHide();
