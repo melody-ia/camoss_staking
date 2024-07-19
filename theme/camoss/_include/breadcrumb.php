@@ -32,6 +32,9 @@ $notice_sql = "select * from g5_write_notice where wr_1 = '1' order by wr_id des
 $notice_result = sql_query($notice_sql);
 $notice_result_num = sql_num_rows($notice_result);
 
+// 대쉬보드 체크 
+$dashboard_page = strpos($_SERVER['PHP_SELF'],'/index.php');
+
 function check_value($val){
 	if($val == 1){
 		$icon = "<i class='ri-check-line icon value_yes'></i>";
@@ -101,8 +104,8 @@ $title = 'Dashboard';
 
 <section class='breadcrumb'>
 		
-		<!-- 공지사항 슬라이드 -->
-		<?php if($notice_result_num > 0 ){?>
+		<!-- 공지사항 슬라이드 // 대쉬보드에서만 노출-->
+		<?php if($notice_result_num > 0 && $dashboard_page > -1){?>
 
 		<link href="/js/swiper/swiper.min.css" rel="stylesheet">
 		<script src="/js/swiper/swiper.min.js"></script>

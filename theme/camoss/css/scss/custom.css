@@ -275,12 +275,12 @@ header .top_title #mode_select {
   background-color: #45d1a4;
 }
 
-.b_main {
-  background: #2ace9a !important;
-  color: #fff !important;
+.btn.b_main {
+  background: #2ace9a;
+  color: #fff;
 }
-.b_main:hover {
-  background: #45d1a4 !important;
+.btn.b_main:hover {
+  background: #45d1a4;
 }
 
 .b_sub {
@@ -292,12 +292,12 @@ header .top_title #mode_select {
 }
 
 .b_third {
-  background: white !important;
+  background: white;
   border: 1px solid rgb(186, 197, 207);
-  color: #333 !important;
+  color: #333;
 }
 .b_third:hover {
-  background: linear-gradient(0deg, #e6ecf3, #e6ecf3) !important;
+  background: linear-gradient(0deg, #e6ecf3, #e6ecf3);
 }
 
 .btn,
@@ -1446,6 +1446,7 @@ a.btn_cancle,
   line-height: 20px;
   font-weight: 300;
   font-weight: 600;
+  color: #333;
 }
 
 .hist_date {
@@ -1582,12 +1583,11 @@ a.btn_cancle,
   color: black;
 }
 .dark .b_main {
-  background: #4c6072 !important;
-  color: #fff !important;
-  font-weight: bold;
+  background: #1aa97c;
+  color: #fff;
 }
 .dark .b_main:hover {
-  background: #202b38 !important;
+  background: #45d1a4 !important;
 }
 .dark .b_sub {
   background: #fac707 !important;
@@ -2071,9 +2071,6 @@ a.btn_cancle,
 }
 .dark .profile .profile-box .person_info .myid {
   color: #fff;
-}
-.dark .mywallet .curency_value {
-  color: white;
 }
 .dark .mywallet #deposit .desc {
   color: #ffd965 !important;
@@ -3514,9 +3511,6 @@ a.btn_cancle,
   display: block;
   border-top: 2px dotted rgba(0, 0, 0, 0.2);
 }
-.dashline.dark {
-  border-top: 2px dotted rgba(255, 255, 255, 0.2);
-}
 
 .content_border {
   border-top: 8px solid #28d2eb;
@@ -3524,16 +3518,6 @@ a.btn_cancle,
 
 .l_div {
   border-left: 1px dashed #ddd;
-}
-
-.dark .puchase_agree {
-  background: #373b41;
-}
-.dark .puchase_agree .main_title2 {
-  color: white;
-}
-.dark .puchase_agree .agree_content_wrap .text_wrap span {
-  color: #efefef;
 }
 
 .item_icon {
@@ -3554,21 +3538,6 @@ a.btn_cancle,
   cursor: pointer;
   z-index: 1;
   width: 100%;
-  /* p {
-      text-align: center;
-      font-size: 0.8em;
-      font-weight: bold;
-
-      span {
-          font-weight: normal;
-          color: #3b86ff;
-          border: 1px solid #3b86ff;
-          border-radius: 10px;
-          padding: 0px 7px 0px 7px;
-          margin-right: 3px;
-          vertical-align: bottom;
-      }
-  } */
 }
 .notice_wrap_top .notice_box {
   background: #e6ecf3;
@@ -3589,6 +3558,35 @@ a.btn_cancle,
   padding: 0px 7px 0px 7px;
   margin-right: 3px;
   vertical-align: bottom;
+}
+
+.dark .b_third {
+  background: #474f61;
+  border: 1px solid #17191d;
+  color: white;
+}
+.dark .b_third:hover {
+  background: #111;
+  color: white;
+}
+.dark .notice_wrap_top .notice_box {
+  background: #171818;
+  color: white;
+}
+.dark .dashline {
+  border-top: 2px dotted rgba(226, 226, 226, 0.2);
+}
+.dark .puchase_agree {
+  background: #373b41;
+}
+.dark .puchase_agree .main_title2 {
+  color: white;
+}
+.dark .puchase_agree .agree_content_wrap .text_wrap span {
+  color: #efefef;
+}
+.dark .curency_value {
+  color: #eee;
 }
 
 /* .icon_marker{

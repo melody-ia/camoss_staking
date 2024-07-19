@@ -94,6 +94,7 @@ h3.title {
   border: 5px solid red;
   padding: 5px;
   font-size: 0.9em;
+  background: white;
 }
 .nft_container .title {
   font-family: "Damion", cursive;
@@ -130,4 +131,32 @@ h3.title {
 }
 .nft_container .company_sign img {
   width: 250px;
+}
+
+.dark h3.title {
+  color: white;
+}
+.dark .nft_container {
+  background: #181818;
+}
+.dark .nft_container .title {
+  color: white;
+}
+.dark .nft_container .sub_title {
+  color: #eee;
+}
+.dark .nft_container ul {
+  color: #eee;
+}
+.dark .nft_container .signature {
+  color: white;
+}
+.dark .staking_card.my_staking {
+  background: #19cf95;
+}
+.dark .item_character {
+  color: white;
+}
+.dark .staking_card.my_staking {
+  color: white;
 }

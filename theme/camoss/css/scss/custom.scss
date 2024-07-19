@@ -373,14 +373,14 @@ header {
     background-color: $main-color;
 }
 
-.b_main {
+.btn.b_main {
     // background:linear-gradient(0deg, $main-color,$sub-color) !important; 
-    background: $sub-color !important;
-    color: #fff !important;
+    background: $sub-color ;
+    color: #fff;
 
     &:hover {
         // background: linear-gradient(180deg, $main-color, $main-color) !important;
-        background: $main-color !important;
+        background: $main-color ;
         // box-shadow:0 0 1px 2px $main-color;
     }
 }
@@ -398,12 +398,12 @@ header {
 }
 
 .b_third {
-    background: white !important;
+    background: white;
     border:1px solid rgb(186, 197, 207);
-    color: #333 !important;
+    color: #333;
 
     &:hover {
-        background: linear-gradient(0deg, #e6ecf3, #e6ecf3) !important;
+        background: linear-gradient(0deg, #e6ecf3, #e6ecf3);
     }
 }
 
@@ -1808,6 +1808,8 @@ a.btn_cancle,
     line-height:20px;
     font-weight:300;
     font-weight:600;
+    color:#333;
+
 }
 
 .hist_date{
@@ -2012,13 +2014,13 @@ a.btn_cancle,
     // 버튼
     .b_main {
         // background: linear-gradient(to right, $main-button3, $main-button4) !important;
-        background: $main-button3 !important;
-        color: #fff !important;
-        font-weight: bold;
+        background: $dark_main_color_3;
+        color: #fff;
 
         &:hover {
-            // background: linear-gradient(to right, $main-button3, $main-button3) !important;
-            background: $main-button4 !important;
+            // background: linear-gradient(180deg, $main-color, $main-color) !important;
+            background: $main-color !important;
+            // box-shadow:0 0 1px 2px $main-color;
         }
     }
 
@@ -2760,9 +2762,7 @@ a.btn_cancle,
 
     // mywallet
     .mywallet {
-        .curency_value{
-            color:white;
-        }
+        
 
         #deposit {
             .desc {
@@ -4758,11 +4758,6 @@ a.btn_cancle,
     float:left;
     display: block;
     border-top:2px dotted rgba(0, 0, 0, 0.2);
-
-    &.dark {
-        border-top:2px dotted rgba(255, 255, 255, 0.2);
-    }
-
   }
 
 
@@ -4771,31 +4766,6 @@ a.btn_cancle,
 }
 
 .l_div{ border-left:1px dashed #ddd}
-
-.dark {
-
-    .puchase_agree{
-        background:#373b41;
-
-        .main_title2{
-            color:white;
-        }
-
-        .agree_content_wrap{
-            
-            .text_wrap{ 
-                span{
-                    color:#efefef;
-                }
-
-            }
-        }
-    }
-}
-
-
-
-
 
 
 .item_icon{font-size:22px;font-weight:300;}
@@ -4832,22 +4802,58 @@ a.btn_cancle,
         }    
     }
 
-    /* p {
-        text-align: center;
-        font-size: 0.8em;
-        font-weight: bold;
-
-        span {
-            font-weight: normal;
-            color: #3b86ff;
-            border: 1px solid #3b86ff;
-            border-radius: 10px;
-            padding: 0px 7px 0px 7px;
-            margin-right: 3px;
-            vertical-align: bottom;
-        }
-    } */
 }
+
+.dark {
+    .b_third{
+        background:#474f61;
+        border:1px solid #17191d;
+        color:white;
+
+        &:hover{
+            background:#111;
+            color:white;
+        }
+    }
+
+    .notice_wrap_top{
+        .notice_box{
+            background:#171818;
+            color:white
+        }
+    }
+    .dashline {
+        border-top:2px dotted rgba(226, 226, 226, 0.2);
+    }
+
+    .puchase_agree{
+        background:#373b41;
+
+        .main_title2{
+            color:white;
+        }
+
+        .agree_content_wrap{
+            
+            .text_wrap{ 
+                span{
+                    color:#efefef;
+                }
+
+            }
+        }
+    }
+
+    .curency_value{
+        color:#eee;
+    }
+}
+
+
+
+
+
+
 
 
 /* .icon_marker{

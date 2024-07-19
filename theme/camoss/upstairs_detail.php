@@ -16,6 +16,14 @@
         $sql = "SELECT * from g5_order WHERE od_id = '{$od_id}' order by od_id desc limit 0,1";
     }
 
+    $goods_sql = "select it_price, it_supply_point from g5_item where it_maker <> 'P0' order by it_price asc";
+    $goods_row = sql_query($goods_sql);
+    $goods_array = [];
+    for($i = 0; $i < $row = sql_fetch_array($goods_row); $i++){
+        array_push($goods_array,$row);
+    }
+    
+
     $this_od = sql_fetch($sql);
     
     $sum_pv = $this_od['sum_pv'];
@@ -81,6 +89,7 @@
 
 
     $item_rank = item_rank($sum_pv);
+    $fund_rate = $goods_array[$item_rank-1]['it_supply_point'];
     $item_layer = $sum_pv / 500;
     $digital_aseet = "moss_Inherent_asset_".$item_rank.".jpg";
 
@@ -131,8 +140,8 @@
                 <p class="mt20">
                     <ul><i class="ri-check-line"></i> 권리의 내용
                         <li>- 보유수량 > <span class="red"> <?=$item_layer?> MOSS</span></li>
-                        <!-- <li>- 일련번호 > <span class="red"><?=od_txt($this_od['od_cash_no'],$this_od['od_cash_info'])?>  </span></li>
-                        <li>- 사업 지분 권리 > <span class="red"><?=$funt_rate?>%</span></li> -->
+                        <!-- <li>- 일련번호 > <span class="red"><?=od_txt($this_od['od_cash_no'],$this_od['od_cash_info'])?>  </span></li> -->
+                        <li>- 투자 수익률 권리 > <span class="red"><?=$fund_rate?>%</span></li>
                     </ul>
 
                     <ul>
