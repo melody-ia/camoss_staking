@@ -129,7 +129,7 @@
 
             <div id="myChart2"></div>
             <?
-					$bonus_history_sql	 = "SELECT * from `{$g5['bonus']}` WHERE mb_id = '{$member['mb_id']}' order by day desc limit 0,5";
+					$bonus_history_sql	 = "SELECT allowance_name,SUM(benefit)AS total_bonus from `{$g5['bonus']}` WHERE mb_id = '{$member['mb_id']}' GROUP BY allowance_name ";
 					$bonus_history_result = sql_query($bonus_history_sql);
 					$bonus_history_cnt = sql_num_rows($bonus_history_result);
 					if($bonus_history_cnt > 0){
@@ -138,11 +138,11 @@
 
             <div class="line row">
                 <div class='col-7'>
-                    <span class='day'><?=timeshift($row['day'])?> </span>
-                    <span class='category'><?=strtoupper($row['allowance_name'] == "booster" ? "matching" : $row['allowance_name'])?> BONUS</span>
+                    <!-- <span class='day'><?=timeshift($row['day'])?> </span> -->
+                    <span class='category'>누적 <?=bonus_pick_category($row['allowance_name'],'name')?> 보너스</span>
                 </div>
                 <div class='col-5 text-right'>
-                    <span class='price'><?=shift_auto($row['benefit'],$curencys[0])?> <?=$curencys[0]?> </span>
+                    <span class='price'><?=shift_auto($row['total_bonus'],$curencys[0])?> <?=strtoupper($curencys[0])?> </span>
                 </div>
             </div>
 
@@ -222,7 +222,7 @@
                     <div class="line row">
                         <div class='col-9'>
                             <span class='badge'><?=$member_level_array[$row['mb_level']]?> </span>
-                            <span class='badge color<?=user_grade($member['mb_id'])?>'><?=$row['grade'].' star'?> </span>
+                            <span class='badge color<?=user_grade($member['mb_id'])?>'><?=$row['grade'].' CP'?> </span>
                             <span class='id'><?=$row['mb_id']?> </span>
 
                         </div>
@@ -242,7 +242,7 @@
         <div class='r_card_wrap content-box round regist_latest'>
             <div class="card_title_wrap">
                 <div class="card_title">후원내역 </div>
-                <a href='<?=G5_URL?>/page.php?id=structure'
+                <a href='<?=G5_URL?>/page.php?id=binary'
                     class='inline more'><span>더보기<i class="ri-add-circle-fill"></i></span>
                 </a>
             </div>
@@ -263,7 +263,7 @@
                     <div class="line row">
                         <div class='col-9'>
                             <span class='badge'><?=$member_level_array[$row['mb_level']]?> </span>
-                            <span class='badge color<?=user_grade($member['mb_id'])?>'><?=$row['grade'].' star'?> </span>
+                            <span class='badge color<?=user_grade($member['mb_id'])?>'><?=$row['grade'].' CP'?> </span>
                             <span class='id'><?=$row['mb_id']?> </span>
 
                         </div>

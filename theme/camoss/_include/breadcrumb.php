@@ -32,8 +32,7 @@ $notice_sql = "select * from g5_write_notice where wr_1 = '1' order by wr_id des
 $notice_result = sql_query($notice_sql);
 $notice_result_num = sql_num_rows($notice_result);
 
-// 대쉬보드 체크 
-$dashboard_page = strpos($_SERVER['PHP_SELF'],'/index.php');
+
 
 function check_value($val){
 	if($val == 1){
@@ -134,7 +133,7 @@ $title = 'Dashboard';
 				autoHeight : true,
 				loop:true,
 				autoplay: {   
-					delay: 5000, 
+					delay: 4000, 
 					disableOnInteraction: false, 
 				},
 			})
@@ -169,15 +168,15 @@ $title = 'Dashboard';
 					<ul class="row top">
 						<li class="col-4">
 							<dt class="title" >총 누적 보너스</dt>
-							<dd class="value" style='font-size:15px;'><?=shift_auto($total_fund,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
+							<dd class="value" style='font-size:15px;'><?=shift_auto($total_fund,$curencys[0])?><span class='currency'></span></dd>
 						</li>
 						<li class="col-4">
 							<dt class="title" >구매 가능액(입금)</dt>
-							<dd class="value" style='font-size:15px;'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
+							<dd class="value" style='font-size:15px;'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'></span></dd>
 						</li>
 						<li class="col-4">
 							<dt class="title" >출금/재구매 가능액 </dt>
-							<dd class="value" style='font-size:15px;'><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'><?=$curencys[0]?></span></dd>
+							<dd class="value" style='font-size:15px;'><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'></span></dd>
 						</li>
 						
 					</ul> 

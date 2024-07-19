@@ -71,6 +71,8 @@ $mb_balance_ignore = $member['mb_balance_ignore'];
 $day_mint_sql = "SELECT rate from  {$g5['bonus_config']} WHERE code = 'mining' ";
 $day_mint_value = sql_fetch($day_mint_sql)['rate'];
 
+// 대쉬보드 체크 
+$dashboard_page = strpos($_SERVER['PHP_SELF'],'/index.php');
 
 // 현재 통화(달러) 시세
 $usd_price = coin_price('usd')*1000;
@@ -208,9 +210,11 @@ function user_grade($id){
 }
 
 function _user_grade($grade){
-	$array = ["0 STAR","1 STAR","2 STAR","3 STAR","4 STAR","5 STAR"];
+	$array = ["0 CP","1 CP","2 CP","3 CP","4 CP","5 CP"];
 	return $array[$grade > 5 ? 5 : $grade];
 }
+
+
 
 
 // 닉네임검사
@@ -891,4 +895,21 @@ function array_bank_account($category = null, $used = null, $idx = null){
 	}
 	
 	return $array;
+}
+
+// 보너스명 리턴
+function bonus_pick_category($val,$category='*'){    
+    global $g5;
+	
+	$_category = $category;
+	
+    $pick_sql = "select {$_category} from {$g5['bonus_config']} where code = '{$val}' ";
+    $list = sql_fetch($pick_sql);
+
+	if($category != '*'){
+		return $list[$_category];
+	}else{
+		return $list;
+	}
+    
 }

@@ -48,9 +48,11 @@ $(document).ready(function(){
 <section id="wrapper" class="<?if($menubar){echo "menu_back_gnb";}?>" >
 <header>
 	<?if($menubar){?>
-	<div class="menuback">
-		<a href="javascript:history.back();" class='back_icon'><i class="ri-arrow-left-s-line"></i></a>
-	</div>
+		<?if($dashboard_page > -1){}else{?>
+		<div class="menuback">
+			<a href="javascript:history.back();" class='back_icon'><i class="ri-arrow-left-s-line"></i></a>
+		</div>
+		<?}?>
 	<?}else{?>
 	<div class="menu">
 		<a href="#" class='menu_icon'><i class="ri-menu-2-line"></i></a>

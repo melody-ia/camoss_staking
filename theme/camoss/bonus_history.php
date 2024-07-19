@@ -59,13 +59,12 @@ SELECT allowance_name AS cate, DAY, SUM(benefit) AS c_sum  FROM soodang_pay WHER
             <?}?>
             <!-- 수당 -->
             <? while($row = sql_fetch_array($result) ){
-                $row['cate'] = $row['cate'] == "booster" ? "matching" : $row['cate'];
             ?>
             <div class="col-sm-12 col-12 content-box round" id="<?=$row['cate']?>">
 
                 <div class="box-header row">
                     <div class='col-7 text-left' style='font-size:13px;font-weight:600'>
-                        <span><?=strtoupper($row['cate'])?> Bonus </span>
+                        <span><?=bonus_pick_category($row['cate'],'name')?> 보너스 </span>
                         <span class='badge' style='font-size:12px;font-weight:300'><?=$row['cnt']?></span>
                     </div>
 

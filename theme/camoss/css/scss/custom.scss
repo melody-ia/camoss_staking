@@ -4805,6 +4805,17 @@ a.btn_cancle,
 }
 
 .dark {
+    #fnb{
+        background:#111;
+        i{color:#cfcfcf;font-weight:300;}
+        label{color:white;}
+
+        div:hover{
+            i{color:#fac707;font-weight:300;}
+            label{color:#fac707;}
+        }
+    }
+
     .b_third{
         background:#474f61;
         border:1px solid #17191d;

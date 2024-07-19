@@ -3560,6 +3560,23 @@ a.btn_cancle,
   vertical-align: bottom;
 }
 
+.dark #fnb {
+  background: #111;
+}
+.dark #fnb i {
+  color: #cfcfcf;
+  font-weight: 300;
+}
+.dark #fnb label {
+  color: white;
+}
+.dark #fnb div:hover i {
+  color: #fac707;
+  font-weight: 300;
+}
+.dark #fnb div:hover label {
+  color: #fac707;
+}
 .dark .b_third {
   background: #474f61;
   border: 1px solid #17191d;

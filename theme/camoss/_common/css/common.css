@@ -2369,6 +2369,7 @@ input:checked + .slider:before {
 .mywallet .qrBox .qr_img {
   width: 120px;
   margin: 0 auto;
+  text-align: center;
 }
 .mywallet .qrBox .qr_img img {
   width: 90%;
