@@ -112,7 +112,7 @@ function  excute(){
         $datas[$mb_id]['limit'] = $mb_index;
         $format_benefit = number_format($benefit);
         $datas[$mb_id]['history'] .= "상품 : {$od_name} | 직추천인 : <span class='red'> {$from_mb_id} </span>
-        =><span class='blue'> {$format_benefit} 원</span><br>";
+        =><span class='blue'> {$format_benefit} usdt</span><br>";
 
     }
 
@@ -122,7 +122,7 @@ function  excute(){
 
         echo "<br><span class='title block' style='font-size:30px;'>{$key}</span><br>";
         echo "<code>";
-        echo "현재수당: ".number_format($data['total_balance'])." 원 | 수당한계: ".number_format($data['limit'])." 원 | 발생수당: ".number_format($data['benefit'])." 원 <br><br>";
+        echo "현재수당: ".number_format($data['total_balance'])." usdt | 수당한계: ".number_format($data['limit'])." usdt | 발생수당: ".number_format($data['benefit'])." usdt <br><br>";
         echo "</code>";
         echo $data['history']."<br>";
 
@@ -141,8 +141,8 @@ function  excute(){
         $shop_benefit = $calc_benefit * $shop_bonus_rate;
 
         echo "<code>";
-        echo "<span>실제수당: ".clean_number_format($calc_benefit)." 원</span><br>";
-        echo "<span>수당: ".clean_number_format($balance_benefit)." 원 | 쇼핑포인트: ".clean_number_format($shop_benefit)." 원</span>";
+        echo "<span>실제수당: ".clean_number_format($calc_benefit)." usdt</span><br>";
+        echo "<span>수당: ".clean_number_format($balance_benefit)." usdt | 탄소포인트: ".clean_number_format($shop_benefit)." cp</span>";
         echo "</code>";
 
         if($mb_balance_update == ""){$mb_balance_update .= "mb_balance = case mb_id ";}
@@ -161,8 +161,8 @@ function  excute(){
 
         $soodang_pay_values_insert .= "('{$code}','{$bonus_day}','{$key}',{$data['mb_no']},
         {$calc_benefit},{$data['mb_level']},{$data['grade']},'{$data['mb_name']}',
-        '{$code} bonus {$bonus_row['rate']}% : {$clean_balance_benefit} 원, shop bonus : {$clean_shop_benefit} 원 {$over_benefit}',
-        '{$clean_upstair}(총 구매액)*{$bonus_row['rate']}%(지급률) {$over_benefit}={$clean_balance_benefit} 원, shop bonus : {$clean_shop_benefit} 원(expected : {$expected} 원)',
+        '{$code} bonus {$bonus_row['rate']}% : {$clean_balance_benefit} usdt, shop bonus : {$clean_shop_benefit} CP {$over_benefit}',
+        '{$clean_upstair}(총 구매액)*{$bonus_row['rate']}%(지급률) {$over_benefit}={$clean_balance_benefit} usdt, shop bonus : {$clean_shop_benefit} CP(expected : {$expected} usdt)',
         {$clean_total_balance},{$clean_mb_deposit_point},now()),";
 
     }

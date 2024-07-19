@@ -11,7 +11,8 @@ auth_check($auth[$sub_menu], 'r');
 
 $month = date('m', $timestr);
 
-echo "이번달 : ".$month;
+echo "이번달 : ".$month."월";
+echo "<br>";
 
 /* 
 if($day > 13 && $day <= 20){
@@ -68,7 +69,7 @@ $bonus_layer = $bonus_row['layer'];
 $bonus_layer_tx = bonus_layer_tx($bonus_layer);
 $bonus_limited = $bonus_row['limited'];
 
-$company_sales = 6;
+$company_sales = 3;
 
 /* 
 //보름간 매출 합계 
@@ -104,8 +105,8 @@ if($debug){
 //회원 리스트를 읽어 온다.
 $sql_common = " FROM g5_member ";
 // $sql_search=" WHERE o.mb_id=m.mb_id AND DATE_FORMAT(o.od_time,'%Y-%m-%d')='".$bonus_day."'";
-$sql_search=" WHERE grade > 0 ".$pre_condition.$admin_condition;
-$sql_mgroup=" GROUP BY grade ORDER BY grade asc ";
+$sql_search=" WHERE pv > 0 ".$pre_condition.$admin_condition;
+$sql_mgroup=" ORDER BY grade asc ";
 
 $pre_sql = "select grade, count(*) as cnt
                 {$sql_common}
@@ -113,6 +114,7 @@ $pre_sql = "select grade, count(*) as cnt
                 {$sql_mgroup}";
 
 $pre_result = sql_query($pre_sql);
+
 
 function grade_name($val)
 {
@@ -149,16 +151,17 @@ if($debug){
 ob_start();
 
 // 설정로그 
-echo "<strong>직급(등급) 지급비율 : ";
+echo "<strong>글로벌 지급비율 : ";
 print_R(rate_txt($bonus_row['rate']));
 echo "   </strong> |    지급조건 :".$pre_condition.' | '.$bonus_condition_tx." | ".$bonus_layer_tx."<br>";
 echo "<br><strong> 현재일 : ".$bonus_day." |  ".$half." 매출산정기준 : 지난달 | <span class='red'>".$start_week."~".$end_week."</span> | ".$half." 패키지 매출 합계 : <span class='blue big'>".Number_format($total_order).' '.$curencys[0]."</span>  </strong><br>";
-echo "<br> 직급수당 대상금액 : <span class='blue big'>".$company_sales."% = ".Number_format($grade_order).' '.$curencys[0]."</span>";
-echo "<br><br>기준대상자(직급 0 이상) : ";
+echo "<br> 글로벌수당 대상금액 : <span class='blue big'>".$company_sales."% = ".Number_format($grade_order).' '.$curencys[0]."</span>";
+echo "<br><br>기준대상자(PV 0 이상) : ";
 
 
-$cnt_total = 0;
-$cnt_arr = [];
+$cnt_total = sql_fetch($pre_sql)['cnt'];
+
+/* $cnt_arr = [];
 
 while( $cnt_row = sql_fetch_array($pre_result)){
     echo "<br><strong>".$cnt_row['grade']." CA</strong> : <span class='red'>".$cnt_row['cnt'].'</span> 명';  
@@ -177,9 +180,16 @@ for($k=0; $k<$cnt_total; $k++){
     array_push($cnt_result_arr,$temp);
 }
 
-$member_cnt_result = array_reverse($cnt_result_arr);
+$member_cnt_result = array_reverse($cnt_result_arr); */
 
+/* while( $cnt_row = sql_fetch_array($pre_result)){
+    echo "<br><span class='red'>".$cnt_row['cnt'].'</span> 명';  
+    // array_push($cnt_arr,$cnt_row['cnt']);
+    // $cnt_total++; 
+    $cnt_total = $cnt_row['cnt']
+}  */
 
+echo "<br><span class='red'>".$cnt_total.'</span> 명';  
 
 
 
@@ -201,38 +211,21 @@ if($grade_order > 0){
 function  excute(){
 
     global $g5,$admin_condition,$pre_condition;
-    global $bonus_day, $bonus_condition, $bonus_rate_array_cnt, $code, $bonus_rate,$bonus_limit,$total_order,$Khan_order,$grade_order;
+    global $bonus_day, $bonus_condition, $bonus_rate_array_cnt, $code, $bonus_rate,$bonus_limit,$total_order,$Khan_order,$grade_order,$cnt_total;
     global $debug,$prev_m,$live_bonus_rate,$shop_bonus_rate,$balanace_ignore,$member_cnt_result;
-
-    for ($i=1; $i<$bonus_rate_array_cnt+2; $i++) {   
-        $cnt_sql = "SELECT count(*) as cnt From {$g5['member_table']} WHERE grade >= {$i} ".$admin_condition.$pre_condition." ORDER BY mb_no" ;
-        $cnt_result = sql_fetch($cnt_sql);
-        
-
-        $sql = "SELECT * FROM {$g5['member_table']} WHERE grade >= {$i} ".$admin_condition.$pre_condition." ORDER BY mb_no ";
-        $result = sql_query($sql);
-
-        // 직급표기예외
-        $member_count  = $cnt_result['cnt'];
-        $member_grade_count = $member_cnt_result[$i-1];
-        $grade_name = $i;
+ 
        
 
-        // 수당예외
-        /* if($i == 1 ){
-            $star_rate = 500000;
-            $star_rate_tx = "500,000 원 고정지급";
-        }else{
-            $star_rate = $bonus_rate[$i -1]*0.01;
-            $star_rate_tx = $bonus_rate[$i -1]."%";
-        } */
+        $sql = "SELECT * FROM {$g5['member_table']} WHERE pv > 0 ".$admin_condition.$pre_condition." ORDER BY mb_no ";
+        $result = sql_query($sql);
 
-        $star_rate = $bonus_rate[$i -1]*0.01;
-        $star_rate_tx = $bonus_rate[$i -1]."%";
+        $star_rate = $bonus_rate[0]*0.01;
+        $star_rate_tx = $bonus_rate[0]."%";
 
+        $member_count = $cnt_total;
 
         // echo "<br><br><span class='title block'>".grade_name($grade_name)." (<span class='red'>".$member_count."</span> | ".$member_grade_count.") - ".$star_rate_tx." (".($grade_order*$star_rate)." usdt)"."</span><br>";
-        echo "<br><br><span class='title block'>".grade_name($grade_name)." (<span class='red'>".$member_count."</span> ".") - ".$star_rate_tx." (".Number_format($total_order*$star_rate)."  원 )"."</span><br>";
+        // echo "<br><br><span class='title block'>".grade_name($grade_name)." (<span class='red'>".$member_count."</span> ".") - ".$star_rate_tx." (".Number_format($total_order*$star_rate)."  원 )"."</span><br>";
 
         // 디버그 로그 
         if($debug){
@@ -261,35 +254,13 @@ function  excute(){
             
             if( $member_count != 0 ){ 
                 
-                // 수당예외
-                /* if($i == 1 ){
-
-                    $benefit = $star_rate  ;
-                    $benefit = round($benefit);
-                    $benefit_tx = ' 500,000  ';
-                     
-                    // 중복지급 제외
-                    $have_sql = "SELECT count(mb_id) as cnt FROM soodang_pay WHERE allowance_name ='grade' AND benefit = 500000 AND mb_id = '{$mb_id}' ";
-                    $have_cnt = sql_fetch($have_sql)['cnt'];
-                    
-                }else if($i == $bonus_rate_array_cnt){
-
-                    $benefit =  ( ($Khan_order*$star_rate) * (1/$member_count) );
-                    $benefit = round($benefit);
-                    $benefit_tx = ' '.$Khan_order.' * '.$star_rate.' * 1/'.$member_count.'='.$benefit; 
-                }else{
-
-                    $benefit = ( ($grade_order*$star_rate) * (1/$member_count) );// 매출자 * 수당비율 * 1/n
-                    $benefit = round($benefit);
-                    $benefit_tx = ' '.$grade_order.' * '.$star_rate.' * 1/'.$member_count.'='.$benefit; 
-                } */
-
-                $benefit = ( ($total_order*$star_rate) * (1/$member_grade_count) );// 매출자 * 수당비율 * 1/n
+            
+                $benefit = round((($total_order*$star_rate) * (1/$member_count)),2);// 매출자 * 수당비율 * 1/n
                 // $benefit = shift_auto($benefit,'$');
 
                 $live_benefit = clean_coin_format($benefit,2);
 
-                $benefit_tx = ' '.$total_order.' * '.$star_rate.' * 1/'.$member_grade_count.'='.$benefit; 
+                $benefit_tx = ' '.$total_order.' * '.$star_rate.' * 1/'.$member_count.'='.$benefit; 
                 
                 $balance_limit = $mb_index; // 수당한계
                 $benefit_limit = $mb_index - ($mb_balance + $mb_shop_point + $benefit); // 수당합계
@@ -308,7 +279,7 @@ function  excute(){
                 
                 echo $benefit_tx;
                 
-                $rec= $code.' Bonus from '. $prev_m."M | ".$grade_name.' CA';
+                $rec= $code.' Bonus from Global ' ;
                 $rec_adm= $benefit_tx;
 
                 if($benefit > $benefit_limit && $balance_limit != 0 ){
@@ -366,7 +337,6 @@ function  excute(){
             } // if else
         } //while
         $rec='';
-    } //for
 } //function
 ?>
 

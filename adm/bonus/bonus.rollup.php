@@ -32,7 +32,7 @@ endif;
 
 //회원 리스트를 읽어 온다.
 $sql_common = " FROM g5_member";
-$sql_search=" WHERE pv >= 500000 AND mb_level < 7";
+$sql_search=" WHERE pv >= 500 AND mb_level < 10";
 $sql_mgroup=" ORDER BY mb_no asc";
 
 $pre_sql = "select * 
@@ -82,7 +82,7 @@ echo "지급조건 -".$pre_condition.' | '.$bonus_condition_tx." | ".$bonus_limi
 
 for($i =0; $i < count($rollup_rate_array); $i++){
 
-    array_push($rollup_rate,$rollup_rate_array[$i][0]*10000); 
+    array_push($rollup_rate,$rollup_rate_array[$i][0]); 
     array_push($rollup_layer,$rollup_rate_array[$i][1]);
     array_push($rollup_condition,$rollup_rate_array[$i][2]);
 
@@ -105,26 +105,21 @@ function find_rank_index($val,$mem_cnt){
     if($mem_cnt >= 0){
         if($val < $rollup_rate[0]) {$result = -1;}
         if($val >= $rollup_rate[0]) {$result = 0;}
-        if($val >= $rollup_rate[1]) {$result = 1;}
-        if($val >= $rollup_rate[2]) {$result = 2;}
     }
 
     if($mem_cnt >= 2){
-        if($val >= $rollup_rate[3]) {$result = 3;}
+        if($val >= $rollup_rate[1]) {$result = 1;}
     }
 
     if($mem_cnt >= 3){
-        if($val >= $rollup_rate[4]) {$result = 4;}
+        if($val >= $rollup_rate[2]) {$result = 2;}
     }
 
-    if($mem_cnt >= 4){
-        if($val >= $rollup_rate[5]) {$result = 5;}
-    }
 
     if($mem_cnt >= 5){
-        if($val >= $rollup_rate[6]) {$result = 6;}
-        if($val >= $rollup_rate[7]) {$result = 7;}
-        if($val >= $rollup_rate[8]) {$result = 8;}
+        if($val >= $rollup_rate[3]) {$result = 3;}
+        if($val >= $rollup_rate[4]) {$result = 4;}
+        if($val >= $rollup_rate[5]) {$result = 5;}
     }
 
     return $result;
@@ -132,9 +127,11 @@ function find_rank_index($val,$mem_cnt){
 }
 
 function bonus_rate($val){
-    if($val <= 3){$result = 10;}
-    if($val > 3 && $val <= 15){$result = 5;}
-    if($val > 15 && $val <= 20){$result = 2;}
+    if($val <= 1){$result = 30;}
+    if($val > 1 && $val <= 2){$result = 20;}
+    if($val > 2 && $val <= 5){$result = 10;}
+    if($val > 5 && $val <= 8){$result = 5;}
+    if($val > 8 && $val <= 10){$result = 2.5;}
     return $result;
 }
 
@@ -309,7 +306,7 @@ function  excute(){
         }
         
         
-        echo "▶추천인수 : <span class='blue'>" . $mem_cnt . "</span>";
+        echo "▶직추천인수 : <span class='blue'>" . $mem_cnt . "</span>";
 
         if($item_rank >= 0){ // 매칭레벨
 
@@ -321,7 +318,7 @@ function  excute(){
             
 
             echo "<br>";
-            echo "▶▶ 보유PV: <strong>".shift_kor($pv)."</strong> | 패키지등급 : ".$item_rank." | 매칭레벨 : <span class='blue'>".$matching_lvl."</span><br> ";
+            echo "▶▶ 보유PV: <strong>".shift_kor($pv)."</strong> | 패키지등급 : ".$item_rank." | 매칭레벨 : <span class='blue'>".$matching_lvl."대</span><br> ";
             echo "▶▶▶ 후원라인 하부 <span class='blue'>".$matching_lvl."대</span> 하부PV :: ";
             echo "<span class='blue'>".shift_auto($brecom_list_sum)."</span>";
             echo "<br>";
@@ -367,12 +364,12 @@ function  excute(){
                         echo "<br>".$recomm." | ".$count." 대 :: ".shift_auto($today_sales).'*0.5 *'.$bonus_rates;
 
                     // 기록용 
-                    $rec = $code.' Bonus from '. $recomm.' - '.$count."대  | P =".$live_benefit.", SP = ".$shop_benefit;
-                    $rec_adm = ''. $recomm.' - '.$count.'대 :'.shift_auto($today_sales).'*0.5 *'.$bonus_rate.'='.$benefit." | P =".$live_benefit.", SP = ".$shop_benefit; 
+                    $rec = $code.' Bonus from '. $recomm.' - '.$count."대  | P =".$live_benefit.", CP = ".$shop_benefit;
+                    $rec_adm = ''. $recomm.' - '.$count.'대 :'.shift_auto($today_sales).'*0.5 *'.$bonus_rate.'='.$benefit." | P =".$live_benefit.", CP = ".$shop_benefit; 
 
                     if($benefit > $benefit_limit && $balance_limit != 0 ){
 
-                        $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit)." (P:".$live_benefit." / SP:".$shop_benefit.")</span>";
+                        $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit)." (P:".$live_benefit." / CP:".$shop_benefit.")</span>";
                         echo "<span class=blue> ▶▶ 수당 지급 : ".$benefit_point."</span>";
                         echo "<span class=red> ▶▶▶ 수당 초과 (한계까지만 지급) : ".$benefit_limit_point." </span><br>";
 
@@ -385,7 +382,7 @@ function  excute(){
             
                         echo "<span class=black> ▶▶ 수당 미발생 </span>";
                     }else{
-                        echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P지급".$live_benefit." / SP지급 : ".$shop_benefit.")</span><br>";
+                        echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P지급".$live_benefit." / CP지급 : ".$shop_benefit.")</span><br>";
                     }
 
                             // 디버그 로그

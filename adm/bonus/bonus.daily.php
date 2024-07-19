@@ -37,7 +37,7 @@ if($debug){
 }
 
 $order_list_sql = "select m.mb_level,m.mb_no, m.mb_id, m.grade, m.mb_name, m.pv, (m.mb_balance + m.mb_shop_point) as mb_balance, m.mb_balance_ignore, m.mb_index
-from g5_member m where m.pv > 0 ";
+from g5_member m where m.pv > 0 AND mb_level < 10 ";
 
 $order_list_result = sql_query($order_list_sql);
 
@@ -71,7 +71,7 @@ for($i = 0; $i < $row = sql_fetch_array($goods_row); $i++){
 		return false;
 	}
 	$clean_price_format = clean_number_format($row['it_price']);
-	$rate .= "{$clean_price_format}원 -> {$soodang_config[$i]}%";
+	$rate .= "{$clean_price_format} {$curencys[2]} -> {$soodang_config[$i]}%";
 	$rate_array[$row['it_price']] = $soodang_config[$i];
 	if($i < $goods_cnt - 1){
 		$rate .= ", ";
@@ -94,8 +94,8 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
 
 if(!$get_today){
 
-	$unit = "원";
-	$shop_unit = "원";
+	$unit = "usdt";
+	$shop_unit = "cp";
 
 	$member_start_sql = "update g5_member set ";
 	$member_balance_column_sql = "";
@@ -154,8 +154,8 @@ if(!$get_today){
 		$_benefit = clean_coin_format($benefit * $live_bonus_rate,2);
 		$_clean_number_benefit  = clean_number_format($_benefit);
 
-		$rec = "{$code} bonus {$rate}% : {$_clean_number_benefit} {$unit}, shop bonus : {$clean_shop_benefit} {$shop_unit} {$over_benefit_log}";
-		$benefit_log = "{$clean_number_goods_price}(총 구매액) * {$rate}%(지급률) {$over_benefit_log}";
+		$rec = "{$code} bonus {$rate}% : {$_clean_number_benefit} {$unit}, CP point : {$clean_shop_benefit} {$shop_unit} {$over_benefit_log}";
+		$benefit_log = "{$clean_number_goods_price} (PV) * {$rate}%(지급률) {$over_benefit_log}";
 		
 		$total_paid_list[$order_list_row['mb_id']]['log'] .= "<br><span>{$benefit_log} = </span><span class='blue'>{$clean_number_benefit}</span>";
 		$total_paid_list[$order_list_row['mb_id']]['sub_log'] = "<span>현재총수당 : {$clean_number_mb_balance}, 수당한계점 : {$clean_number_mb_index} </span>";
@@ -179,7 +179,7 @@ if(!$get_today){
 		$member_my_sales_cloumn_sql .= "when '{$key}' then {$value['real_benefit']} ";
 		
 		$member_where_sql .= "'{$key}',";
-		echo "<span class='title block' style='font-size:30px;'>{$key}</span>{$value['sub_log']}<br>{$value['log']}<div style='color:orange;'>발생 수당 : {$value['total_benefit']}</div><div style='color:red;'>▶ 수당지급 : {$live_benefit} <br> ▶ 쇼핑몰포인트지급 : {$shop_benefit} </div><br><br>";
+		echo "<span class='title block' style='font-size:30px;'>{$key}</span>{$value['sub_log']}<br>{$value['log']}<div style='color:orange;'>발생 수당 : {$value['total_benefit']}</div><div style='color:red;'>▶ 수당지급 : {$live_benefit} <br> ▶ 탄소포인트지급 : {$shop_benefit} </div><br><br>";
 	}
 	
 	$member_balance_column_sql .= "else mb_balance end ";

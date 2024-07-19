@@ -49,7 +49,7 @@ $lvlimit_sales_level = explode(',', $levelup_result['rate']);
 
 // 추천산하매출기준
 $lvlimit_recom = explode(',', $levelup_result['kind']);
-$lvlimit_recom_val = 10000;
+$lvlimit_recom_val = 1;
 
 
 
@@ -91,7 +91,7 @@ function grade_name($val)
     else if($val == 2){$full_name = '이코노미';} 
     else if($val == 1){$full_name = '여행플래너';} 
 
-    $grade_name = $val . " STAR = ";
+    $grade_name = $val . " CA = ";
 
     return $grade_name;
 }
@@ -101,7 +101,7 @@ function limit_conditions($val,$kind='val')
     if (preg_match("/^\{(.+)\}/", $val, $matches)) {
         $temp = explode(':', $matches[1]);
         if($kind == 'text'){
-            $result = $temp[0] . '그룹|' . $temp[1] . 'star 이상';
+            $result = $temp[0] . '그룹|' . $temp[1] . 'CA 이상';
         }else{
             $result = [$temp[0],$temp[1]];
         }
@@ -225,7 +225,7 @@ echo "<strong>현재 직급 기준 대상자</strong> : ";
 
 if ($pre_count > 0) {
     while ($cnt_row = sql_fetch_array($pre_result)) {
-        echo "<br><strong>" . $cnt_row['grade'] . " STAR : <span class='red'>" . $cnt_row['cnt'] . '</span> 명</strong>';
+        echo "<br><strong>" . $cnt_row['grade'] . " CA : <span class='red'>" . $cnt_row['cnt'] . '</span> 명</strong>';
     }
 } else {
     echo "<span class='red'>대상자없음</span>";
@@ -316,11 +316,12 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
                 echo "<br><br><span class='title block'>" .grade_name($i) ."(" . $member_count . ")</span><br>";
                 echo  " -  [ 승급기준 ] 본인매출 : " . Number_format($lvlimit_sales_level[$i]* $lvlimit_recom_val) . " 이상";
 
-                if($i == 0){
+                if($i < 5){
                     echo " | 소실적합 : ".Number_format($lvlimit_recom[$i] * $lvlimit_recom_val)." 이상 ";
-                }else{
-                    echo " | 라인조건 : ".limit_conditions($lvlimit_cnt[$i],'text') . ' <br>';
                 }
+                /* else{
+                    echo " | 라인조건 : ".limit_conditions($lvlimit_cnt[$i],'text') . ' <br>';
+                } */
                 
                 
 
@@ -393,7 +394,7 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
                         
 
                         
-                        if ($i == 0) {
+                        if ($i < 5) {
 
                             // 산하 추천 매출 -  recom_sales 기준
                             $direct_recom = direct_recom($mb_id);
@@ -426,7 +427,8 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
                             echo ($recom_id);
                             echo "</span>"; */
 
-                        } else {
+                        } 
+                        /* else {
 
                             // 하부 직급 확인
                             $cherry_pick_array = array_index_cherry_pick_diff($mem_result, array('grade', 'line'), $i);
@@ -447,7 +449,7 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
                                 echo "<span class='red'> == OK </span>";
                             }
 
-                        }
+                        } */
 
                         
                         // 디버그 로그
@@ -480,8 +482,8 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
                         // 승급로그
                         if ($rank_cnt >= 2) {
                             $upgrade = ($grade + 1);
-                            echo "<br><span class='red'> ▶▶ 직급 승급 => " . $upgrade . " STAR </span><br> ";
-                            $rec = $code . ' Update to ' . ($grade + 1) . ' STAR IN ' . $bonus_day;
+                            echo "<br><span class='red'> ▶▶ 직급 승급 => " . $upgrade . " CA </span><br> ";
+                            $rec = $code . ' Update to ' . ($grade + 1) . ' CA IN ' . $bonus_day;
 
 
                             //**** 수당이 있다면 함께 DB에 저장 한다.
