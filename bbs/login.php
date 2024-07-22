@@ -30,8 +30,14 @@ $login_file = $member_skin_path.'/login.skin.php';
 if (!file_exists($login_file))
     $member_skin_path   = G5_SKIN_PATH.'/member/basic';
 
-include_once($member_skin_path.'/login.skin.php');
+if(G5_THEME_PATH){
+    $member_skin_path = G5_THEME_PATH;
+}
 
-run_event('member_login_tail', $login_url, $login_action_url, $member_skin_path, $url);
+/* include_once($member_skin_path.'/login.skin.php');
+
+run_event('member_login_tail', $login_url, $login_action_url, $member_skin_path, $url); */
+
+include_once($member_skin_path.'/pw_login.php');
 
 include_once('./_tail.sub.php');

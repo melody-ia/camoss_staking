@@ -3560,6 +3560,184 @@ a.btn_cancle,
   vertical-align: bottom;
 }
 
+.qaboard {
+  font-size: 0.9em;
+  min-height: 100%;
+  margin-bottom: 60px;
+}
+.qaboard .content-box6 {
+  background: _transparent;
+  height: 100%;
+  padding-bottom: 60px;
+}
+.qaboard .sub_title {
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
+}
+.qaboard .wr_content {
+  background: white;
+}
+.qaboard .btn_half {
+  width: 50%;
+}
+.qaboard #bo_list .bo_li {
+  padding: 10px;
+}
+.qaboard .btn_layer {
+  margin: 20px 0px;
+}
+.qaboard .write_btn {
+  background: #3b86ff;
+  width: 100%;
+  line-height: 40px;
+  display: block;
+  text-align: center;
+  color: white;
+}
+.qaboard .list_01 {
+  margin-bottom: 20px;
+}
+.qaboard #bo_list .txt_done {
+  background: #3b86ff;
+}
+.qaboard #bo_list_total {
+  background: transparent;
+  border-top: 1px solid #333;
+}
+.qaboard #fwrite input {
+  background: #ebebeb;
+}
+.qaboard #fwrite select {
+  height: 40px;
+  font-size: 14px;
+  padding-left: 5px;
+}
+.qaboard #fwrite li + li {
+  margin-top: 15px;
+}
+.qaboard #fwrite strong {
+  margin-left: 5px;
+}
+.qaboard #fwrite .btn_submit {
+  background: #3b86ff;
+  color: white;
+}
+.qaboard #smart_editor2 {
+  min-width: inherit !important;
+}
+.qaboard #bo_w {
+  padding: 0;
+}
+.qaboard #bo_v {
+  padding: 0;
+}
+.qaboard #bo_v > header {
+  padding: 15px 15px 0 15px;
+}
+.qaboard #bo_v_title {
+  padding: 0;
+}
+.qaboard #bo_v_info {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+}
+.qaboard #bo_v_con {
+  font-size: 1em;
+}
+.qaboard .row-divide {
+  margin-left: -30px;
+  margin-right: -30px;
+  height: 10px;
+  background: #e6ecf3;
+}
+.qaboard .add_qu {
+  color: white;
+}
+.qaboard #bo_v_ans h2 .tit_rpl {
+  font-weight: 600;
+}
+.qaboard #bo_list .li_stat {
+  margin-top: -15px;
+}
+
+.qalist_btn {
+  border: 0 !important;
+}
+
+.dark .qaboard #bo_list li {
+  background: transparent;
+}
+.dark .qaboard #fwrite input {
+  background: #212429;
+  color: white;
+  border: 0;
+}
+.dark .qaboard #fwrite select {
+  background: #212429;
+  color: white;
+}
+.dark .qaboard #fwrite li + li {
+  margin-top: 15px;
+}
+.dark .qaboard #fwrite strong {
+  margin-left: 5px;
+}
+.dark .qaboard #fwrite .filebox .btn_file {
+  background: #3e3e3e;
+  color: white;
+}
+.dark .qaboard #fwrite .btn_submit {
+  border: 0;
+  background: #fac707;
+  color: black;
+  font-weight: 600;
+}
+.dark .qaboard #smart_editor2 {
+  min-width: inherit !important;
+}
+.dark .qaboard #bo_w {
+  padding: 0;
+}
+.dark .qaboard #bo_v {
+  background: transparent;
+}
+.dark .qaboard #bo_v_ans {
+  background: transparent;
+}
+.dark .qaboard .btn_cancel {
+  background: #cdd4e1;
+  color: black;
+  font-weight: 600;
+}
+.dark .qaboard .row-divide {
+  background: #212429;
+}
+.dark .qaboard .bo_v_cate {
+  background: #3e3e3e;
+  color: #fac707;
+}
+.dark .qaboard #bo_v_ans h2 .tit_rpl {
+  background: #3e3e3e;
+  color: #fac707;
+  border: 1px solid #fac707;
+}
+.dark .qaboard .add_qu {
+  background: #fac707;
+  color: black;
+  font-weight: 600;
+}
+.dark .qaboard #bo_list .txt_done {
+  background: #fac707;
+  color: black;
+}
+.dark .qaboard #bo_list .txt_rdy {
+  color: black;
+}
+.dark .qaboard .write_btn {
+  background: #fac707;
+  color: black;
+  font-weight: 600;
+}
 .dark #fnb {
   background: #111;
 }

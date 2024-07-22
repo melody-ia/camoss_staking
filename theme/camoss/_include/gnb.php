@@ -8,6 +8,8 @@ if($_COOKIE['myLang'])
 
 $menubar =1;
 include_once(G5_THEME_PATH.'/_include/lang.php');
+
+
 ?>
 
 

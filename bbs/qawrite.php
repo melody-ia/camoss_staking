@@ -3,7 +3,8 @@ include_once('./_common.php');
 define('QA',true);
 define('_INDEX_', true);
 define('_SHOP_', true);
-include_once(G5_MSHOP_PATH.'/_head.php');
+// include_once(G5_MSHOP_PATH.'/_head.php');
+
 include_once(G5_EDITOR_LIB);
 
 if($w != '' && $w != 'u' && $w != 'r') {

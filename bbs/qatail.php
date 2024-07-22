@@ -12,3 +12,8 @@ if (G5_IS_MOBILE) {
     else
         include ('./_tail.php');
 }
+?>
+    </div>
+</div>
+
+<?include_once(G5_THEME_PATH.'/_include/tail.php');?>

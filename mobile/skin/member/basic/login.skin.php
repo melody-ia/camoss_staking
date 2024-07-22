@@ -12,7 +12,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
  <?php } ?> 
 
 <div id="mb_login" class="mbskin">
-    <h1><img class="logo" src="<?=G5_IMG_URL?>/project/logo.png" alt="logo" /></h1>
+    <h1><img class="logo" src="<?=G5_THEME_URL?>/img/logo.png" alt="logo" /></h1>
 
     <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post" id="flogin">
     <input type="hidden" name="url" value="<?php echo $login_url ?>">

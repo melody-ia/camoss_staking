@@ -15,6 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
     <input type="hidden" name="stx" value="<?php echo $stx; ?>">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="token" value="<?php echo $token ?>">
     <?php
     $option = '';
     $option_hidden = '';
@@ -23,33 +24,29 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     if ($is_dhtml_editor) {
         $option_hidden .= '<input type="hidden" name="qa_html" value="1">';
     } else {
-        $option .= "\n".'<input type="checkbox" id="qa_html" name="qa_html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="qa_html">html</label>';
+        $option .= "\n".'<input type="checkbox" id="qa_html" name="qa_html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.' style="width:auto;">'."\n".'<label for="qa_html">html</label>';
     }
 
     echo $option_hidden;
     ?>
 
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <tbody>
-        <?php if ($option) { ?>
-        <tr>
-            <th scope="row">옵션</th>
-            <td><?php echo $option; ?></td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <th><label for="qa_subject">Title</label></th>
-            <td><input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required" size="50" maxlength="255"></td>
-        </tr>
-        <tr>
-        <th scope="row"><label for="qa_content">내용<strong class="sound_only">필수</strong></label></th>
-            <td class="wr_content">
+    <div class="form_01">
+        <ul>
+            <?php if ($option) { ?>
+            <li>
+                <span class="sound_only">옵션</span>
+                <?php echo $option; ?>
+            </li>
+            <?php } ?>
+            <li>
+                <label for="qa_subject" class="sound_only">제목</label>
+                <input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required" size="50" maxlength="255" placeholder="제목">
+            </li>
+            <li>
+                <label for="qa_content" class="sound_only">내용<strong>필수</strong></label>
                 <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-            </td>
-        </tr>
-        </tbody>
-        </table>
+            </li>
+        </ul>
     </div>
 
     <div class="btn_confirm">
@@ -94,7 +91,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         });
 
         if (subject) {
-            alert("Title에 금지단어('"+subject+"')가 포함되어있습니다");
+            alert("제목에 금지단어('"+subject+"')가 포함되어있습니다");
             f.qa_subject.focus();
             return false;
         }
@@ -107,6 +104,23 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 f.qa_content.focus();
             return false;
         }
+
+        $.ajax({
+            type: "POST",
+            url: g5_bbs_url+"/ajax.write.token.php",
+            data: { 'token_case' : 'qa_write' },
+            cache: false,
+            async: false,
+            dataType: "json",
+            success: function(data) {
+                if (typeof data.token !== "undefined") {
+                    token = data.token;
+                    if(typeof f.token === "undefined")
+                        $(f).prepend('<input type="hidden" name="token" value="">');
+                    $(f).find("input[name=token]").val(token);
+                }
+            }
+        });
 
         document.getElementById("btn_submit").disabled = "disabled";
 

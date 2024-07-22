@@ -109,7 +109,7 @@
 		.hja_addr{color:black;min-width:80%;color:black !important;background:#f1f4fb !important;border:1px solid #dae0ef !important}
 		.dark .hja_addr{color:black;min-width:80%;background:rgba(255,255,255,0.9)}
 
-		.refferal_btn{position: absolute; right: 15px;margin: 0;}
+		.refferal_btn{position: absolute; right: 15px; margin: -5px 0 0 0 !important;}
 
 	</style>
 
@@ -219,35 +219,6 @@
 
 				</div>
 
-				<div class='col-sm-12 col-12 profile-box certificate'>
-					<!-- <h3 class='title b_line'>
-						<i class="ri-wallet-2-line kyc_icon" style="font-weight:300;"></i>
-						<span >HJA 주소 등록</span>
-					</h3>
-					<ul class='row mt10'>
-						<li class='col-sm-9 col-9' style="margin-right:0;padding-right:0;">
-							<label >※ HJA BEP-20 주소 등록</label>
-							<input type='text' id='hja_addr' class='hja_addr' placeholder="<?=$member['hja_addr']?>" />
-							
-						</li>
-						<li class='col-sm-3 col-3 text-right' style="">
-							<button class="addr_btn btn" data-name="ch_addr" style="margin:30px 5px 10px 0;"> 등록/변경</button>
-						</li>
-					</ul> -->
-
-					<!-- <ul class='row'>
-						<li class='col-sm-9 col-8'>
-							<label >환불계좌(실명계좌) 등록</label>
-							<p ><?=get_name($member['mb_center'])?></p>
-						</li>
-						<li class='col-sm-3 col-4 text-right'>
-							<span class="reg_btn" data-name="ch_cert_bank"> 변경</span>
-						</li>
-					</ul> -->
-
-					<!-- <div class="google-auth-top-qr" id="qrcode"></div> -->
-				</div>
-
 				<!-- <div class='col-sm-12 col-12 profile-box'>
 					<h3 class='title b_line'>
 						<i><img src="<?=G5_THEME_URL?>/img/alert_setting.png" alt=""></i>
@@ -274,7 +245,7 @@
 					<h3 class='title b_line'>
 						<i class="p3"><img src="<?=G5_THEME_URL?>/img/recommendation_information.png" alt=""></i>
 						<span >추천인 정보</span>
-						<a href='/page.php?id=referral_link' class="btn refferal_btn" data-name="refferal" > 내추천링크코드</a>
+						<a href='/page.php?id=referral_link' class="btn refferal_btn" data-name="refferal" > 내추천링크</a>
 					</h3>
 					<ul class='row mt10'>
 						<li class='col-sm-12 col-12'>
@@ -301,6 +272,9 @@
 				<div class='col-sm-12 col-12 profile-box'>
 					
 					<ul class='row mt10'>
+						<li class="col-12 ">
+							<a href='/bbs/qalist.php' class="btn wd main_btn b_sub qalist_btn"><i class="ri-send-plane-2-line" style='font-size:16px;font-weight:300;'></i> 1:1문의</a>
+						</li>
 						
 						<li class='col-12 '>
 							<button class="btn wd logout_pop_open">로그아웃</button>
