@@ -119,12 +119,14 @@
                 <img style="overflow:visible;" width="100%" src="<?=G5_THEME_URL?>/img/nft/<?=$digital_aseet?>" >
                 </svg>
                 <div class="content_foot">
-                    <ul>
+                    <div class='nft-content img'><i class="ri-nft-line icon" ></i> </div>
+                    <div class='nft-content article'><ul>
                         <li><?=CONFIG_TITLE?></li>
                         <li class="title"><?=CONFIG_SUB_TITLE?></li>
                         <li>Inherent Stake & Right</li>
                         <!-- <li class="sn_no">SN. <span class="red"></span></li> -->
                     </ul>
+                    </div>
                 </div>
             </div>
 

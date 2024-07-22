@@ -374,9 +374,9 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
 
                         // 내 구매등급  
                         echo "<br>본인 매출 : <span class='blue'>" . Number_format($pv) . "</span>";
-                        
                         if ($pv >= $lvlimit_sales_level[$i]*$lvlimit_recom_val) {
                             $rank_cnt += 1;
+                            $item_rank = $pv;
                             $rank_option1 = 1;
                             echo "<span class='red'> == OK </span>";
                         }
@@ -467,7 +467,7 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
                         $update_mem_rank = "UPDATE g5_member SET recom_sales = {$recom_sales} ";
                         $update_mem_rank .= ",mb_4 = '{$item_rank}',mb_5= '{$rank_option1}' ";
                         $update_mem_rank .= ",mb_6 = '{$recom_sales}',mb_7= '{$rank_option2}' ";
-                        $update_mem_rank .= ",mb_8 = '{$mem_cnt}',mb_9= '{$rank_option3}' ";
+                        $update_mem_rank .= ",mb_8 = '{$recom_sales_value}',mb_9= '{$recom_small_sales_value}' ";
                         $update_mem_rank .= "WHERE mb_id = '{$row['mb_id']}' ";
 
                         if ($debug) {

@@ -419,7 +419,7 @@ function curency_txt($value, $kind = 'deposit')
     <!-- 입금 -->
     <section id='deposit' class='loadable'>
       <div class="content-box round">
-        <h3 class="wallet_title" >입금지갑주소</h3>
+        <h3 class="wallet_title" >입금지갑주소 </h3><span>(USDT)</span>
 
         <div class="row ">
 
@@ -429,12 +429,19 @@ function curency_txt($value, $kind = 'deposit')
             </div>
           <?}?>
 
-          <!-- 코인입금 -->          
+          <!-- 코인입금 -->   
+          <div class='txt-box withrawal_alert col-12 mb20'>
+                Tron 네트워크 기반 USDT 를 지원하며 다른 네트워크 지갑으로 <br>  입금시 복구 불가능하오니 반드시 확인후 입금 바랍니다.
+              </div>
+
           <div class="wallet qrBox col-12">
               <div class="eth_qr_img qr_img" id="my_eth_qr"></div>
           </div> 
           <div class='qrBox_right col-12'>
-              <input type="text" id="my_eth_wallet" class="wallet_addr text-center" value="<?=$company_wallet ?>" title='my address' disabled/>
+              
+
+              <input type="text" id="my_eth_wallet" class="wallet_addr text-center" value="<?=$company_wallet ?>" style="font-size:12px;" title='my address' disabled/>
+
               <button class="btn wd line_btn" id="accountCopy" onclick="copyURL('#my_eth_wallet')">
                   <span >주소복사</span>
               </button>

@@ -108,6 +108,31 @@ h3{
     }
 }
 
+.nft-content{
+    display:inline-block; 
+    
+
+    &.img{
+        width:50px;
+        margin-left:5px;
+        vertical-align:top;
+        padding-top:10px;
+    }
+
+    .icon{
+        font-size:40px;
+        color:white;
+    }
+
+    &.article{
+        width:auto;
+        border-left:1px dashed rgba(255,255,255,0.3);
+        padding-left:15px;
+    }
+}
+
+
+
 
 .dark {
     h3.title{color:white;}

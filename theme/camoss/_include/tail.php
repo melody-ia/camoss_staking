@@ -29,8 +29,9 @@
 <section id="fnb">
 <div>
 	<a href='/'>
-	<i class="ri-discount-percent-line fnb_menu"></i>
-	<label>200%</label>
+	<!-- <i class="ri-discount-percent-line fnb_menu"></i> -->
+	<i class="ri-nft-line fnb_menu"></i>
+	<label>NFT</label>
 	</a>
 </div>
 <div>
