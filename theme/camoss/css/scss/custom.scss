@@ -506,6 +506,7 @@ a.btn_cancle,
 
 .history_latest {
     line-height: 24px;
+    border: 4px solid #2ace9a;
 
     .card_title_wrap {
         display: flex;
@@ -4872,7 +4873,8 @@ a.btn_cancle,
 .dark {
     .qaboard{
         #bo_list li{background:transparent;}
-
+        .btn_cke_sc{color:black;}
+        .cke_sc_def{color:black;}
         // 글쓰기
         #fwrite {
             input{background:#212429;color:white;border:0;}
@@ -4883,7 +4885,6 @@ a.btn_cancle,
             .filebox .btn_file{background:#3e3e3e;color:white;}
             .btn_submit{border:0;background:#fac707;color:black;font-weight:600;}
         }
-        #smart_editor2{min-width:inherit !important;}
         #bo_w{padding:0;}
         #bo_v{background:transparent;}
         #bo_v_ans{background:transparent}
@@ -4896,7 +4897,9 @@ a.btn_cancle,
         #bo_list .txt_rdy{color:black}
         .write_btn{background:#fac707;color:black;font-weight:600;}
     }
-
+    .history_latest{
+        border: 4px solid #1aa97c;
+    }
     #fnb{
         background:#111;
         i{color:#cfcfcf;font-weight:300;}
