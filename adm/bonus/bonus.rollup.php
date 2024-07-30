@@ -120,6 +120,7 @@ function find_rank_index($val,$mem_cnt){
         if($val >= $rollup_rate[3]) {$result = 3;}
         if($val >= $rollup_rate[4]) {$result = 4;}
         if($val >= $rollup_rate[5]) {$result = 5;}
+        if($val >= $rollup_rate[6]) {$result = 6;}
     }
 
     return $result;
@@ -127,11 +128,12 @@ function find_rank_index($val,$mem_cnt){
 }
 
 function bonus_rate($val){
-    if($val <= 1){$result = 30;}
-    if($val > 1 && $val <= 2){$result = 20;}
-    if($val > 2 && $val <= 5){$result = 10;}
-    if($val > 5 && $val <= 8){$result = 5;}
-    if($val > 8 && $val <= 10){$result = 2.5;}
+    if($val <= 1){$result = 20;}
+    if($val > 1 && $val <= 3){$result = 10;}
+    if($val > 3 && $val <= 9){$result = 5;}
+    if($val > 9 && $val <= 15){$result = 3;}
+    if($val > 15 && $val <= 18){$result = 3;}
+    if($val > 18 && $val <= 20){$result = 1.5;}
     return $result;
 }
 

@@ -140,7 +140,7 @@ $result = sql_query($sql);
 										"sign" => $sign
 									));
 
-									if ($start_pack != 1) {
+									if ($i == 7) {
 										$row_col = 'col-12 col-lg-12';
 									} else {
 										$row_col = 'col-6 col-lg-4';
@@ -290,7 +290,7 @@ $result = sql_query($sql);
 							<div class="row">
 								<span class="hist_date"><?= $row['od_date'] ?></span>
 								<span class="hist_value status mt20">보유중</span>
-								<span class="hist_value mt20 pack_f_<?= substr($od_name, 1, 1)?>"><i class="ri-discount-percent-line item_icon"></i><?= strtoupper($row['od_name']) ?> Package</span>
+								<span class="hist_value mt20 pack_f_<?= substr($od_name, 1, 1)?>"><i class="ri-nft-line fnb_menu item_icon"></i><?= strtoupper($row['od_name']) ?> Package</span>
 								<span class="curency_value mt20"><?= $row['pv'] ?>% / <?= shift_auto($row['od_cart_price'], $od_settle_case) ?> <?= strtoupper($od_settle_case) ?></span>
 							</div>
 

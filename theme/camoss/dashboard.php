@@ -151,7 +151,7 @@
             <div class="line row">
                 <div class='col-7'>
                     <!-- <span class='day'><?=timeshift($row['day'])?> </span> -->
-                    <span class='category'>누적 <?=bonus_pick_category($row['allowance_name'],'name')?> 보너스</span>
+                    <span class='category'><strong>누적 <?=bonus_pick_category($row['allowance_name'],'name')?> 보너스</strong></span>
                 </div>
                 <div class='col-5 text-right'>
                     <span class='price'><?=shift_auto($row['total_bonus'],$curencys[0])?> <?=strtoupper($curencys[0])?>

@@ -45,7 +45,7 @@
     } */
 
     function item_rank($val){
-        if($val >= 20000){
+        if($val >= 50000){
             $result = 7;
         }else if($val >= 10000){
             $result = 6;
