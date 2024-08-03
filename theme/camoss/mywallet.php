@@ -385,7 +385,7 @@ function curency_txt($value, $kind = 'deposit')
     padding: 10px;
   }
   
-  .swap_amt{font-size:16px;text-align:left;letter-spacing: -1px;}
+  .swap_amt{font-size:14px;text-align:left;letter-spacing: -1px;}
   #active_amt{font-weight:bold}
   #active_in{font-weight:bold}
 </style>
@@ -1023,6 +1023,7 @@ function curency_txt($value, $kind = 'deposit')
         type: "POST",
         url: "./util/withdrawal_proc.php",
         cache: false,
+        async: false,
         dataType: "json",
         data: {
           mb_id: mb_id,
@@ -1031,13 +1032,14 @@ function curency_txt($value, $kind = 'deposit')
           select_coin: usdt_curency,
           fixed_fee: fixed_fee,
           fixed_amt: fixed_amt,
-          bank_name: withdrawal_bank_name,
-          bank_account: withdrawal_bank_account,
+          // bank_name: withdrawal_bank_name,
+          // bank_account: withdrawal_bank_account,
           account_name: withdrawal_account_name,
           rate: coin_price
 
         },
         success: function(res) {
+         
           if (res.result == "success") {
             dialogModal('출금신청이 정상적으로 처리되었습니다.', '<p>실제 출금까지 24시간 이상 소요될수있습니다.</p>', 'success');
 

@@ -320,7 +320,7 @@ $title = 'Dashboard';
 		}
 
 	$(document).ready(function(){
-		move(<?=$bonus_per?>,1);
+		// move(<?=$bonus_per?>,1);
 
 		// 공지사항 - 하단공지로 사용안함
 		var notice_open = getCookie('notice');
