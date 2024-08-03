@@ -274,7 +274,7 @@ function brecommend_direct($mb_id)
 function  excute(){
 
     global $result;
-    global $g5, $bonus_day, $bonus_condition, $code, $rollup_rate,$rollup_layer,$rollup_condition,$pre_condition_in,$bonus_limit,$bonus_layer;
+    global $g5, $bonus_day, $bonus_condition, $code, $rollup_rate,$rollup_layer,$rollup_condition,$pre_condition_in,$bonus_limit,$bonus_layer,$live_bonus_rate,$shop_bonus_rate;
     global $minings,$mining_target,$mining_amt_target,$mem_list,$mining_rate,$now_mining_coin,$mining,$balanace_ignore;
     global $debug;
 
@@ -300,8 +300,6 @@ function  excute(){
 
         $item_rank = find_rank_index($pv,$mem_cnt);
        
-        $live_bonus_rate = 0.9;
-        $shop_bonus_rate = 0.1;
 
         echo "<br><br><span class='title block gold' style='font-size:30px;'>".$comp."</span><br>";
         if($debug){
