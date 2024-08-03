@@ -260,7 +260,7 @@ function brecommend_array($brecom_id, $count, $limit=0)
 function brecommend_direct($mb_id)
 {
     $down_leg = array();
-    $sql = "SELECT mb_id,mb_name,grade,mb_rate,mb_save_point,mb_brecommend_type,pv,mb_index FROM g5_member where mb_brecommend = '{$mb_id}' AND mb_brecommend != '' ORDER BY mb_brecommend_type ASC ";
+    $sql = "SELECT mb_id,mb_name,grade,mb_rate,mb_save_point,mb_brecommend_type,pv, mb_index FROM g5_member where mb_brecommend = '{$mb_id}' AND mb_brecommend != '' ORDER BY mb_brecommend_type ASC ";
     $sql_result = sql_query($sql);
     $cnt = sql_num_rows($sql_result);
 
@@ -286,6 +286,7 @@ function  excute(){
         $comp=$row['mb_id'];
         $mb_balance = $row['mb_balance'];
         $mb_index = $row['mb_index'];
+        $mb_ignore = $row['mb_balance_ignore'];
         $mb_shop_point = $row['mb_shop_point'];
         $mb_name = $row['mb_name'];
         $mb_level = $row['mb_level'];
@@ -346,13 +347,11 @@ function  excute(){
                     $benefit=(($today_sales*0.5)*$bonus_rates);// 매출자 * 수당비율
                     $benefit_point = shift_auto($benefit);
                                  
-                    
+                    $total_balance = $mb_balance + $mb_shop_point - $mb_ignore;
                     $balance_limit = $mb_index; // 수당한계
-                    $benefit_limit = $mb_index - ($mb_balance + $mb_shop_point + $benefit); // 수당합계
+                    $benefit_limit = $mb_index - $total_balance + $benefit; // 수당합계
 
-                    if($benefit_limit > 0){
-                        $benefit_limit = $benefit;
-                    }else{
+                    if($benefit_limit < 0){
                         $benefit_limit = 0;
                     }
                     
@@ -390,7 +389,7 @@ function  excute(){
                             // 디버그 로그
                             if($debug){
                                 echo "<code>";
-                                echo "현재수당 : ".Number_format($mb_balance + $mb_shop_point)."  | 수당한계 :". shift_auto($balance_limit);
+                                echo "현재수당 : ".Number_format($total_balance)."  | 수당한계 :". shift_auto($balance_limit);
                                 echo " | 발생할수당: ".$benefit." | 지급할수당 :".$benefit_limit;
                                 echo "</code><br>";
                             }

@@ -11,8 +11,30 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-if (empty($fr_date)) $fr_date = date("Y-m-d", strtotime(date("Y-m-d")."+0 day"));
-if (empty($to_date)) $to_date = date("Y-m-d", strtotime(date("Y-m-d")."+1 day"));
+
+$d_1 = mktime(0,0,0, date("m"), 1, date("Y")); // 이번달 1일
+$prev_month = strtotime("0 month", $d_1); // 이번달
+
+$prev_month = strtotime("-1 month", $d_1); // 지난달
+
+$day = date('d', $timestr);
+$lastday = date('t', $timestr);
+
+if($day > 13 && $day <= 18){
+    $half = '1/2';
+    $half_frdate    = date('Y-m-01', $timestr); // 매월 1 시작일자
+    $half_todate    = date('Y-m-15', $timestr); // 매월 15
+}else{
+    $half = '2/2';
+    $half_frdate    = date('Y-m-16', $prev_month); // 전월 15
+    $half_todate    = date('Y-m-'.$lastday, $prev_month); // 전월 말일
+}
+
+// if (empty($fr_date)) $fr_date = date("Y-m-01", strtotime(date("Y-m-d")."+0 day"));
+// if (empty($to_date)) $to_date = date("Y-m-d", strtotime(date("Y-m-d")."+1 day"));
+
+if (empty($fr_date)) $fr_date = $half_frdate;
+if (empty($to_date)) $to_date = $half_todate;
 
 
 if($center){
@@ -258,7 +280,7 @@ function fvisit_submit(act)
         <th>회원의 추천인</th>
         <th>기간매출(PV)금액</th>
         <th>PV</th>
-        <th>멤버쉽결제</th>
+        <!-- <th>멤버쉽결제</th> -->
         <th>센터수당</th>
         <th>소개수당</th>
     </tr>
@@ -268,10 +290,8 @@ function fvisit_submit(act)
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
 
-        $order_total_sql = "SELECT sum(upstair) as upstair_total, sum(pv) as pv_total from g5_order WHERE mb_id = '{$row['mb_id']}' AND od_date >= '{$fr_date}' AND od_date <= '{$to_date}' ";
-        
+        $order_total_sql = "SELECT sum(od_cart_price) as upstair_total, sum(pv) as pv_total from g5_order WHERE mb_id = '{$row['mb_id']}' AND od_date >= '{$fr_date}' AND od_date <= '{$to_date}' ";
         $order_total = sql_fetch($order_total_sql);
-        
         /* $membership_sql = " SELECT * from g5_order WHERE mb_id = '{$row['mb_id']}' AND od_date >= '{$fr_date}' AND od_date <= '{$to_date}' AND od_cash = 300000 ";
         $membership_yn = sql_fetch($membership_sql)['od_cash']; */
 
@@ -282,7 +302,7 @@ function fvisit_submit(act)
         $recommand_bonus = $order_total['upstair_total']*0.01;
 
         $total_center_bonus += $center_bonus ;
-        $membership_total += $membership_yn; 
+        // $membership_total += $membership_yn; 
         $recommand_total += $recommand_bonus;
         
     ?>
@@ -297,7 +317,7 @@ function fvisit_submit(act)
         <td class='text-center'><?=$row['mb_recommend']?></td>
         <td class='text-center'><?=Number_format($order_total['upstair_total'])?></td>
         <td class='text-center'><?=Number_format($order_total['pv_total'])?></td>
-        <td class='text-center'><?=Number_format($membership_yn)?></td>			
+        <!-- <td class='text-center'><?=Number_format($membership_yn)?></td>			 -->
         <td class='text-center'><?=Number_format($center_bonus)?></td>
         <td class='text-center'><?=Number_format($recommand_bonus)?></td>			
     </tr>
@@ -313,11 +333,11 @@ function fvisit_submit(act)
         <td></td>
         <td><?=$i?>명</td>
         <td colspan='2'></td>
-        <td><?=number_format($total_hap)?><?=$curencys[1]?></td>
+        <td><?=number_format($total_hap)?></td>
         <td><?=number_format($total_pv)?> PV </td>
-        <td><?=number_format($membership_total)?></td>
-        <td><?=number_format($total_center_bonus)?><?=$curencys[1]?></td>
-        <td><?=number_format($recommand_total)?><?=$curencys[1]?></td>
+        <!-- <td><?=number_format($membership_total)?></td> -->
+        <td><?=number_format($total_center_bonus)?></td>
+        <td><?=number_format($recommand_total)?></td>
     </tfoot>
 
     </table>

@@ -17,18 +17,27 @@ $weekla         = $weekfr + (6 * 86400);
 $week_frdate    = date('Y-m-d', $weekfr - (86400 * 5)); // 지난주 시작일자
 $week_todate    = date('Y-m-d', $weekla - (86400 * 5)); // 지난주 종료일자 */
 
+$month = date('m', $timestr);
+
+echo "이번달 : ".$month."<br>";
+
+$d_1 = mktime(0,0,0, date("m"), 1, date("Y")); // 이번달 1일
+
+// 지난달 1일~말일
+$prev_month = strtotime("-1 month", $d_1); // 지난달
+
 $day = date('d', $timestr);
 $lastday = date('t', $timestr);
-$balanace_ignore = fALSE;
+$balanace_ignore = TRUE;
 
-if($day > 13 && $day <= 20){
+if($day > 13 && $day <= 18){
     $half = '1/2';
-    $half_frdate    = date('Y-m-1', $timestr); // 매월 1 시작일자
+    $half_frdate    = date('Y-m-01', $timestr); // 매월 1 시작일자
     $half_todate    = date('Y-m-15', $timestr); // 매월 15
 }else{
     $half = '2/2';
-    $half_frdate    = date('Y-m-16', $timestr); // 매월 15
-    $half_todate    = date('Y-m-'.$lastday, $timestr); // 매월 말일
+    $half_frdate    = date('Y-m-16', $prev_month); // 전월 15
+    $half_todate    = date('Y-m-'.$lastday, $prev_month); // 전월 말일
 }
 
 
@@ -81,7 +90,7 @@ if($debug){
 ob_start();
 
 // 설정로그 
-echo "<strong>센터 지급비율 : ". $bonus_row['rate']."%   </strong> <br>";
+echo "<strong>센터 지급비율 : ". $bonus_row['rate']."% / 소개수당 지급비율(센터회원의 추천인) : 1 %   </strong> <br>";
 echo "<br><strong> 현재일 : ".$bonus_day." |  ".$half."(지급산정기준) : <span class='red'>".$half_frdate."~".$half_todate."</span><br>";
 
 echo "<br><br>기준대상자(센터회원) : <span class='red'>".$result_cnt."</span>";
@@ -93,15 +102,6 @@ echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
 <header>정산시작</header>    
 <div>
 <?
-
-
-/*
-$sql = "SELECT od_date AS od_time, m.mb_no, m.mb_id, m.mb_name, m.mb_level, m.mb_deposit_point, m.mb_balance, m.grade,SUM(pv) AS hap 
-            FROM g5_shop_order AS o, g5_member AS m
-            WHERE o.mb_id = m.mb_id AND m.mb_center != '0' AND od_date BETWEEN '{$week_frdate}' AND '{$week_todate}'
-            GROUP BY m.mb_id ORDER BY m.mb_no asc";
-$result = sql_query($sql);
-*/
 
 
 //회원 리스트를 읽어 온다.
@@ -126,27 +126,26 @@ excute();
 function  excute(){
 
     global $result;
-    global $g5, $bonus_day, $bonus_condition, $code, $bonus_rate,$pre_condition_in,$bonus_limit,$week_frdate,$week_todate,$half_frdate,$half_todate,$balanace_ignore;
+    global $g5, $bonus_day, $bonus_condition, $code, $bonus_rate,$pre_condition_in,$bonus_limit,$week_frdate,$week_todate,$half_frdate,$half_todate,$balanace_ignore,$live_bonus_rate,$shop_bonus_rate;
     global $debug,$log_sql;
 
 
     for ($i=0; $row=sql_fetch_array($result); $i++) {   
    
-        // $center_bonus = $bonus_rate;
         $mb_no=$row['mb_no'];
         $mb_id=$row['mb_id'];
         $mb_name=$row['mb_name'];
         $mb_level=$row['mb_level'];
         $mb_deposit=$row['mb_deposit_point'];
         $mb_balance=$row['mb_balance'];
+        $mb_shop_point = $row['mb_shop_point'];
+        $mb_ignore = $row['mb_balance_ignore'];
+        $mb_index = $row['mb_index'];
         $grade=$row['grade'];
-
-        $live_bonus_rate = 0.9;
-        $shop_bonus_rate = 0.1;
 
 
         $recom= 'mb_center'; //센터멤버
-        $sql = " SELECT mb_no, mb_id, mb_name, grade, mb_level, mb_balance,mb_recommand, mb_deposit_point,pv FROM g5_member WHERE {$recom} = '{$mb_id}' ";
+        $sql = " SELECT mb_no, mb_id, mb_name, grade, mb_level, mb_balance,mb_recommend, mb_deposit_point,pv FROM g5_member WHERE {$recom} = '{$mb_id}' ";
         $sql_result = sql_query($sql);
         $sql_result_cnt = sql_num_rows($sql_result);
 
@@ -159,8 +158,7 @@ function  excute(){
         while( $center = sql_fetch_array($sql_result) ){   
             
             $recom_id = $center['mb_id'];
-            $half_bonus_sql = "SELECT SUM(upstair) AS hap FROM g5_order WHERE od_date BETWEEN '{$half_frdate}' AND '{$half_todate}' AND mb_id = '{$recom_id}' ";
-            // if($debug){echo "<code>".$half_bonus_sql."</code>";}
+            $half_bonus_sql = "SELECT SUM(od_cart_price) AS hap FROM g5_order WHERE od_soodang_date BETWEEN '{$half_frdate}' AND '{$half_todate}' AND mb_id = '{$recom_id}' ";
             $half_bonus_result = sql_fetch($half_bonus_sql);
 
             if($half_bonus_result['hap'] > 0){
@@ -171,53 +169,68 @@ function  excute(){
 
             $recom_half_total += $recom_half_bonus;
 
-            echo "<br>".$recom_id;
+            echo "<br><br>-<br><br>".$recom_id;
             echo " | 기간내 매출 : <span class='blue'>".Number_format($recom_half_bonus)."</span>";
+
+            $recom_direct_member_sql = "SELECT mb_recommend FROM g5_member WHERE mb_id = '{$recom_id}'";
+            $recom_direct_member = sql_fetch($recom_direct_member_sql)['mb_recommend'];
+
+            $sub_benefit = $recom_half_bonus * 0.01;
+
+            if($recom_half_bonus > 0 ){
+
+                echo "<br><br> 추천인  <span class='blue'> ▶ ". $recom_direct_member."</span>  | 센터소개수당(1%) : ".$sub_benefit;
+               
+                $live_benefit = $sub_benefit * $live_bonus_rate;
+                $shop_benefit = $sub_benefit * $shop_bonus_rate;
+
+                $rec = "Bonus By Center ".$recom_id;
+                $rec_adm = "CENTER : ".$recom_half_bonus."* 0.01 = ".$sub_benefit." | (P지급".$live_benefit." / SP지급 : ".$shop_benefit.")";
+
+                echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($sub_benefit)." (P지급".$live_benefit." / SP지급 : ".$shop_benefit.")</span><br>";
+                
+                $record_sub_result = soodang_record($mb_id, $code, $sub_benefit,$rec,$rec_adm,$bonus_day);
+                if($record_sub_result){
+                    if($balanace_ignore){
+                        $balance_ignore_sql = ", mb_balance_ignore = mb_balance_ignore + {$sub_benefit} ";
+                    }else{
+                        $balance_ignore_sql = "";
+                    }
+
+                    $balance_up = "update g5_member set mb_balance = mb_balance + {$live_benefit} {$balance_ignore_sql}, mb_shop_point = mb_shop_point + {$shop_benefit}   where mb_id = '".$recom_direct_member."'";
+        
+                    // 디버그 로그
+                    if($debug){
+                        echo "<code>";
+                        print_R($balance_up);
+                        echo "</code>";
+                    }else{
+                        sql_query($balance_up);
+                    }
+                }
+            }
+            echo "";
+
         } 
 
         $benefit = $recom_half_total * $bonus_rate;
         $direct_benefit = $recom_half_total*0.01;
-       
         
-        echo "<br><br><span class='title box'> ".$mb_id."  - 기간내 하부 총매출 : <span class='blue'>".Number_format($recom_half_total)."</span>";
-        echo " | 센터수당 : <span class='blue'>".Number_format($benefit)." (".($bonus_rate*100)."%)</span>";
-        echo " | 소개수당 : <span class='blue'>".Number_format($direct_benefit)." (".(1)."%)</span></span><br>";
-        
-        list($mb_balance,$balance_limit,$benefit_limit) = bonus_limit_check($recom_id,$benefit);
-        $benefit_limit = $benefit;
-
-        // 디버그 로그
-        echo "<code>";
-        echo "현재수당 : ".Number_format($mb_balance)."  | 수당한계 :". Number_format($balance_limit).' | ';
-        echo "발생할수당: ".Number_format($benefit)." | 지급할수당 :".Number_format($benefit_limit);
-        echo "</code><br>";
-        
-        $rec=$code.' Bonus By Center:'.$mb_id;
-        $rec_adm= 'CENTER | '.$recom_half_total.'*'.$bonus_rate.'='.$benefit;
+        echo "<br><br>======================================<br><span class='title box'> 기간내 하부 총매출 : <span class='blue'>".Number_format($recom_half_total)."</span></span>";
+        echo "<br><span class='red'>".$mb_id. " </span> | 센터수당 : <span class='blue'>".Number_format($benefit)." (".($bonus_rate*100)."%)</span>";
+        // echo " | 소개수당 : <span class='blue'>".Number_format($direct_benefit)." (".(1)."%)</span></span><br>";
+ 
+        $total_balance = $mb_balance + $mb_shop_point - $mb_ignore;
+        $benefit_limit = $benefit; // 수당합계
 
         $live_benefit = $benefit_limit * $live_bonus_rate;
         $shop_benefit = $benefit_limit * $shop_bonus_rate;
 
-        // 수당제한
-        echo $mb_id." | ".Number_format($recom_half_total).'*'.$bonus_rate;
+        $rec=$code.' Bonus By Center:'.$mb_id;
+        $rec_adm= 'CENTER | '.$recom_half_total.'*'.$bonus_rate.'='.$benefit." (P지급".$live_benefit." / SP지급 : ".$shop_benefit.")";
 
-        if($benefit > $benefit_limit && $balance_limit != 0 ){
-
-            $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit)."</span>";
-            echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)."</span>";
-            echo "<span class=red> ▶▶▶ 수당 초과 (한계까지만 지급) : ".Number_format($benefit_limit)." </span><br>";
-        }else if($benefit != 0 && $balance_limit == 0 && $benefit_limit == 0){
-
-            $rec_adm .= "<span class=red> | Sales zero :: ".Number_format($benefit_limit - $benefit)."</span>";
-            echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)."</span>";
-            echo "<span class=red> ▶▶▶ 수당 초과 (기준매출없음) : ".Number_format($benefit_limit)." </span><br>";
-        }else if($benefit == 0){
-            echo "<span class=blue> ▶▶ 수당 미발생 </span>";
-        }else{
-            echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)." (P지급".$live_benefit." / SP지급 : ".$shop_benefit.")</span><br>";
-        }
-
-
+        echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)." (P지급".$live_benefit." / SP지급 : ".$shop_benefit.")</span><br><br>";
+        
         if($benefit > 0 && $benefit_limit > 0){
             
             $record_result = soodang_record($mb_id, $code, $benefit_limit,$rec,$rec_adm,$bonus_day);
@@ -228,7 +241,7 @@ function  excute(){
                     $balance_ignore_sql = "";
                 }
 
-                $balance_up = "update g5_member set mb_balance = mb_balance + {$live_benefit} {$balance_ignore_sql}, mb_shop_point = mb_shop_point + {$shop_benefit}   where mb_id = '".$comp."'";
+                $balance_up = "update g5_member set mb_balance = mb_balance + {$live_benefit} {$balance_ignore_sql}, mb_shop_point = mb_shop_point + {$shop_benefit}   where mb_id = '".$mb_id."'";
     
                 // 디버그 로그
                 if($debug){

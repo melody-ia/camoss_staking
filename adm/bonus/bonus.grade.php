@@ -88,7 +88,7 @@ $grade_order = ($total_order * ($company_sales * 0.01));
 
 
 // 수당제한 제외 
-$balanace_ignore = FALSE;
+$balanace_ignore = true;
 
 $live_bonus_rate = 0.9;
 $shop_bonus_rate = 0.1;
@@ -250,6 +250,7 @@ function  excute(){
             $mb_level=$row['mb_level'];
             $mb_shop_point = $row['mb_shop_point'];
             $mb_deposit=$row['mb_deposit_point'];
+            $mb_ignore = $row['mb_balance_ignore'];
             $mb_balance=$row['mb_balance'];
             $grade=$row['grade'];
             
@@ -291,8 +292,10 @@ function  excute(){
 
                 $benefit_tx = ' '.$total_order.' * '.$star_rate.' * 1/'.$member_grade_count.'='.$benefit; 
                 
-                $balance_limit = $mb_index; // 수당한계
-                $benefit_limit = $mb_index - ($mb_balance + $mb_shop_point + $benefit); // 수당합계
+
+                // $total_balance = $mb_balance + $mb_shop_point - $mb_ignore;
+                // $balance_limit = $mb_index; // 수당한계
+                $benefit_limit = $benefit; // 수당합계
 
                 if($benefit_limit > 0){
                     $benefit_limit = $benefit;
@@ -311,7 +314,7 @@ function  excute(){
                 $rec= $code.' Bonus from '. $prev_m."M | ".$grade_name.' CA';
                 $rec_adm= $benefit_tx;
 
-                if($benefit > $benefit_limit && $balance_limit != 0 ){
+                /* if($benefit > $benefit_limit && $balance_limit != 0 ){
 
                     $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit)." (P:".$live_benefit." / SP:".$shop_benefit.")</span>";
                     echo "<span class=blue> ▶▶ 수당 지급 : ".Number_format($benefit)."</span>";
@@ -327,13 +330,15 @@ function  excute(){
             
                 }else{
                     echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P : ".$live_benefit." / SP : ".$shop_benefit.")</span><br>";
-                }
+                } 
                 
                 echo "<code>";
-                echo "현재수당 : ".Number_format($mb_balance + $mb_shop_point)."  | 수당한계 :". Number_format($balance_limit).' | ';
+                echo "현재수당 : ".Number_format($total_balance)."  | 수당한계 :". Number_format($balance_limit).' | ';
                 echo "발생할수당: ".Number_format($benefit)." | 지급할수당 :".Number_format($benefit_limit);
                 echo "</code><br>";
+                */
 
+                echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P : ".$live_benefit." / SP : ".$shop_benefit.")</span><br>";
 
                 if($benefit > 0 && $benefit_limit > 0){
 

@@ -92,7 +92,7 @@ function bonus_limit_tx($bonus_limit){
 }
 
 
-/* 수당초과 계산 */
+/* 수당초과 계산  사용안함 */
 function bonus_limit_check($mb_id,$bonus,$kind = '$'){
     global $bonus_limit,$config;
 
@@ -101,11 +101,11 @@ function bonus_limit_check($mb_id,$bonus,$kind = '$'){
     }
 
     // $mem_sql="SELECT mb_balance, mb_rate,(SELECT SUM(benefit) FROM soodang_pay WHERE mb_id ='{$mb_id}' AND DAY = '{$bonus_day}') AS b_total FROM g5_member WHERE mb_id ='{$mb_id}' ";
-    $mem_sql="SELECT mb_balance, mb_rate, mb_save_point FROM g5_member WHERE mb_id ='{$mb_id}' ";
+    $mem_sql="SELECT mb_balance, mb_shop_point, mb_balance_ignore, mb_index FROM g5_member WHERE mb_id ='{$mb_id}' ";
     $mem_result = sql_fetch($mem_sql);
 
-    $mb_balance = $mem_result['mb_balance'];
-    $mb_pv = $mem_result['mb_save_point'] * $bonus_limit;
+    $mb_balance = $mem_result['mb_balance'] + $mem_result['mb_shop_point'] - $mem_result['mb_balance_ignore'];
+    $mb_index = $mem_result['mb_index'];
     
     if($mb_id == 'admin' || $mb_id == $config['cf_admin']){
         $mb_pv = 100000000000;

@@ -91,9 +91,6 @@ $grade_order = ($total_order * ($company_sales * 0.01));
 // 수당제한 제외 
 $balanace_ignore = FALSE;
 
-$live_bonus_rate = 0.9;
-$shop_bonus_rate = 0.1;
-
 // 디버그 로그 
 if($debug){
 	echo "매출 합계 - <code>";
@@ -211,7 +208,7 @@ if($grade_order > 0){
 function  excute(){
 
     global $g5,$admin_condition,$pre_condition;
-    global $bonus_day, $bonus_condition, $bonus_rate_array_cnt, $code, $bonus_rate,$bonus_limit,$total_order,$Khan_order,$grade_order,$cnt_total;
+    global $bonus_day, $bonus_condition, $bonus_rate_array_cnt, $code, $bonus_rate,$bonus_limit,$total_order,$Khan_order,$grade_order,$cnt_total,$live_bonus_rate,$shop_bonus_rate;
     global $debug,$prev_m,$live_bonus_rate,$shop_bonus_rate,$balanace_ignore,$member_cnt_result;
  
        
@@ -244,6 +241,7 @@ function  excute(){
             $mb_shop_point = $row['mb_shop_point'];
             $mb_deposit=$row['mb_deposit_point'];
             $mb_balance=$row['mb_balance'];
+            $mb_ignore = $row['mb_balance_ignore'];
             $grade=$row['grade'];
             
 
@@ -262,12 +260,11 @@ function  excute(){
 
                 $benefit_tx = ' '.$total_order.' * '.$star_rate.' * 1/'.$member_count.'='.$benefit; 
                 
+                $total_balance = $mb_balance + $mb_shop_point - $mb_ignore;
                 $balance_limit = $mb_index; // 수당한계
-                $benefit_limit = $mb_index - ($mb_balance + $mb_shop_point + $benefit); // 수당합계
+                $benefit_limit = $mb_index - $total_balance; // 수당합계
 
-                if($benefit_limit > 0){
-                    $benefit_limit = $benefit;
-                }else{
+                if($benefit_limit < 0){
                     $benefit_limit = 0;
                 }
 
@@ -301,7 +298,7 @@ function  excute(){
                 }
                 
                 echo "<code>";
-                echo "현재수당 : ".Number_format($mb_balance + $mb_shop_point)."  | 수당한계 :". Number_format($balance_limit).' | ';
+                echo "현재수당 : ".Number_format($total_balance)."  | 수당한계 :". Number_format($balance_limit).' | ';
                 echo "발생할수당: ".Number_format($benefit)." | 지급할수당 :".Number_format($benefit_limit);
                 echo "</code><br>";
 
