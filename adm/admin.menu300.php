@@ -25,8 +25,8 @@ if($member['mb_id'] == 'admin'){
         array('300250', '공지사항', G5_ADMIN_URL.'/bbs/board.php?bo_table=notice','',1),
         array('300001', '1:1문의 관리', G5_ADMIN_URL.'/bbs/qalist.php', '',1),
         // array('300350', '뉴스관리', G5_ADMIN_URL.'/bbs/board.php?bo_table=news','',1),
-        array('300450', 'FAQ관리', G5_ADMIN_URL.'/faqmasterlist.php', 'scf_faq', 1),
-        array('300550', '서포트문의관리', G5_ADMIN_URL.'/board_support.php','',1),
+        // array('300450', 'FAQ관리', G5_ADMIN_URL.'/faqmasterlist.php', 'scf_faq', 1),
+        // array('300550', '서포트문의관리', G5_ADMIN_URL.'/board_support.php','',1),
         array('300650', 'KYC 회원인증', G5_ADMIN_URL.'/bbs/board.php?bo_table=kyc','',1),
         array('300750', '이용약관/개인정보', G5_ADMIN_URL.'/bbs/board.php?bo_table=agreement','',1)
     );
