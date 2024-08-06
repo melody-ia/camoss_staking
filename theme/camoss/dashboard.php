@@ -129,7 +129,7 @@
 
         <div class='r_card_wrap content-box round history_latest mb30 mt30'>
             <div class="card_title_wrap">
-                <div class="card_title">순환 보너스 (200%)</div>
+                <div class="card_title">순환 보너스 (<?=$limited?>%)</div>
                 <a href='<?=G5_URL?>/page.php?id=bonus_history' class='inline more'><span>더보기<i
                             class="ri-add-circle-fill"></i></span></a>
             </div>

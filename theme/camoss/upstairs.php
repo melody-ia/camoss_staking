@@ -428,10 +428,13 @@ $service_puchase_term_contents = $service_puchase_term['wr_content'];
         html += `</div>`;
 
         show_alert_terms(title,html);
-
-		$('#closeModalTerms').css('visibility','hidden');
-
+		
 		var modal_term_body = $( '#commonModalTerms .modal-body');
+		// $('#closeModalTerms').animate({scrollTop:0},100);
+
+		modal_term_body.animate({scrollTop:0},200);
+		$('#closeModalTerms').css('visibility','hidden');
+		
 
 		modal_term_body.scroll(function () {
 			var el = $(this) ;

@@ -3535,6 +3535,17 @@ a.btn_cancle,
   height: 38px;
 }
 
+#commonModalTerms img {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#commonModalTerms #closeModalTerms {
+  background: #3b86ff;
+  color: white;
+}
+
 .fold_wrap {
   height: 20px;
 }
@@ -3778,6 +3789,10 @@ a.btn_cancle,
 .dark .b_third:hover {
   background: #111;
   color: white;
+}
+.dark #commonModalTerms #closeModalTerms {
+  background: #fac707;
+  color: black;
 }
 .dark .notice_wrap_top .notice_box {
   background: #171818;
