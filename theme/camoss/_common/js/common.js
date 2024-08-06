@@ -399,8 +399,9 @@ function dialogModal(title, htmlBody, category, dim = true) {
 }
 
 
-function commonModalTerms(htmlBody, bodyHeight) {
+function commonModalTerms(htmlTitle,htmlBody, bodyHeight) {
     $('#commonModalTerms').modal('show');
+	$('#commonModalTerms .modal-title').html(htmlTitle);
     $('#commonModalTerms .modal-body').html(htmlBody);
 
     if (bodyHeight) {
@@ -681,8 +682,8 @@ function mode_colorset2(mode) {
 }
 
 
-function show_alert_terms(args) {
-    commonModalTerms(`<p>${args}`, 'auto');
+function show_alert_terms(title,args) {
+    commonModalTerms(`<P>${title}</P>`,`<p>${args}`, 'auto');
 }
 
 function ajax(url, type, data, callback, async=true) {

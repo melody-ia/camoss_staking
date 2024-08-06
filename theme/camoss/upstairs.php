@@ -46,6 +46,12 @@ $sql = "SELECT mb_id, od_id, od_cart_price, od_receipt_time, od_name, od_cash, o
 $sql .= "order by od_receipt_time desc limit {$from_record}, {$rows} ";
 
 $result = sql_query($sql);
+
+
+$service_puchase_term = get_write("g5_write_agreement", 3);
+$service_puchase_term_title = $service_puchase_term['wr_subject'];
+$service_puchase_term_contents = $service_puchase_term['wr_content'];
+
 ?>
 
 <link rel="stylesheet" href="<?= G5_THEME_URL ?>/css/default.css">
@@ -223,20 +229,20 @@ $result = sql_query($sql);
 
 						<h1 class="main_title2">
 							<span>유의사항 확인/동의</span>
-							<div class="agree_wrap">
+							<!-- <div class="agree_wrap">
 								<input type="checkbox" name="all_check" id="all_check">
 								<label for="all_check" class="chk_all"></label>
-							</div>
+							</div> -->
 						</h1>
 
 						<div class="agree_content_wrap">
-							<!-- <div class="text_wrap">
+							<div class="text_wrap">
 								<img class="caution" src="<?=G5_THEME_URL?>/img/caution.png" alt=""><span>패키지 상품 유의사항 확인<a href="#" class="content_all_view">약관보기</a></span>
 								<div class="agree_btn_wrap">
-									<input type="checkbox" name="check1" id="check1">
+									<input type="checkbox" name="check1" id="check1" >
 									<label for="check1" class="chk_all"></label>
 								</div>
-							</div> -->
+							</div>
 							<div class="text_wrap">
 								<img class="caution" src="<?=G5_THEME_URL?>/img/caution.png" alt=""><span>본 패키지 상품의 내용과 설명을 이해하였으며, 상품 투자 및 패키지 구매에 <b>동의</b>합니다.</span>
 								<div class="agree_btn_wrap">
@@ -256,7 +262,7 @@ $result = sql_query($sql);
 
 					<div class="mt20">
 						<button id="purchase" class="btn wd main_btn b_blue b_darkblue round">구매</button>
-						<button id="upgrade" class="btn wd main_btn round" style="background:#ff555d !important;">패키지 업그레이드</button>
+						<!-- <button id="upgrade" class="btn wd main_btn round" style="background:#ff555d !important;">패키지 업그레이드</button> -->
 						<button id="go_wallet_btn" class="btn wd main_btn b_green b_skyblue round">입금</button>
 					</div>
 
@@ -413,39 +419,36 @@ $result = sql_query($sql);
 
 		$('.content_all_view').on('click',function(e) {
         e.preventDefault();
-        const html = `
-            <div class="modal_content">
-                <p> 상품 투자 유의사항</p>
-                <p class="title">
-                    1. 는 NFT & 스테이킹에 관한 수익을 보장하지
-                    않으며, 가상 프로젝트나 밸리데이터의 사정에 따라 손실이
-                    발생할 수도 있습니다.
-                </p>
-                <p class="title">
-                    2. 스테이킹 신청한 디지털 자산은 스테이킹 목적으로 고객님
-                    의 ESG Global 지갑에서 출금 처리되며, 보유자산 및 출금 가능
-                    자산에서 제외 됩니다. 고객님은 여전히 해당 디지털 자산에
-                    대한 권리를 보유하고 있으며, ESG GLOBAL VINA 는 고객님
-                    을 위하여 스테이킹 업무를 처리합니다.
-                </p>
-                <p class="title">
-                    3. 스테이킹 신청이후, 스테이킹 완료 및 보상 발생 시작까지
-                    대기기간이 발생 할 수 있습니다. 스테이킹 신청 전에 스테이킹
-                    대기기간을 확인해 주시기 바랍니다.
-                </p>
-                <p class="title">
-                    4. 보상 수익은 매월 정기 지급됩니다.
-                </p>
-                <p class="title">
-                    5. 스테이킹 신청 직후부터 취소가 불가합니다.
-                </p>
-            </div>
-        `;
+	
+		const title = '<?=$service_puchase_term_title?>';
+		const service_puchase_term = '<?=$service_puchase_term_contents?>';
 
-        show_alert_terms(html)
+        var html = `<div class="modal_content">`;
+        html += service_puchase_term;        
+        html += `</div>`;
+
+        show_alert_terms(title,html);
+
+		$('#closeModalTerms').css('visibility','hidden');
+
+		var modal_term_body = $( '#commonModalTerms .modal-body');
+
+		modal_term_body.scroll(function () {
+			var el = $(this) ;
+			// console.log(el[0].scrollHeight - el.scrollTop() + ` | ` + el.outerHeight());
+
+			if((el[0].scrollHeight - el.scrollTop()) < (el.outerHeight()+10)){
+				console.log('END')
+				$('#closeModalTerms').css('visibility','visible');
+			}else{
+				$('#closeModalTerms').css('visibility','hidden');
+			}
+		});
+		
+
     })
         
-        $('#all_check').click(function(){
+        /* $('#all_check').click(function(){
             var checked = $('#all_check').is(':checked');
             
             if(checked) {
@@ -453,7 +456,7 @@ $result = sql_query($sql);
             } else {
                 $('input:checkbox').prop('checked',false);
             }
-        });
+        }); */
 
         $('#check2, #check3').on('click',function() {
             if($('#all_check').is(":checked") == true) {
@@ -464,6 +467,12 @@ $result = sql_query($sql);
                 $('#all_check').prop('checked',true)
             }
         });
+
+		if($("#check1").on('click',function(e) {
+			e.preventDefault();
+			dialogModal('약관보기','약관보기를 클릭해 약관을 확인 주세요', 'warning');
+		})
+		);
 
 
 		// 패키지구매
@@ -484,8 +493,20 @@ $result = sql_query($sql);
 				return false;
 			}
 
-			// 유의사항 동의
+			// 유의사항 동의1
+			if($("#check1").prop('checked') == false || $("#check3").prop('checked') == false) {
+                dialogModal('','유의사항 확인/동의를 체크해 주세요', 'warning');
+                return false;
+            }
+
+			// 유의사항 동의2
 			if($("#check2").prop('checked') == false || $("#check3").prop('checked') == false) {
+                dialogModal('','유의사항 확인/동의를 체크해 주세요', 'warning');
+                return false;
+            }
+
+			// 유의사항 동의3
+			if($("#check3").prop('checked') == false || $("#check3").prop('checked') == false) {
                 dialogModal('','유의사항 확인/동의를 체크해 주세요', 'warning');
                 return false;
             }
