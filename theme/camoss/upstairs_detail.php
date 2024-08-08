@@ -143,7 +143,7 @@
                     <ul><i class="ri-check-line"></i> 권리의 내용
                         <li>- 보유수량 > <span class="red"> <?=$item_layer?> MOSS</span></li>
                         <!-- <li>- 일련번호 > <span class="red"><?=od_txt($this_od['od_cash_no'],$this_od['od_cash_info'])?>  </span></li> -->
-                        <li>- 투자 수익률 권리 > <span class="red"><?=$fund_rate?>%</span></li>
+                        <li>- 투자 수익률 권리 > <span class="red">각 패키지별 수익률 </span></li>
                     </ul>
 
                     <ul>
