@@ -41,7 +41,7 @@
 	</a>
 </div>
 <div>
-	<a href="javascript:alert('준비중입니다.')">
+	<a href="https://travelexpress.io/">
 	<i class="ri-secure-payment-line fnb_menu"></i>
 	<label>Cardwallet</label>
 	</a>
