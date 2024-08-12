@@ -1,11 +1,10 @@
 <?php
 include_once('./_common.php');
+include_once('../common.php');
 
-/*## 프레임 아이디 찾기 ################################################*/
-if ($_GET['mbid'] && $member['mb_level'] > 8) {
-include_once(G5_THEME_PATH.'/head.sub.php');
+$theme_path = G5_PATH.'/'.G5_THEME_DIR.'/'.$config['cf_theme'];
+define('G5_THEME_PATH',        $theme_path);
 ?>
-<div class="id_search">
 <style type="text/css">
 .id_search {padding:30px;}
 .id_search li {float:left;width:32.3%;padding:0.5%;}
@@ -14,7 +13,21 @@ include_once(G5_THEME_PATH.'/head.sub.php');
 .id_search li span:hover {background-color:#777;color:#fff;}
 .infoBx {border:solid 2px rgba(39,48,62,0.4);border-radius:8px;margin-bottom:30px;}
 .infoBx h3 {line-height:40px;font-size:15px;padding-left:20px;border-bottom:solid 1px rgba(0,0,0,0.1);background-color:rgba(39,48,62,0.05);}
+.infoBx ul{    display: block;float: left;width: 100%;height: auto;margin-top: 10px;}
+.infoBx strong{font-size:16px;font-family: Montserrat, Arial, sans-serif;line-height: 24px;}
+.infoBx ul p{font-size:13px;line-height: 20px;}
+.close_btn{height:40px; background:#333;color:white;}
 </style>
+
+<?
+/*## 프레임 아이디 찾기 ################################################*/
+if ($_GET['mbid'] && $member['mb_level'] > 8) {
+	include_once(G5_THEME_PATH.'/head.sub.php');
+?>
+
+<div class="id_search">
+
+
 <script>
 $(function(){
 	$('span[id^="id_"]').click(function () {
@@ -27,6 +40,7 @@ $(function(){
 	});
 });
 </script>
+
 <div class="infoBx">
 	<h3>주문 아이디 검색</h3>
 	<ul>
@@ -36,7 +50,7 @@ $(function(){
 		while ($res = sql_fetch_array($qry)) {
 			if ($res['mb_id']) {
 	?>
-		<li><span id="id_<?=$res['mb_id']?>"><?=$res['mb_id']?><p>(<?=$res['mb_email']?>)</p></span></li>
+		<li><span id="id_<?=$res['mb_id']?>"><strong><?=$res['mb_id']?> <p>(<?=$res['mb_name']?>)</p></span></li>
 	<?
 				$i++;
 			}
@@ -56,18 +70,11 @@ $(function(){
 include_once(G5_THEME_PATH.'/tail.sub.php');
 /*## 추천 아이디 찾기 ################################################*/
 } else if ($_GET['rcm']) {
-include_once(G5_PATH.'/theme/cdasset/head.sub.php');
+	
+include_once(G5_THEME_PATH.'/head.sub.php');
 ?>
 <div class="id_search">
-<style type="text/css">
-.id_search {padding:30px;}
-.id_search li {float:left;width:32.3%;padding:0.5%;}
-.id_search li:nth-child(3n+0) {width:32.4%;}
-.id_search li span {display:block;padding:5px;line-height:18px;font-size:14px;border:solid 1px #ddd;cursor:pointer;}
-.id_search li span:hover {background-color:#777;color:#fff;}
-.infoBx {border:solid 2px rgba(39,48,62,0.4);border-radius:8px;margin-bottom:30px;}
-.infoBx h3 {line-height:40px;font-size:15px;padding-left:20px;border-bottom:solid 1px rgba(0,0,0,0.1);background-color:rgba(39,48,62,0.05);}
-</style>
+
 <script>
 $(function(){
 	$('span[id^="id_"]').click(function () {
@@ -80,16 +87,16 @@ $(function(){
 });
 </script>
 <div class="infoBx">
-	<h3>Referrer username research result</h3>
+	<h3>추천인 검색 결과</h3>
 	<ul>
 	<?
 		$i = 0;
-		$sql = " select mb_id, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' and (mb_id like '%{$_GET['rcm']}%' or mb_name like '%{$_GET['rcm']}%')  order by mb_id ";
+		$sql = " select mb_id, mb_name, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' and (mb_id like '%{$_GET['rcm']}%' or mb_name like '%{$_GET['rcm']}%')  order by mb_id ";
 		$qry = sql_query($sql);
 		while ($res = sql_fetch_array($qry)) {
 			if ($res['mb_id']) {
 	?>
-		<li><span id="id_<?=$res['mb_id']?>"><?=$res['mb_id']?><p>(<?=$res['mb_email']?>)</p></span></li>
+		<li><span id="id_<?=$res['mb_id']?>"><strong><?=$res['mb_id']?></strong><p>(<?=$res['mb_name']?>)</p></span></li>
 	<?
 				$i++;
 			}
@@ -111,26 +118,19 @@ function close_ajax(){
 }
 </script>
 		<div align="center" style="padding-top:30px">
-		<input type="button" onclick="close_ajax()" value=" close ">
+		<input type="button" class='close_btn' onclick="close_ajax()" value=" close ">
 		</div>
 </div><!-- // id_search -->
+
 <?
-include_once(G5_PATH.'/theme/cdasset/head.sub.php');
+include_once(G5_THEME_PATH.'/head.sub.php');
 /*## ajax 회원정보입력 ################################################*/
 
 } else if ($_GET['brcm']) {
-	include_once(G5_PATH.'/theme/cdasset/head.sub.php');
+	include_once(G5_THEME_PATH.'/head.sub.php');
 	?>
 	<div class="id_search">
-	<style type="text/css">
-	.id_search {padding:30px;}
-	.id_search li {float:left;width:32.3%;padding:0.5%;}
-	.id_search li:nth-child(3n+0) {width:32.4%;}
-	.id_search li span {display:block;padding:5px;line-height:18px;font-size:14px;border:solid 1px #ddd;cursor:pointer;}
-	.id_search li span:hover {background-color:#777;color:#fff;}
-	.infoBx {border:solid 2px rgba(39,48,62,0.4);border-radius:8px;margin-bottom:30px;}
-	.infoBx h3 {line-height:40px;font-size:15px;padding-left:20px;border-bottom:solid 1px rgba(0,0,0,0.1);background-color:rgba(39,48,62,0.05);}
-	</style>
+	
 	<script>
 	$(function(){
 		$('span[id^="id_"]').click(function () {
@@ -143,16 +143,16 @@ include_once(G5_PATH.'/theme/cdasset/head.sub.php');
 	});
 	</script>
 	<div class="infoBx">
-		<h3>Brecommend username research result</h3>
+		<h3>후원인 검색 결과</h3>
 		<ul>
 		<?
 			$i = 0;
-			$sql = " select mb_id, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' and (mb_id like '%{$_GET['rcm']}%' or mb_name like '%{$_GET['rcm']}%')  order by mb_id ";
+			$sql = " select mb_id, mb_name, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' and (mb_id like '%{$_GET['rcm']}%' or mb_name like '%{$_GET['rcm']}%')  order by mb_id ";
 			$qry = sql_query($sql);
 			while ($res = sql_fetch_array($qry)) {
 				if ($res['mb_id']) {
 		?>
-			<li><span id="id_<?=$res['mb_id']?>"><?=$res['mb_id']?><p>(<?=$res['mb_email']?>)</p></span></li>
+			<li><span id="id_<?=$res['mb_id']?>"><strong><?=$res['mb_id']?></strong><p>(<?=$res['mb_name']?>)</p></span></li>
 		<?
 					$i++;
 				}
@@ -178,7 +178,7 @@ include_once(G5_PATH.'/theme/cdasset/head.sub.php');
 			</div>
 	</div><!-- // id_search -->
 	<?
-	include_once(G5_PATH.'/theme/cdasset/head.sub.php');
+	include_once(G5_THEME_PATH.'/head.sub.php');
 	/*## ajax 회원정보입력 ################################################*/
 	
 	}else if ($_POST['mb_id']) {
@@ -196,7 +196,7 @@ include_once(G5_PATH.'/theme/cdasset/head.sub.php');
 	}
 }else{
 /*@@End.  #####*/
-include_once(G5_PATH.'/theme/cdasset/head.sub.php');
+include_once(G5_THEME_PATH.'/head.sub.php');
 ?>
 <script>
 function close_ajax(){
@@ -206,6 +206,6 @@ function close_ajax(){
 }
 </script>
 		<div align="center" style="padding-top:30px">
-		<input type="button" onclick="close_ajax()" value=" close ">
+		<input type="button"  class='close_btn' onclick="close_ajax()" value=" close ">
 		</div>
 <?}?>

@@ -125,7 +125,7 @@ function imageview(id, w, h)
 <div id="framewrp">
 <style type="text/css">
 #framewrp {position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:99999;display:none;}
-#framer {position:absolute;left:50%;margin-left:-300px;top:50%;margin-top:-250px;width:600px;height:500px;background-color:#fff;border:0;}
+#framer {position:absolute;left:50%;margin-left:-400px;top:40%;margin-top:-350px;width:800px;height:700px;background-color:#fff;border:0;}
 @media screen and (max-width:480px) {
 #framer {position:absolute;left:0;margin-left:0;top:10%;margin-top:0;width:100%;height:80%;}
 }
