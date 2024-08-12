@@ -4,7 +4,7 @@
 
 <div class='btn' onclick="bonus_url('<?=$category?>');">돌아가기</div>
 
-<body>
+</body>
 </html>
 
 <style>

@@ -45,6 +45,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
         <th scope="col">번호</th>
         <th scope="col">메세지</th>
         <th scope="col">회신번호</th>
+        <th scope="col">발신번호</th>
         <th scope="col">전송일시</th>
         <th scope="col">예약</th>
         <th scope="col">총건수</th>
@@ -65,7 +66,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     <?php
     }
     $qry = sql_query("select * from {$g5['sms5_write_table']} where wr_renum=0 $sql_search order by wr_no desc limit $page_start, $page_size");
-    while($res = sql_fetch_array($qry)) {
+    print_R("select * from {$g5['sms5_write_table']} where wr_renum=0 $sql_search order by wr_no desc limit $page_start, $page_size");
+    while($res = sql_fetch_array($qry)) {;
         $bg = 'bg'.($line++%2);
         $tmp_wr_memo = @unserialize($res['wr_memo']);
         $dupli_count = (isset($tmp_wr_memo['total']) && $tmp_wr_memo['total']) ? (int) $tmp_wr_memo['total'] : 0;
