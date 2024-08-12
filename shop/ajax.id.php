@@ -4,6 +4,8 @@ include_once('../common.php');
 
 $theme_path = G5_PATH.'/'.G5_THEME_DIR.'/'.$config['cf_theme'];
 define('G5_THEME_PATH',        $theme_path);
+
+include_once(G5_THEME_PATH.'/head.sub.php');
 ?>
 <style type="text/css">
 .id_search {padding:30px;}
@@ -16,17 +18,15 @@ define('G5_THEME_PATH',        $theme_path);
 .infoBx ul{    display: block;float: left;width: 100%;height: auto;margin-top: 10px;}
 .infoBx strong{font-size:16px;font-family: Montserrat, Arial, sans-serif;line-height: 24px;}
 .infoBx ul p{font-size:13px;line-height: 20px;}
-.close_btn{height:40px; background:#333;color:white;}
+.close_btn{margin-top:20px;height:40px; background:#333;color:white;}
+.blanked{display:table;width:100%;text-align:center;}
+.blanked > div{display:table-cell;vertical-align: middle;height:100px;}
 </style>
+
 
 <?
 /*## 프레임 아이디 찾기 ################################################*/
-if ($_GET['mbid'] && $member['mb_level'] > 8) {
-	include_once(G5_THEME_PATH.'/head.sub.php');
-?>
-
-<div class="id_search">
-
+if ($_GET['mbid'] && $member['mb_level'] > 8) {?>
 
 <script>
 $(function(){
@@ -41,6 +41,7 @@ $(function(){
 });
 </script>
 
+<div class="id_search">
 <div class="infoBx">
 	<h3>주문 아이디 검색</h3>
 	<ul>
@@ -63,18 +64,15 @@ $(function(){
 	?>
 	</ul>
 	<p class="clr"></p>
-</div><!-- // infoBx -->
+</div>
+</div>
 
-</div><!-- // id_search -->
-<?
-include_once(G5_THEME_PATH.'/tail.sub.php');
-/*## 추천 아이디 찾기 ################################################*/
-} else if ($_GET['rcm']) {
-	
-include_once(G5_THEME_PATH.'/head.sub.php');
-?>
+
+
+
+<!-- 추천 아이디 찾기 ################################################ -->
+<?} else if ($_GET['type'] == 'rcm_search') {?>
 <div class="id_search">
-
 <script>
 $(function(){
 	$('span[id^="id_"]').click(function () {
@@ -86,49 +84,49 @@ $(function(){
 	});
 });
 </script>
-<div class="infoBx">
-	<h3>추천인 검색 결과</h3>
-	<ul>
-	<?
-		$i = 0;
-		$sql = " select mb_id, mb_name, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' and (mb_id like '%{$_GET['rcm']}%' or mb_name like '%{$_GET['rcm']}%')  order by mb_id ";
-		$qry = sql_query($sql);
-		while ($res = sql_fetch_array($qry)) {
-			if ($res['mb_id']) {
-	?>
-		<li><span id="id_<?=$res['mb_id']?>"><strong><?=$res['mb_id']?></strong><p>(<?=$res['mb_name']?>)</p></span></li>
-	<?
-				$i++;
+	<div class="infoBx">
+		<h3>추천인 검색 결과</h3>
+		<ul>
+		<?
+			$recom_keyword = $_GET['rcm'];
+
+			if($recom_keyword != ''){
+				$sql = " select mb_id, mb_name, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' and (mb_id like '%{$recom_keyword}%' or mb_name like '%{$recom_keyword}%') AND mb_id != 'admin'  order by mb_id ";
+			}else{
+				$sql = " select mb_id, mb_name, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' AND mb_id != 'admin'  order by mb_id ";
 			}
+			
+			$qry = sql_query($sql);
+			$qry_num = sql_num_rows($qry);
+
+			if($qry_num < 1){
+				echo "<div class='blanked'><div>검색 결과가 없습니다.</div></div>";
+			}else{
+				while ($res = sql_fetch_array($qry)) {?>
+				<li><span id="id_<?=$res['mb_id']?>"><strong><?=$res['mb_id']?></strong><p>(<?=$res['mb_name']?>)</p></span></li>
+				<?}?>
+			<?}?>
+			
+		</ul>
+		<p class="clr"></p>
+	</div>
+
+		<script>
+		function close_ajax(){
+			$("#reg_mb_recommend",parent.document.body).focus();
+			$("#framer",parent.document.body).attr("src","");
+			$("#framewrp",parent.document.body).hide();
 		}
-		if ($i == 0) {
-	?>
-		<li>No result found</li>
-	<?
-		}
-	?>
-	</ul>
-	<p class="clr"></p>
-</div><!-- // infoBx -->
-<script>
-function close_ajax(){
-	$("#reg_mb_recommend",parent.document.body).focus();
-	$("#framer",parent.document.body).attr("src","");
-	$("#framewrp",parent.document.body).hide();
-}
-</script>
-		<div align="center" style="padding-top:30px">
-		<input type="button" class='close_btn' onclick="close_ajax()" value=" close ">
-		</div>
+		</script>
+			<div  style="padding-top:30px">
+				<input type="button" class='close_btn' onclick="close_ajax()" value=" close ">
+			</div>
+	</div>
 </div><!-- // id_search -->
 
-<?
-include_once(G5_THEME_PATH.'/head.sub.php');
-/*## ajax 회원정보입력 ################################################*/
 
-} else if ($_GET['brcm']) {
-	include_once(G5_THEME_PATH.'/head.sub.php');
-	?>
+<!-- 후원인검색 ################################################ -->
+<?} else if ($_GET['type'] == 'brcm_search') {?>
 	<div class="id_search">
 	
 	<script>
@@ -146,26 +144,27 @@ include_once(G5_THEME_PATH.'/head.sub.php');
 		<h3>후원인 검색 결과</h3>
 		<ul>
 		<?
-			$i = 0;
-			$sql = " select mb_id, mb_name, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' and (mb_id like '%{$_GET['rcm']}%' or mb_name like '%{$_GET['rcm']}%')  order by mb_id ";
+			$brecom_keyword = $_GET['brcm'];
+
+			if($brecom_keyword != ''){
+				$sql = " select mb_id, mb_name, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' and (mb_id like '%{$_GET['brcm']}%' or mb_name like '%{$_GET['brcm']}%') AND mb_id != 'admin'  order by mb_id ";
+			}else{
+				$sql = " select mb_id, mb_name, mb_email from g5_member where mb_leave_date = '' and mb_id != '{$_GET['mb_id']}' AND mb_id != 'admin'  order by mb_id ";
+			}
+			
 			$qry = sql_query($sql);
-			while ($res = sql_fetch_array($qry)) {
-				if ($res['mb_id']) {
-		?>
-			<li><span id="id_<?=$res['mb_id']?>"><strong><?=$res['mb_id']?></strong><p>(<?=$res['mb_name']?>)</p></span></li>
-		<?
-					$i++;
-				}
-			}
-			if ($i == 0) {
-		?>
-			<li>No result found</li>
-		<?
-			}
-		?>
+			$qry_num = sql_num_rows($qry);
+
+			if($qry_num < 1){
+				echo "<div class='blanked'><div>검색 결과가 없습니다.</div></div>";
+			}else{
+				while ($res = sql_fetch_array($qry)) {?>
+				<li><span id="id_<?=$res['mb_id']?>"><strong><?=$res['mb_id']?></strong><p>(<?=$res['mb_name']?>)</p></span></li>
+			<?}?>
+			<?}?>
 		</ul>
 		<p class="clr"></p>
-	</div><!-- // infoBx -->
+	</div>
 	<script>
 	function close_ajax(){
 		$("#reg_mb_brecommend",parent.document.body).focus();
@@ -173,20 +172,71 @@ include_once(G5_THEME_PATH.'/head.sub.php');
 		$("#framewrp",parent.document.body).hide();
 	}
 	</script>
-			<div align="center" style="padding-top:30px">
-			<input type="button" onclick="close_ajax()" value=" close ">
+			<div  style="padding-top:30px">
+				<input type="button" class='close_btn' onclick="close_ajax()" value=" close ">
 			</div>
-	</div><!-- // id_search -->
+	</div>
+
+
+<!-- 센터검색 ################################################ -->
+<?} else if ($_GET['type']=='center_search') {?>
+<div class="id_search">
+
+<script>
+$(function(){
+	$('span[id^="id_"]').click(function () {
+		var $id = $(this).attr("id").replace("id_","");
+		$("#mb_center",parent.document.body).val($id);
+		$("#mb_center",parent.document.body).focus();
+		$("#framer",parent.document.body).attr("src","");
+		$("#framewrp",parent.document.body).hide();
+	});
+});
+</script>
+<div class="infoBx">
+	<h3>센터 검색 결과</h3>
+	<ul>
 	<?
-	include_once(G5_THEME_PATH.'/head.sub.php');
-	/*## ajax 회원정보입력 ################################################*/
-	
-	}else if ($_POST['mb_id']) {
+		
+		$center_keyword = $_GET['center'];
+
+		if($center_keyword != ''){
+			$sql = " select * from g5_member where (mb_center_name like '%{$center_keyword}%' OR mb_id like '%{$center_keyword}%' ) and center_use = 1 AND mb_id != 'admin'  order by mb_id  ";
+		}else{
+			$sql = " select * from g5_member where mb_leave_date = '' and center_use = 1 AND mb_id != 'admin'  order by mb_id ";
+		}
+		
+		$qry = sql_query($sql);
+		$qry_num = sql_num_rows($qry);
+
+		if($qry_num < 1){
+			echo "<div class='blanked'><div>검색 결과가 없습니다.</div></div>";
+		}else{
+			while ($res = sql_fetch_array($qry)) {?>
+			<li><span id="id_<?=$res['mb_id']?>"><strong><?=$res['mb_id']?> [ <?=$res['mb_center_name']?> ] </strong><p>(<?=$res['mb_name']?>)</p></span></li>
+			<?}?>
+		<?}?>
+	</ul>
+	<p class="clr"></p>
+</div>
+<script>
+function close_ajax(){
+	$("#reg_center",parent.document.body).focus();
+	$("#framer",parent.document.body).attr("src","");
+	$("#framewrp",parent.document.body).hide();
+}
+</script>
+		<div align="center" style="padding-top:30px">
+		<input type="button" class='close_btn' onclick="close_ajax()" value=" close ">
+		</div>
+</div>
+
+<?}else if ($_POST['mb_id']) {
 	$mb_info = sql_fetch(" select mb_name, mb_tel, mb_hp, mb_zip1, mb_zip2, mb_addr1, mb_addr2, mb_addr3, mb_email from g5_member where mb_leave_date = '' and mb_id = '{$_POST['mb_id']}' ");
 ?>
 <?=$mb_info['mb_name']?>^<?=$mb_info['mb_tel']?>^<?=$mb_info['mb_hp']?>^<?=$mb_info['mb_zip1']?><?=$mb_info['mb_zip2']?>^<?=$mb_info['mb_addr1']?>^<?=$mb_info['mb_addr2']?>^<?=$mb_info['mb_addr3']?>^<?=$mb_info['mb_email']?>
-<?
-} else if ($_POST['rcm_id']) {
+
+<?} else if ($_POST['rcm_id']) {
 	$rcm_id = trim($_POST['rcm_id']);
 	$mb_info = sql_fetch(" select mb_id, mb_name from g5_member where mb_id = '{$rcm_id}' ");
 	if ($mb_info) {
@@ -195,9 +245,9 @@ include_once(G5_THEME_PATH.'/head.sub.php');
 		echo "break";
 	}
 }else{
-/*@@End.  #####*/
-include_once(G5_THEME_PATH.'/head.sub.php');
+	include_once(G5_THEME_PATH.'/head.sub.php');
 ?>
+
 <script>
 function close_ajax(){
 	$("#reg_mb_recommend",parent.document.body).focus();

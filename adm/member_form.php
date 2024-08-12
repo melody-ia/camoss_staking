@@ -233,6 +233,7 @@ $rank_result = sql_fetch($rank_sql);
 ?>
 
 <style>
+	.frm_input{min-width:200px}
 	.ly_up {
 		height: 60px;
 	}
@@ -458,7 +459,7 @@ $rank_result = sql_fetch($rank_sql);
 	<tr>
 		<th scope="row">센터지정</th>
 		<td colspan="1">
-			<input type="checkbox" style='width:24px;height:24px' name="center_use" id="center_use" value=" <?= $mb['center_use'] ?> " class="frm_input" <? if ($mb['center_use'] == '1') {
+			<input type="checkbox" style='width:24px;height:24px' name="center_use" id="center_use" value=" <?= $mb['center_use'] ?> " class="" <? if ($mb['center_use'] == '1') {
 																																																																											echo "checked";
 																																																																										} ?> />
 			<? if ($mb['center_use'] > 0) {
@@ -470,13 +471,14 @@ $rank_result = sql_fetch($rank_sql);
 			<div id='mb_nick_regist' class='<?= $center_regist_class ?>'>
 				| 센터명 :
 				<input type="text" name="mb_center_name" id="mb_nick_field" value="<?= $mb['mb_center_name'] ?>" class="frm_input" />
+				
 			</div>
 
 		</td>
 
 		<th scope="row">센터회원</th>
 		<td colspan="1">
-			<input type="text" name="mb_center" id="mb_center" value="<?= $mb['mb_center'] ?>" class="frm_input wide" />
+			<input type="text" name="mb_center" id="mb_center" value="<?= $mb['mb_center'] ?>" class="frm_input wide" /><span id="ajax_center_search" class="btn flexible">검색</span>
 		</td>
 	</tr>
 
@@ -1003,7 +1005,7 @@ $rank_result = sql_fetch($rank_sql);
 		</td>
 		<?}else{?>
 			<td colspan="3">
-			<?= strtoupper($curencys[0]) ?> 지갑주소 : <input type="text" name="usdt_my_wallet" value="<?php echo $mb['account_name']?>" id="usdt_my_wallet" class="frm_input wide" size="15" style="width:400px; margin-left: 15px;" readonly>
+			<?= strtoupper($curencys[0]) ?> 지갑주소 : <input type="text" name="usdt_my_wallet" value="<?php echo $mb['account_name']?>" id="usdt_my_wallet" class="frm_input wide" size="15" style="width:400px; margin-left: 15px;"  readonly>
 				
 			<!-- <?= $curencys[0] ?> 지갑주소 : <input type="text" name="eth_my_wallet" value="<?php echo Decrypt($mb['eth_my_wallet'], $mb['mb_id'], 'x') ?>" id="eth_my_wallet" class="frm_input wide" size="15" style="width:300px; margin-left: 15px;"><br>
 			<?= $curencys[4] ?> 지갑주소 : <input type="text" name="etc_my_wallet" value="<?php echo Decrypt($mb['etc_my_wallet'], $mb['mb_id'], 'x') ?>" id="etc_my_wallet" class="frm_input wide" size="15" style="width:300px; margin-left: 15px;"><br>

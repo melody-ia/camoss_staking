@@ -142,23 +142,24 @@ function imageview(id, w, h)
 $(function(){
 	$('span[id^="ajax_"]').click(function () {
 		var $type = $(this).attr("id").replace("ajax_","");
+        console.log($type);
 		if ($type == "id_search") {
 			var $search = $('#set_id_sel').val();
 			$('#framer').attr("src","/shop/ajax.id.php?mbid="+$search);
 			$('#framewrp').fadeIn();
 		} else if ($type == "center_search") {
             var $center = $('#mb_center').val();
-			$('#framer').attr("src","/shop/ajax.center.php?mb_id="+$center+"&rcm="+$center);
+			$('#framer').attr("src","/shop/ajax.id.php?type=center_search&center="+$center);
 			$('#framewrp').fadeIn();
 		}else if ($type == "rcm_search") {
 			var $rcm = $('#mb_recommend').val();
 			var $mb_id = $('#mb_id').val();
-			$('#framer').attr("src","/shop/ajax.id.php?mb_id="+$mb_id+"&rcm="+$rcm);
+			$('#framer').attr("src","/shop/ajax.id.php?type=rcm_search&mb_id="+$mb_id+"&rcm="+$rcm);
 			$('#framewrp').fadeIn();
 		}else if ($type == "brcm_search") {
 			var $brcm = $('#mb_brecommend').val();
 			var $mb_id = $('#mb_id').val();
-			$('#framer').attr("src","/shop/ajax.id.php?mb_id="+$mb_id+"&brcm="+$brcm);
+			$('#framer').attr("src","/shop/ajax.id.php?type=brcm_search&mb_id="+$mb_id+"&brcm="+$brcm);
 			$('#framewrp').fadeIn();
 		}
 	});
