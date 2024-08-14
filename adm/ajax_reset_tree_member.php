@@ -38,7 +38,7 @@ function get_recommend_down($mb_id, $ca_id)
 		if ($rd_num>$max_num)  break;
 		if ($row['mb_id']=="admin") break;
 		$len = strlen($ca_id);
-		if ($len == 30){
+		if ($len == 400){
 			echo "END";
 			exit;
 		}

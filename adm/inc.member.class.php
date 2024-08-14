@@ -11,7 +11,7 @@ function pv($value){
 
 $tree_id = $config['cf_admin'];
 
-$max_num    = 800;
+$max_num    = 1000;
 $max_up_num = 10; //5단계만 보이길 원하실 경우 4로 하시면 됩니다.
 $rd_num   = 0;
 $ru_num   = 0;
@@ -196,7 +196,7 @@ function get_org_down($srow){
 			JOIN ".$class_name." c ON m.mb_id=c.mb_id
 			WHERE c.mb_id='{$tree_id}' AND LENGTH(c.c_class)={$clen} AND c.c_class LIKE '".$srow['c_class']."%'
 			ORDER BY c.c_class
-			LIMIT 50
+			LIMIT 100
 			";
 		$result = sql_query($sql);
 		$count  = sql_num_rows($result);
@@ -692,7 +692,7 @@ function get_recommend_down($mb_id, $m_id, $ca_id) {
 		//if ($rd_num>$max_num)  break;
 
 		if ($row['mb_id']=="admin") break;
-		if ($len == 200)	break;
+		if ($len == 400)	break;
 		$len2  = $len + 1;
 		$subid = base_convert(($i+1), 36, 10);
 		$subid += 36;
@@ -748,7 +748,7 @@ function get_brecommend_down($mb_id, $m_id, $ca_id) {
 		$len = strlen($ca_id);
 		//if ($brd_num>$max_num)  break;
 		if ($row['mb_id']=="admin") break;
-		if ($len == 200)	break;
+		if ($len == 400)	break;
 		$len2  = $len + 1;
 		$subid = base_convert(($i+1), 36, 10);
 		$subid += 36;
