@@ -288,7 +288,7 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 /* 하단 레이아웃 */
 #ft{background:#f3f3f3;padding:0 25px;color:#777;text-align:center}
 #ft p{line-height:50px;}
-.scroll_top{position:fixed;bottom:10px;right:10px;width:50px;height:50px;border:0;text-align:center;background:#ddd;background:rgba(0,0,0,0.1)}
+.scroll_top{position:fixed;bottom:10px;right:100px;width:50px;height:50px;border:0;text-align:center;background:#ddd;background:rgba(0,0,0,0.1)}
 .scroll_top span.top_img{display:inline-block;width: 0; height: 0; border-left: 5px solid transparent;border-right: 5px solid transparent;
 border-bottom: 5px solid black;}
 .scroll_top span.top_txt{display:block}
