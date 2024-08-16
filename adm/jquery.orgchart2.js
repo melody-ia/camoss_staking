@@ -1074,7 +1074,8 @@
         html +='<p class="mb" >'
         +"<span class='user_icon lv"+trim(temp[6])+"'><i class='ri-vip-crown-line'></i></span>"
         // +'<img style="width:20px;" src="/img/'+temp[6]+'.png" align=absmiddle> '
-        + temp[2] + '</p>' + "<div class='mb_name'>" + temp[3] + '</div>';
+        + temp[2] + '</p>'; 
+        //html += "<div class='mb_name'>" + temp[3] + '</div>';
 
         var badge_color = 'grade_'+temp[12];
         html += "<div class='dec' style='margin-bottom:5px;'>등급: <span class='badge "+badge_color+"' style='font-size:11px;'>"+temp[12]+"S</span></div>";
@@ -1087,7 +1088,7 @@
         }
 
         // html += '<div class="dec mt5"><span class=f_green> MH: ' + temp[13] + '</span></div>';
-        html += '<div class="dec"><span class=f_blue><strong> PV: ' + temp[11] + '</strong></span></div>';
+        html += '<div class="dec"><br><span class=f_blue><strong> PV: ' + temp[11] + '</strong></span></div>';
         // html += '<div class="dec"><span class=f_pink><strong> ACC: ' + temp[9] + '</strong></span></div>';
 
         if(temp[18] == 'C'){

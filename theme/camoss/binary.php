@@ -165,6 +165,7 @@ $.datepicker.setDefaults($.datepicker.regional["ko"]);
 		overflow: auto !important;
 		border:0;
 	}
+	.f_blue{color:#373cbc !important;}
 
 	.orgchart .node {
 		box-sizing: border-box;
@@ -487,7 +488,7 @@ $.datepicker.setDefaults($.datepicker.regional["ko"]);
 	.dark .orgchart .node .title{background:#fff}
 	.dark #div_right{background:white}
 	.dark .user_icon{width:20px !important;display:inline-grid !important}
-	.dark strong{color:black;}
+	.dark strong{color:#3b86ff;}
 	.mb_name{margin:-3px 0 5px 0;font-weight:bold}
 </style>
 
