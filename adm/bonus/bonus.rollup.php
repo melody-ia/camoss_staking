@@ -62,9 +62,9 @@ for($i=0; $i < count($rollup_rate_1); $i++){
 }
 
 $rollup_rate_1 = explode(',',$rollup_config['rate']);
-$rollup_config['layer'];
+$bonus_layer = $rollup_config['layer'];
 
-$bonus_layer = 20;
+
 
 // 수당제한 제외 
 $balanace_ignore = FAlSE;
@@ -82,21 +82,49 @@ echo "지급조건 -".$pre_condition.' | '.$bonus_condition_tx." | ".$bonus_limi
 
 for($i =0; $i < count($rollup_rate_array); $i++){
 
-    array_push($rollup_rate,$rollup_rate_array[$i][0]); 
+    array_push($rollup_condition,$rollup_rate_array[$i][0]);
     array_push($rollup_layer,$rollup_rate_array[$i][1]);
-    array_push($rollup_condition,$rollup_rate_array[$i][2]);
+    array_push($rollup_rate,$rollup_rate_array[$i][2]);
 
-    echo "매출 : ".Number_format($rollup_rate[$i]);
-    echo " | ".$rollup_layer[$i]." 대";
-    echo " | 추천인 : ".$rollup_condition[$i]." 명";
+    echo "추천인 : ".$rollup_condition[$i]." 명";
+    echo " |  ~ ".$rollup_layer[$i]." 대";
+    echo " | 지급률 : ".Number_format($rollup_rate[$i])." %";
     echo "<br>";
 }
-// print_R($rollup_rate);
+
+// print_R($rollup_layer);
 
 echo "<strong>".$bonus_day."</strong><br>";
 echo "<br><span class='red'> 기준대상자(매출발생자) : ".$result_cnt."</span><br><br>";
 echo "<div class='btn' onclick=bonus_url('".$category."')>돌아가기</div>";
 
+
+function find_rank_tier($mem_cnt){
+    $result = 0;
+
+    if($mem_cnt > 0){
+        $result = 1;
+    }
+    if ($mem_cnt >= 2){
+        $result = 2;
+    }
+    if ($mem_cnt >= 5){
+        $result = 3;
+    }
+    if ($mem_cnt >= 7){
+        $result = 4;
+    }
+    if ($mem_cnt >= 10){
+        $result = 5;
+    }
+
+    return $result;
+
+}
+
+
+// PV 기준으로 추천인으로 등급  X: 사용안함
+/* 
 function find_rank_index($val,$mem_cnt){
     global $rollup_rate;
     $result = 0;
@@ -125,15 +153,15 @@ function find_rank_index($val,$mem_cnt){
 
     return $result;
 
-}
+} */
 
 function bonus_rate($val){
-    if($val <= 1){$result = 20;}
-    if($val > 1 && $val <= 3){$result = 10;}
-    if($val > 3 && $val <= 9){$result = 5;}
-    if($val > 9 && $val <= 15){$result = 3;}
-    if($val > 15 && $val <= 18){$result = 3;}
-    if($val > 18 && $val <= 20){$result = 1.5;}
+    if($val == 1){$result = 15;}
+    if($val > 1 && $val <= 6){$result = 10;}
+    if($val > 6 && $val <= 10){$result = 5;}
+    if($val > 10 && $val <= 15){$result = 2;}
+    if($val > 15 && $val <= 20){$result = 1;}
+    
     return $result;
 }
 
@@ -298,7 +326,8 @@ function  excute(){
         $mem_cnt_result = sql_fetch($mem_cnt_sql);
         $mem_cnt = $mem_cnt_result['cnt'];
 
-        $item_rank = find_rank_index($pv,$mem_cnt);
+        // $item_rank = find_rank_index($pv,$mem_cnt);
+        $item_rank = find_rank_tier($mem_cnt);
        
 
         echo "<br><br><span class='title block gold' style='font-size:30px;'>".$comp."</span><br>";
@@ -309,9 +338,9 @@ function  excute(){
         
         echo "▶직추천인수 : <span class='blue'>" . $mem_cnt . "</span>";
 
-        if($item_rank >= 0){ // 매칭레벨
+        if($item_rank >= 1){ // 매칭레벨
 
-            $matching_lvl = $rollup_layer[$item_rank];
+            $matching_lvl = $rollup_layer[$item_rank-1];
 
             // 후원하부
             $brecom_list = brecommend_array($comp,0,$matching_lvl);
@@ -319,7 +348,7 @@ function  excute(){
             
 
             echo "<br>";
-            echo "▶▶ 보유PV: <strong>".shift_kor($pv)."</strong> | 패키지등급 : ".$item_rank." | 매칭레벨 : <span class='blue'>".$matching_lvl."대</span><br> ";
+            echo "▶▶ 보유PV: <strong>".shift_kor($pv)."</strong> | 매칭레벨 : <span class='blue'>".$matching_lvl."대</span><br> ";
             echo "▶▶▶ 후원라인 하부 <span class='blue'>".$matching_lvl."대</span> 하부PV :: ";
             echo "<span class='blue'>".shift_auto($brecom_list_sum)."</span>";
             echo "<br>";
@@ -342,16 +371,25 @@ function  excute(){
                     $bonus_rates = $bonus_rate * 0.01;
 
                     // 지급보너스
-                    $benefit=(($today_sales*0.5)*$bonus_rates);// 매출자 * 수당비율
+                    $benefit=(($today_sales*$bonus_layer)*$bonus_rates);// 매출자 * 수당비율
                     $benefit_point = shift_auto($benefit);
-                                 
+
                     $total_balance = $mb_balance + $mb_shop_point - $mb_ignore;
                     $balance_limit = $mb_index; // 수당한계
-                    $benefit_limit = $mb_index - $total_balance + $benefit; // 수당합계
+                    
+                    $benefit_limit = $mb_index - ($total_balance + $benefit); // 수당합계
+                    
 
-                    if($benefit_limit < 0){
-                        $benefit_limit = 0;
+                    if($benefit_limit > 0){
+                        $benefit_limit = $benefit;
+                    }else{
+                        if($benefit_limit*-1 > $benefit){
+                            $benefit_limit = 0;
+                        }else{
+                            $benefit_limit = $benefit + $benefit_limit;
+                        }
                     }
+
                     
                     $benefit_limit_point = shift_auto($benefit_limit);
 
@@ -360,17 +398,22 @@ function  excute(){
 
 
                         // 수당 로그
-                        echo "<br>".$recomm." | ".$count." 대 :: ".shift_auto($today_sales).'*0.5 *'.$bonus_rates;
+                        echo "<br>".$recomm." | ".$count." 대 :: ".shift_auto($today_sales).'*'.$bonus_layer.'*'.$bonus_rates;
 
                     // 기록용 
                     $rec = $code.' Bonus from '. $recomm.' - '.$count."대  | P =".$live_benefit.", CP = ".$shop_benefit;
-                    $rec_adm = ''. $recomm.' - '.$count.'대 :'.shift_auto($today_sales).'*0.5 *'.$bonus_rate.'='.$benefit." | P =".$live_benefit.", CP = ".$shop_benefit; 
+                    $rec_adm = ''. $recomm.' - '.$count.'대 :'.shift_auto($today_sales).'*'.$bonus_layer.'*'.$bonus_rate.'='.$benefit." | P =".$live_benefit.", CP = ".$shop_benefit; 
 
                     if($benefit > $benefit_limit && $balance_limit != 0 ){
 
-                        $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit)." (P:".$live_benefit." / CP:".$shop_benefit.")</span>";
+                        $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit,2)." (P:".$live_benefit." / CP:".$shop_benefit.")</span>";
                         echo "<span class=blue> ▶▶ 수당 지급 : ".$benefit_point."</span>";
                         echo "<span class=red> ▶▶▶ 수당 초과 (한계까지만 지급) : ".$benefit_limit_point." </span><br>";
+
+                        echo "<code>";
+                        echo "현재수당 : ".Number_format($total_balance,2)."  | 수당한계 :". shift_auto($balance_limit);
+                        echo " | 발생할수당: ".$benefit." | 지급할수당 :".$benefit_limit;
+                        echo "</code><br>";
 
                     }else if($benefit != 0 && $balance_limit == 0 && $benefit_limit == 0){
             
@@ -379,7 +422,7 @@ function  excute(){
                         echo "<span class=red> ▶▶▶ 수당 초과 (기준매출없음) : ".$benefit_limit_point." </span><br>";
                     }else if($benefit == 0){
             
-                        echo "<span class=black> ▶▶ 수당 미발생 </span>";
+                        echo "<span class=black> ▶▶ 수당 미발생 </span><br>";
                     }else{
                         echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P지급".$live_benefit." / CP지급 : ".$shop_benefit.")</span><br>";
                     }
@@ -387,7 +430,7 @@ function  excute(){
                             // 디버그 로그
                             if($debug){
                                 echo "<code>";
-                                echo "현재수당 : ".Number_format($total_balance)."  | 수당한계 :". shift_auto($balance_limit);
+                                echo "현재수당 : ".Number_format($total_balance,2)."  | 수당한계 :". shift_auto($balance_limit);
                                 echo " | 발생할수당: ".$benefit." | 지급할수당 :".$benefit_limit;
                                 echo "</code><br>";
                             }
