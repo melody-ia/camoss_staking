@@ -381,7 +381,7 @@ else
 	
  	// KYC 인증 API
 	if(TELEGRAM_ALERT_USE){
-		curl_tele_sent("[HWAJO][KYC인증] ".$member['mb_id']." 님이 KYC 인증 등록을 요청했습니다.",2);
+		curl_tele_sent("[".CONFIG_TITLE."][KYC인증] ".$member['mb_id']." 님이 KYC 인증 등록을 요청했습니다.",2);
 	}
     echo (json_encode(array("result" => "success",  "code" => "0000", "sql" => 'kyc upload success')));
 

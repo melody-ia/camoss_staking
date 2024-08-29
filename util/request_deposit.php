@@ -81,6 +81,7 @@ if($pre_result['cnt'] < $limit_cnt){
 
   if(TELEGRAM_ALERT_USE){  
     curl_tele_sent($msg);
+    
   }else{
     if($debug ==1){
       echo "<br><code>".$msg."</code><br>";

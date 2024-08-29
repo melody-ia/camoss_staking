@@ -229,7 +229,7 @@ if($debug){
 
 // 출금알림 텔레그램 API
 if(TELEGRAM_ALERT_USE){
-	curl_tele_sent('[출금요청] '.$mb_id.'('.$mb_name.') 님의 '.shift_auto($fixed_amt, $select_coin). ' ' . $select_coin . ' 출금요청이 있습니다.');
+	curl_tele_sent('['.CONFIG_TITLE.'][출금요청] '.$mb_id.'('.$mb_name.') 님의 '.shift_auto($fixed_amt, $select_coin). ' ' . $select_coin . ' 출금요청이 있습니다.');
 }
 
 if($rst && $amt_result){

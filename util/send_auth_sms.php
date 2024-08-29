@@ -7,7 +7,7 @@ include_once(G5_PLUGIN_PATH.'/Encrypt/rule.php');
 
 login_check($member['mb_id']);
 // $debug = 1;
-$debug_mode = LIVE_MODE;
+$debug_mode = HANDLE_STATES;
 
 $otp_key = mt_rand(100000, 999999);
 $mb_id = $member['mb_id'];
@@ -40,7 +40,7 @@ $wr_message = stripslashes($sms_contents);
 
 
 
-if($debug || !$debug_mode){
+if($debug || $debug_mode == 'test'){
     echo "<br>";
     print_R($sms_contents);
     echo "<br>receive_number : ".$receive_number;

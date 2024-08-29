@@ -16,7 +16,7 @@ $d_price = '5830000';
 
 
   // 입금알림 텔레그램 API
-  curl_tele_sent('[ZETABYTE][입금요청] '.$mb_id.'('.$txhash.') 님의 '.Number_format($d_price).'입금요청이 있습니다.');
-
+  $msg = '['.CONFIG_TITLE.'][입금요청] '.$mb_id.'('.$mb_name.') 님의 '.shift_auto($d_price, $curencys[0]).' '.$curencys[0].' 입금요청이 있습니다.';
+  curl_tele_sent($msg);
 
 ?>
