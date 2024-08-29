@@ -151,6 +151,8 @@ function return_status_tx($val)
 				type: "POST",
 				url: "/adm/adm.request_proc.php",
 				dataType: "json",
+				cache: false,
+        		async: false,
 				data: {
 					uid: $(this).attr('uid'),
 					status: $(this).val(),
@@ -158,16 +160,16 @@ function return_status_tx($val)
 					coin: coins,
 					func: 'withrawal'
 				},
-				success: function(data) {
-					if (data.code == '0001') {
-						alert(data.msg);
+				success: function(result) {
+					if (result.code == '0001') {
+						alert(result.msg);
 						location.reload();
 					} else {
 						alert("처리되지 않았습니다.");
 					}
 				},
 				error: function(e) {
-					alert("오류가 발생하였습니다.");
+					alert("오류가 발생하였습니다. -1");
 				}
 			});
 		});

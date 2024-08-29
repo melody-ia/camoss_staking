@@ -419,6 +419,7 @@ if($auto_brecomend_system === true){
 
 $msg .= "처리가 완료되었습니다.";
 
+ob_clean();
 echo (json_encode(array("result" => "success", "code" => "0001", "msg" => $msg), JSON_UNESCAPED_UNICODE));
 
 
