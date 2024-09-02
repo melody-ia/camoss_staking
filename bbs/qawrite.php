@@ -141,6 +141,7 @@ if(is_file($skin_file)) {
     $list_href = G5_BBS_URL.'/qalist.php'.preg_replace('/^&amp;/', '?', $qstr);
 
     $action_url = https_url(G5_BBS_DIR).'/qawrite_update.php';
+    
     include_once($skin_file);
 } else {
     echo '<div>'.str_replace(G5_PATH.'/', '', $skin_file).'이 존재하지 않습니다.</div>';

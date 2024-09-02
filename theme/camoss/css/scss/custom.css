@@ -3687,6 +3687,13 @@ a.btn_cancle,
 .dark .qaboard #bo_list li {
   background: transparent;
 }
+.dark .qaboard #bo_list li.bo_adm {
+  border: 1px solid #3e3e3e;
+}
+.dark .qaboard #bo_list li .bo_cate_link {
+  background: #3e3e3e;
+  color: #fac707 !important;
+}
 .dark .qaboard .btn_cke_sc {
   color: black;
 }

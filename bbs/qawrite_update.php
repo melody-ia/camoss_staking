@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/Telegram/telegram_api.php');
 
 /*==========================
 $w == a : 답변
@@ -340,8 +341,8 @@ if($w == '' || $w == 'a' || $w == 'r') {
 
 run_event('qawrite_update', $qa_id, $write, $w, $qaconfig);
 
-// SMS 알림
-if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
+// SMS 알림 ※사용안함
+/* if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
     if($config['cf_sms_type'] == 'LMS') {
         include_once(G5_LIB_PATH.'/icode.lms.lib.php');
 
@@ -438,7 +439,11 @@ if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
             }
         }
     }
-}
+} */
+
+// 답변 텔레그램 전송 
+$msg = '['.CONFIG_TITLE.'][1:1문의] '.$member['mb_id'].' 님이 ('.$qa_category.') 문의 내용을 남겼습니다.';
+curl_tele_sent($msg,2);
 
 // 답변 이메일전송
 if($w == 'a' && $write['qa_email_recv'] && trim($write['qa_email'])) {
