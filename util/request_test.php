@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/Telegram/telegram_api.php');
-
+include_once(G5_THEME_PATH . '/_include/wallet.php');
 // 입금처리 PROCESS
 // $debug = 1;
 
@@ -10,9 +10,9 @@ $now_datetime = date('Y-m-d H:i:s');
 $now_date = date('Y-m-d');
 
 $mb_id = 'admin';
-$txhash = '관리자 입금 : zeta';
-$coin = $_POST['coin'];
-$d_price = '5830000';
+$txhash = '입금테스트 : ';
+$coin = 'usdt';
+$d_price = '30000';
 
 
   // 입금알림 텔레그램 API

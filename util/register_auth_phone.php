@@ -10,7 +10,7 @@ $code = "300";
 $msg = "잘못된 접근입니다.";
 if($mb_hp && $rand_num){
     
-    if(HANDLE_STATES == "real"){
+    if(HANDLE_STATES != "test"){
         include_once(G5_THEME_PATH."/_include/sms.php");
     }
     $code = "200";
