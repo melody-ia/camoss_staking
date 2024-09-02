@@ -15,4 +15,12 @@ if($member['mb_id'] == 'admin'){
         array('900900', '휴대폰번호 파일', ''.G5_SMS5_ADMIN_URL.'/num_book_file.php' , 'hp_file', 1)
 
     );
+}else{
+	$menu["menu900"] = array (
+        array('900000', 'SMS 관리', ''.G5_SMS5_ADMIN_URL.'/config.php', 'sms5'),
+        array('900100', 'SMS 기본설정', ''.G5_SMS5_ADMIN_URL.'/config.php', 'sms5_config'),
+        // array('900410', '전송내역-번호별', ''.G5_SMS5_ADMIN_URL.'/history_num.php', 'sms_history_num' , 1),
+        array('900450', '회원가입인증전송', ''.G5_SMS5_ADMIN_URL.'/auth_history_num.php', 'sms_history_num' , 1),
+	// array('700700', '입금계좌관리', G5_ADMIN_URL.'/adm.Account_Manage.php', 'bbs_board')
+	);
 }
