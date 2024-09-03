@@ -210,36 +210,37 @@ if (!function_exists('array_column')) :
     }
 endif;
 
-
-/* 승급기준 로그 출력 */
-echo "<br><code>회원직급 승급 조건   |   기준조건 :" . $pre_condition . "<br>";
-for ($i = 0; $i < $grade_cnt; $i++) {
-    echo "<br>" . grade_name($i + 1);
-    echo  " -  [ 승급기준]  본인구매기준" . ": " . Number_format($lvlimit_sales_level[$i] * $lvlimit_recom_val). " 이상 ";
-    echo  "/ 소실적합 :" . Number_format($lvlimit_recom[$i] * $lvlimit_recom_val) . " 이상 ";
-    echo  "/ 조건 : " . limit_conditions($lvlimit_cnt[$i],'text') . '<br>';
-}
-echo "</code><br><br><br>";
-
-echo "<strong>현재 직급 기준 대상자</strong> : ";
-
-if ($pre_count > 0) {
-    while ($cnt_row = sql_fetch_array($pre_result)) {
-        echo "<br><strong>" . $cnt_row['grade'] . " CA : <span class='red'>" . $cnt_row['cnt'] . '</span> 명</strong>';
-    }
-} else {
-    echo "<span class='red'>대상자없음</span>";
-}
-
-echo "</span><br><br>";
-echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
-
-
+header('Content-Type: text/html; charset=utf-8');
 ?>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head><body>
 
-<body>
+<?
+    /* 승급기준 로그 출력 */
+    echo "<br><code>회원직급 승급 조건   |   기준조건 :" . $pre_condition . "<br>";
+    for ($i = 0; $i < $grade_cnt; $i++) {
+        echo "<br>" . grade_name($i + 1);
+        echo  " -  [ 승급기준]  본인구매기준" . ": " . Number_format($lvlimit_sales_level[$i] * $lvlimit_recom_val). " 이상 ";
+        echo  "/ 소실적합 :" . Number_format($lvlimit_recom[$i] * $lvlimit_recom_val) . " 이상 ";
+        echo  "/ 조건 : " . limit_conditions($lvlimit_cnt[$i],'text') . '<br>';
+    }
+    echo "</code><br><br><br>";
+
+    echo "<strong>현재 직급 기준 대상자</strong> : ";
+
+    if ($pre_count > 0) {
+        while ($cnt_row = sql_fetch_array($pre_result)) {
+            echo "<br><strong>" . $cnt_row['grade'] . " CA : <span class='red'>" . $cnt_row['cnt'] . '</span> 명</strong>';
+        }
+    } else {
+        echo "<span class='red'>대상자없음</span>";
+    }
+
+    echo "</span><br><br>";
+    echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
+?>
     <header>승급시작</header>
     <div>
 

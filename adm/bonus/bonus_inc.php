@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+header('Content-Type: text/html; charset=utf-8');
 
 /*수당설정 로드*/
 define('ASSETS_CURENCY','원');

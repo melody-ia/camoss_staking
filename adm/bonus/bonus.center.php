@@ -98,7 +98,7 @@ echo "</span><br><br>";
 echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
 ?>
 
-<html><body>
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head><body>
 <header>정산시작</header>    
 <div>
 <?

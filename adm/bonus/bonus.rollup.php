@@ -4,6 +4,7 @@ include_once('./_common.php');
 
 // $debug=1;
 include_once('./bonus_inc.php');
+
 auth_check($auth[$sub_menu], 'r');
 
 if(!$debug){
@@ -167,12 +168,13 @@ function bonus_rate($val){
 
 
 
-
+header('Content-Type: text/html; charset=utf-8');
 ?>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head><body>
 
-<body>
     <header>정산시작</header>
     <div>
 

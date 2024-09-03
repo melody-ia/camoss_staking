@@ -1,11 +1,10 @@
 <?php
 $sub_menu = "600200";
 include_once('./_common.php');
-$debug = false;
 include_once('./bonus_inc.php');
+$debug = false;
 
 auth_check($auth[$sub_menu], 'r');
-
 
 
 //회원 리스트를 읽어 온다.
@@ -36,10 +35,10 @@ echo "<strong>".strtoupper($code)." 수당 지급비율 : ". $bonus_row['rate'].
 echo "<strong>".$bonus_day."</strong><br>";
 echo "<br><span class='red'> 기준대상자(매출발생자) : ".$result_cnt."</span><br><br>";
 echo "<div class='btn' onclick='bonus_url();'>돌아가기</div>";
-
+header('Content-Type: text/html; charset=utf-8');
 ?>
 
-<html><body>
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head><body>
 <header>정산시작</header>    
 <div>
 <?
