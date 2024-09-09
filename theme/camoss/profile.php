@@ -1016,7 +1016,7 @@ $(function() {
 
 			if(fileInput.val() != "") {		
 				var ext = fileInput.val().split(".").pop().toLowerCase();		    
-				if($.inArray(ext, ["jpg", "jpeg", "png", "gif", "bmp", "pdf"]) == -1) {
+				if($.inArray(ext, ["jpg", "jpeg", "png", "gif", "bmp", "pdf", "heic"]) == -1) {
 					alert("첨부파일은 이미지 파일만 등록 가능합니다.");
 					fileInput.val("");
 					return false;
@@ -1050,7 +1050,7 @@ $(function() {
 					if (fileInput[i].files.length > 0) {
 						
 						var ext = fileInput.val().split(".").pop().toLowerCase();		    
-						if($.inArray(ext, ["jpg", "jpeg", "png", "gif", "bmp", "pdf"]) == -1) {
+						if($.inArray(ext, ["jpg", "jpeg", "png", "gif", "bmp", "pdf","heic"]) == -1) {
 							alert("첨부파일은 이미지 파일만 등록 가능합니다.");
 							fileInput.val("");
 							return false;
