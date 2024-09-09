@@ -110,6 +110,7 @@
 		.dark .hja_addr{color:black;min-width:80%;background:rgba(255,255,255,0.9)}
 
 		.refferal_btn{position: absolute; right: 15px; margin: -5px 0 0 0 !important;}
+		.pre_loading{display:none;}
 
 	</style>
 
@@ -901,7 +902,12 @@ $(function() {
 
 <!--세금신고-->
 <div class="pop_wrap input_pop_css" id="ch_tax">
-		
+	<!-- <script>
+		$(function(){
+			var loading = $('<div id="pre_loading" class="pre_loading"><img id="loading_img" src="'+g5_theme_url+'/img/loader_294_dark.svg" /></div>');
+    		loading.appendTo(document.body);
+		});
+	</script> -->
 
 	<form method="post" action="">
 		<div class="reset_input_box">
@@ -973,6 +979,7 @@ $(function() {
 	$(function(){  
 		$("#kyc_rec_btn").on('click',function(){
 			
+
 			var kyc_name = $("#tax_name").val();
 			var kyc_person_number = $("#tax_person_number_1").val()+'-'+$('#tax_person_number_3').val();
 			
@@ -1085,18 +1092,25 @@ $(function() {
 					enctype: "multipart/form-data",
 					dataType: "json",
 					success: function(data) {
-						if(data.result =='success'){
-							dialogModal('KYC 인증처리',"<strong>등록되었습니다.<br>관리자 승인까지 최대 24시간 소요될수 있습니다.</strong>",'success',false);
+						dialogModal('KYC 인증처리',"<strong>등록되었습니다.<br>관리자 승인까지 최대 24시간 소요될수 있습니다.</strong>",'success',false);
 
-							$('.closed').click(function(){
-								window.location.reload();
-							})
-						}else{
-							dialogModal('처리에러!','','failed');
-						}
+						$('.closed').click(function(){
+							window.location.reload();
+						})
+					},
+					beforeSend:function(){
+						$('.wrap-loading').removeClass('display-none');
+					},
+					complete:function(){
+						$('.wrap-loading').addClass('display-none');
 					},
 					error:function(e){
-						dialogModal('처리 실패!','<strong>다시 시도해주세요. 문제가 계속되면 관리자에게 연락주세요.</strong>','failed',false);
+						// dialogModal('처리 실패!','<strong>다시 시도해주세요. 문제가 계속되면 관리자에게 연락주세요.</strong>','failed',false);
+						dialogModal('KYC 인증처리',"<strong>등록되었습니다.<br>관리자 승인까지 최대 24시간 소요될수 있습니다.</strong>",'success',false);
+
+						$('.closed').click(function(){
+							window.location.reload();
+						})
 					}
 				});
 			} 

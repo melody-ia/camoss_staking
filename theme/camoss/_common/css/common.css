@@ -4755,7 +4755,7 @@ input.input_price {
   top: 0;
   background: rgba(253, 254, 251, 0.8);
   text-align: center;
-  z-index: 1000;
+  z-index: 1005;
   display: flex;
   align-items: center;
   justify-content: center;

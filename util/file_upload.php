@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/Telegram/telegram_api.php');
 $g5['title'] = '파일 저장';
 
 // print_R($_REQUEST);
-// print_r($_FILES['bf_file']);
+print_r($_FILES['bf_file']);
 
 
 
@@ -45,6 +45,9 @@ if ($msg) {
 }
 
 $upload_max_filesize = ini_get('upload_max_filesize');
+echo "<br>파일업로드 맥스 : ";
+print_R($upload_max_filesize);
+echo "<br>";
 
 if (empty($_POST)) {
 	alert("파일 또는 글내용의 크기가 서버에서 설정한 값을 넘어 오류가 발생하였습니다.\\npost_max_size=".ini_get('post_max_size')." , upload_max_filesize=".$upload_max_filesize."\\n게시판관리자 또는 서버관리자에게 문의 바랍니다.");
@@ -210,7 +213,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
 	$upload[$i]['image'][2] = '';
 
 	// 삭제에 체크가 되어있다면 파일을 삭제합니다.
-	if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
+	/* if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
 		$upload[$i]['del_check'] = true;
 
 		$row = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
@@ -221,7 +224,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
 		}
 	}
 	else
-		$upload[$i]['del_check'] = false;
+		$upload[$i]['del_check'] = false; */
 
 	$tmp_file  = $_FILES['bf_file']['tmp_name'][$i];
 	$filesize  = $_FILES['bf_file']['size'][$i];
@@ -370,7 +373,7 @@ sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{
 sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 //------------------------------------------------------------------------------
 
-
+ob_clean();
 delete_cache_latest($bo_table);
 
 if ($file_upload_msg)

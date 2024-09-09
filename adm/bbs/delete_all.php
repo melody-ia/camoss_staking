@@ -28,7 +28,7 @@ if($chk_count > (G5_IS_MOBILE ? $board['bo_mobile_page_rows'] : $board['bo_page_
 for ($i=$chk_count-1; $i>=0; $i--)
 {
     $write = sql_fetch(" select * from $write_table where wr_id = '$tmp_array[$i]' ");
-
+    
     if ($is_admin == 'super') // 최고관리자 통과
         ;
     else if ($is_admin == 'group') // 그룹관리자
@@ -76,13 +76,19 @@ for ($i=$chk_count-1; $i>=0; $i--)
                 and wr_id <> '{$write['wr_id']}'
                 and wr_num = '{$write['wr_num']}'
                 and wr_is_comment = 0 ";
+                
     $row = sql_fetch($sql);
-    if ($row['cnt'])
+
+    if($write_table != 'g5_write_kyc'){
+        if ($row['cnt'])
             continue;
+    }
 
     // 나라오름님 수정 : 원글과 코멘트수가 정상적으로 업데이트 되지 않는 오류를 잡아 주셨습니다.
     //$sql = " select wr_id, mb_id, wr_comment from {$write_table} where wr_parent = '{$write[wr_id]}' order by wr_id ";
     $sql = " select wr_id, mb_id, wr_is_comment, wr_content from $write_table where wr_parent = '{$write['wr_id']}' order by wr_id ";
+    print_R($sql);
+    
     $result = sql_query($sql);
     while ($row = sql_fetch_array($result))
     {
