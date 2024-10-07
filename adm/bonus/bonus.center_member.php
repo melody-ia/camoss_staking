@@ -1,6 +1,7 @@
 <?php
 $sub_menu = "600800";
 include_once('./_common.php');
+include_once('./bonus_inc.php');
 
 // $debug=1;
 $g5['title'] = '센터수당(멤버)';
@@ -107,6 +108,8 @@ if($debug){
 $excel_sql = urlencode($sql);
 $result = sql_query($sql);
 
+$bonus_row = bonus_pick('center');
+$bonus_rate = $bonus_row['rate']*0.01;
 ?>
 
 
@@ -298,7 +301,7 @@ function fvisit_submit(act)
         $bg = 'bg'.($i%2);
         $total_hap += $order_total['upstair_total'];
         $total_pv +=  $order_total['pv_total'];
-        $center_bonus = $order_total['upstair_total']*0.03;
+        $center_bonus = $order_total['upstair_total']*$bonus_rate;
         $recommand_bonus = $order_total['upstair_total']*0.01;
 
         $total_center_bonus += $center_bonus ;
