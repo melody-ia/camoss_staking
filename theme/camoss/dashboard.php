@@ -212,7 +212,7 @@
 
 
 
-        <div class='r_card_wrap content-box round regist_latest'>
+        <!-- <div class='r_card_wrap content-box round regist_latest'>
             <div class="card_title_wrap">
                 <div class="card_title">추천내역 </div>
                 <a href='<?=G5_URL?>/page.php?id=structure' class='inline more'><span>더보기<i
@@ -251,20 +251,20 @@
 					}?>
 
             <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('structure');"> 추천조직도</button>
-        </div>
+        </div> -->
 
         <div class='r_card_wrap content-box round regist_latest'>
             <div class="card_title_wrap">
-                <div class="card_title">후원내역 </div>
+                <div class="card_title">추천내역 </div>
                 <a href='<?=G5_URL?>/page.php?id=binary' class='inline more'><span>더보기<i
                             class="ri-add-circle-fill"></i></span>
                 </a>
             </div>
 
-            <p>후원산하 :</p>
+            <p>추천산하 :</p>
             <p class='main_centent mb20 mt10'><?=$mb_b_child?> 명</p>
             <P class='dashline mb20'></P>
-            <p>최근 후원 등록 회원 :</p>
+            <p>최근 추천 등록 회원 :</p>
 
             <?
                     $brecommend_binary_sql	 = "SELECT * from `{$g5['member_table']}` WHERE mb_brecommend = '{$member['mb_id']}' order by mb_open_date desc limit 0,2";
@@ -291,7 +291,7 @@
 						echo "<div class='no_data'>추천 등록 회원이 존재하지 않습니다</div>";
 					}?>
 
-            <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('binary');"> 후원조직도</button>
+            <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('binary');"> 조직도</button>
         </div>
 
         <div class='r_card_wrap content-box round mt30'>
