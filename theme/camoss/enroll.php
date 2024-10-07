@@ -1,12 +1,20 @@
 <?
 $menubar = 1;
 $email_auth = 1;
-$phone_auth = 1;
+
 
 
 include_once(G5_THEME_PATH.'/_include/head.php');
 include_once(G5_THEME_PATH.'/_include/gnb.php');
 include_once(G5_THEME_PATH.'/_include/lang.php');
+
+if(HANDLE_STATES =='test'){
+	$phone_auth = 0;
+}else{
+	$phone_auth = 1;
+}
+
+
 
 if($nw['nw_enroll'] == 'Y'){
 }else{
@@ -647,7 +655,6 @@ if ($_GET['recom_referral']){
 			return false;
 		}
 
-
 		//센터멤버 검사
 		/* if (f.mb_center.value == '' || f.mb_center.value == 'undefined') {
 			dialogModal('센터정보 확인', "<strong>센터명 또는 센터 아이디를 검색하여 목록에서 선택해주세요.</strong>", 'warring');
@@ -659,7 +666,7 @@ if ($_GET['recom_referral']){
 		} */
 		
 		//후원인 검사
-		if (f.mb_brecommend.value == '' || f.mb_brecommend.value == 'undefined') {
+		/* if (f.mb_brecommend.value == '' || f.mb_brecommend.value == 'undefined') {
 			dialogModal('후원인 정보 확인', "<strong>후원인 아이디를 검색하여 목록에서 선택해주세요.</strong>", 'warning');
 			return false;
 		}
@@ -672,7 +679,7 @@ if ($_GET['recom_referral']){
 			commonModal('조직 관계 입력 확인', '<strong> 자신을 후원인으로 등록할수없습니다. </strong>', 80);
 			f.mb_brecommend.focus();
 			return false;
-		}
+		} */
 
 		// 이름
 		if (f.mb_name.value == '' || f.mb_name.value == 'undefined') {
@@ -810,7 +817,7 @@ if ($_GET['recom_referral']){
 				<em class="info_text">※추천회원 검색후 선택해주세요.</em> -->
 			<!-- <p class="check_appear_title mt40"><span data-i18n='signUp.일반정보'>General Information</span></p> -->
 			
-			<p class="check_appear_title mt20"><span >후원인정보</span></p>
+			<!-- <p class="check_appear_title mt20"><span >후원인정보</span></p>
 				<section class='referzone'>
 					<div class="btn_input_wrap">
 						<input type="text" minlength="2" name="mb_brecommend" id="reg_mb_brecommend" placeholder="후원인 아이디" value="<?= $mb_brecommend ?>" required/>
@@ -820,7 +827,7 @@ if ($_GET['recom_referral']){
 							><span>검색</span></button>
 						</div>
 					</div>
-				</section>
+				</section> -->
 			
 			<p class="check_appear_title mt30"><span>개인 정보 & 인증</span></p>
 			<div>

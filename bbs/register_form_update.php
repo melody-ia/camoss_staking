@@ -137,6 +137,9 @@ $pre_sql = "SELECT mb_no as recom_no, depth+1 as mb_depth FROM g5_member WHERE m
 $result  = sql_fetch($pre_sql);
 $mb_recommend_no = $result['recom_no'];
 
+// 1007 추천인과 후원인 동일하게 
+$mb_brecommend = $mb_recommend;
+
 $depth = $result['mb_depth'];
 
 if($_POST['mb_center_nick']){
