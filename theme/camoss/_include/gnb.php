@@ -52,7 +52,7 @@ $(document).ready(function(){
 	<?if($menubar){?>
 		<?if($dashboard_page > -1){}else{?>
 		<div class="menuback">
-			<a href="javascript:history.back();" class='back_icon'><i class="ri-arrow-left-s-line"></i></a>
+			<a href="javascript:location.href = document.referrer;" class='back_icon'><i class="ri-arrow-left-s-line"></i></a>
 		</div>
 		<?}?>
 	<?}else{?>

@@ -3684,6 +3684,18 @@ a.btn_cancle,
 #commonModalTerms .modal-title {
   font-weight: 600;
 }
+.r_card_wrap p.title .p_name {
+  line-height: 34px;
+  font-family: "Montserrat";
+  font-weight: 600;
+}
+
+.pay_id {
+  float: right;
+  font-size: 0.7em;
+  line-height: 40px;
+}
+
 .dark .qaboard #bo_list li {
   background: transparent;
 }

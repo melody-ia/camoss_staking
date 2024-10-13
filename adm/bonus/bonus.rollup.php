@@ -2,7 +2,7 @@
 $sub_menu = "600200";
 include_once('./_common.php');
 
-// $debug=1;
+$debug=0;
 include_once('./bonus_inc.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -33,7 +33,7 @@ endif;
 
 //회원 리스트를 읽어 온다.
 $sql_common = " FROM g5_member";
-$sql_search=" WHERE pv >= 500 AND mb_level < 10";
+$sql_search=" WHERE pv >= 100 AND mb_level < 10";
 $sql_mgroup=" ORDER BY mb_no asc";
 
 $pre_sql = "select * 
@@ -311,17 +311,17 @@ function  excute(){
 
    
     
-    for ($i=0; $row=sql_fetch_array($result); $i++) {   
+    for ($i=0; $pre_row=sql_fetch_array($result); $i++) {   
 
-        $comp=$row['mb_id'];
-        $mb_balance = $row['mb_balance'];
-        $mb_index = $row['mb_index'];
-        $mb_ignore = $row['mb_balance_ignore'];
-        $mb_shop_point = $row['mb_shop_point'];
-        $mb_name = $row['mb_name'];
-        $mb_level = $row['mb_level'];
-        $mb_no = $row['mb_no'];
-        $pv = $row['pv'];
+        $comp=$pre_row['mb_id'];
+        $mb_balance = $pre_row['mb_balance'];
+        $mb_index = $pre_row['mb_index'];
+        $mb_ignore = $pre_row['mb_balance_ignore'];
+        $mb_shop_point = $pre_row['mb_shop_point'];
+        $mb_name = $pre_row['mb_name'];
+        $mb_level = $pre_row['mb_level'];
+        $mb_no = $pre_row['mb_no'];
+        $pv = $pre_row['pv'];
 
         // 직추천자수 
         $mem_cnt_sql = "SELECT count(*) as cnt FROM g5_member where mb_recommend = '{$comp}' AND mb_level > 0 AND pv > 0";
@@ -330,147 +330,165 @@ function  excute(){
 
         // $item_rank = find_rank_index($pv,$mem_cnt);
         $item_rank = find_rank_tier($mem_cnt);
-       
-
-        echo "<br><br><span class='title block gold' style='font-size:30px;'>".$comp."</span><br>";
-        if($debug){
-            echo "<code> ITEM_RANK :: ".$item_rank."</code>";
-        }
         
-        
-        echo "▶직추천인수 : <span class='blue'>" . $mem_cnt . "</span>";
+        // 보유패키지 
+        $comp_pack_sql = "SELECT * FROM g5_order WHERE mb_id = '{$comp}' AND pay_end != 1 order by od_soodang_date desc limit 0,1";
+        $comp_pack_result = sql_query($comp_pack_sql);
+        $comp_pack_result_cnt = sql_num_rows($comp_pack_result);
 
-        if($item_rank >= 1){ // 매칭레벨
+        if($comp_pack_result_cnt > 0){
+            while($row = sql_fetch_array($comp_pack_result)){
 
-            $matching_lvl = $rollup_layer[$item_rank-1];
-
-            // 후원하부
-            $brecom_list = brecommend_array($comp,0,$matching_lvl);
-            $brecom_list_sum = array_sum(array_column($brecom_list, 'pv'));
-            
-
-            echo "<br>";
-            echo "▶▶ 보유PV: <strong>".shift_kor($pv)."</strong> | 매칭레벨 : <span class='blue'>".$matching_lvl."대</span><br> ";
-            echo "▶▶▶ 후원라인 하부 <span class='blue'>".$matching_lvl."대</span> 하부PV :: ";
-            echo "<span class='blue'>".shift_auto($brecom_list_sum)."</span>";
-            echo "<br>";
-
-            if(count($brecom_list) > 0){
-                for($k=0; $k < count($brecom_list); $k++ ){   
-                    $rows = $brecom_list[$k];
-                    
-                    $recomm = $rows['mb_id'];
-                    $recomm_name = $rows['mb_name'];
-                    $count = $rows['count'];
-                    
-                    // 데일리 수당
-                    $daily_soodang = "SELECT allowance_name, day, mb_id, benefit FROM {$g5['bonus']} WHERE day = '{$bonus_day}' AND allowance_name = 'daily' AND mb_id = '{$recomm}' ";
-                    $daily_soodang_result = sql_fetch($daily_soodang);
-                    $today_sales=$daily_soodang_result['benefit'];
-
-                    // 지급률
-                    $bonus_rate = bonus_rate($count); 
-                    $bonus_rates = $bonus_rate * 0.01;
-
-                    // 지급보너스
-                    $benefit=(($today_sales*$bonus_layer)*$bonus_rates);// 매출자 * 수당비율
-                    $benefit_point = shift_auto($benefit);
-
-                    $total_balance = $mb_balance + $mb_shop_point - $mb_ignore;
-                    $balance_limit = $mb_index; // 수당한계
-                    
-                    $benefit_limit = $mb_index - ($total_balance + $benefit); // 수당합계
-                    
-
-                    if($benefit_limit > 0){
-                        $benefit_limit = $benefit;
-                    }else{
-                        if($benefit_limit*-1 > $benefit){
-                            $benefit_limit = 0;
-                        }else{
-                            $benefit_limit = $benefit + $benefit_limit;
-                        }
-                    }
-
-                    
-                    $benefit_limit_point = shift_auto($benefit_limit);
-
-                    $live_benefit = $benefit_limit * $live_bonus_rate;
-                    $shop_benefit = $benefit_limit * $shop_bonus_rate;
+                $od_name = $row['od_name'];
+                $pay_id = $row['pay_id'];
+                $pay_limit = $row['pay_limit'];
+                $pay_ing = $row['pay_ing'];
 
 
-                        // 수당 로그
-                        echo "<br>".$recomm." | ".$count." 대 :: ".shift_auto($today_sales).'*'.$bonus_layer.'*'.$bonus_rates;
-
-                    // 기록용 
-                    $rec = $code.' Bonus from '. $recomm.' - '.$count."대  | P =".$live_benefit.", CP = ".$shop_benefit;
-                    $rec_adm = ''. $recomm.' - '.$count.'대 :'.shift_auto($today_sales).'*'.$bonus_layer.'*'.$bonus_rate.'='.$benefit." | P =".$live_benefit.", CP = ".$shop_benefit; 
-
-                    if($benefit > $benefit_limit && $balance_limit != 0 ){
-
-                        $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit,2)." (P:".$live_benefit." / CP:".$shop_benefit.")</span>";
-                        echo "<span class=blue> ▶▶ 수당 지급 : ".$benefit_point."</span>";
-                        echo "<span class=red> ▶▶▶ 수당 초과 (한계까지만 지급) : ".$benefit_limit_point." </span><br>";
-
-                        echo "<code>";
-                        echo "현재수당 : ".Number_format($total_balance,2)."  | 수당한계 :". shift_auto($balance_limit);
-                        echo " | 발생할수당: ".$benefit." | 지급할수당 :".$benefit_limit;
-                        echo "</code><br>";
-
-                    }else if($benefit != 0 && $balance_limit == 0 && $benefit_limit == 0){
-            
-                        $rec_adm .= "<span class=red> | Sales zero :: ".shift_auto(($benefit_limit - $benefit),COIN_NUMBER_POINT)."</span>";
-                        echo "<span class=blue> ▶▶ 수당 지급 : ".shift_auto($benefit)."</span>";
-                        echo "<span class=red> ▶▶▶ 수당 초과 (기준매출없음) : ".$benefit_limit_point." </span><br>";
-                    }else if($benefit == 0){
-            
-                        echo "<span class=black> ▶▶ 수당 미발생 </span><br>";
-                    }else{
-                        echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P지급".$live_benefit." / CP지급 : ".$shop_benefit.")</span><br>";
-                    }
-
-                            // 디버그 로그
-                            if($debug){
-                                echo "<code>";
-                                echo "현재수당 : ".Number_format($total_balance,2)."  | 수당한계 :". shift_auto($balance_limit);
-                                echo " | 발생할수당: ".$benefit." | 지급할수당 :".$benefit_limit;
-                                echo "</code><br>";
-                            }
-                    
-                    
-                   
-
-                    if($benefit > 0 && $benefit_limit > 0){
-    
-                        $record_result = soodang_record($comp, $code, $benefit_limit,$rec,$rec_adm,$bonus_day,$mb_no,$mb_level,$mb_name);
-        
-                        if($record_result){
-                            
-                            if($balanace_ignore){
-                                $balance_ignore_sql = ", mb_balance_ignore = mb_balance_ignore + {$benefit_limit} ";
-                            }else{
-                                $balance_ignore_sql = "";
-                            }
-    
-                            $balance_up = "update g5_member set mb_balance = mb_balance + {$live_benefit} {$balance_ignore_sql}, mb_shop_point = mb_shop_point + {$shop_benefit}   where mb_id = '".$comp."'";
-    
-                            // 디버그 로그
-                            if($debug){
-                                echo "<code>";
-                                print_R($balance_up);
-                                echo "</code>";
-                            }else{
-                                sql_query($balance_up);
-                            }
-                        }
-                    }
-
+                echo "<br><br><span class='title block gold' style='font-size:30px;'>".$comp."</span><br>";
+                if($debug){
+                    echo "<code> ITEM_RANK :: ".$item_rank."</code>";
                 }
-            }else{
-                echo "<span class=blue> ▶▶ 하부라인 없음 </span>";    
+                echo "<br><span >".$od_name." | ". $pay_id ." </span><br>";
+                
+                echo "▶직추천인수 : <span class='blue'>" . $mem_cnt . "</span>";
+
+                if($item_rank >= 1){ // 매칭레벨
+
+                    $matching_lvl = $rollup_layer[$item_rank-1];
+
+                    // 후원하부
+                    $brecom_list = brecommend_array($comp,0,$matching_lvl);
+                    $brecom_list_sum = array_sum(array_column($brecom_list, 'pv'));
+                    
+
+                    echo "<br>";
+                    // echo "▶▶ 패키지보유매출: <strong>".shift_kor($pv)."</strong> | 매칭레벨 : <span class='blue'>".$matching_lvl."대</span><br> ";
+                    echo "▶▶ 매칭레벨 하부 <span class='blue'>".$matching_lvl."대</span> ";
+                    // echo "하부매출 :: <span class='blue'>".shift_auto($brecom_list_sum)."</span>";
+                    echo "<br>";
+
+                    if(count($brecom_list) > 0){
+                        for($k=0; $k < count($brecom_list); $k++ ){   
+                            $rows = $brecom_list[$k];
+                            
+                            $recomm = $rows['mb_id'];
+                            $recomm_name = $rows['mb_name'];
+                            $count = $rows['count'];
+                            
+                            // 데일리 수당
+                            $daily_soodang = "SELECT allowance_name, day, mb_id, SUM(benefit) as benefit_sum FROM {$g5['bonus']} WHERE day = '{$bonus_day}' AND allowance_name = 'daily' AND mb_id = '{$recomm}' ";
+                            $daily_soodang_result = sql_fetch($daily_soodang);
+                            $today_sales=$daily_soodang_result['benefit_sum'];
+
+                            // 지급률
+                            $bonus_rate = bonus_rate($count); 
+                            $bonus_rates = $bonus_rate * 0.01;
+
+                            // 지급보너스
+                            $benefit=(($today_sales*$bonus_layer)*$bonus_rates);// 매출자 * 수당비율
+                            $benefit_point = shift_auto($benefit);
+
+                            $benefit_limit = $pay_limit - ($pay_ing + $benefit);// 수당합계
+                            $balance_limit = $pay_limit; // 수당한계
+                            $package_end = '';
+
+                            if($benefit_limit > 0){
+                                $benefit_limit = $benefit;
+                            }else{
+                                if($benefit_limit*-1 > $benefit){
+                                    $benefit_limit = 0;
+                                }else{
+                                    $benefit_limit = $benefit + $benefit_limit;
+                                    
+                                    $package_end = " ,pay_end = 1 ";
+                                    // 완료처리
+                                }
+                            }
+                            
+                            $benefit_point = shift_auto($benefit);
+                            $benefit_limit_point = shift_auto($benefit_limit);
+            
+                            $live_benefit = $benefit_limit * $live_bonus_rate;
+                            $shop_benefit = $benefit_limit * $shop_bonus_rate;
+
+                            // 수당 로그
+                            echo "<br>".$recomm." | ".$count." 대 :: ".shift_auto($today_sales).'*'.$bonus_layer.'*'.$bonus_rates;
+                            
+
+                            // 디버그 로그
+                            if($debug){
+                                echo "<code>누적수당: ".shift_auto($pay_ing)." | 수당한계: ".shift_auto($pay_limit);
+                                echo " | 발생할수당: ".shift_auto($benefit)." | 지급할수당:".shift_auto($benefit_limit)."</code>";
+                            }
+
+                            // 기록용 
+                            $rec = $code.' Bonus from '. $recomm.' - '.$count."대  | P =".$live_benefit.", CP = ".$shop_benefit;
+                            $rec_adm = ''. $recomm.' - '.$count.'대 :'.shift_auto($today_sales).'*'.$bonus_layer.'*'.$bonus_rate.'='.$benefit." | P =".$live_benefit.", CP = ".$shop_benefit; 
+
+                            if($benefit > $benefit_limit && $balance_limit != 0 ){
+
+                                $rec_adm .= "<span class=red> |  Bonus overflow :: ".Number_format($benefit_limit - $benefit,2)." (P:".$live_benefit." / CP:".$shop_benefit.")</span>";
+                                echo "<span class=blue> ▶▶ 수당 지급 : ".$benefit_point."</span>";
+                                echo "<span class=red> ▶▶▶ 수당 초과 (한계까지만 지급) : ".$benefit_limit_point." </span><br>";
+
+                                echo "<code>누적수당: ".shift_auto($pay_ing)." | 수당한계: ".shift_auto($pay_limit);
+                                echo " | 발생할수당: ".shift_auto($benefit)." | 지급할수당:".$benefit_limit."</code>";
+
+                            }else if($benefit != 0 && $balance_limit == 0 && $benefit_limit == 0){
+                    
+                                $rec_adm .= "<span class=red> | Sales zero :: ".shift_auto(($benefit_limit - $benefit),COIN_NUMBER_POINT)."</span>";
+                                echo "<span class=blue> ▶▶ 수당 지급 : ".shift_auto($benefit)."</span>";
+                                echo "<span class=red> ▶▶▶ 수당 초과 (기준매출없음) : ".$benefit_limit_point." </span><br>";
+                            }else if($benefit == 0){
+                    
+                                echo "<span class=black> ▶▶ 수당 미발생 </span><br>";
+                            }else{
+                                echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P지급".$live_benefit." / CP지급 : ".$shop_benefit.")</span><br>";
+                            }
+
+                            
+                        
+
+                            if($benefit > 0 && $benefit_limit > 0){
+            
+                                $record_result = soodang_record($comp, $code, $benefit_limit,$rec,$rec_adm,$bonus_day,$mb_no,$mb_level,$mb_name,$pay_id);
+                
+                                if($record_result){
+                                    
+                                    if($balanace_ignore){
+                                        $balance_ignore_sql = ", mb_balance_ignore = mb_balance_ignore + {$benefit_limit} ";
+                                    }else{
+                                        $balance_ignore_sql = "";
+                                    }
+            
+                                    $balance_up = "update g5_member set mb_balance = mb_balance + {$live_benefit} {$balance_ignore_sql}, mb_shop_point = mb_shop_point + {$shop_benefit}   where mb_id = '".$comp."'";
+                                    $order_up = "UPDATE g5_order set pay_ing = pay_ing + {$benefit_limit} {$package_end} WHERE pay_id = '{$pay_id}' ";
+
+                                    // 디버그 로그
+                                    if($debug){
+                                        echo "<code>";
+                                        print_R($balance_up);
+                                        echo "<br>";
+                                        prinT_R($order_up);
+                                        echo "</code>";
+                                    }else{
+                                        sql_query($balance_up);
+                                        sql_query($order_up);
+                                    }
+                                }
+                            }
+
+                        }
+                    }else{
+                        echo "<span class=blue> ▶▶ 하부라인 없음 </span>";    
+                    }
+                }else{
+                    echo "<span class=blue> ▶▶ 롤업수당조건 미달 </span>";
+                }
             }
         }else{
-            echo "<span class=blue> ▶▶ 롤업수당조건 미달 </span>";
+            echo "<span class=red>기준매출없음</span>";
         }
 
         $mem_list = array();

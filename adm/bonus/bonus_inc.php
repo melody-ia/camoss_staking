@@ -144,7 +144,7 @@ function it_item_return($it_id,$func){
     }
 }
 
-function soodang_record($mb_id, $code, $bonus_val,$rec,$rec_adm,$bonus_day,$mb_no='',$mb_level = '', $mb_name = ''){
+function soodang_record($mb_id, $code, $bonus_val,$rec,$rec_adm,$bonus_day,$mb_no='',$mb_level = '', $mb_name = '',$pay_id = ''){
     global $g5,$debug,$now_datetime;
 
     $soodang_sql = " insert `{$g5['bonus']}` set day='".$bonus_day."'";
@@ -163,6 +163,9 @@ function soodang_record($mb_id, $code, $bonus_val,$rec,$rec_adm,$bonus_day,$mb_n
     }
     if($mb_name != ''){
         $soodang_sql .= " ,mb_name		= '".$mb_name."'";
+    }
+    if($pay_id != ''){
+        $soodang_sql .= " ,pay_id		= '".$pay_id."'";
     }
 
     // 수당 푸시 메시지 설정

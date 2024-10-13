@@ -25,7 +25,8 @@ if($_POST['nw_soodang_reset'] == 'on'){
 
     $member_update_sql = " UPDATE g5_member set  mb_balance = 0,mb_balance_calc = 0,mb_balance_ignore = 0, mb_shop_point=0, mb_shop_calc=0,mb_4='',mb_5='',mb_6='',mb_7='',mb_8='',mb_9='' WHERE mb_level < 9 ";
     sql_query($member_update_sql);
-    
+    $order_update_sql = " UPDATE g5_order set pay_ing = 0 ";
+    sql_query($order_update_sql );
 
     if($trunc16){
         $result = 1;

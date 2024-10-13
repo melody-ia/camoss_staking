@@ -653,7 +653,8 @@ $rank_result = sql_fetch($rank_sql);
 	<tr class="ly_up padding-box fund">
 		<th scope="row">총 수당 총액</th>
 		<td colspan="1"><span class='strong bonus'>
-		<input type="hidden" class='no-input' name="mb_balance" value="<?= shift_auto($mb['mb_balance'],$curencys[0]) ?>" readonly> <?= shift_auto($mb['mb_balance'],$curencys[0]) ?> </span><?=$curencys[0]?> / (MAX :: <?= shift_auto($mb['mb_index'],$curencys[0]) ?> <?=$curencys[0]?>)</td>
+		<!-- <input type="hidden" class='no-input' name="mb_balance" value="<?= shift_auto($mb['mb_balance'],$curencys[0]) ?>" readonly> <?= shift_auto($mb['mb_balance'],$curencys[0]) ?> </span><?=$curencys[0]?> / (MAX :: <?= shift_auto($mb['mb_index'],$curencys[0]) ?> <?=$curencys[0]?>)</td> -->
+		<input type="hidden" class='no-input' name="mb_balance" value="<?= shift_auto($mb['mb_balance'],$curencys[0]) ?>" readonly> <?= shift_auto($mb['mb_balance'],$curencys[0]) ?> </span><?=$curencys[0]?> </td>
 		
 		<th scope="row" >남은 수당</th>
 		<td colspan="1"><span class='strong amt'><?=shift_auto($mb['mb_balance'] - $mb['mb_shift_amt'] + $mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>
@@ -681,8 +682,8 @@ $rank_result = sql_fetch($rank_sql);
 		<th scope="row">출금 총액</th>
 		<td colspan="1"><span class='strong amt'><?= shift_auto($mb['mb_shift_amt'],$curencys[0])?></span> <?=$curencys[0]?></td>
 
-		<th scope="row">재구매 사용</th>
-		<td colspan="1"><span class='strong amt'><?=shift_auto(-1*$mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td>
+		<!-- <th scope="row">재구매 사용</th>
+		<td colspan="1"><span class='strong amt'><?=shift_auto(-1*$mb['mb_balance_calc'],$curencys[0])?></span> <?=$curencys[0]?></td> -->
 	</tr>
 
 
@@ -712,7 +713,7 @@ $rank_result = sql_fetch($rank_sql);
 	</tr>
 
 	<tr class="ly_up padding-box fund">
-		<th scope="row">누적 매출 합계 (PV)</th>
+		<th scope="row">누적 매출 합계</th>
 		<td colspan="1"><span class='strong soodang'><?= number_format($mb['pv']) ?> </span><?=$curencys[0]?></td>
 
 		<th scope="row">수당제한비율</th>
@@ -724,7 +725,7 @@ $rank_result = sql_fetch($rank_sql);
 				-->
 				<?=$limited?>
 				% 
-				<span style="color:red;">( <?=shift_auto($mb['mb_index'], $curencys[0])?> )</span> / <span class='strong bonus'><?= shift_auto(($mb['mb_balance']+$mb['mb_shop_point'])*100 / $mb['mb_index']) ?> % </span>
+				<!-- <span style="color:red;">( <?=shift_auto($mb['mb_index'], $curencys[0])?> )</span> -->
 			</td>
 	</tr>
 

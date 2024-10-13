@@ -60,29 +60,30 @@
                     <p class='main_centent'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'> <span
                                 class='currency'><?=strtoupper($curencys[0])?></span></p>
                 </div>
-                <button type='button' class='btn wd main_btn b_sub' onclick="go_to_url('mywallet');"> 입출금</button>
+                <button type='button' class='btn wd main_btn b_sub' onclick="go_to_url('mywallet');"> 입금</button>
             </div>
         </div>
 
         <div class='r_card_wrap content-box round mt30'>
-            <div class="card_title">출금 & 재구매 가능 금액</div>
+            <div class="card_title">출금 가능 금액</div>
             <div class="box-wrap">
                 <div class='box'>
                     <p class='main_centent'><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'> <span
                                 class='currency'><?=strtoupper($curencys[0])?></span></p>
                 </div>
-                <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('reupstairs');"> 재구매</button>
+                <!-- <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('reupstairs');"> 재구매</button> -->
+                <button type='button' class='btn wd main_btn b_third' onclick="go_to_url('mywallet&view=withdraw');"> 출금</button>
             </div>
         </div>
 
         <div class='r_card_wrap content-box round mt30'>
             <?$ordered_items = ordered_items($member['mb_id']);?>
             <div class="card_title mb20">보유 패키지 (<?=count($ordered_items)?>)
-                <a href='<?=G5_URL?>/page.php?id=upstairs_detail' class='f_right inline more'><span>더보기<i
+                <a href='<?=G5_URL?>/page.php?id=upstairs' class='f_right inline more'><span>더보기<i
                             class="ri-add-circle-fill"></i></span></a>
             </div>
 
-            <p>구매등급(PV) :</p>
+            <p>구매등급 :</p>
             <p class='main_centent mb20'><?=shift_auto($member['pv'], $curencys[0])?> <span class='currency'>
                     <?=strtoupper($curencys[0])?></span></p>
 
@@ -95,12 +96,13 @@
                     $row = $ordered_items[$i];
                     ?>
             <div class="col-12 r_card_box">
-                <a href='/page.php?id=upstairs_detail'>
+                <a href='/page.php?id=upstairs_detail&pay_id=<?=$row['pay_id']?>'>
 
                     <div class="r_card r_card_<?=substr($row['od_name'],1,1)?>">
                         <p class="title">
 
-                            <?=$ordered_items[$i]['it_name']?>
+                            <span class='p_name' ><?=$ordered_items[$i]['it_name']?> </span>
+                            
                             
                             <!-- <span style='font-size:14px;'><?=$ordered_items[$i]['it_option_subject']?></span> -->
                             <!-- <span style='font-size:20px;'>NFT</span> -->
@@ -109,6 +111,7 @@
                             <i class="ri-arrow-right-double-fill" style="font-size:30px;"></i>
                                 <!-- <img src="<?=G5_THEME_URL?>/img/arrow.png" alt=""> -->
                             </span>
+                            <span class='pay_id'><?=strtoupper($ordered_items[$i]['pay_id'])?></span>
                         </p>
                         <div class="b_blue_bottom"></div>
                         <div class="text_wrap">
@@ -121,6 +124,7 @@
             <?}
             }
 			?>
+            <div style='text-align:center'>-</div>
             <button type='button' class='btn wd main_btn b_main' onclick="go_to_url('upstairs');">패키지구매</button>
         </div>
 
@@ -129,24 +133,60 @@
 
         <div class='r_card_wrap content-box round history_latest mb30 mt30'>
             <div class="card_title_wrap">
-                <div class="card_title">순환 보너스 (<?=$limited?>%)</div>
-                <a href='<?=G5_URL?>/page.php?id=bonus_history' class='inline more'><span>더보기<i
-                            class="ri-add-circle-fill"></i></span></a>
+                <div class="card_title">보너스한계 (<?=$limited?>%)</div>
+              
             </div>
+            <?
+                $my_package_sql = "SELECT * from g5_order WHERE mb_id = '{$member['mb_id']}' AND pay_end = 0";
+                $my_package_result = sql_query($my_package_sql);
+                $my_package_cnt = sql_num_rows($my_package_result);
 
-            <p>총누적보너스 :</p>
-            <p class='main_centent'><?=shift_auto($total_fund,'usdt')?><span class='currency'>
-                    <?=strtoupper($curencys[0])?></span></p>
+                if($my_package_cnt > 0){
+                    $chart_data = [];
+                    $chart_label = [];
+                    $chart_color = [];
+                    $chart_color_array = ['#ddd','#b55dcc','#516feb','#09c3fd','#5ed2dc','#373cbc','#2b3a6d','#6214ab','#5edc79','#dcc55e'];
 
+                    while($row = sql_fetch_array($my_package_result)){
+                        $pack_full_name = strtoupper($row['od_name'].'_'.$row['pay_id']);
+
+                        if($row['pay_ing'] < 0.1){
+                            $pack_per_bonus = 0;
+                        }else{
+                            $pack_per_bonus = Round($row['pay_ing']/($row['pay_limit']/100));
+                        }
+
+                        if($pack_per_bonus > 95){
+                            $pack_per_color = '#dc3545';
+                        }else{
+                            $pack_per_color = $chart_color_array[substr($row['od_name'],1,1)];
+                        }
+
+
+                        array_push($chart_color,$pack_per_color);
+                        array_push($chart_data,$pack_per_bonus);
+                        array_push($chart_label,$pack_full_name);
+                    }
+                }
+            ?>
 
             <div id="myChart2"></div>
+
+            <p class="dashline mb20"></p>
+
+            <div class="card_title_wrap" style="clear:both">
+            <div class="card_title">총누적보너스 :</div>
+            <a href='<?=G5_URL?>/page.php?id=bonus_history' class='f_right inline more'><span>더보기<i class="ri-add-circle-fill"></i></span></a>
+            </div>
+            <p class='main_centent'><?=shift_auto($total_fund,'usdt')?><span class='currency'>
+                    <?=strtoupper($curencys[0])?></span></p>
             <?
-					$bonus_history_sql	 = "SELECT allowance_name,SUM(benefit)AS total_bonus from `{$g5['bonus']}` WHERE mb_id = '{$member['mb_id']}' GROUP BY allowance_name ";
-					$bonus_history_result = sql_query($bonus_history_sql);
-					$bonus_history_cnt = sql_num_rows($bonus_history_result);
-					if($bonus_history_cnt > 0){
-						while($row = sql_fetch_array($bonus_history_result)){
-					?>
+            $bonus_history_sql	 = "SELECT allowance_name,SUM(benefit)AS total_bonus from `{$g5['bonus']}` WHERE mb_id = '{$member['mb_id']}' GROUP BY allowance_name ";
+            $bonus_history_result = sql_query($bonus_history_sql);
+            $bonus_history_cnt = sql_num_rows($bonus_history_result);
+            if($bonus_history_cnt > 0){
+                while($row = sql_fetch_array($bonus_history_result)){
+            ?>
 
             <div class="line row">
                 <div class='col-7'>
@@ -168,16 +208,18 @@
 
         <script>
         // var chart_data = JSON.parse('<?=($member_info['hash_info'])?>');
+        // var chart_data = <?=$bonus_per?>;
 
-        var chart_data = <?=$bonus_per?>;
+        var chart_data = <?=json_encode($chart_data)?>;
+        var chart_label = <?=json_encode($chart_label)?>;
+        var chart_color = <?=json_encode($chart_color)?>;
 
         $(function() {
 
             $(window).scroll(function() {
                 var wrapper_height = $(window).scrollTop();
-
-                if (wrapper_height > 500) {
-                    chart();
+                if (wrapper_height > 500 &&  wrapper_height < 600 && chart_data.length > 0) {
+                    chart("#myChart2");
                     chart = function() {};
                 } else {
 
@@ -185,18 +227,15 @@
             });
 
 
-
-            function chart() {
-                var chart = new ApexCharts(document.querySelector("#myChart2"), options);
+            function chart(where) {
+                var chart = new ApexCharts(document.querySelector(where), options);
                 chart.render();
+
             }
 
-            /*   $('#mode_select').on('change',function(e) {
-                  mode_colorset2(this.value);
-              }); */
         });
         </script>
-        <script src="<?=G5_THEME_URL?>/_common/js/chart/apexchart.js"></script>
+        <script src="<?=G5_THEME_URL?>/_common/js/chart/apexchart_multi.js"></script>
 
 
 

@@ -531,7 +531,7 @@ $stats_result = sql_fetch($stats_sql);
 	<?
 	
 		echo "<span >총 입금 합계 <strong>" . Number_format($stats_result['deposit']) . " " . $curencys[0] . " </strong></span> | ";
-		echo "<span>총 매출(pv) 합계 <strong>" . Number_format($stats_result['pv']) . "</strong></span><br> ";
+		echo "<span>총 매출 합계 <strong>" . Number_format($stats_result['pv']) . "</strong></span><br> ";
     ?>
     </div>
     <?
@@ -710,15 +710,15 @@ while ($l_row = sql_fetch_array($get_lc)) {
 					<th scope="col" id="mb_list_auth2" class="bonus_calc" rowspan="2"><?php echo subject_sort_link('deposit_point') ?>총입금액 <br></th>
 					<th scope="col" id="mb_list_auth2" class="bonus_bb" rowspan="2"><?php echo subject_sort_link('mb_deposit_calc') ?>사용금액</th>
 					<!-- <th scope="col" id="mb_list_auth2" class="bonus_bb bonus_calc"  rowspan="2"><?php echo subject_sort_link('deposit_calc') ?>USE <br>출금 및 구매사용</th> -->
-					<th scope="col" id="mb_list_auth2" class="bonus_aa" rowspan="2"><?php echo subject_sort_link('pv') ?> 누적매출<br>(PV)</th>
-					<th scope="col" id="mb_list_auth2" class="bonus_bb bonus_benefit" rowspan="2"><?php echo subject_sort_link('total_mb_balance') ?> 누적수당합계<br>(수당+쇼핑몰)</th>
+					<th scope="col" id="mb_list_auth2" class="bonus_aa" rowspan="2"><?php echo subject_sort_link('pv') ?> 누적매출</th>
+					<th scope="col" id="mb_list_auth2" class="bonus_bb bonus_benefit" rowspan="2"><?php echo subject_sort_link('total_mb_balance') ?> 누적수당합계<br>(수당+CP)</th>
 					<th scope="col" id="mb_list_auth2" class="bonus_calc" rowspan="2"><?php echo subject_sort_link('mb_balance') ?> 누적수당</th>
-					<th scope="col" id="mb_list_auth2" class="bonus_calc" rowspan="2"><?php echo subject_sort_link('mb_shop_point') ?> 누적쇼핑몰포인트</th>
+					<th scope="col" id="mb_list_auth2" class="bonus_calc" rowspan="2"><?php echo subject_sort_link('mb_shop_point') ?> 누적CP</th>
 					<th scope="col" id="mb_list_auth2" class="bonus_usdt" style='color:white !important' rowspan="2"><?php echo subject_sort_link('mb_shift_amt') ?>출금총액<br>(+수수료)<br></th>
 					<!-- <th scope="col" id="mb_list_auth2" class="" rowspan="2"><?php echo subject_sort_link('mb_rate') ?>마이닝<br>(MH/s)</th>
 					<th scope="col" id="mb_list_auth2" class="bonus_bb green font_white" rowspan="2"> <?php echo subject_sort_link('mining') ?> <span style='color:white'>마이닝보유<br>(<?= $minings[$now_mining_coin] ?>)</span></th>
 					<th scope="col" id="mb_list_auth2" class="bonus_aa" style='background:white !important' rowspan="2"><?php echo subject_sort_link('mb_bonus_total') ?>마이닝<br>총보너스 (mh/s)</th> -->
-					<th scope="col" id="mb_list_auth2" class="bonus_aa" style='background:white !important' rowspan="2"><?php echo subject_sort_link('mb_bonus_total_rate') ?>순환율 (%)</th>
+					<!-- <th scope="col" id="mb_list_auth2" class="bonus_aa" style='background:white !important' rowspan="2"><?php echo subject_sort_link('mb_bonus_total_rate') ?>순환율 (%)</th> -->
 					<th scope="col" rowspan="2" id="" class="item_title" style='min-width:60px;'><?php echo subject_sort_link('rank') ?>상위보유패키지</th>
 					
 					<th scope="col" id="mb_list_member"><?php echo subject_sort_link('mb_today_login', '', 'desc') ?>최종접속</a></th>
@@ -864,7 +864,7 @@ while ($l_row = sql_fetch_array($get_lc)) {
 							<?if($row['swaped'] == 0 && $row[$before_mining_target] > 0){echo "<span class='no-swap'>".shift_auto_zero(($row[$before_mining_target] - $row[$before_mining_amt_target]), $minings[$before_mining_coin])."</span>";}?>
 						</td>
 						<td headers="mb_list_auth" class="td_mbstat" rowspan="2" ><?= $total_mining ?></td> -->
-						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= $bonus_per ?> %</td>
+						<!-- <td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= $bonus_per ?> %</td> -->
 						<td headers="mb_list_auth" class="text-center" style='width:40px;' rowspan="2"><span class='badge t_white color<?= $row['rank'] ?>'>
 						<? if ($row['rank']) {echo 'P' . $row['rank'];} ?></span></td>
 

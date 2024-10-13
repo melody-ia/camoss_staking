@@ -123,7 +123,6 @@ $title = 'Dashboard';
 			</div>
 			</a>
 		</section>
-		
 
 
 		<script>
@@ -136,7 +135,7 @@ $title = 'Dashboard';
 					delay: 4000, 
 					disableOnInteraction: false, 
 				},
-			})
+			});
 		</script>
 		<?php } ?>
 		

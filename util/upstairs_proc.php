@@ -48,6 +48,15 @@ if($func == "new"){
 	$orderid = $_POST['od_id'];
 }
 
+// 개별모드 
+if(Solitare == true){
+	$pay_limit = $it_point*$limited;
+	$pay_id =  generateOrderCode(3);
+	$Sol_sql = ", pay_limit = '{$pay_limit}', pay_id = '{$pay_id}' ";
+}else{
+	$Sol_sql = "";
+}
+
 // 해당 패키지로 받을 수 있는 수당 한도()
 $max_limit_point = $it_point * ($limited/100);
 
@@ -68,7 +77,7 @@ $sql = "insert g5_order set
 	, od_cash_no 		= '".$pack_maker."'	
 	, upstair    		= ".$it_point."
 	, pv				= ".$pv." 
-	, od_misu           = ".$max_limit_point."";
+	, od_misu           = ".$max_limit_point."".$Sol_sql;
 
 if($debug){
 	$rst = 1;

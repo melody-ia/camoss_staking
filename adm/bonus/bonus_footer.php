@@ -23,7 +23,7 @@
 	.error{display:block;width:100%;text-align:center;height:150px;line-height:150px}
 	.hidden{display:none;}
 	.desc{font-size:11px;color:#777;}
-	.subtitle{font-size:20px;}
+	.subtitle{font-size:20px;font-weight:600;line-height:28px;}
 	.sys_log{margin-bottom:30px;}
 </style>
 

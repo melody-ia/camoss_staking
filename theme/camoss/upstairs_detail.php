@@ -8,12 +8,12 @@
 
     $val = $_REQUEST;
     // $od_id = $val['od_id'];
-    $od_id = '';
+    $pay_id = $val['pay_id'];
 
-    if($od_id == ''){
-        $sql = "SELECT SUM(upstair) as sum_pv from g5_order WHERE mb_id = '{$member['mb_id']}' ";
+    if($pay_id == ''){
+        $sql = "SELECT upstair as sum_pv from g5_order WHERE mb_id = '{$member['mb_id']}' ";
     }else{
-        $sql = "SELECT * from g5_order WHERE od_id = '{$od_id}' order by od_id desc limit 0,1";
+        $sql = "SELECT *,upstair as sum_pv from g5_order WHERE pay_id = '{$pay_id}' order by pay_id desc limit 0,1";
     }
 
     $goods_sql = "select it_price, it_supply_point from g5_item where it_maker <> 'P0' order by it_price asc";
@@ -25,8 +25,8 @@
     
 
     $this_od = sql_fetch($sql);
-    
     $sum_pv = $this_od['sum_pv'];
+
 
     /*
     $item_no = $this_od['od_app_no'];
@@ -143,7 +143,7 @@
                     <ul><i class="ri-check-line"></i> 권리의 내용
                         <li>- 보유수량 > <span class="red"> <?=$item_layer?> MOSS</span></li>
                         <!-- <li>- 일련번호 > <span class="red"><?=od_txt($this_od['od_cash_no'],$this_od['od_cash_info'])?>  </span></li> -->
-                        <li>- 투자 수익률 권리 > <span class="red">각 패키지별 수익률 </span></li>
+                        <li>- 투자 수익률 권리 > <span class="red"><?=$this_od['pv']?> % </span></li>
                     </ul>
 
                     <ul>

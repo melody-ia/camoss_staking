@@ -734,6 +734,9 @@ function ordered_items($mb_id, $table=null){
 				"it_maker" => $item[$i]['it_maker'],
 				"it_brand" => $item[$i]['it_brand'],
 				"od_name" => $item[$i]['it_maker'],
+				"pay_limit" => $order_row['pay_limit'],
+				"pay_ing" => $order_row['pay_ing'],
+				"pay_id" => $order_row['pay_id'],
 				"it_supply_point" => $item[$i]['it_supply_point'],
 				"it_option_subject" => $item[$i]['it_option_subject'],
 				"it_supply_subject" => $item[$i]['it_supply_subject'],
@@ -912,4 +915,27 @@ function bonus_pick_category($val,$category='*'){
 		return $list;
 	}
     
+}
+
+function generateRandomString($length = 10) {
+	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$charactersLength = strlen($characters);
+	$randomString = '';
+
+	for ($i = 0; $i < $length; $i++) {
+		$randomString .= $characters[rand(0, $charactersLength - 1)];
+	}
+	return $randomString;
+}
+
+function generateOrderCode($length = 3, $digit = 4) {
+	$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$charactersLength = strlen($characters);
+	$randomString = '';
+	for ($i = 0; $i < $length; $i++) {
+		$randomString .= $characters[rand(0, $charactersLength - 1)];
+	}
+
+	$rand_num = sprintf('%04d',rand(0000,9999));
+	return $randomString.$rand_num;
 }

@@ -291,6 +291,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 		<th scope="col">회원아이디</th>
 		<th scope="col">회원이름</th>
         <th scope="col">보너스이름</th>
+		<th scope="col">지급패키지ID</th>
         <th scope="col">발생보너스</th>
 		<th scope="col">보너스단위</th>
 		<th scope="col">보너스근거</th>
@@ -316,6 +317,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 			<?php echo get_text($row['mb_name']); ?>
 		</td>
 		<td width='80' style='text-align:center'><?=get_text($row['allowance_name']); ?></td>
+		<td width='80'><?=$row['pay_id']?></td>
 		<td width="100" class='bonus' style='text-align:right'><?=Number_format($soodang,BONUS_NUMBER_POINT) ?></td>
 		<td width="30" class='bonus'><?=$curencys[0]?></td>
 		
@@ -333,8 +335,9 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 	<tfoot>
 	<tr class="<?php echo $bg; ?>">
 		<td colspan=3>TOTAL :</td>
+		<td ></td>
+		<td ></td>
 		<td width="150" class='bonus' style='color:red'><?=number_format($soodang_sum,BONUS_NUMBER_POINT)?></td>
-        <td ></td>
 		<td ></td>
 		<td ></td>
 		<td ></td>

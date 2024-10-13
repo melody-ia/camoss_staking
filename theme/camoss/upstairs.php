@@ -146,7 +146,7 @@ $service_puchase_term_contents = $service_puchase_term['wr_content'];
 										"sign" => $sign
 									));
 
-									if ($i == 7) {
+									if ($i == 9) {
 										$row_col = 'col-12 col-lg-12';
 									} else {
 										$row_col = 'col-6 col-lg-4';

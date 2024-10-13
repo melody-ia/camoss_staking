@@ -139,6 +139,14 @@ function  od_name_return_rank($val){
     }
 }
 
+function enable_check($val){
+    if($val > 0){
+        return 'disabled';
+    }else{
+        return '';
+    }
+}
+
 // 주문삭제 히스토리 테이블 필드 추가
 if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g5['g5_order_delete_table']}`
@@ -316,7 +324,13 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         <th scope="col" id="th_odrall" >결제금액</th>
         <th scope="col" id="odrpay" >결제수단</th>
 		<th scope="col" id="th_odrcnt" >구매가격</th>
-		<th scope="col" id="th_odrcnt" >판매실적(pv)</th>
+        <th scope="col" id="th_odrcnt" >수익률</th>
+		<th scope="col" id="th_odrcnt" >수당한계</th>
+        <th scope="col" id="th_odrcnt" >누적지급수당</th>
+        <th scope="col" id="th_odrcnt" >지급률(250%)</th>
+        <th scope="col" id="th_odrcnt" >지급완료</th>
+        
+        
         
         <!-- <th scope="col" >마이닝(MH/s)</th> -->
         <th scope="col" width="7%">관리</th>
@@ -434,7 +448,8 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         <td ><?php echo $row['od_time']; ?></td>
         <td style="width:160px;" ><input type="text" id="od_soodang_date" class="frm_input od_soodang_date" style="font-weight:600;color:blue;width:150px;text-align:center" data-id="<?=$row['od_id']?>"  value="<?=$row['od_soodang_date']; ?>"></td>
         <td headers="th_ordnum" class="td_odrnum2">
-            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo $disp_od_id; ?></a>
+            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem" style="font-weight:600;font-size:15px;" ><?=strtoupper($row['pay_id']); ?></a>
+            <p style='font-size:10px;'><?php echo $disp_od_id; ?></p>
             <?php echo $od_mobile; ?>
             <?php echo $od_paytype; ?>
         </td>
@@ -445,9 +460,13 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         <td class="td_numsum" style='text-align:right'><?= shift_auto($row['od_cart_price'],$od_settle_case)?> </td>
         <td style="text-align:center"><?php echo $row['od_settle_case'] ?></td>
 		<td style="text-align:right;font-weight:600"><?=shift_auto($row['od_cash'],$od_settle_case)?> </td>
-		<td style="text-align:right;font-weight:600"><?=number_format($row['upstair'])?> </td>
+        <td style="text-align:right;"><?=$row['pv']?> </td>
+		<td style="text-align:right;"><?=number_format($row['pay_limit'])?> </td>
+        <td style="text-align:right;font-weight:600"><?=number_format($row['pay_ing'])?> </td>
+        <td style="text-align:right;"><?=Round($row['pay_ing']/($row['pay_limit']/100))*2.5?>% </td>
+        <td style="text-align:right;"><?=number_format($row['pay_end'])?> </td>
         <!-- <td > <?php echo $row['pv']; ?></td> -->
-        <td style="text-align:center"><input type='button' class='btn od_cancel' value='구매취소' data-id="<?=$row['od_id']?>"></td>
+        <td style="text-align:center"><input type='button' class='btn od_cancel' value='구매취소' data-id="<?=$row['od_id']?>" <?=enable_check($row['pay_ing'])?>></td>
        
     </tr>
 
@@ -485,10 +504,14 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
             <!-- <?php echo number_format($tot_itemcount); ?>건 -->
         </td>
         <th scope="row">합 계</th>
-        <td class="td_numsum" style='text-align:right; padding: 7px 5px'><?=shift_auto($tot_orderprice,$curencys[0])?> <?=$curencys[0]?></td>
+        <td class="td_numsum" style='text-align:right; padding: 7px 5px'><?=shift_auto($tot_orderprice,$curencys[0])?> </td>
         <td></td>
-        <td style='text-align:right; padding: 7px 5px'><?=shift_auto($tot_receiptprice,$curencys[0])?> <?=$curencys[0]?></td>
-        <td style='text-align:right; padding: 7px 5px'><?=shift_auto($tot_misu,0)?></td>
+        <td style='text-align:right; padding: 7px 5px'><?=shift_auto($tot_receiptprice,$curencys[0])?> </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     </tfoot>
