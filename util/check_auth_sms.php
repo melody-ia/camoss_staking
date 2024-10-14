@@ -5,9 +5,9 @@ $pin = $_POST['pin'];
 
 $check_pin = sql_fetch("SELECT mb_id, otp_key from g5_member WHERE mb_id = '{$member['mb_id']}'");
 
-$debug_mode = LIVE_MODE;
+$debug_mode = HANDLE_STATES;
 
-if($debug_mode){
+if($debug_mode != 'test'){
     $input_value = Encrypt($pin);
 }else{
     $input_value = $pin;

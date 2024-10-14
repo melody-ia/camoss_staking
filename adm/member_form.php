@@ -618,7 +618,7 @@ $rank_result = sql_fetch($rank_sql);
 			$deposit_sum = sql_fetch($sql);
 
 			// 보유잔고
-			$mb_balance_total = $mb['mb_deposit_point'] + $mb['mb_deposit_calc'] + $mb['mb_balance'] - $mb['mb_shift_amt'] + $mb['mb_balance_calc'];
+			$mb_balance_total = $mb['mb_deposit_point'] + $mb['mb_deposit_calc'] + $mb['mb_balance'] + $mb['mb_balance_calc'] - $mb['mb_shift_amt'];
 
 			?>
 			<strong><?= shift_auto($mb_balance_total ,$curencys[0]) ?></strong> <?=$curencys[0]?> &nbsp&nbsp (총 입금액 : <?= shift_auto($deposit_sum['amt']) ?> <?=$curencys[0]?>)
@@ -872,7 +872,7 @@ $rank_result = sql_fetch($rank_sql);
 				$('#shop_math_code').val(value);
 			});
 
-			var total_fund = '<?= $mb['mb_deposit_point'] + $mb['mb_deposit_calc']?>';
+			var total_fund = '<?= $mb['mb_deposit_point'] + $mb['mb_deposit_calc'] + $mb['mb_balance'] + $mb['mb_balance_calc'] - $mb['mb_shift_amt']?> ';
 			var mb_grade = '<?= $mb['grade'] ?>';
 
 			//패키지구매처리

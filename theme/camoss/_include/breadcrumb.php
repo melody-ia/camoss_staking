@@ -166,15 +166,15 @@ $title = 'Dashboard';
 				
 					<ul class="row top">
 						<li class="col-4">
-							<dt class="title" >총 누적 보너스</dt>
+							<dt class="title" >총 누적 보너스(+CP)</dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($total_fund,$curencys[0])?><span class='currency'></span></dd>
 						</li>
 						<li class="col-4">
-							<dt class="title" >구매 가능액(입금)</dt>
+							<dt class="title" >구매 가능액</dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'></span></dd>
 						</li>
 						<li class="col-4">
-							<dt class="title" >출금/재구매 가능액 </dt>
+							<dt class="title" >출금 가능액 </dt>
 							<dd class="value" style='font-size:15px;'><?=shift_auto($total_withraw,$curencys[0])?><span class='currency'></span></dd>
 						</li>
 						

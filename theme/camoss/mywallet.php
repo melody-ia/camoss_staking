@@ -490,7 +490,7 @@ function curency_txt($value, $kind = 'deposit')
               <div class="row">
                 <span class="hist_date"><?= $row['create_dt'] ?></span>
                 <span class="hist_value status mt20"><? string_shift_code($row['status']) ?></span>
-                <span class="hist_value mt20"><?= $row['amt'] == '0' ? '' : shift_auto($row['amt']) . ' ' . strtoupper($curencys[0]);?></span>
+                <span class="hist_value mt20"><?= $row['in_amt'] == '0' ? '' : shift_auto($row['in_amt']) . ' ' . strtoupper($curencys[0]);?></span>
                 <span class="curency_value"> = <?= shift_auto($row['od_id']) . ' ' . $curencys[1] ?></span>
 
               </div>
@@ -503,6 +503,7 @@ function curency_txt($value, $kind = 'deposit')
                 <!-- <span class='hist_name'><?=$bank_info[0] ?></span> -->
                 <!-- <span class="hist_value status"><? string_shift_code($row['status']) ?></span> -->
                 <input type="hidden" class="bank_account_num" name="bank_account" value="<?=$row['bank_account']?>">
+
                 
                 <!-- <div class="bank_info_desc " onclick="copy_order_bank_account_num(this);"><?=$bank_info[0]?></div> -->
               </div>

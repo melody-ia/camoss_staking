@@ -13,7 +13,7 @@ $otp_key = mt_rand(100000, 999999);
 $mb_id = $member['mb_id'];
 $mb_hp = $member['mb_hp'];
 
-if($debug_mode){
+if($debug_mode != 'test'){
     $opt_key_secure = Encrypt($otp_key);
 }else{
     $opt_key_secure = $otp_key;
@@ -22,7 +22,7 @@ if($debug_mode){
 $update_auth_mobile = "UPDATE g5_member set otp_key = '{$opt_key_secure}' WHERE mb_id = '{$mb_id}' ";
 
 if($debug){
-    // print_R($update_auth_mobile);
+    print_R($update_auth_mobile);
 }else{
     sql_query($update_auth_mobile);
 }

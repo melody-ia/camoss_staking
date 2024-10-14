@@ -43,8 +43,9 @@ if($_POST['mb_certify_case'] && $_POST['mb_certify']) {
 $mb_zip1 = substr($_POST['mb_zip'], 0, 3);
 $mb_zip2 = substr($_POST['mb_zip'], 3);
 
-
-
+$coin = get_coins_price();
+$coin_krw_usdt = $coin['krw_usdt'];
+$coin_price = $coin_krw_usdt;
 
 
 
@@ -302,9 +303,11 @@ else if ($w == 'u')
 		$coin = get_coins_price();
 		// $deposit_adm_value = ($deposit_code.$deposit_adm) / $coin['usdt_eth'];
 		$in_deposit_adm_value = $deposit_code.$deposit_adm;
+		$in_od_id = ($coin_price*$in_deposit_adm_value);
 
 		$deposit_adm_sql = "insert wallet_deposit_request set
-				mb_id             = '{$mb_id}'
+				od_id		= '{$in_od_id}'
+				, mb_id             = '{$mb_id}'
 				, txhash     =  '{$deposit_adm_code}'
 				, create_dt         = '{$today}'
 				, create_d    		= '{$today}'
@@ -312,7 +315,7 @@ else if ($w == 'u')
 				, update_dt         = '{$todate}'
 				, coin          	= '{$curencys[0]}'
 				, fee    			= 0
-				, cost         		= 0
+				, cost         		= {$coin_price}
 				, amt    			= 0
 				, in_amt			= {$in_deposit_adm_value}
 				, admin_states 		= '{$admin_states}'";

@@ -54,7 +54,7 @@
 
 
         <div class='r_card_wrap content-box round mt30'>
-            <div class="card_title">구매 가능 금액(입금액)</div>
+            <div class="card_title">구매 가능 금액</div>
             <div class="box-wrap">
                 <div class='box'>
                     <p class='main_centent'><?=shift_auto($available_fund,$curencys[0])?><span class='currency'> <span
@@ -175,7 +175,7 @@
             <p class="dashline mb20"></p>
 
             <div class="card_title_wrap" style="clear:both">
-            <div class="card_title">총누적보너스 :</div>
+            <div class="card_title">총누적보너스(+탄소포인트) : </div>
             <a href='<?=G5_URL?>/page.php?id=bonus_history' class='f_right inline more'><span>더보기<i class="ri-add-circle-fill"></i></span></a>
             </div>
             <p class='main_centent'><?=shift_auto($total_fund,'usdt')?><span class='currency'>
@@ -191,7 +191,7 @@
             <div class="line row">
                 <div class='col-7'>
                     <!-- <span class='day'><?=timeshift($row['day'])?> </span> -->
-                    <span class='category'><strong>누적 <?=bonus_pick_category($row['allowance_name'],'name')?> 보너스</strong></span>
+                    <i class="ri-arrow-right-s-fill" style='font-size:14px;vertical-align: top;'></i><span class='category'><strong>누적 <?=bonus_pick_category($row['allowance_name'],'name')?> 보너스</strong></span>
                 </div>
                 <div class='col-5 text-right'>
                     <span class='price'><?=shift_auto($row['total_bonus'],$curencys[0])?> <?=strtoupper($curencys[0])?>

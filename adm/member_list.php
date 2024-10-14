@@ -195,8 +195,8 @@ function out_check($val)
 // 통계수치
 $stats_sql = "SELECT COUNT(*) as cnt, 
 SUM(mb_deposit_point) AS deposit, 
-SUM(mb_balance) AS balance,
-SUM(pv) AS pv, 
+SUM(mb_balance+ mb_balance_calc) AS balance,
+SUM(mb_save_point) AS mb_save_point, 
 SUM(mb_balance + mb_balance_calc - mb_shift_amt) AS able_with
 {$sql_common} {$sql_search}";
 
@@ -531,12 +531,12 @@ $stats_result = sql_fetch($stats_sql);
 	<?
 	
 		echo "<span >총 입금 합계 <strong>" . Number_format($stats_result['deposit']) . " " . $curencys[0] . " </strong></span> | ";
-		echo "<span>총 매출 합계 <strong>" . Number_format($stats_result['pv']) . "</strong></span><br> ";
+		echo "<span>총 매출 합계 <strong>" . Number_format($stats_result['mb_save_point']) . "</strong></span><br> ";
     ?>
     </div>
     <?
-		echo "<div class='bonus'>보너스<span>보유량 : <strong>" . Number_format($stats_result['balance']) . " " . $curencys[1] . " </strong></span> | ";
-		echo "<span>출금 가능 : <span class='f_blue'>" . Number_format($stats_result['able_with']) . " " . $curencys[1] . "  </span></span></div>  ";
+		echo "<div class='bonus'>보너스<span>보유량 : <strong>" . Number_format($stats_result['balance']) . " " . $curencys[0] . " </strong></span> | ";
+		echo "<span>출금 가능 : <span class='f_blue'>" . Number_format($stats_result['able_with']) . " " . $curencys[0] . "  </span></span></div>  ";
 
 		// echo "<div class='bonus mining before'>미변환 <strong>".strtoupper($minings[$before_mining_coin])."</strong><span>보유량 : <strong>" . Number_format($stats_result['B1'], 8) .' '.strtoupper($minings[$before_mining_coin])." </strong></span> | ";
 		// echo "<span>변환 가능 : <span class='f_blue'>" . Number_format($stats_result['B2'], 8) .' '.strtoupper($minings[$before_mining_coin])."  </span></span></div> ";
@@ -568,7 +568,7 @@ $stats_result = sql_fetch($stats_sql);
 		<option value="mb_datetime" <?php echo get_selected($_GET['sfl'], "mb_datetime"); ?>>가입일시</option>
 		<option value="mb_ip" <?php echo get_selected($_GET['sfl'], "mb_ip"); ?>>IP</option>
 		<option value="mb_recommend" <?php echo get_selected($_GET['sfl'], "mb_recommend"); ?>>추천인</option>
-		<option value="mb_brecommend" <?php echo get_selected($_GET['sfl'], "mb_brecommend"); ?>>후원인</option>
+		<!-- <option value="mb_brecommend" <?php echo get_selected($_GET['sfl'], "mb_brecommend"); ?>>후원인</option> -->
 		<!-- <option value="mb_wallet"<?php echo get_selected($_GET['sfl'], "mb_wallet"); ?>>지갑</option> -->
 	</select>
 
@@ -703,7 +703,7 @@ while ($l_row = sql_fetch_array($get_lc)) {
 					<?if($mode=='del'){?><th scope="col" rowspan="2" id="mb_list_member" class="td_leave_date"><?php echo subject_sort_link('mb_name') ?>탈퇴일</a></th><?}?>
 					<th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_recommend') ?>추천인</th>
 					<th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_habu_sum') ?>직추천</th>
-					<th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_brecommend') ?>후원인</th>
+					<!-- <th scope="col" rowspan="2" id="mb_list_mobile" class="center"><?php echo subject_sort_link('mb_brecommend') ?>후원인</th> -->
 					<!-- <th scope="col" rowspan="2" id="mb_list_mobile" class="td_mail">메일주소</th> -->
 					<th scope="col" id="mb_list_auth" class="bonus_aa" rowspan="2"><?php echo subject_sort_link('total_direct') ?>추천수당<br></a></th>
 					<th scope="col" id="mb_list_auth" class="bonus_eth" rowspan="2"><?php echo subject_sort_link('total_fund') ?>현재잔고<br></a></th>
@@ -763,7 +763,7 @@ while ($l_row = sql_fetch_array($get_lc)) {
 
 					$total_deposit = $row['mb_deposit_point'] + $row['mb_deposit_calc'];
 					$total_bonus = $row['mb_balance'] + $row['mb_shop_point'];
-					$total_fund = $total_deposit;
+					$total_fund = $total_deposit + $row['mb_balance'] +$row['mb_balance_calc'] - $row['mb_shift_amt'];
 
 
 					// 보너스 수당 - 한계 
@@ -843,21 +843,21 @@ while ($l_row = sql_fetch_array($get_lc)) {
 						<?if($mode=='del'){?><th scope="col" rowspan="2" class="td_mbstat" style='letter-spacing:0;'><?=$row['mb_leave_date']?></th><?}?>
 						<td rowspan="2" class="td_name name" style='width:70px;'><?php echo $row['mb_recommend'] ?></td>
 						<td rowspan="2" class="td_name td_index <? if($row['mb_habu_sum']>=2){echo 'strong';}?>"><?=$row['mb_habu_sum'] ?></td>
-						<td rowspan="2" class="td_name name" style='width:70px;'><?php echo $row['mb_brecommend'] ?></td>
+						<!-- <td rowspan="2" class="td_name name" style='width:70px;'><?php echo $row['mb_brecommend'] ?></td> -->
 
-						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($direct_benefit) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= shift_auto($direct_benefit) ?></td>
 
-						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($total_deposit) ?></td>
-						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($row['mb_deposit_point']) ?></td>
-						<td headers="mb_list_auth" class="td_mbstat" style='color:red' rowspan="2"><?= Number_format($row['mb_deposit_calc']) ?></td>
-						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($row['pv']) ?></td>
-						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($total_bonus) ?></td>
-						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($row['mb_balance']) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= shift_auto($total_fund) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= shift_auto($row['mb_deposit_point']) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" style='color:red' rowspan="2"><?= shift_auto($row['mb_deposit_calc'] + $row['mb_balance_calc']) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= shift_auto($row['pv']) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= shift_auto($total_bonus) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= shift_auto($row['mb_balance']) ?></td>
 
-						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= Number_format($row['mb_shop_point']) ?></td>
-						<td headers="mb_list_auth" class="td_mbstat" style='color:red' rowspan="2"><?= Number_format($row['mb_shift_amt']) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" rowspan="2"><?= shift_auto($row['mb_shop_point']) ?></td>
+						<td headers="mb_list_auth" class="td_mbstat" style='color:red' rowspan="2"><?= shift_auto($row['mb_shift_amt']) ?></td>
 
-						<!-- <td headers="mb_list_auth" class="td_mbstat" rowspan="2" style="min-width:50px;width:50px;"><?= Number_format($row['mb_rate']) ?></td>
+						<!-- <td headers="mb_list_auth" class="td_mbstat" rowspan="2" style="min-width:50px;width:50px;"><?= shift_auto($row['mb_rate']) ?></td>
 						<td headers="mb_list_auth" class="td_mbstat strong" rowspan="2" style="min-width:70px;color:black">
 							
 							<?= shift_auto_zero(($row[$mining_target] - $row[$mining_amt_target]), $minings[$now_mining_coin]) ?> 

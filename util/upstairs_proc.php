@@ -3,7 +3,7 @@ include_once('./_common.php');
 include_once(G5_THEME_PATH.'/_include/wallet.php');
 include_once(G5_PATH.'/util/purchase_proc.php');
 
-// $debug = 1;
+//$debug = 1;
 $now_datetime = date('Y-m-d H:i:s');
 $now_date = date('Y-m-d');
 $soodang_date = date('Y-m-d', strtotime("+0 day"));
@@ -29,17 +29,16 @@ $it_supply_point = $_POST['it_supply_point'];
 $val = substr($pack_maker,1,1);
 
 if($debug){
-	$mb_id = 'test3';
+	$mb_id = 'test5';
 	$func = 'new';
-	$input_val ='5500000'; // 결제금액 (부가세포함)
-	$output_val ='5000000'; // 구매금액 (부가세제외)
-	$pack_name = 'Membership-Package';
-	$pack_id = 2021091720;
-	$it_point = 5000000;
-	$it_supply_point = 5;
+	$input_val ='500'; // 결제금액 (부가세포함)
+	$output_val ='500'; // 구매금액 (부가세제외)
+	$pack_name = 'P2';
+	$pack_id = 2024073502;
+	$it_point = 500;
+	$it_supply_point = 0.5;
 }
 
-$target = "mb_deposit_calc";
 $pv = $it_supply_point;
 
 if($func == "new"){
@@ -47,6 +46,16 @@ if($func == "new"){
 }else{
 	$orderid = $_POST['od_id'];
 }
+
+
+$member_bucks_check_sql = "select sum(mb_deposit_point+mb_deposit_calc+mb_balance+mb_balance_calc - mb_shift_amt) as deposit_total, SUM(mb_deposit_point+mb_deposit_calc) AS deposit_limit from g5_member where mb_id = '{$mb_id}'";
+
+$member_bucks_check_row = sql_fetch($member_bucks_check_sql);
+
+$deposit_total = floor($member_bucks_check_row['deposit_total']);
+$deposit_limit = floor($member_bucks_check_row['deposit_limit']);
+
+
 
 // 개별모드 
 if(Solitare == true){
@@ -85,12 +94,7 @@ if($debug){
 	echo $sql."<br><br>";
 }else{
 
-	$member_bucks_check_sql = "select sum(mb_deposit_point+mb_deposit_calc) as deposit from g5_member where mb_id = '{$mb_id}'";
-	$member_bucks_check_row = sql_fetch($member_bucks_check_sql);
-
-	$deposit = floor($member_bucks_check_row['deposit']);
-
-	if($deposit < $it_point){
+	if($deposit_total < $it_point){
 		echo json_encode(array("result" => "failed",  "code" => "0001", "sql" => "잔고가 부족합니다."));
 		return false;
 	}
@@ -108,10 +112,21 @@ if($func == "new"){
 	}
 } */
 
+$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
+
+if($deposit_limit <= $input_val){
+	$deposit_cal_value = $input_val-$deposit_limit;
+	
+	if($deposit_cal_value > 0){
+		$target_sql .= ", mb_balance_calc = mb_balance_calc - {$deposit_cal_value}";
+	}
+}
+
+
 
 if($rst && $logic){
 
-	$update_point = " UPDATE g5_member set pv = pv + {$input_val}, $target = ($target - $input_val)";
+	$update_point = " UPDATE g5_member set pv = pv + {$input_val}, {$target_sql}";
 
 	if($member['mb_level'] == 0){
 		$update_point .= ", mb_level = 1 " ;

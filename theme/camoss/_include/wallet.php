@@ -26,8 +26,8 @@ $withdrawal_start_time = "09:00";
 $withdrawal_end_time = "17:30";
 
 // 회원 자산, 보너스 정보
-$total_deposit = $member['mb_deposit_point'] + $member['mb_deposit_calc'];
 $total_bonus = $member['mb_balance'] + $member['mb_balance_calc']; 
+$total_deposit = $member['mb_deposit_point'] + $member['mb_deposit_calc'] + $total_bonus - $member['mb_shift_amt'];
 $total_shift_amt = $member['mb_shift_amt'];
 
 $total_fund = ($member['mb_balance'] + $member['mb_shop_point']);

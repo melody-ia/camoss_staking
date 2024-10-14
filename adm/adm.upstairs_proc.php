@@ -41,7 +41,7 @@ if($debug){
 	$it_supply_point = 0;
 }
 
-$target = "mb_deposit_calc";
+
 $pv = $it_supply_point;
 
 if($func == "new"){
@@ -50,7 +50,11 @@ if($func == "new"){
 	$orderid = $_POST['od_id'];
 }
 
+$member_bucks_check_sql = "select sum(mb_deposit_point+mb_deposit_calc+mb_balance+mb_balance_calc - mb_shift_amt) as deposit_total, SUM(mb_deposit_point+mb_deposit_calc) AS deposit_limit from g5_member where mb_id = '{$mb_id}'";
+$member_bucks_check_row = sql_fetch($member_bucks_check_sql);
 
+$deposit_total = floor($member_bucks_check_row['deposit_total']);
+$deposit_limit = floor($member_bucks_check_row['deposit_limit']);
 
 // 개별모드 
 if(Solitare == true){
@@ -89,12 +93,9 @@ if($debug){
 	echo $sql."<br><br>";
 }else{
 
-	$member_bucks_check_sql = "select sum(mb_deposit_point+mb_deposit_calc) as deposit from g5_member where mb_id = '{$mb_id}'";
-	$member_bucks_check_row = sql_fetch($member_bucks_check_sql);
+	
 
-	$deposit = floor($member_bucks_check_row['deposit']);
-
-	if($deposit < $output_val){
+	if($deposit_total < $output_val){
 		echo json_encode(array("result" => "failed",  "code" => "0001", "sql" => "잔고가 부족합니다."));
 		return false;
 	}
@@ -103,13 +104,23 @@ if($debug){
 }
 
 $logic = purchase_package($mb_id,$pack_id);
-
 $calc_value = conv_number($it_point);
 $price_value = conv_number($output_val);
 
+$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
+
+if($deposit_limit <= $price_value){
+	$deposit_cal_value = $price_value-$deposit_limit;
+	
+	if($deposit_cal_value > 0){
+		$target_sql .= ", mb_balance_calc = mb_balance_calc - {$deposit_cal_value}";
+	}
+}
+
+
 if($rst && $logic){
 
-	$update_point = " UPDATE g5_member set pv = pv + {$calc_value}, $target = ($target - $price_value)";
+	$update_point = " UPDATE g5_member set pv = pv + {$calc_value}, {$target_sql}";
 	$mb_level = sql_fetch("SELECT mb_level from g5_member WHERE mb_id = '{$mb_id}' ")['mb_level'];
 
 	if($mb_level == 0){

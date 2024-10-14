@@ -3364,6 +3364,8 @@ a.btn_cancle,
   font-family: Montserrat, Arial, sans-serif;
   font-size: 24px;
   font-weight: 600;
+  line-height: 30px;
+  margin-bottom: 20px;
 }
 .main_centent .currency {
   font-weight: 300;
