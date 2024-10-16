@@ -112,14 +112,17 @@ if($func == "new"){
 	}
 } */
 
-$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
+
 
 if($deposit_limit <= $input_val){
 	$deposit_cal_value = $input_val-$deposit_limit;
-	
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
+
 	if($deposit_cal_value > 0){
 		$target_sql .= ", mb_balance_calc = mb_balance_calc - {$deposit_cal_value}";
 	}
+}else{
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$input_val} ";
 }
 
 

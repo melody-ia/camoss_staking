@@ -129,8 +129,28 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall" style="marg
 $stats_sql = "select CASE WHEN od_cash_no = 'R' THEN '재구매' ELSE od_name END AS od_name, COUNT(*) AS cnt, SUM(od_cash) AS amt ".$sql_common."group by od_cash_no";
 $stats_result = sql_query($stats_sql);
 
-// 구매상품명 리턴
+// 지급완료 선택
+function done_select($name, $start_id=0, $selected="", $event="")
+{
+    global $g5;
 
+    $level_name=array("지급중","지급완료");
+	//$level_name=array("Black","Red","Yellow","Green");
+    $str = "\n<select id=\"{$name}\" class='pay_done_select' name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    $level_cnt = count($level_name);
+    for ($i=$start_id; $i<$level_cnt; $i++) {
+        $str .= '<option value="'.$i.'"';
+        if ($i == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$level_name[$i]}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+// 구매상품명 리턴
 function  od_name_return_rank($val){
     if(strlen($val) > 1){
         return substr($val,1,1);
@@ -464,7 +484,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 		<td style="text-align:right;"><?=number_format($row['pay_limit'])?> </td>
         <td style="text-align:right;font-weight:600"><?=number_format($row['pay_ing'])?> </td>
         <td style="text-align:right;"><?=Round($row['pay_ing']/($row['pay_limit']/100))*2.5?>% </td>
-        <td style="text-align:right;"><?=number_format($row['pay_end'])?> </td>
+        <td style="text-align:right;"><?=done_select('pay_end_'.$i,$row['pay_end'])?> </td>
         <!-- <td > <?php echo $row['pv']; ?></td> -->
         <td style="text-align:center"><input type='button' class='btn od_cancel' value='구매취소' data-id="<?=$row['od_id']?>" <?=enable_check($row['pay_ing'])?>></td>
        

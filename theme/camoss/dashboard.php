@@ -94,6 +94,7 @@
                 
                 for($i = 0; $i < count($ordered_items); $i++){
                     $row = $ordered_items[$i];
+                    $pack_limit_per = round(($row['pay_ing'] / $row['pay_limit'] * 250),2);
                     ?>
             <div class="col-12 r_card_box">
                 <a href='/page.php?id=upstairs_detail&pay_id=<?=$row['pay_id']?>'>
@@ -115,7 +116,7 @@
                         </p>
                         <div class="b_blue_bottom"></div>
                         <div class="text_wrap">
-                            <p class="value_rate">수익률 : <?=$row['pv']?>%</p>
+                            <p class="value_rate"><i class="ri-discount-percent-line pack_bull"></i> 수익률 : <?=$row['pv']?>%   <i class="ri-pie-chart-2-fill pack_bull"></i> 누적지급률 : <?=$pack_limit_per?>%</p> 
                             <p class="value_date" style='text-align:right'><?=$row['od_date']?></p>
                         </div>
                     </div>
@@ -133,7 +134,7 @@
 
         <div class='r_card_wrap content-box round history_latest mb30 mt30'>
             <div class="card_title_wrap">
-                <div class="card_title">보너스한계 (<?=$limited?>%)</div>
+                <div class="card_title">패키지별 보너스한계 (<?=$limited?>%)</div>
               
             </div>
             <?

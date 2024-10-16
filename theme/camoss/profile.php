@@ -281,7 +281,7 @@
 							<button class="btn wd logout_pop_open">로그아웃</button>
 						</li>
 						<li class='col-12 text-center'>
-							<a href='page.php?id=member_leave' class='member_leave'>회원 탈퇴</a>
+							<a href='page.php?id=member_leave' class='member_leave' style="text-decoration:underline">회원 탈퇴</a>
 						</li>
 					</ul>
 				</div>

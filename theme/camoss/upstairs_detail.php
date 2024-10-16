@@ -7,13 +7,17 @@
     $title = 'upstairs_history';
 
     $val = $_REQUEST;
-    // $od_id = $val['od_id'];
+
+    $od_id = $val['od_id'];
     $pay_id = $val['pay_id'];
 
-    if($pay_id == ''){
+    if($od_id == ''){
         $sql = "SELECT upstair as sum_pv from g5_order WHERE mb_id = '{$member['mb_id']}' ";
+        if($pay_id){
+            $sql = "SELECT *, upstair as sum_pv from g5_order WHERE pay_id = '{$pay_id}' ";
+        }
     }else{
-        $sql = "SELECT *,upstair as sum_pv from g5_order WHERE pay_id = '{$pay_id}' order by pay_id desc limit 0,1";
+        $sql = "SELECT *, upstair as sum_pv from g5_order WHERE od_id = '{$od_id}' limit 0,1";
     }
 
     $goods_sql = "select it_price, it_supply_point from g5_item where it_maker <> 'P0' order by it_price asc";
@@ -93,6 +97,8 @@
     $item_layer = $sum_pv / 500;
     $digital_aseet = "moss_Inherent_asset_".$item_rank.".jpg";
 
+    $pack_limit_per = round(($this_od['pay_ing'] / $this_od['pay_limit'] * 250),2);
+
     /* $rand_num = getRandStr(4);
     $rand_digit = sprintf('%06d',rand(000000,999999));
     $digital_code = $rand_num.$rand_digit; */
@@ -140,10 +146,12 @@
                 <p class="sub_title">본 NFT 는 <?=CONFIG_SUB_TITLE?>이 운영하는 <?=CONFIG_TITLE?> 사업의 지분 권리 및 배당수익 권리를 증명함.</p>
                 
                 <p class="mt20">
+                   
                     <ul><i class="ri-check-line"></i> 권리의 내용
                         <li>- 보유수량 > <span class="red"> <?=$item_layer?> MOSS</span></li>
-                        <!-- <li>- 일련번호 > <span class="red"><?=od_txt($this_od['od_cash_no'],$this_od['od_cash_info'])?>  </span></li> -->
+                        <li>- 일련번호 > <span class="red"><?=$this_od['pay_id']?>  </span></li>
                         <li>- 투자 수익률 권리 > <span class="red"><?=$this_od['pv']?> % </span></li>
+                        <li>- 누적 수익 > <span class="red"><?=shift_auto($this_od['pay_ing'])?> <?=strtoupper($curencys[0])?> (<?=$pack_limit_per?>%) </span></li>
                     </ul>
 
                     <ul>

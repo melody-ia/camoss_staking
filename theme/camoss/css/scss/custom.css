@@ -3835,6 +3835,11 @@ a.btn_cancle,
   color: #eee;
 }
 
+.pack_bull {
+  font-size: 16px;
+  vertical-align: bottom;
+}
+
 /* .icon_marker{
     position:absolute;
     margin-top:24px;

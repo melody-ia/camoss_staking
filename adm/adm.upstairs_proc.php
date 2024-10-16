@@ -107,14 +107,17 @@ $logic = purchase_package($mb_id,$pack_id);
 $calc_value = conv_number($it_point);
 $price_value = conv_number($output_val);
 
-$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
+
 
 if($deposit_limit <= $price_value){
 	$deposit_cal_value = $price_value-$deposit_limit;
-	
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
+
 	if($deposit_cal_value > 0){
 		$target_sql .= ", mb_balance_calc = mb_balance_calc - {$deposit_cal_value}";
 	}
+}else{
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$price_value} ";
 }
 
 
