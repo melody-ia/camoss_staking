@@ -63,6 +63,11 @@ if ($od_name) {
     $where[] = " od_name = '$od_name' ";
 }
 
+if ($mb_name) {
+    $where[] = " mb_name = '$mb_name' ";
+}
+
+
 if ($od_misu) {
     $where[] = " od_misu != 0 ";
 }
@@ -101,7 +106,7 @@ if ($sort2 == "") $sort2 = "desc";
 
 $sql_common = " from g5_order $sql_search ";
 
-$sql = " select count(od_id) as cnt " . $sql_common;
+$sql = " select count(pay_id) as cnt " . $sql_common;
 
 
 $row = sql_fetch($sql);
@@ -113,9 +118,11 @@ if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이�
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql  = " select *
-           $sql_common
+           ,B.mb_name from g5_order A JOIN g5_member B ON A.mb_id = B.mb_id $sql_search
            order by $sort1 $sort2
            limit $from_record, $rows ";
+
+        //   print_R($sql);
 $result = sql_query($sql);
 
 
@@ -206,16 +213,16 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 
 <label for="sel_field" class="sound_only">검색대상</label>
 <select name="sel_field" id="sel_field">
-    <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
-    <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
-    <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
-    <option value="od_tel" <?php echo get_selected($sel_field, 'od_tel'); ?>>주문자전화</option>
-    <option value="od_hp" <?php echo get_selected($sel_field, 'od_hp'); ?>>주문자핸드폰</option>
+    <option value="pay_id" <?php echo get_selected($sel_field, 'pay_id'); ?>>페이ID</option>
+    <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>아이디</option>
+    <option value="mb_name" <?php echo get_selected($sel_field, 'mb_name'); ?>>회원명</option>
+    <!-- <option value="od_tel" <?php echo get_selected($sel_field, 'pay_id'); ?>>페이ID</option> -->
+    <!-- <option value="od_hp" <?php echo get_selected($sel_field, 'od_hp'); ?>>주문자핸드폰</option>
     <option value="od_b_name" <?php echo get_selected($sel_field, 'od_b_name'); ?>>받는분</option>
     <option value="od_b_tel" <?php echo get_selected($sel_field, 'od_b_tel'); ?>>받는분전화</option>
     <option value="od_b_hp" <?php echo get_selected($sel_field, 'od_b_hp'); ?>>받는분핸드폰</option>
     <option value="od_deposit_name" <?php echo get_selected($sel_field, 'od_deposit_name'); ?>>입금자</option>
-    <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
+    <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option> -->
 </select>
 
 <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
@@ -318,7 +325,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 
 <div class="local_desc01 local_desc">
     <p>
-        <strong>- 구매취소 :</strong> 수당 지급 안된 경우에만 취소 처리 가능 <strong> 지급완료 :</strong> 수동 지급 완료 처리시 수당지급안됨 
+        <strong>- 구매취소 :</strong> 수당 지급 안된 경우에만 취소 처리 가능 | <strong> 지급완료 :</strong> 수동 지급 완료 처리시 수당지급안됨 
 	</p>
 </div>
 
@@ -474,8 +481,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
             <?php } ?>
         </td>
         <td><?
-            $mb_name_row = sql_fetch("SELECT mb_name FROM g5_member WHERE mb_id = '{$row['mb_id']}' ");
-            echo $mb_name_row['mb_name'];
+            echo $row['mb_name'];
         ?></td>
         <td ><?php echo $row['od_time']; ?></td>
         <td style="width:160px;" ><input type="text" id="od_soodang_date" class="frm_input od_soodang_date" style="font-weight:600;color:blue;width:150px;text-align:center" data-id="<?=$row['od_id']?>"  value="<?=$row['od_soodang_date']; ?>"></td>

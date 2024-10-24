@@ -779,7 +779,7 @@ $rank_result = sql_fetch($rank_sql);
 			}
 		</style>
 		
-		<td colspan="3">
+		<td colspan="2">
 		<div style="display: flex; margin-left: 200px; padding: 2px 0px;">
 		<!-- 
 			<div style="display: flex;width: auto;justify-content: space-between;">
@@ -836,10 +836,16 @@ $rank_result = sql_fetch($rank_sql);
 			<button type='button' class='btn purchase_btn pack m-pack' data-point='0' data-name='[인정회원패키지]' data-id='2021051040' data-it_supply_point='0' value=''>P3-1 인정회원 팩</button> -->
 		</td>
 
-		<!-- <td colspan="2">
-			<button type='button' class='btn `purchase_btn` pack m-pack' data-price='1' data-name='Membership Pack' data-id='2020120890' value=''>M-PACK</button>
-			<button type='button' class='btn purchase_btn pack p-pack' data-price='0.8' data-name='Promotion Pack' data-id='2020120892' value=''>P-PACK</button>
-		</td> -->
+		<td colspan="1">
+			<? 
+			$ordered_items = ordered_items($mb['mb_id']);
+				
+			for($i = 0; $i < count($ordered_items); $i++){
+				$row = $ordered_items[$i];
+				?>
+				<a href='/adm/shop_admin/g5_orderlist.php?sel_field=pay_id&search=<?=$row['pay_id']?>' class='badge t_white color<?=substr($row['od_name'],1,1)?>'><?=$row['pay_id']?></a>
+			<?}?>
+		</td>
 	</tr>
 
 
