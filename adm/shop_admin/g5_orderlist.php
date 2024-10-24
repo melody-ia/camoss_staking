@@ -67,6 +67,10 @@ if ($mb_name) {
     $where[] = " mb_name = '$mb_name' ";
 }
 
+if ($mb_id) {
+    $where[] = " B.mb_id = '$mb_name' ";
+}
+
 
 if ($od_misu) {
     $where[] = " od_misu != 0 ";
@@ -100,7 +104,7 @@ if ($where) {
     $sql_search = ' where '.implode(' and ', $where);
 }
 
-if ($sel_field == "")  $sel_field = "mb_id";
+if ($sel_field == "")  $sel_field = "B.mb_id";
 if ($sort1 == "") $sort1 = "od_time";
 if ($sort2 == "") $sort2 = "desc";
 
@@ -117,7 +121,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select *
+$sql  = " select A.*
            ,B.mb_name from g5_order A JOIN g5_member B ON A.mb_id = B.mb_id $sql_search
            order by $sort1 $sort2
            limit $from_record, $rows ";
@@ -196,6 +200,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
     .od_cancel{border:1px solid #ccc;background:white;border-radius: 0;padding:5px 10px;}
     .od_cancel:hover{background: black;;border:1px solid black;color:white}
     .cancle_log_btn{border-radius: 0;}
+    .soodang{text-decoration:none;background:#2b9b8a !important}
 </style>
 <link rel="stylesheet" href="/adm/css/scss/admin_custom.css">
 <script src="../../excel/tabletoexcel/xlsx.core.min.js"></script>
@@ -213,8 +218,8 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 
 <label for="sel_field" class="sound_only">검색대상</label>
 <select name="sel_field" id="sel_field">
+    <option value="B.mb_id" <?php echo get_selected($sel_field, 'B.mb_id'); ?>>아이디</option>
     <option value="pay_id" <?php echo get_selected($sel_field, 'pay_id'); ?>>페이ID</option>
-    <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>아이디</option>
     <option value="mb_name" <?php echo get_selected($sel_field, 'mb_name'); ?>>회원명</option>
     <!-- <option value="od_tel" <?php echo get_selected($sel_field, 'pay_id'); ?>>페이ID</option> -->
     <!-- <option value="od_hp" <?php echo get_selected($sel_field, 'od_hp'); ?>>주문자핸드폰</option>
@@ -475,7 +480,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         <td><?= $i + 1 ?></td>
 		<td>
             <?php if ($row['mb_id']) { ?>
-            <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>" class='mb_id' style='font-size:14px;'><?=member_sort($row['mb_id'],$m1 = '',$m2 = '')?></a>
+            <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=B.mb_id&amp;search=<?php echo $row['mb_id']; ?>" class='mb_id' style='font-size:14px;'><?=member_sort($row['mb_id'],$m1 = '',$m2 = '')?></a>
             <?php } else { ?>
             비회원
             <?php } ?>
@@ -498,10 +503,9 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 		<td style="text-align:right;font-weight:600"><?=shift_auto($row['od_cash'],$od_settle_case)?> </td>
         <td style="text-align:right;"><?=$row['pv']?> </td>
 		<td style="text-align:right;"><?=number_format($row['pay_limit'])?> </td>
-        <td style="text-align:right;font-weight:600" data-payid=<?=$row['pay_id']?>><a href="" class="orderitem" ><?=number_format($row['pay_ing'])?></a> </td>
-        <td style="text-align:right;"><?=Round($row['pay_ing']/($row['pay_limit']/100))*2.5?>% </td>
+        <td style="text-align:right;font-weight:600" data-payid=<?=$row['pay_id']?>><a href="" class="orderitem" ><?=number_format($row['pay_ing'],2)?></a> </td>
+        <td style="text-align:right;"><?=round($row['pay_ing']/($row['pay_limit']/100))*2.5?>% </td>
         <td style="text-align:right;" data-payid=<?=$row['pay_id']?>><?=done_select('pay_end_'.$i,$row['pay_end'])?> </td>
-        <!-- <td > <?php echo $row['pv']; ?></td> -->
         <td style="text-align:center"><input type='button' class='btn od_cancel' value='구매취소' data-id="<?=$row['od_id']?>" <?=enable_check($row['pay_ing'])?>></td>
        
     </tr>
@@ -651,7 +655,7 @@ $(function(){
                 $this.after("<div id=\"orderitemlist\"><div class=\"itemlist\"></div></div>");
                 $("#orderitemlist .itemlist")
                     .html(data)
-                    .append("<div id=\"orderitemlist_close\"><button type=\"button\" id=\"orderitemlist-x\" class=\"btn_frmline\">닫기</button></div>");
+                    .append("<div id=\"orderitemlist_close\"><a href='/adm/bonus/bonus_list.php?sfl=pay_id&stx="+pay_id+"&start_dt=2024-09-02' class='btn_frmline soodang'>수당바로가기</a> <button type=\"button\" id=\"orderitemlist-x\" class=\"btn_frmline\">닫기</button></div>");
             }
         );
 

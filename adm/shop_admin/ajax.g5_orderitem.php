@@ -56,8 +56,8 @@ $result = sql_query($sql);
             ?>
             <tr>
                 <td class="td_mngsmall"><?php echo $row['allowance_name']; ?></td>
-                <td class="td_cntsmall"><?php echo Round($row['group_benefit'],2); ?></td>
-                <td class="td_num"><?php echo number_format($opt_price); ?></td>
+                <td class="td_cntsmall" style='text-align:right'><?php echo number_format($row['group_benefit'],2); ?></td>
+                <td class="td_num"></td>
                 <!-- <td class="td_num"><?php echo number_format($ct_price['stotal']); ?></td>
                 <td class="td_num"><?php echo number_format($opt['cp_price']); ?></td>
                 <td class="td_num"><?php echo number_format($ct_point['stotal']); ?></td>
@@ -70,7 +70,7 @@ $result = sql_query($sql);
         <tfoot>
             <tr>
                 <td>누적합계</td>
-                <td><?=round($total_benefit,2)?></td>
+                <td style='text-align:right'><?=number_format($total_benefit,2)?></td>
                 <td></td>
             </tr>
         </tfoot>

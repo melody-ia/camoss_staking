@@ -132,7 +132,7 @@ function wallet_type($val){
                 echo $list[$i]['num'];
              ?>
             </td>
-            <td class=" sv_use" style="text-align:center"><?php echo $list[$i]['name'] ?></td>
+            <td class=" sv_use" style="text-align:center"><?php echo $list[$i]['mb_id'] ?></td>
             <td class="td_subject" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
                 <?php
                 if ($is_category && $list[$i]['ca_name']) {

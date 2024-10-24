@@ -141,7 +141,7 @@ $excel_sql = urlencode($sql);
 $result = sql_query($sql);
 $send_sql = $sql;
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'?view=all" class="ov_listall">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'?view=all&'.$qstr.'" class="ov_listall">전체목록</a>';
 
 $qstr.='&fr_date='.$fr_date.'&to_date='.$to_date.'&chkc='.$chkc.'&chkm='.$chkm.'&chkr='.$chkr.'&chkd='.$chkd.'&chke='.$chke.'&chki='.$chki;
 $qstr.='&diviradio='.$diviradio.'&r='.$r;

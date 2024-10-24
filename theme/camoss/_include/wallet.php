@@ -850,7 +850,8 @@ function retrun_tx_func($tx,$coin){
 		return "<a href ='https://filfox.info/ko/message/".$tx."' target='_blank' style='text-decoration:underline'>".$tx."</a>";
 
 	}else if(strtolower($coin) =='usdt'){
-		return "<a href ='https://www.oklink.com/ko/trx/tx/".$tx."' target='_blank' style='text-decoration:underline'>".utf8_strcut( $tx, 12, $suffix='...' )."</a>";
+		// return "<a href ='https://www.oklink.com/ko/trx/tx/".$tx."' target='_blank' style='text-decoration:underline'>".utf8_strcut( $tx, 12, $suffix='...' )."</a>";
+		return "<a href ='https://www.oklink.com/ko/trx/tx/".$tx."/transfer' target='_blank' style='text-decoration:underline'>".$tx."</a>";
 	}else{
 		return $tx;
 	}
@@ -864,7 +865,8 @@ function retrun_addr_func($tx,$coin){
 	}else if (strtolower($coin) == 'etc'){
 		return "<a href ='https://blockscout.com/etc/mainnet/address/".$tx."' target='_blank' style='text-decoration:underline'>".$tx."</a>";
 	}else if(strtolower($coin) =='usdt'){
-		return "<a href ='https://www.oklink.com/ko/trx/address/".$tx."/token-transfer' target='_blank' style='text-decoration:underline'>".utf8_strcut( $tx, 30, $suffix='...' )."</a>";
+		// return "<a href ='https://www.oklink.com/ko/trx/address/".$tx."/token-transfer' target='_blank' style='text-decoration:underline'>".utf8_strcut( $tx, 30, $suffix='...' )."</a>";
+		return "<a href ='https://www.oklink.com/ko/trx/address/".$tx."/token-transfer' target='_blank' style='text-decoration:underline'>".$tx."</a>";
 	}else{
 		return $tx;
 	}

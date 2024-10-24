@@ -127,7 +127,8 @@ function wallet_type($val){
             <?php } ?>
             <span class="bo_v_tit">
             <?php
-            echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력
+            echo cut_str(get_text($view['wr_subject']), 70);
+            echo "[ ".$view['mb_id']." ]"; // 글제목 출력 
             ?></span>
         </h2>
     </header>
