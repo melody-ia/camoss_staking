@@ -154,7 +154,7 @@
                         if($row['pay_ing'] < 0.1){
                             $pack_per_bonus = 0;
                         }else{
-                            $pack_per_bonus = Round($row['pay_ing']/($row['pay_limit']/100));
+                            $pack_per_bonus = Round($row['pay_ing']/($row['pay_limit']/100),2);
                         }
 
                         if($pack_per_bonus > 95){

@@ -559,6 +559,28 @@ function multi_curl($url){
 	return $response;
 }
 
+// 회원 별도 구분
+function member_sort($mb_id,$m1 = '',$m2 = ''){
+	if($m1 == false){
+		$sql = "SELECT mb_divide_date,mb_intercept_date FROM g5_member WHERE mb_id = '{$mb_id}' ";
+		$mb = sql_fetch($sql);
+
+		$m1 = $mb['mb_divide_date'];
+		$m2 = $mb['mb_intercept_date'];
+	}
+
+	if($m1 != ''){
+		$result = "<span class='mb-id' style='color:#af1919'>".$mb_id."</span>";
+	}
+	else if($m2 != ''){
+		$result = "<span class='mb-id red'><del>".$mb_id."</del></span>";
+	}
+	else{
+		$result = "<span class='mb-id'>".$mb_id."</span>";
+	}
+	return $result;
+}
+
 
 function shift_auto_zero($val,$coin = ASSETS_CURENCY){
 	if($val == 0 || $val ==''){

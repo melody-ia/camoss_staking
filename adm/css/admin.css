@@ -707,7 +707,7 @@ ul.de_pg_tab li.tab-current a{background:#2CC185;color:#fff}
 #sodr_list .td_name {text-align:center !important}
 
 #orderitemlist {position:relative}
-#orderitemlist .itemlist {z-index:2;position:absolute;top:0;left:-41px;width:958px;padding:10px;border:1px solid #a2a5a9;background:#f2f5f9}
+#orderitemlist .itemlist {z-index:2;position:absolute;top:22px;left:-100px;width:450px;padding:10px;border:1px solid #a2a5a9;background:#f2f5f9}
 #orderitemlist .itemlist h2{margin:0 0 10px}
 #orderitemlist td {background:#fff}
 #orderitemlist #orderitemlist_close {text-align:right}

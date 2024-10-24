@@ -59,11 +59,24 @@ $deposit_limit = floor($member_bucks_check_row['deposit_limit']);
 
 // 개별모드 
 if(Solitare == true){
-	$pay_limit = $it_point*$limited;
+	$pay_limit = $it_point*$limited/100;
 	$pay_id =  generateOrderCode(3);
 	$Sol_sql = ", pay_limit = '{$pay_limit}', pay_id = '{$pay_id}' ";
 }else{
 	$Sol_sql = "";
+}
+
+
+if($deposit_limit <= $input_val){
+	$deposit_cal_value = $input_val-$deposit_limit;
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
+
+	if($deposit_cal_value > 0){
+		$target_sql .= ", mb_balance_calc = mb_balance_calc - {$deposit_cal_value}";
+		$Sol_sql .= ", od_refund_price = {$deposit_cal_value} ";
+	}
+}else{
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$input_val} ";
 }
 
 // 해당 패키지로 받을 수 있는 수당 한도()
@@ -111,20 +124,6 @@ if($func == "new"){
 		$logic = rankup($val,$mb_id,$orderid);
 	}
 } */
-
-
-
-if($deposit_limit <= $input_val){
-	$deposit_cal_value = $input_val-$deposit_limit;
-	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
-
-	if($deposit_cal_value > 0){
-		$target_sql .= ", mb_balance_calc = mb_balance_calc - {$deposit_cal_value}";
-	}
-}else{
-	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$input_val} ";
-}
-
 
 
 if($rst && $logic){

@@ -138,6 +138,7 @@ function imageview(id, w, h)
 	<iframe name='framer' id="framer" frameborder="0"></iframe> 
 </div><!-- // framewrp -->
 
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>
 $(function(){
 	$('span[id^="ajax_"]').click(function () {

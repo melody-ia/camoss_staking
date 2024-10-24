@@ -58,11 +58,26 @@ $deposit_limit = floor($member_bucks_check_row['deposit_limit']);
 
 // 개별모드 
 if(Solitare == true){
-	$pay_limit = $it_point*$limited;
+	$pay_limit = $it_point*($limited/100);
 	$pay_id =  generateOrderCode(3);
 	$Sol_sql = ", pay_limit = '{$pay_limit}', pay_id = '{$pay_id}' ";
 }else{
 	$Sol_sql = "";
+}
+
+$calc_value = conv_number($it_point);
+$price_value = conv_number($output_val);
+
+if($deposit_limit <= $price_value){
+	$deposit_cal_value = $price_value-$deposit_limit;
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
+
+	if($deposit_cal_value > 0){
+		$target_sql .= ", mb_balance_calc = mb_balance_calc - {$deposit_cal_value}";
+		$Sol_sql .= ", od_refund_price = {$deposit_cal_value} ";
+	}
+}else{
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$price_value} ";
 }
 
 $max_limit_point = $it_point * ($limited/100);
@@ -104,21 +119,7 @@ if($debug){
 }
 
 $logic = purchase_package($mb_id,$pack_id);
-$calc_value = conv_number($it_point);
-$price_value = conv_number($output_val);
 
-
-
-if($deposit_limit <= $price_value){
-	$deposit_cal_value = $price_value-$deposit_limit;
-	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
-
-	if($deposit_cal_value > 0){
-		$target_sql .= ", mb_balance_calc = mb_balance_calc - {$deposit_cal_value}";
-	}
-}else{
-	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$price_value} ";
-}
 
 
 if($rst && $logic){

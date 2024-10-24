@@ -8,7 +8,7 @@ auth_check($auth[$sub_menu], 'r');
 
 
 //회원 리스트를 읽어 온다.
-$sql_common = " FROM g5_order AS o WHERE od_soodang_date ='2024-10-12' AND o.od_cash_no NOT IN ('P0') AND pay_end != 1 ";
+$sql_common = " FROM g5_order AS o WHERE od_soodang_date ='{$bonus_day}' AND o.od_cash_no NOT IN ('P0') AND pay_end != 1 ";
 $sql_mgroup=' ORDER BY o.mb_no asc';
 
 $pre_sql = "select * 
@@ -44,12 +44,6 @@ header('Content-Type: text/html; charset=utf-8');
 <div>
 <?
 
-// 디버그 로그 
-if($debug){
-	echo "<code>";
-    print_r($sql);
-	echo "</code><br>";
-}
 
 
 if($result_cnt > 0){

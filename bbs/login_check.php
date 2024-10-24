@@ -53,7 +53,7 @@ $leave_mb = sql_fetch($leave_sql);
 if ($mb['mb_intercept_date'] && $mb['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) {
 	$date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1년 \\2월 \\3일", $mb['mb_intercept_date']);
 	// alert('회원님의 아이디는 접근이 금지되어 있습니다.\n처리일 : '.$date);
-	echo json_encode(array('code'=>'300', 'msg'=>"회원님의 아이디는 접근이 금지되어 있습니다. 처리일 : {$date}",'url'=>'/'));
+	echo json_encode(array('code'=>'300', 'msg'=>"회원님의 아이디는 이용이 제한되어 있습니다. <br><br><span style='color:red'> 처리일 : {$date}</span>",'url'=>'/'));
 	exit;
 }
 

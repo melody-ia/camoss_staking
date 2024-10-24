@@ -796,7 +796,7 @@ function curency_txt($value, $kind = 'deposit')
     /* 입출금 서비스 사용여부*/
     var nw_with = '<?= $nw_with ?>'; // 출금서비스 가능여부
     var mb_block = Number("<?= $member['mb_block'] ?>"); // 차단회원 여부
-    var personal_with = '<?= $member['mb_leave_date'] ?>'; // 별도구분회원 여부
+    var personal_with = '<?= $member['mb_divide_date'] ?>'; // 별도구분회원 여부
     var mb_id = '<?=$member['mb_id']?>';
     
 
@@ -987,7 +987,7 @@ function curency_txt($value, $kind = 'deposit')
 
       // 서비스 이용제한 여부 확인
       if (personal_with != '') {
-        dialogModal('서비스이용제한', '<strong>관리자에게 연락주세요</strong>', 'warning');
+        dialogModal('서비스이용제한', '<strong>현재 출금 서비스를 이용할수 없습니다. <br>문제가 지속 되는 경우 관리자에게 연락주세요</strong>', 'warning');
         return false;
       }
 

@@ -20,7 +20,7 @@ if($_GET['start_dt']){
 	$max_date = "'{$fr_date}'";
 }
 // if($_GET['end_dt']){
-	$to_date = $fr_date;
+	
 	// $to_date = $_GET['end_dt'];
 // }
 if($_GET['to_date']){
@@ -70,6 +70,17 @@ if(($allowance_name) ){
  $sql_search .= " )";
 }
 
+// 페이아이디 또는 아이디로 검색
+if($pay_id){
+	$sql_search .= " and pay_id = '{$pay_id}'  ";
+	$qstr .= "&pay_id=".$pay_id;
+}
+
+if($mb_id){
+	$sql_search .= " and mb_id = '{$mb_id}'  ";
+	$qstr .= "&mb_id=".$mb_id;
+}
+
 // 검색기간검색
 if($fr_date){
 	$sql_search .= " and day >= '{$fr_date}' ";
@@ -92,6 +103,8 @@ if ($stx) {
     }
     $sql_search .= " ) ";
 }
+
+
 
 $sql_common = " from {$g5['bonus']} where (1) ";
 $sql_order='order by day desc';
@@ -122,6 +135,7 @@ $sql = "select *
 	{$sql_search}
 	{$sql_order}
 	limit {$from_record}, {$rows} ";
+
 
 $excel_sql = urlencode($sql);
 $result = sql_query($sql);
@@ -158,7 +172,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 	span.ov_listall{margin-left:10px; }
 	span.ov_listall:after{content:""; border-right:2px solid gray; padding-right:10px;}
-
+	.tbl_wrap a {text-decoration:underline;}
 </style>
 
 <link href="<?=G5_ADMIN_URL?>/css/scss/bonus/bonus_list.css" rel="stylesheet">
@@ -228,20 +242,6 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 </div>
 
 
-<!--
-<?if($member['mb_id'] = 'admin'){?>
-<div class="sysbtn">
-	수동관리 :: 
-	<a href="./member_grade.php" class="btn btn2" >멤버 등급(grade) 수동 갱신</a>
-	
-	<a href="#" class="btn btn2" onclick="clear_db('balance');">멤버 보너스,V7,매출전환,level 초기화(출금,전환 제외)</a>
-	<a href="#" class="btn btn2" onclick="clear_db('amt');">멤버 출금, 전환 내역 초기화</a>-->
-	<!--<a href="#" class="btn btn3" onclick="clear_db('pack_order');">B팩,Q팩 구매 DB 초기화</a>
-	<a href="#" class="btn btn2" onclick="clear_db('soodang');">보너스지급 내역 전체 초기화</a>
-</div>
-<?}?>
--->
-
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" style="clear:both;padding:10px 20px 20px;" method="get" >
 	
@@ -249,12 +249,13 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 			<select name="sfl" id="sfl">
 				<option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>>
 				<option value="mb_name"<?php echo get_selected($_GET['sfl'], "mb_name"); ?>>회원이름</option>
+				<option value="pay_id"<?php echo get_selected($_GET['sfl'], "pay_id"); ?>>패키지ID</option>
 			</select>
 
 			<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 			<input type="text" name="stx" value="<?php echo $stx ?>" id="stx" class="frm_input" style='padding:0 5px;'>
 			| 검색 기간 : <input type="date" name="start_dt" id="start_dt" placeholder="From" class="frm_input" value="<?=$fr_date?>" style='padding:0 5px;width:100px;'/> 
-			<!-- ~ <input type="text" name="end_dt" id="end_dt" placeholder="To" class="frm_input" value="<?=$to_date?>" style='padding:0 5px;width:80px;'/> -->
+			~ <input type="text" name="end_dt" id="end_dt" placeholder="To" class="frm_input" value="<?=$to_date?>" style='padding:0 5px;width:100px;'/>
 			
 			<?=$html?>
 		
@@ -263,6 +264,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 		
 	</div>
 </form>
+
 
 
 <form name="benefitlist" id="benefitlist" style="margin-top:-50px;">
@@ -311,13 +313,13 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
     <tr class="<?php echo $bg; ?>">
 		<td width='100'><? echo $row['day'];?></td>
 		<td width="100" style='text-align:center'>
-			<a href='/adm/member_form.php?w=u&mb_id=<?=$row['mb_id']?>'><?php echo get_text($row['mb_id']); ?></a>
+			<a href='/adm/bonus/bonus_list.php?mb_id=<?=$row['mb_id']?>&fr_date=<?=$fr_date?>&to_date=<?=$to_date?>'><?php echo get_text($row['mb_id']); ?></a>
 		</td>
 		<td width="100" style='text-align:center'>
 			<?php echo get_text($row['mb_name']); ?>
 		</td>
 		<td width='80' style='text-align:center'><?=get_text($row['allowance_name']); ?></td>
-		<td width='80'><?=$row['pay_id']?></td>
+		<td width='80'><a href="/adm/bonus/bonus_list.php?pay_id=<?=$row['pay_id']?>&fr_date=<?=$fr_date?>&to_date=<?=$to_date?>"><?=$row['pay_id']?></a></td>
 		<td width="100" class='bonus' style='text-align:right'><?=Number_format($soodang,BONUS_NUMBER_POINT) ?></td>
 		<td width="30" class='bonus'><?=$curencys[0]?></td>
 		

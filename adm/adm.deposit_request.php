@@ -306,7 +306,7 @@ $result = sql_query($sql);
    
     <tr class="bg0">
         <td ><?php echo $row['uid'] ?></td>
-        <td class='td_id'><a href='/adm/member_form.php?sst=&sod=&sfl=&stx=&page=&w=u&mb_id=<?=$row['mb_id']?>' target='_blank'><?=$row['mb_id'] ?></a></td>
+        <td class='td_id'><a href='/adm/member_form.php?sst=&sod=&sfl=&stx=&page=&w=u&mb_id=<?=$row['mb_id']?>' target='_blank'><?=member_sort($row['mb_id'],false,false)?></a></td>
         <td style='color:#666'><?=$member_result['mb_name']?></td>
         <td style='color:#666'><?=$row['bank_account']?></td>
         <!-- <td style='color:#666'><?=$member_result['mb_center']?></td> -->

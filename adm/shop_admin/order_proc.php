@@ -5,6 +5,13 @@ $od_id = $_POST['od_id'];
 $func = $_POST['func'];
 // $od_id = '2021122416374801';
 
+$debug = false;
+
+if($debug){
+$func = 'delete';
+$od_id = '2024102423562101';
+}
+
 $od_item_sql = "SELECT * from g5_order WHERE od_id = {$od_id}";
 $od_item = sql_fetch($od_item_sql); 
 
@@ -51,10 +58,19 @@ if($func == 'delete'){
             }
         
             // 금액반환처리
+            if($od_item['od_refund_price'] > 0){
+                $amt1 = $od_item['od_refund_price'];
+                $amt2 = $amt - $od_item['od_refund_price'];
+                $amt_txt = $amt2.' / '.$amt1;
 
-            $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$amt}, mb_rate = mb_rate - {$pv}, 
-            pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
-        
+                $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt2}, mb_balance_calc = mb_balance_calc + {$amt1}, mb_save_point = mb_save_point - {$amt}, mb_rate = mb_rate - {$pv}, 
+                pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
+            }else{
+                $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$amt}, mb_rate = mb_rate - {$pv}, 
+                pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
+                $amt_txt = $amt;
+            }
+
             if($rank_num == 0){
                 $update_member_sql .=", sales_day = '0000-00-00' , rank_note = '' , rank = 0 ";
             }else{
@@ -69,6 +85,7 @@ if($func == 'delete'){
         
 
         }else{
+           
             $update_member_sql = "UPDATE g5_member SET pv = pv - {$amt}, 
             mb_balance_calc = mb_balance_calc + {$amt}, mb_index = mb_index - {$od_misu} WHERE mb_id = '{$mb_id}'";
         
@@ -76,7 +93,7 @@ if($func == 'delete'){
         }
 
         if($update_result){
-            $de_data = $od_item['od_name']." | ".$amt." | ".$od_item['od_status'].' 건 구매취소처리 | '.$upstair;
+            $de_data = $od_item['od_name']." | ".$amt." | ".$od_item['od_status'].' 건 구매취소 | '.$amt_txt;
             $od_del_log_sql = "INSERT g5_order_delete set de_key = {$od_item['od_id']}
             , de_data = '{$de_data}'
             , mb_id = '{$od_item['mb_id']}'
@@ -112,13 +129,14 @@ if($func == 'delete'){
 
 
 
-
-if($del_odlist_result){
-    ob_end_clean();
-    echo json_encode(array("response"=>"OK", "data"=>'complete'));
-}else{
-    ob_end_clean();
-    echo json_encode(array("response"=>"FAIL", "data"=>"<p>ERROR<br>Please try later</p>"));
+if(!$debug){
+    if($del_odlist_result){
+        ob_end_clean();
+        echo json_encode(array("response"=>"OK", "data"=>'complete'));
+    }else{
+        ob_end_clean();
+        echo json_encode(array("response"=>"FAIL", "data"=>"<p>ERROR<br>Please try later</p>"));
+    }
 }
 
 

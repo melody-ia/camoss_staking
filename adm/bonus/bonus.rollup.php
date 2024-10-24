@@ -2,7 +2,7 @@
 $sub_menu = "600200";
 include_once('./_common.php');
 
-$debug=0;
+$debug=false;
 include_once('./bonus_inc.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -33,7 +33,7 @@ endif;
 
 //회원 리스트를 읽어 온다.
 $sql_common = " FROM g5_member";
-$sql_search=" WHERE pv >= 100 AND mb_level < 10";
+$sql_search=" WHERE pv >= 100 AND mb_level < 10 ";
 $sql_mgroup=" ORDER BY mb_no asc";
 
 $pre_sql = "select * 

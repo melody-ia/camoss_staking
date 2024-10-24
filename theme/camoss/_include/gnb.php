@@ -261,10 +261,10 @@ $(document).ready(function(){
 			<a href="/"><img src= "<?=G5_THEME_URL?>/img/title.png" alt="logo"></a>
 			<?if($member['mb_level'] >= 9){?><button type="button" class='btn adm_btn' onclick="location.href= '<?=G5_ADMIN_URL?>'" ><i class="ri-user-settings-line"></i>Admin</button><?}?>
 		</h3>
-		<select name="" id="mode_select" >
+		<!-- <select name="" id="mode_select" >
 			<option value="white">화이트</option>
 			<option value="dark">다크</option>
-		</select>
+		</select> -->
 	</div>
 </header>
 

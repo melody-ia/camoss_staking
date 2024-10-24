@@ -314,7 +314,7 @@ $ord_rev = $ord_array[($ord_key + 1) % 2]; // 내림차순→오름차순, 오�
 
 						<!-- <td ><input type="checkbox" name="paid_BTC[]" value="<?= $row['uid'] ?>" class="pay_check">  </td> -->
 						<td><?= $row['uid'] ?></td>
-						<td class='td_id'><a href='/adm/member_form.php?w=u&mb_id=<?= $row['mb_id'] ?>'><?= $row['mb_id'] ?></a>
+						<td class='td_id'><a href='/adm/member_form.php?w=u&mb_id=<?= $row['mb_id'] ?>'><?=member_sort($row['mb_id'],false,false)?></a>
 						</td>
 						
 						<input type="hidden" value="<?= $row['mb_id'] ?>" name="mb_id[]">

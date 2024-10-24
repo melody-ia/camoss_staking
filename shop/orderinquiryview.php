@@ -6,7 +6,7 @@ $od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_
 if( isset($_GET['ini_noti']) && !isset($_GET['uid']) ){
     goto_url(G5_SHOP_URL.'/orderinquiry.php');
 }
-
+ 
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
@@ -23,9 +23,11 @@ if($is_member && !$is_admin)
     $sql .= " and mb_id = '{$member['mb_id']}' ";
 $od = sql_fetch($sql);
 
-if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
+print_R($sql);
+
+/* if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
     alert("조회하실 주문서가 없습니다.", G5_SHOP_URL);
-}
+} */
 
 // 결제방법
 $settle_case = $od['od_settle_case'];

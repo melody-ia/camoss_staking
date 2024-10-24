@@ -382,12 +382,10 @@ $rank_result = sql_fetch($rank_sql);
 					<td>
 						<? if ($w == "u") { ?>
 							<input type="hidden" name="mb_id" id="mb_id" value="<?= $mb['mb_id'] ?>" />
-							<span class='td_id <? if ($mb['mb_divide_date'] != '') {
-																		echo 'red';
-																	} ?>'><?= $mb['mb_id'] ?></span>
+							<span class='td_id '><?= member_sort($mb['mb_id'],$mb['mb_divide_date'],$mb['mb_intercept_date']) ?></span>
 
 						<? } else { ?>
-							<input type="text" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id" <?php echo $required_mb_id ?> class="frm_input <?php echo $required_mb_id_class ?>" size="15" minlength="3" maxlength="20">
+							<input type="text" name="mb_id"  value="<?php echo $mb['mb_id'] ?>" id="mb_id" <?php echo $required_mb_id ?> class="frm_input <?php echo $required_mb_id_class ?>" size="15" minlength="3" maxlength="20">
 							<?php if ($w == 'u') { ?><a href="./boardgroupmember_form.php?mb_id=<?php echo $mb['mb_id'] ?>">접근가능그룹보기</a><?php } ?>
 						<? } ?>
 

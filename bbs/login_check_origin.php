@@ -43,7 +43,7 @@ if (!$is_social_password_check && (! (isset($mb['mb_id']) && $mb['mb_id']) || !l
 // 차단된 아이디인가?
 if ($mb['mb_intercept_date'] && $mb['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) {
     $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1년 \\2월 \\3일", $mb['mb_intercept_date']);
-    alert('회원님의 아이디는 접근이 금지되어 있습니다.\n처리일 : '.$date);
+    alert('회원님의 아이디는 이용이 제한되어 있습니다.<br>\n처리일 : '.$date);
 }
 
 // 탈퇴한 아이디인가?

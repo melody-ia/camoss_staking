@@ -118,6 +118,7 @@ $sql  = " select *
            limit $from_record, $rows ";
 $result = sql_query($sql);
 
+
 $qstr1 = "od_status=".urlencode($od_status)."&amp;od_settle_case=".urlencode($od_settle_case)."&amp;od_misu=$od_misu&amp;od_cancel_price=$od_cancel_price&amp;od_refund_price=$od_refund_price&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;fr_date=$fr_date&amp;to_date=$to_date&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 if($default['de_escrow_use'])
     $qstr1 .= "&amp;od_escrow=$od_escrow";
@@ -134,9 +135,13 @@ function done_select($name, $start_id=0, $selected="", $event="")
 {
     global $g5;
 
+    if($start_id == 1){
+        $abled = "disabled";
+    }
+
     $level_name=array("지급중","지급완료");
 	//$level_name=array("Black","Red","Yellow","Green");
-    $str = "\n<select id=\"{$name}\" class='pay_done_select' name=\"{$name}\"";
+    $str = "\n<select id=\"{$name}\" class='pay_done_select' name=\"{$name}\" {$abled}";
     if ($event) $str .= " $event";
     $str .= ">\n";
     $level_cnt = count($level_name);
@@ -311,6 +316,12 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 </form>
 
 
+<div class="local_desc01 local_desc">
+    <p>
+        <strong>- 구매취소 :</strong> 수당 지급 안된 경우에만 취소 처리 가능 <strong> 지급완료 :</strong> 수동 지급 완료 처리시 수당지급안됨 
+	</p>
+</div>
+
 <div class="local_ov01 local_ov" style="display: flex; align-items: center">
     <?php echo $listall; ?>
     전체 주문내역 <?php echo number_format($total_count); ?>건
@@ -446,6 +457,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 
 	<style>
 	/* td{width:140px !important;} */
+    .tbl_wrap a:not(.mb_id){text-decoration:underline !important;}
 	</style>
     <tr class="orderlist<?php echo ' '.$bg; ?>">
         <!-- <td rowspan="2" class="td_chk">
@@ -456,7 +468,7 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         <td><?= $i + 1 ?></td>
 		<td>
             <?php if ($row['mb_id']) { ?>
-            <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a>
+            <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>" class='mb_id' style='font-size:14px;'><?=member_sort($row['mb_id'],$m1 = '',$m2 = '')?></a>
             <?php } else { ?>
             비회원
             <?php } ?>
@@ -467,11 +479,9 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
         ?></td>
         <td ><?php echo $row['od_time']; ?></td>
         <td style="width:160px;" ><input type="text" id="od_soodang_date" class="frm_input od_soodang_date" style="font-weight:600;color:blue;width:150px;text-align:center" data-id="<?=$row['od_id']?>"  value="<?=$row['od_soodang_date']; ?>"></td>
-        <td headers="th_ordnum" class="td_odrnum2">
-            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem" style="font-weight:600;font-size:15px;" ><?=strtoupper($row['pay_id']); ?></a>
+        <td headers="th_ordnum" class="td_odrnum2" data-payid=<?=$row['pay_id']?>>
+            <a href="" class="orderitem" style="font-weight:600;font-size:15px;" ><?=strtoupper($row['pay_id']); ?></a>
             <p style='font-size:10px;'><?php echo $disp_od_id; ?></p>
-            <?php echo $od_mobile; ?>
-            <?php echo $od_paytype; ?>
         </td>
 		<td class="td_odrstatus" style="width:150px;">
 			<?php echo $row['od_status']; ?>
@@ -482,9 +492,9 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 		<td style="text-align:right;font-weight:600"><?=shift_auto($row['od_cash'],$od_settle_case)?> </td>
         <td style="text-align:right;"><?=$row['pv']?> </td>
 		<td style="text-align:right;"><?=number_format($row['pay_limit'])?> </td>
-        <td style="text-align:right;font-weight:600"><?=number_format($row['pay_ing'])?> </td>
+        <td style="text-align:right;font-weight:600" data-payid=<?=$row['pay_id']?>><a href="" class="orderitem" ><?=number_format($row['pay_ing'])?></a> </td>
         <td style="text-align:right;"><?=Round($row['pay_ing']/($row['pay_limit']/100))*2.5?>% </td>
-        <td style="text-align:right;"><?=done_select('pay_end_'.$i,$row['pay_end'])?> </td>
+        <td style="text-align:right;" data-payid=<?=$row['pay_id']?>><?=done_select('pay_end_'.$i,$row['pay_end'])?> </td>
         <!-- <td > <?php echo $row['pv']; ?></td> -->
         <td style="text-align:center"><input type='button' class='btn od_cancel' value='구매취소' data-id="<?=$row['od_id']?>" <?=enable_check($row['pay_ing'])?>></td>
        
@@ -582,10 +592,46 @@ if(!sql_query(" select mb_id from {$g5['g5_order_delete_table']} limit 1 ", fals
 $(function(){
     $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
 
+    $(".pay_done_select").on("change",function(){
+        var this_payId = $(this).parent().data('payid');
+        var this_end = $(this).val();
+
+        console.log(`pay_id : `+ this_payId);
+        console.log(`pay_end : `+ this_end);
+
+        $.ajax({
+            url: '/util/ajax_paydone.php',
+            type: 'POST',
+            cache: false,
+            async: false,
+            data: {
+            "pay_id": this_payId,
+            "pay_end" : this_end
+            },
+            dataType: 'json',
+            success: function(result) {
+            if (result == "success") {
+                // dialogModal('출금 비밀번호(핀코드) 인증', '<p>출금 비밀번호가 인증되었습니다.</p>', 'success');
+                console.log('success');
+            } else {
+                // dialogModal('출금 비밀번호(핀코드) 인증', '<p>출금 비밀번호가 일치 하지 않습니다.</p>', 'failed');
+                console.log('failed');
+            }
+            },
+            error: function(e) {
+                console.log(e);
+            }
+      });
+
+
+    });
+
     // 주문상품보기
     $(".orderitem").on("click", function() {
         var $this = $(this);
-        var od_id = $this.text().replace(/[^0-9]/g, "");
+        // var od_id = $this.text().replace(/[^0-9]/g, "");
+        var pay_id = $this.parent().data('payid')
+
 
         if($this.next("#orderitemlist").size())
             return false;
@@ -593,8 +639,8 @@ $(function(){
         $("#orderitemlist").remove();
 
         $.post(
-            "./ajax.orderitem.php",
-            { od_id: od_id },
+            "./ajax.g5_orderitem.php",
+            { pay_id: pay_id },
             function(data) {
                 $this.after("<div id=\"orderitemlist\"><div class=\"itemlist\"></div></div>");
                 $("#orderitemlist .itemlist")
@@ -604,6 +650,34 @@ $(function(){
         );
 
         return false;
+
+        /* 
+        $.ajax({
+        url: './util/pin_number_check_proc.php',
+        type: 'POST',
+        cache: false,
+        async: false,
+        data: {
+          "mb_id": mb_id,
+          "pin": $('#pin_auth_with').val()
+        },
+        dataType: 'json',
+        success: function(result) {
+          if (result.response == "OK") {
+            dialogModal('출금 비밀번호(핀코드) 인증', '<p>출금 비밀번호가 인증되었습니다.</p>', 'success');
+
+            $('#Withdrawal_btn').attr('disabled', false);
+            $('#pin_open').attr('disabled', true);
+            $("#pin_auth_with").attr("readonly", true);
+          } else {
+            dialogModal('출금 비밀번호(핀코드) 인증', '<p>출금 비밀번호가 일치 하지 않습니다.</p>', 'failed');
+          }
+        },
+        error: function(e) {
+          //console.log(e);
+        }
+      }); */
+
     });
 
     // 상품리스트 닫기
@@ -717,8 +791,8 @@ function set_date(today)
         document.getElementById("fr_date").value = "<?php echo date('Y-m-01', strtotime('-1 Month', $last_term)); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-t', strtotime('-1 Month', $last_term)); ?>";
     } else if (today == "전체") {
-        document.getElementById("fr_date").value = "";
-        document.getElementById("to_date").value = "";
+        document.getElementById("fr_date").value = "<?php echo date('2024-09-01')?>";
+        document.getElementById("to_date").value = "<?php echo G5_TIME_YMD; ?>";
     }
 }
 </script>

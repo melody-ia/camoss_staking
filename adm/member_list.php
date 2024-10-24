@@ -8,12 +8,7 @@ auth_check($auth[$sub_menu], 'r');
 
 $get_shop_item = get_g5_item();
 
-if($_GET['mode'] == 'del'){
-	$sql_target = 'g5_member_del';
-	$mode = 'del';
-}else{
-	$sql_target = 'g5_member';
-}
+
 
 $sub_sql = "";
 
@@ -45,10 +40,6 @@ if ($_GET['sst'] == "total_mb_balance") {
 	$sub_sql = " , ($mining_target - $mining_amt_target) as mining";
 } */
 
-
-
-
-$sql_common = " {$sub_sql} from {$sql_target} ";
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -99,6 +90,19 @@ if ($member['mb_id'] != 'admin') {
 	$sql_search .= " AND mb_id != 'admin' ";
 }
 
+if($_GET['mode'] == 'del'){
+	$sql_target = 'g5_member_del';
+	$mode = 'del';
+}else if($_GET['mode'] == 'etc'){
+	$sql_target = 'g5_member';
+	$mode = 'etc';
+	$sql_search .= " AND mb_divide_date != '' OR  mb_intercept_date != '' ";
+}else{
+	$sql_target = 'g5_member';
+}
+
+$sql_common = " {$sub_sql} from {$sql_target} ";
+
 $sql_order = " order by {$sst} {$sod}";
 $sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 
@@ -137,7 +141,6 @@ $g5['title'] = '회원관리';
 include_once('./admin.head.php');
 
 $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
-
 
 $result = sql_query($sql);
 $colspan = 21;
@@ -648,6 +651,7 @@ $stats_result = sql_fetch($stats_sql);
 		<a href="./member_table_depth.php" id="member_depth">회원추천/직추천갱신</a>
 		<a href="./member_table_fixtest.php">추천/후원관계검사</a>
 		<a href="./del_member_list.php" >삭제/탈퇴 회원보기</a>
+		<a href="./member_list.php?mode=etc" >별도구분/차단 회원보기</a>
 		<a href="./member_form.php" id="member_add">회원직접추가</a>
 		<?if($range == 'all'){?>
 			<a href="./member_list.php?range=" >회원전체보기</a>
@@ -836,8 +840,8 @@ while ($l_row = sql_fetch_array($get_lc)) {
 							<?php echo get_member_level_select("mb_level[$i]", 0, $member['mb_level'], $row['mb_level']) ?>
 						</td>
 
-						<td headers="mb_list_id" rowspan="2" class="td_name td_id <?if($row['mb_divide_date'] != ''){echo 'red';}?>" style="min-width:110px; width:auto">
-							<?php echo $mb_id ?>
+						<td headers="mb_list_id" rowspan="2" class="td_name td_id" style="min-width:110px; width:auto">
+						<?=member_sort($mb_id,$row['mb_divide_date'],$row['mb_intercept_date'])?>
 						</td>
 						<td rowspan="2" class="td_name name" style='width:70px;'><?php echo get_text($row['mb_name']); ?></td>
 						<?if($mode=='del'){?><th scope="col" rowspan="2" class="td_mbstat" style='letter-spacing:0;'><?=$row['mb_leave_date']?></th><?}?>
