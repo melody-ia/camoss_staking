@@ -61,7 +61,7 @@ if($result_cnt > 0){
         echo "<br><span class='title block gold' style='font-size:30px;'>".$from_od_name." | ". $from_pay_id ." | ".$from_mb_id."</span><br>";
         echo "<span class='strong'>▶직추천인 : ".$comp."</span>";
 
-        $comp_pack_sql = "SELECT * FROM g5_order WHERE mb_id = '{$comp}' AND pay_end != 1 order by od_soodang_date desc limit 0,1";
+        $comp_pack_sql = "SELECT * FROM g5_order WHERE mb_id = '{$comp}' AND pay_end != 1 order by od_soodang_date asc limit 0,1";
         $comp_pack_result = sql_query($comp_pack_sql);
         $comp_pack_result_cnt = sql_num_rows($comp_pack_result);
 
@@ -111,7 +111,6 @@ if($result_cnt > 0){
 
 
                 if($benefit > $benefit_limit && $balance_limit != 0 ){
-
                     $rec_adm .= "<span class=red> |  Bonus overflow :: ".shift_auto($benefit_limit - $benefit,2)."</span>";
                     echo "<span class=blue> ▶▶ 수당 지급 : ".shift_auto($benefit)."</span>";
                     echo "<span class=red> ▶▶▶ 수당 초과 (한계까지만 지급) : ".$benefit_limit_point." </span><br>";
@@ -120,7 +119,6 @@ if($result_cnt > 0){
                     echo " | 발생할수당: ".shift_auto($benefit)." | 지급할수당:".$benefit_limit."</code>";
 
                 }else if($benefit != 0 && $balance_limit == 0 && $benefit_limit == 0){
-
                     $rec_adm .= "<span class=red> | Sales zero :: ".shift_auto(($benefit_limit - $benefit),COIN_NUMBER_POINT)."</span>";
                     echo "<span class=blue> ▶▶ 수당 지급 : ".shift_auto($benefit)."</span>";
                     echo "<span class=red> ▶▶▶ 수당 초과 (기준매출없음) : ".$benefit_limit_point." </span><br>";
@@ -129,6 +127,7 @@ if($result_cnt > 0){
                 }else{
                     echo "<span class=blue>  ▶▶ 수당 지급 : ".$benefit_limit." (P지급".$live_benefit." / CP지급 : ".$shop_benefit.")</span><br>";
                 }
+                
                 echo "<br><br>";
 
 

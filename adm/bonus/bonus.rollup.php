@@ -332,7 +332,7 @@ function  excute(){
         $item_rank = find_rank_tier($mem_cnt);
         
         // 보유패키지 
-        $comp_pack_sql = "SELECT * FROM g5_order WHERE mb_id = '{$comp}' AND pay_end != 1 order by od_soodang_date desc limit 0,1";
+        $comp_pack_sql = "SELECT * FROM g5_order WHERE mb_id = '{$comp}' AND pay_end != 1 order by od_soodang_date asc limit 0,1";
         $comp_pack_result = sql_query($comp_pack_sql);
         $comp_pack_result_cnt = sql_num_rows($comp_pack_result);
 
