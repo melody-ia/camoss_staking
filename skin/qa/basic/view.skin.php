@@ -24,7 +24,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
     <section id="bo_v_info">
         <h2>페이지 정보</h2>
-        <span class="sound_only">작성자</span><strong><?php echo $view['name'] ?></strong>
+        <span class="sound_only">작성자</span><strong class='td_id' style="color:black;font-weight:600;font-size:16px;"><a href="https://camoss.io/adm/member_form.php?sst=&sod=&sfl=&stx=&page=&w=u&mb_id=<?=$view['mb_id']?>"><?=member_sort($view['mb_id']) ?></a></strong>
         <span class="sound_only">작성일</span><strong class="bo_date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $view['datetime']; ?></strong>
         <?php if($view['email'] || $view['hp']) { ?>
             <?php if($view['email']) { ?>
@@ -88,7 +88,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
          ?>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['content'], $qaconfig['qa_image_width']); ?></div>
+        <div id="bo_v_con" style="font-size:1.2em;"><?php echo get_view_thumbnail($view['content'], $qaconfig['qa_image_width']); ?></div>
         <!-- } 본문 내용 끝 -->
 
         <?php if($view['qa_type']) { ?>

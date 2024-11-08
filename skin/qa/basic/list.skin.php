@@ -89,8 +89,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             </th>
             <?php } ?>
             <th scope="col">번호</th>
+            <th scope="col">구분</th>
+            <th scope="col">ID</th>
             <th scope="col">제목</th>
-            <th scope="col">글쓴이</th>
+            
             <th scope="col">등록일</th>
             <th scope="col">상태</th>
         </tr>
@@ -112,14 +114,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             </td>
             <?php } ?>
             <td class="td_num"><?php echo $list[$i]['num']; ?></td>
-            <td class="td_subject">
-                <span class="bo_cate_link"><?php echo $list[$i]['category']; ?></span>
+            
+            <td class="td_stat"><span class="bo_cate_link"><?php echo $list[$i]['category']; ?></span></td>
+            <td class="td_id"><a href="https://camoss.io/adm/member_form.php?sst=&sod=&sfl=&stx=&page=&w=u&mb_id=<?=$list[$i]['mb_id']?>"><?=member_sort($list[$i]['mb_id']) ?></a></td>
+            <td class="td_subject" style="text-align:left;padding-left:5px;">
+                
                 <a href="<?php echo $list[$i]['view_href']; ?>" class="bo_tit">
                     <?php echo $list[$i]['subject']; ?>
                     <?php if ($list[$i]['icon_file']) echo " <i class=\"fa fa-download\" aria-hidden=\"true\"></i>" ; ?>
                 </a>
             </td>
-            <td class="td_name"><?php echo $list[$i]['name']; ?></td>
+            
             <td class="td_date"><?php echo $list[$i]['date']; ?></td>
             <td class="td_stat"><span class=" <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></span></td>
         </tr>
