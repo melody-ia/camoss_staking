@@ -632,7 +632,7 @@ $rank_result = sql_fetch($rank_sql);
 	</tr>
 
 	<tr class="ly_up padding-box fund">
-		<th scope="row" class="manual_modify">잔고 수동지급/차감</th>
+		<th scope="row" class="manual_modify">잔고(입금) 수동지급/차감</th>
 
 		<td colspan="1">
 			<input type="hidden" name="mb_deposit_point_math" id="math_code" value="">
@@ -660,7 +660,7 @@ $rank_result = sql_fetch($rank_sql);
 	</tr>
 
 	<tr class="ly_up padding-box fund">
-		<th scope="row" class="manual_modify">수당 수동지급/차감</th>
+		<th scope="row" class="manual_modify">수당(보너스) 수동지급/차감</th>
 
 		<td colspan="1">
 			<input type="hidden" name="mb_balance_math" id="balance_math_code" value="">
@@ -876,7 +876,12 @@ $rank_result = sql_fetch($rank_sql);
 				$('#shop_math_code').val(value);
 			});
 
-			var total_fund = '<?= $mb['mb_deposit_point'] + $mb['mb_deposit_calc'] + $mb['mb_balance'] + $mb['mb_balance_calc'] - $mb['mb_shift_amt']?> ';
+			var total_deposit = '<?= $mb['mb_deposit_point'] + $mb['mb_deposit_calc']?>';
+			var total_withraw = '<?= $mb['mb_balance'] + $mb['mb_balance_calc'] - $mb['mb_shift_amt']?>';
+			var total_fund = Number(total_deposit)+Number(total_withraw);
+
+			
+
 			var mb_grade = '<?= $mb['grade'] ?>';
 
 			//패키지구매처리
@@ -901,10 +906,13 @@ $rank_result = sql_fetch($rank_sql);
 					var mb_item_rank = '<?= $mb['rank_note'] ?>';
 					var item_num = item.it_maker.substr(1, 1);
 
-					console.log(mb_item_rank);
-					console.log(item_num);
+					var shift_fund = item.it_cust_price - total_deposit;
+					var fee_total_fund = shift_fund*1.07;
 
-					console.log(`total:${total_fund}\nprice:${item.it_cust_price}`);
+					// console.log(mb_item_rank);
+					// console.log(item_num);
+
+					console.log(`total:${total_fund}\nprice:${item.it_cust_price}\nshift:${shift_fund}\nfee_total:${fee_total_fund}`);
 					// console.log(`it_id:${item_id}\nit_sp:${item_supply_point}\ncoin:${select_coin}`);
 
 					/* if (mb_item_rank == '' && item_num > 0) {
@@ -912,12 +920,20 @@ $rank_result = sql_fetch($rank_sql);
 						return false;
 					} */
 
+
 					if (confirm("해당 회원에게 " + item.it_name + " 패키지를 지급하시겠습니까?\n회원 잔고에서 " + Comma_Number(item.it_cust_price) + " <?= $curencys[0] ?> (이)가 차감됩니다.")) {} else {
 						return false;
 					}
 
+					
+
 					if (Number(total_fund) < Number(item.it_cust_price)) {
 						alert("회원 잔고가 부족합니다.\n잔고지급후 사용해주세요.");
+						return false;
+					}
+
+					if(fee_total_fund > total_withraw && mb_item_rank !=''){         
+						alert("회원 잔고가 부족합니다.\n재구매시에는 수수료를 포함한 구매가능금액이 필요합니다.");
 						return false;
 					}
 
@@ -928,7 +944,7 @@ $rank_result = sql_fetch($rank_sql);
 							"mb_no": '<?= $mb['mb_no'] ?>',
 							"rank": '<?= $mb['rank'] ?>',
 							"func": func,
-							"input_val": item.it_cust_price,
+							"input_val": item.it_price,
 							"output_val": item.it_price,
 							"select_pack_name": item.it_name,
 							"select_pack_id": item.it_id,
@@ -974,17 +990,16 @@ $rank_result = sql_fetch($rank_sql);
 					data: data,
 					success: function(data) {
 
-						if (data.code == 0000) {
+						if (data.code == '0000') {
 							alert(success_alert);
 							location.reload();
 
 						} else {
-
-							if(data.message == undefined){
+							if(data.sql == undefined){
 								data.message = "상품을 확인해주세요";
 								
 							}
-							alert(data.message);
+							alert(data.sql);
 							// location.reload();
 
 						}

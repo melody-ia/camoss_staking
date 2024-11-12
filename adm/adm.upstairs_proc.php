@@ -7,7 +7,6 @@ include_once(G5_PATH.'/util/purchase_proc.php');
 $now_datetime = date('Y-m-d H:i:s');
 $now_date = date('Y-m-d');
 $soodang_date = date('Y-m-d', strtotime("+0 day"));
-// $debug=1;
 
 
 $mb_id = $_POST['mb_id'];
@@ -29,15 +28,15 @@ $val = substr($pack_maker,1,1);
 $coin_val = $curencys[0];
 
 if($debug){
-	$mb_id = 'test3';
-	$mb_no = 2;
+	$mb_id = 'test38';
+	$mb_no = 39;
 	$mb_rank = 0;
 	$func = 'new';
-	$input_val =0; // 결제금액 
-	$output_val =0; // 구매금액
-	$pack_name = 'P0';
+	$input_val =3000; // 결제금액 
+	$output_val =3000; // 구매금액
+	$pack_name = 'P4';
 	$pack_id = 2023040400;
-	$it_point = 500000;
+	$it_point = 3000;
 	$it_supply_point = 0;
 }
 
@@ -45,7 +44,7 @@ if($debug){
 $pv = $it_supply_point;
 
 if($func == "new"){
-	$orderid = date("YmdHis",time()).'01';
+	$orderid = date("YmdHis",time()).'02';
 }else{
 	$orderid = $_POST['od_id'];
 }
@@ -65,11 +64,24 @@ if(Solitare == true){
 	$Sol_sql = "";
 }
 
-$calc_value = conv_number($it_point);
-$price_value = conv_number($output_val);
+$it_point = conv_number($it_point);
+$input_val = conv_number($it_point);
 
-if($deposit_limit <= $price_value){
-	$deposit_cal_value = $price_value-$deposit_limit;
+
+if($deposit_limit <= $input_val){
+	$deposit_cal_value = ($input_val-$deposit_limit)*1.07;
+	$puchase_value = $deposit_limit + $deposit_cal_value;
+	$output_val = $puchase_value;
+	
+	if( $deposit_total < $puchase_value){
+		if($debug){
+			echo $deposit_total. ' / '.  $puchase_value; 
+		}
+
+		echo json_encode(array("result" => "failed",  "code" => "0001", "sql" => "잔고가 부족합니다.\n재구매시에는 수수료를 포함한 구매가능금액이 필요합니다."));
+		return false;
+	}
+
 	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
 
 	if($deposit_cal_value > 0){
@@ -77,7 +89,7 @@ if($deposit_limit <= $price_value){
 		$Sol_sql .= ", od_refund_price = {$deposit_cal_value} ";
 	}
 }else{
-	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$price_value} ";
+	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$input_val} ";
 }
 
 $max_limit_point = $it_point * ($limited/100);
@@ -110,7 +122,7 @@ if($debug){
 
 	
 
-	if($deposit_total < $output_val){
+	if($deposit_total < $it_point){
 		echo json_encode(array("result" => "failed",  "code" => "0001", "sql" => "잔고가 부족합니다."));
 		return false;
 	}
@@ -124,7 +136,7 @@ $logic = purchase_package($mb_id,$pack_id);
 
 if($rst && $logic){
 
-	$update_point = " UPDATE g5_member set pv = pv + {$calc_value}, {$target_sql}";
+	$update_point = " UPDATE g5_member set pv = pv + {$input_val}, {$target_sql}";
 	$mb_level = sql_fetch("SELECT mb_level from g5_member WHERE mb_id = '{$mb_id}' ")['mb_level'];
 
 	if($mb_level == 0){
@@ -144,10 +156,10 @@ if($rst && $logic){
 	}
 
 	// 해당 패키지로 받을 수 있는 수당 한도(300%)
-	$max_limit_point = $calc_value * ($limited/100);
+	$max_limit_point = $input_val * ($limited/100);
 	
 	$update_point .= ", mb_rate = ( mb_rate + {$pv}) ";
-	$update_point .= ", mb_save_point = ( mb_save_point + {$price_value}) ";
+	$update_point .= ", mb_save_point = ( mb_save_point + {$it_point}) ";
 	$update_point .= ", mb_index = ( mb_index + {$max_limit_point}) ";
 	$update_point .= ", rank = '{$update_rank}', rank_note = '{$pack_name}', sales_day = '{$now_datetime}' ";
 	$update_point .= " where mb_id ='".$mb_id."'";

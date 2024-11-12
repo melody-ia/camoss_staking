@@ -8,8 +8,8 @@ $func = $_POST['func'];
 $debug = false;
 
 if($debug){
-$func = 'delete';
-$od_id = '2024102423562101';
+    $func = 'delete';
+    $od_id = '2024102523373501';
 }
 
 $od_item_sql = "SELECT * from g5_order WHERE od_id = {$od_id}";
@@ -30,7 +30,7 @@ function  od_name_return_rank($val){
 if($func == 'delete'){
     if($od_item){
 
-        $amt = $od_item['od_cart_price'];
+        $amt = $od_item['od_cash'];
         $upstair = $od_item['upstair'];
         $pv = $od_item['pv'];
         $od_misu = $od_item['od_misu'];
@@ -53,8 +53,12 @@ if($func == 'delete'){
         
                 print_R($del_package);
                 echo "<br><br>";
-        
-                $pack_del_result = sql_query($del_package);
+                
+                if(!$debug){
+                    $pack_del_result = sql_query($del_package);
+                }else{
+                    $pack_del_result = 1;
+                }
             }
         
             // 금액반환처리
@@ -63,10 +67,10 @@ if($func == 'delete'){
                 $amt2 = $amt - $od_item['od_refund_price'];
                 $amt_txt = $amt2.' / '.$amt1;
 
-                $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt2}, mb_balance_calc = mb_balance_calc + {$amt1}, mb_save_point = mb_save_point - {$amt}, mb_rate = mb_rate - {$pv}, 
+                $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt2}, mb_balance_calc = mb_balance_calc + {$amt1}, mb_save_point = mb_save_point - {$upstair}, mb_rate = mb_rate - {$pv}, 
                 pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
             }else{
-                $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$amt}, mb_rate = mb_rate - {$pv}, 
+                $update_member_sql = "UPDATE g5_member set mb_deposit_calc= mb_deposit_calc + {$amt}, mb_save_point = mb_save_point - {$upstair}, mb_rate = mb_rate - {$pv}, 
                 pv = pv - {$upstair}, mb_index = mb_index - {$od_misu} ";
                 $amt_txt = $amt;
             }
@@ -80,8 +84,12 @@ if($func == 'delete'){
         
             print_R($update_member_sql);
             echo "<br><br>";
-            // $update_result = 1;
-            $update_result = sql_query($update_member_sql);
+            
+            if(!$debug){
+                $update_result = sql_query($update_member_sql);
+            }else{
+                $update_result = 1;
+            }
         
 
         }else{
@@ -102,8 +110,12 @@ if($func == 'delete'){
 
             print_R($od_del_log_sql);
             echo "<br><br>";
-            // $result = 1;
-            $result = sql_query($od_del_log_sql);
+            
+            if(!$debug){
+                $result = sql_query($od_del_log_sql);
+            }else{
+                $result = 1;
+            }
 
             if($result){
                 $del_odlist_sql = "DELETE from g5_order WHERE od_id = {$od_id} ";
@@ -111,7 +123,11 @@ if($func == 'delete'){
                 echo $del_odlist_sql;
                 echo "<br><br>";
 
-                $del_odlist_result = sql_query($del_odlist_sql);
+                if(!$debug){
+                    $del_odlist_result = sql_query($del_odlist_sql);
+                }else{
+                    $del_odlist_result = 1;
+                }
             }
         }
 

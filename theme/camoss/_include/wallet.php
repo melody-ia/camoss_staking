@@ -27,7 +27,7 @@ $withdrawal_end_time = "17:30";
 
 // 회원 자산, 보너스 정보
 $total_bonus = $member['mb_balance'] + $member['mb_balance_calc']; 
-$total_deposit = $member['mb_deposit_point'] + $member['mb_deposit_calc'] + $total_bonus - $member['mb_shift_amt'];
+$total_deposit = $member['mb_deposit_point'] + $member['mb_deposit_calc'];
 $total_shift_amt = $member['mb_shift_amt'];
 
 $total_fund = ($member['mb_balance'] + $member['mb_shop_point']);
@@ -39,7 +39,7 @@ $total_withraw = $total_bonus - $total_shift_amt;
 $shop_balance = $member['mb_shop_point'] - $member['mb_shop_calc'];
 
 // 구매가능잔고 :: 입금액 - 구매금액 = 남은금액
-$available_fund = $total_deposit;
+$available_fund = $total_deposit + $total_withraw;
 
 // 마이닝합계
 /* $mining_acc = $member[$mining_target];
@@ -78,6 +78,8 @@ $dashboard_page = strpos($_SERVER['PHP_SELF'],'/index.php');
 $usd_price = coin_price('usd')*1000;
 $fil_price = coin_prices('fil');
 $eth_price = coin_prices('eth');
+
+
 
 function coin_price($income){
 	global $g5;

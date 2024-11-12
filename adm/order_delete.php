@@ -186,7 +186,7 @@ function  od_name_return_rank($val){
                 <th scope="col" width='10%'>구매번호(코드)</th>
                 <th scope="col" width='10%'>구매취소상품</th>
                 <th scope="col" width='15%'>구매취소금액</th>
-                <th scope="col" width='15%'>구매취소PV</th>
+                <th scope="col" width='15%'>구매취소방법</th>
                 <th scope="col" width='20%'>구매취소처리</th>
                 <th scope="col" width='10%'>처리자 IP</th>
                 <th scope="col" width='10%'>상태변경일</th>
@@ -208,7 +208,7 @@ function  od_name_return_rank($val){
                     <td style='color:#666'><?= $row['de_key'] ?></td>
                     <td><span class='badge t_white color<?=od_name_return_rank($de_data[0])?>' ><?= $de_data[0] ?></span></td>
                     <td class='price'><?= Number_format($de_data[1]) ?></td>
-                    <td><?= Number_format($de_data[3]) ?></td>
+                    <td><?= $de_data[3] ?></td>
                     <td><?= $de_data[2] ?></td>
                     <td><?= $row['de_ip'] ?></td>
                     <td><?= $row['de_datetime'] ?></td>

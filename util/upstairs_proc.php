@@ -3,7 +3,7 @@ include_once('./_common.php');
 include_once(G5_THEME_PATH.'/_include/wallet.php');
 include_once(G5_PATH.'/util/purchase_proc.php');
 
-//$debug = 1;
+// $debug = 1;
 $now_datetime = date('Y-m-d H:i:s');
 $now_date = date('Y-m-d');
 $soodang_date = date('Y-m-d', strtotime("+0 day"));
@@ -29,13 +29,13 @@ $it_supply_point = $_POST['it_supply_point'];
 $val = substr($pack_maker,1,1);
 
 if($debug){
-	$mb_id = 'test5';
+	$mb_id = 'test8';
 	$func = 'new';
-	$input_val ='500'; // 결제금액 (부가세포함)
-	$output_val ='500'; // 구매금액 (부가세제외)
-	$pack_name = 'P2';
+	$input_val ='3000'; // 결제금액 (부가세포함)
+	$output_val ='3000'; // 구매금액 (부가세제외)
+	$pack_name = 'P4';
 	$pack_id = 2024073502;
-	$it_point = 500;
+	$it_point = 3000;
 	$it_supply_point = 0.5;
 }
 
@@ -68,7 +68,19 @@ if(Solitare == true){
 
 
 if($deposit_limit <= $input_val){
-	$deposit_cal_value = $input_val-$deposit_limit;
+	$deposit_cal_value = ($input_val-$deposit_limit)*1.07;
+	$puchase_value = $deposit_limit + $deposit_cal_value;
+	$output_val = $puchase_value;
+	
+	if( $deposit_total < $puchase_value){
+		if($debug){
+			echo $deposit_total. ' / '.  $puchase_value; 
+		}
+
+		echo json_encode(array("result" => "failed",  "code" => "0001", "sql" => "잔고가 부족합니다."));
+		return false;
+	}
+
 	$target_sql = " mb_deposit_calc = mb_deposit_calc - {$deposit_limit} ";
 
 	if($deposit_cal_value > 0){
