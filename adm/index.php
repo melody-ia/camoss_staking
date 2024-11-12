@@ -53,6 +53,8 @@ $colspan = 12;
     .td_mbid a{text-decoration: underline;}
     .blue{color:blue}
 </style>
+<link rel="stylesheet" href="./css/scss/admin_custom.css?ver=220419">
+
 <section>
     <h2>신규가입회원 <?php echo $new_member_rows ?>건 목록</h2>
     <div class="local_desc02 local_desc">
@@ -154,16 +156,17 @@ $colspan = 5;
 ?>
 
 <section>
-    <h2>최근게시물</h2>
+    <h2>KYC인증</h2>
 
     <div class="tbl_head01 tbl_wrap">
         <table>
-        <caption>최근게시물</caption>
+        <caption>KYC인증</caption>
         <thead>
         <tr>
-            <th scope="col">그룹</th>
+            <!-- <th scope="col">그룹</th> -->
             <th scope="col">게시판</th>
-            <th scope="col">제목</th>
+            <th scope="col">아이디</th>
+            <th scope="col">실명</th>
             <th scope="col">이름</th>
             <th scope="col">일시</th>
         </tr>
@@ -171,6 +174,7 @@ $colspan = 5;
         <tbody>
         <?php
         $sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id {$sql_common} {$sql_order} limit {$new_write_rows} ";
+        // echo $sql;
         $result = sql_query($sql);
         for ($i=0; $row=sql_fetch_array($result); $i++)
         {
@@ -182,7 +186,8 @@ $colspan = 5;
                 $comment_link = "";
                 $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '{$row['wr_id']}' ");
 
-                $name = get_sideview($row2['mb_id'], get_text(cut_str($row2['wr_name'], $config['cf_cut_name'])), $row2['wr_email'], $row2['wr_homepage']);
+                // $name = get_sideview($row2['mb_id'], get_text(cut_str($row2['wr_name'], $config['cf_cut_name'])), $row2['wr_email'], $row2['wr_homepage']);
+                $name = get_text($row2['wr_name']);
                 // 당일인 경우 시간으로 표시함
                 $datetime = substr($row2['wr_datetime'],0,10);
                 $datetime2 = $row2['wr_datetime'];
@@ -199,7 +204,8 @@ $colspan = 5;
                 $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ");
                 $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
 
-                $name = get_sideview($row3['mb_id'], get_text(cut_str($row3['wr_name'], $config['cf_cut_name'])), $row3['wr_email'], $row3['wr_homepage']);
+                // $name = get_sideview($row3['mb_id'], get_text(cut_str($row3['wr_name'], $config['cf_cut_name'])), $row3['wr_email'], $row3['wr_homepage']);
+                $name = $row3['mb_id'];
                 // 당일인 경우 시간으로 표시함
                 $datetime = substr($row3['wr_datetime'],0,10);
                 $datetime2 = $row3['wr_datetime'];
@@ -211,9 +217,12 @@ $colspan = 5;
         ?>
 
         <tr>
-            <td class="td_category"><a href="<?php echo G5_BBS_URL ?>/new.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo cut_str($row['gr_subject'],10) ?></a></td>
-            <td class="td_category"><a href="<?php echo get_pretty_url($row['bo_table']) ?>"><?php echo cut_str($row['bo_subject'],20) ?></a></td>
-            <td><a href="<?php echo get_pretty_url($row['bo_table'], $row2['wr_id']); ?><?php echo $comment_link ?>"><?php echo $comment ?><?php echo conv_subject($row2['wr_subject'], 100) ?></a></td>
+            <!-- <td class="td_category"><a href="<?php echo G5_BBS_URL ?>/new.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo cut_str($row['gr_subject'],10) ?></a></td> -->
+            <!-- <td class="td_category"><a href="<?php echo get_pretty_url($row['bo_table']) ?>"><?php echo cut_str($row['bo_subject'],20) ?></a></td> -->
+            <td class="td_category"><a href="/adm/bbs/board.php?bo_table=kyc"><?php echo cut_str($row['bo_subject'],20) ?></a></td>
+            <td ><a href="/adm/bbs/board.php?bo_table=kyc&wr_id=<?=$row2['wr_id']?><?php echo $comment_link ?>"><?php echo cut_str($row['mb_id'],20) ?></a></td>
+            <!-- <td><a href="<?php echo get_pretty_url($row['bo_table'], $row2['wr_id']); ?><?php echo $comment_link ?>"><?php echo $comment ?><?php echo conv_subject($row2['wr_subject'], 100) ?></a></td> -->
+            <td><a href="/adm/bbs/board.php?bo_table=kyc&wr_id=<?=$row2['wr_id']?><?php echo $comment_link ?>"><?php echo $comment ?><?php echo conv_subject($row2['wr_subject'], 100) ?></a></td>
             <td class="td_mbname"><div><?php echo $name ?></div></td>
             <td class="td_datetime"><?php echo $datetime ?></td>
         </tr>
@@ -228,7 +237,7 @@ $colspan = 5;
     </div>
 
     <div class="btn_list03 btn_list">
-        <a href="<?php echo G5_BBS_URL ?>/new.php">최근게시물 더보기</a>
+        <a href="/adm/bbs/board.php?bo_table=kyc">KYC 인증 전체보기</a>
     </div>
 </section>
 
@@ -242,6 +251,7 @@ $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
 $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$new_point_rows} ";
+// echo $sql;
 $result = sql_query($sql);
 
 $colspan = 7;
@@ -263,7 +273,7 @@ $colspan = 7;
             <th scope="col">일시</th>
             <th scope="col">주문번호</th>
             <th scope="col">매출금액</th>
-            <th scope="col">PV</th>
+            <th scope="col">패키지ID</th>
             <th scope="col">패키지</th>
             <th scope="col">매출구분</th>
         </tr>
@@ -295,8 +305,8 @@ $colspan = 7;
             <td class="td_datetime"><?php echo $row['od_date'] ?></td>
             <td class="td_datetime"><a href='<?=G5_URL?>/adm/shop_admin/g5_orderlist.php?sel_field=od_id&search=<?=$row['od_id']?>' style='text-decoration:underline'><?php echo $row['od_id'] ?></a></td>
             <td class="td_name sv_use"><?php echo number_format($row['od_cart_price']) ?></td>
-            <td class="td_name sv_use"><?php echo number_format($row['upstair']) ?></td>
-            <td class="td_numbig"><?php echo $row['od_cash_no'] ?></td>
+            <td class="td_name sv_use"><?php echo $row['pay_id'] ?></td>
+            <td class="td_numbig"><span class="badge t_white color<?=substr($row['od_name'],1,1)?>"><?php echo $row['od_cash_no'] ?></span></td>
             <td><?php echo $row['od_status'] ?></td>
         </tr>
 
@@ -311,7 +321,7 @@ $colspan = 7;
     </div>
 
     <div class="btn_list03 btn_list">
-        <a href="./point_list.php">포인트내역 전체보기</a>
+        <a href="/adm/shop_admin/g5_orderlist.php">구매내역 전체보기</a>
     </div>
 </section>
 
